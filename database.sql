@@ -173,13 +173,30 @@ VALUES ('Jess','Bucks','example@notawebsite.com','superDUPERsecret'),
 ('Samantha','Mittens','stuffandthings@notawebsite.com','alsoasecret');
 
 INSERT INTO "session" ("title", "email", "phone", "user_id","industry_id",
-"track_id", "rehersal", "covid", "speakers", "diversity", "purpose_id", "location_id", "location_details", "time_id", "date_id", "votes", "host", "description", "attendees", "length", "format_id", "area_of_interest_id", "media", "image", "success", "excited", "other_hosts", "other_info", "awaiting_approval", "approved")
+"track_id", "rehersal", "covid", "speakers", "diversity", "purpose_id", 
+"location_id", "location_details", "time_id", "date_id", "votes", "host", 
+"description", "attendees", "length", "format_id", "area_of_interest_id", 
+"media", "image", "success", "excited", "other_hosts", "other_info", 
+"awaiting_approval", "approved")
 VALUES ('Session Test',
 'someonetocontact@notawebsiteatall.nope', 
-'1234567890', '2', '3', '1', true, true, 'Dr. Speaker McSpeakerson', true,'2', '1','Event will be only online','4','1','0','','This is a description of the event. Lorum ipsum dolor sit amet...', '15-20', 'About 30min', '2', '2', '', 'Image', 'Success looks like success', 'I am excited to meet people who enjoy this type of event.', 'No comment', 'No additional info.', false, false);
+'1234567890', '2', '3', '1', true, true, 'Dr. Speaker McSpeakerson', true,
+'2', '1','Event will be only online','4','1','0','',
+'This is a description of the event. Lorum ipsum dolor sit amet...', '15-20', 
+'About 30min', '2', '2', '', 'Image', 'Success looks like success', 
+'I am excited to meet people who enjoy this type of event.', 'No comment', 
+'No additional info.', false, false);
 
 INSERT INTO "session" ("title", "email", "phone", "user_id","industry_id",
-"track_id", "rehersal", "covid", "speakers", "diversity", "purpose_id", "location_id", "location_details", "time_id", "date_id", "votes", "host", "description", "attendees", "length", "format_id", "area_of_interest_id", "media", "image", "success", "excited", "other_hosts", "other_info", "awaiting_approval", "approved")
+"track_id", "rehersal", "covid", "speakers", "diversity", "purpose_id", 
+"location_id", "location_details", "time_id", "date_id", "votes", "host", 
+"description", "attendees", "length", "format_id", "area_of_interest_id", 
+"media", "image", "success", "excited", "other_hosts", "other_info", 
+"awaiting_approval", "approved")
 VALUES ('Another Session Test',
 'personemail@notawebsiteatall.nope', 
-'0001237654', '1', '2', '1', true, true, 'Mr. TalksALot', true,'1', '2','','2','2','0','','This is a description of the event. Lorum ipsum dolor sit amet...', '40ish', '1 hour', '3', '1', '', 'A picture', 'Lots of people and lots of talking', 'Talking to people who enjoy what I do.', 'No comment', 'No additional info.', false, false);
+'0001237654', '1', '2', '1', true, true, 'Mr. TalksALot', true,'1', '2',
+'','2','2','0','','This is a description of the event. Lorum ipsum dolor sit amet...', 
+'40ish', '1 hour', '3', '1', '', 'A picture', 'Lots of people and lots of talking', 
+'Talking to people who enjoy what I do.', 'No comment', 'No additional info.', 
+false, false);
