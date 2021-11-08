@@ -73,7 +73,7 @@ function App() {
             exact
             path="/submission"
           >
-            <SubmissionForm />
+            <SubmissionPage />
           </Route>
 
           <Route
