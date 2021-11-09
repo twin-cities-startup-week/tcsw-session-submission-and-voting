@@ -36,6 +36,7 @@ function LoginForm() {
       sx={{ width: 1/2, m: 'auto', p: 1, pl: 4, pb: 3, bgcolor: '#A7A9AC' }}>
 
       <h2 className="registerHeader">Login</h2>
+
       <Box sx={{ textAlign: 'center' }}>
         <Button variant="contained" type="submit" value=""
         sx={{ p: 2, width: 350, height: 50, bgcolor: '#0C495A', color: '#FBBD19', mb: 1 }}
@@ -43,19 +44,16 @@ function LoginForm() {
       </Box>
 
       <form onSubmit={login}>
-        {errors.registrationMessage && (
+        {errors.loginMessage && (
           <h3 className="alert" role="alert">
-            {errors.registrationMessage}
+            {errors.loginMessage}
           </h3>
         )}
         <Box sx={{ textAlign: 'center' }}>
           <Box sx={{ m: 1 }}>
             <label htmlFor="username">
               <TextField sx={{ width: 500, bgcolor: '#FFFFFF', borderRadius: 1 }}
-                type="text"
-                name="username"
-                label="Username"
-                variant="filled"
+                type="text" name="username" label="Username" variant="filled"
                 value={username}
                 required
                 onChange={(event) => setUsername(event.target.value)}
@@ -65,10 +63,7 @@ function LoginForm() {
           <Box sx={{ m: 1 }}>
             <label htmlFor="password">
               <TextField sx={{ width: 500, bgcolor: '#FFFFFF', borderRadius: 1 }}
-                type="password"
-                name="password"
-                label="Password"
-                variant="filled"
+                type="password" name="password" label="Password" variant="filled"
                 value={password}
                 required
                 onChange={(event) => setPassword(event.target.value)}
