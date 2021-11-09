@@ -19,6 +19,7 @@ import { useState } from 'react';
 
 function SubmissionPage() {
 
+    //for styling for multi select drop down menu
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
     const MenuProps = {
@@ -30,7 +31,7 @@ function SubmissionPage() {
         },
     };//end MenuProps
 
-
+    //options for multiselect drop down date menu
     const dates = [
         'Saturday, September 17, 2022',
         'Sunday, September 18, 2022',
@@ -41,6 +42,7 @@ function SubmissionPage() {
         'Friday, September 23, 2022',
     ]//end dates
 
+    //options for multiselect drop down time menu
     const times = [
         'Morning: 8am - 11am',
         'Midday: 11 am - 2pm',
