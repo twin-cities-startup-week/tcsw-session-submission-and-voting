@@ -20,6 +20,9 @@ function RegisterForm() {
       payload: {
         username: username,
         password: password,
+        email: email,
+        firstName: firstName,
+        lastName: lastName
       },
     });
   } else {
