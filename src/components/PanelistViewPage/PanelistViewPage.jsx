@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom';
-import { MenuItem, Select, FormControl, InputLabel } from '@mui/material';
+import { MenuItem, Select, FormControl, InputLabel, TextField } from '@mui/material';
 
 
 function PanelViewPage() {
@@ -8,7 +8,6 @@ function PanelViewPage() {
 
     const [track, setTrack] = useState('');
     const [format, setFormat] = useState('');
-    const [level, setLevel] = useState('');
 
     // navigates user to the details page of the speaker on click
     const moveToSelectedPage = () => {
@@ -21,10 +20,6 @@ function PanelViewPage() {
 
       const handleFormatChange = (event) => {
         setFormat(event.target.value);
-      };
-
-      const handleLevelChange = (event) => {
-        setLevel(event.target.value);
       };
 
     return(
@@ -60,22 +55,17 @@ function PanelViewPage() {
                     </tbody>
                 </table>
             </div>
-            <div class='search-section'>
-                <h2>Search</h2>
-                <form>
-                    <input
-                        id='track-filter'
-                        type='text'
-                        name='track'
-                        placeholder='search'
-                    />
 
+            <div class='search-bar'>
+                <h2>Search</h2>
+                <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                {/* <form> */}
                     <button>RESET</button>
                     <button>SEARCH</button>
 
                     <br />
 
-                    <FormControl fullWidth>
+                    {/* <FormControl fullWidth> */}
                         <InputLabel id='track-filter'>Track</InputLabel>
                             <Select
                                 labelId="track-filter"
@@ -94,18 +84,17 @@ function PanelViewPage() {
                                 <MenuItem value='{Spolight}'>Spolight</MenuItem>
                                 <MenuItem value='{Other}'>Other</MenuItem>
                             </Select>
-                    </FormControl>
+                    {/* </FormControl> */}
 
-                    <h5>Track</h5>
+                    {/* <h5>Track</h5>
                     <input
                         id='track-filter'
                         type='text'
                         name='track'
                         placeholder='track'
-                    />
+                    /> */}
 
-
-                    <FormControl fullWidth>
+                    {/* <FormControl fullWidth> */}
                         <InputLabel id='format-filter'>Format</InputLabel>
                             <Select
                                 labelId="format-filter"
@@ -114,56 +103,30 @@ function PanelViewPage() {
                                 label="Format"
                                 onChange={handleFormatChange}
                             >
-                                <MenuItem value='{Growth}'>Growth</MenuItem>
-                                <MenuItem value='{Founder}'>Founder</MenuItem>
-                                <MenuItem value='{Designer}'>Designer</MenuItem>
-                                <MenuItem value='{Maker}'>Maker</MenuItem>
-                                <MenuItem value='{Product}'>Product</MenuItem>
-                                <MenuItem value='{Developer}'>Developer</MenuItem>
-                                <MenuItem value='{People}'>People</MenuItem>
-                                <MenuItem value='{Spolight}'>Spolight</MenuItem>
+                                <MenuItem value='{Presentation}'>Presentation</MenuItem>
+                                <MenuItem value='{Panel}'>Panel</MenuItem>
+                                <MenuItem value='{Workshop}'>Workshop</MenuItem>
+                                <MenuItem value='{Keynote}'>Keynote</MenuItem>
+                                <MenuItem value='{Roundtable}'>Roundtable</MenuItem>
+                                <MenuItem value='{Fireside Chat}'>Fireside Chat</MenuItem>
+                                <MenuItem value='{Showcase}'>Showcase</MenuItem>
+                                <MenuItem value='{Demo}'>Demo</MenuItem>
+                                <MenuItem value='{Meetup}'>Meetup</MenuItem>
+                                <MenuItem value='{Pitch}'>Pitch</MenuItem>
                                 <MenuItem value='{Other}'>Other</MenuItem>
+                                
                             </Select>
-                    </FormControl>
+                    {/* </FormControl> */}
 
-                    <h5>Format</h5>
+                    {/* <h5>Format</h5>
                     <input
                         id='format-filter'
                         type='text'
                         name='format'
                         placeholder='format'
-                    />
-                    
-                    {/* <FormControl fullWidth>
-                        <InputLabel id='level-filter'>Level</InputLabel>
-                            <Select
-                                labelId="level-filter"
-                                id="level-filter-select"
-                                value={level}
-                                label="Level"
-                                onChange={handleLevelChange}
-                            >
-                                <MenuItem value='{Growth}'>Growth</MenuItem>
-                                <MenuItem value='{Founder}'>Founder</MenuItem>
-                                <MenuItem value='{Designer}'>Designer</MenuItem>
-                                <MenuItem value='{Maker}'>Maker</MenuItem>
-                                <MenuItem value='{Product}'>Product</MenuItem>
-                                <MenuItem value='{Developer}'>Developer</MenuItem>
-                                <MenuItem value='{People}'>People</MenuItem>
-                                <MenuItem value='{Spolight}'>Spolight</MenuItem>
-                                <MenuItem value='{Other}'>Other</MenuItem>
-                            </Select>
-                    </FormControl>
+                    /> */}
 
-                    <h5>Level</h5>
-                    <input
-                        id='level-filter'
-                        type='text'
-                        name='level'
-                        placeholder='level' */}
-                    />
-
-                </form>
+                {/* </form> */}
 
                 <br />
 
