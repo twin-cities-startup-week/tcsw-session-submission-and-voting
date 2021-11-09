@@ -20,6 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import SubmissionPage from '../SubmissionPage/SubmissionPage';
+import PanelistView from '../PanelistViewPage/PanelistViewPage'
 
 import './App.css';
 
@@ -74,6 +75,10 @@ function App() {
             path="/submission"
           >
             <SubmissionPage />
+          </Route>
+
+          <Route exact path = "/panelists">
+            <PanelistViewPage />
           </Route>
 
           <Route
