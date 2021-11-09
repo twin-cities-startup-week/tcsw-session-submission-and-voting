@@ -8,10 +8,60 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
+import { useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import { useState } from 'react';
+
 
 
 function SubmissionPage() {
 
+    const ITEM_HEIGHT = 48;
+    const ITEM_PADDING_TOP = 8;
+    const MenuProps = {
+        PaperProps: {
+            style: {
+                maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                width: 250,
+            },
+        },
+    };//end MenuProps
+
+
+    const dates = [
+        'Saturday, September 17, 2022',
+        'Sunday, September 18, 2022',
+        'Monday, September 19, 2022',
+        'Tuesday, September 20, 2022',
+        'Wednesday, September 21, 2022',
+        'Thursday, September 22, 2022',
+        'Friday, September 23, 2022',
+    ]//end dates
+
+    const theme = useTheme();
+
+    function getStyles(date, individualDate, theme) {
+        return {
+            fontWeight:
+                individualDate.indexOf(date) === -1
+                    ? theme.typography.fontWeightRegular
+                    : theme.typography.fontWeightMedium,
+        };
+    }//end getStyles
+
+    const [individualDate, setIndividualDate] = useState([]);
+    const handleChange = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setIndividualDate(
+            // On autofill we get a the stringified value.
+            typeof value === 'string' ? value.split(',') : value,
+        );
+    };//end handleChange
 
     return (
         <>
@@ -66,18 +116,31 @@ function SubmissionPage() {
                             <TextField fullWidth id="outlined-basic" label="Location" variant="outlined" />
                         </Box>
                         <Box p={1}>
-                            <Typography variant="body2" gutterBottom>What day(s) work for you to host your event? Select all that apply (NEED TO USE MULTISELECT). </Typography>
-                            <FormControl component="fieldset">
-                                <RadioGroup defaultValue="Saturday, September 17, 2022 " name="radio-buttons-group">
-                                    <FormControlLabel value="Saturday, September 17, 2022" control={<Radio />} label="Saturday, September 17, 2022" />
-                                    <FormControlLabel value="Sunday, September 18, 2022 " control={<Radio />} label="Sunday, September 18, 2022" />
-                                    <FormControlLabel value="Monday, September 19, 2022" control={<Radio />} label="Monday, September 19, 2022" />
-                                    <FormControlLabel value="Tuesday, September 20, 2022" control={<Radio />} label="Tuesday, September 20, 2022" />
-                                    <FormControlLabel value="Wendesday, September 21, 2022" control={<Radio />} label="Wednesday, September 21, 2022" />
-                                    <FormControlLabel value="Thursday, September 22, 2022" control={<Radio />} label="Thursday, September 22, 2022" />
-                                    <FormControlLabel value="Friday, September 23, 2022" control={<Radio />} label="Friday, September 23, 2022" />
-                                </RadioGroup>
-                            </FormControl>
+                            <Typography variant="body2" gutterBottom>What day(s) work for you to host your event? Select all that apply. </Typography>
+                            <div>
+                                <FormControl sx={{ m: 1, width: 300 }}>
+                                    <InputLabel id="demo-multiple-name-label">Date</InputLabel>
+                                    <Select
+                                        labelId="demo-multiple-name-label"
+                                        id="demo-multiple-name"
+                                        multiple
+                                        value={individualDate}
+                                        onChange={handleChange}
+                                        input={<OutlinedInput label="Name" />}
+                                        MenuProps={MenuProps}
+                                    >
+                                        {dates.map((date) => (
+                                            <MenuItem
+                                                key={date}
+                                                value={date}
+                                                style={getStyles(date, individualDate, theme)}
+                                            >
+                                                {date}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </div>
                         </Box>
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom> Approximately how long will your event be?</Typography>
@@ -207,7 +270,7 @@ function SubmissionPage() {
                             <TextField fullWidth id="outlined-basic" label="Success looks like:" variant="outlined" />
                         </Box>
                         <Box p={1}>
-                            <Typography variant="body2" gutterBottom>What makes you most excited to host an event during Twin Cities Startup Week? </Typography> 
+                            <Typography variant="body2" gutterBottom>What makes you most excited to host an event during Twin Cities Startup Week? </Typography>
                             <TextField fullWidth id="outlined-basic" label="Most excited to host because:" variant="outlined" />
                         </Box>
                         <Box p={1}>
