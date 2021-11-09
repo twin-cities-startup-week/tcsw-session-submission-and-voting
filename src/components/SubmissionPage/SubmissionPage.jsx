@@ -41,19 +41,47 @@ function SubmissionPage() {
         'Friday, September 23, 2022',
     ]//end dates
 
+    const times = [
+        'Morning: 8am - 11am',
+        'Midday: 11 am - 2pm',
+        'Afternoon: 2pm - 5pm',
+        'Evening: 5pm - 9pm',
+    ]//end times
+
     const theme = useTheme();
 
-    function getStyles(date, individualDate, theme) {
+    function getDateStyles(date, individualDate, theme) {
         return {
             fontWeight:
                 individualDate.indexOf(date) === -1
                     ? theme.typography.fontWeightRegular
                     : theme.typography.fontWeightMedium,
         };
-    }//end getStyles
+    }//end getDateStyles
+
+    function getTimeStyles(time, individualTime, theme) {
+        return {
+            fontWeight:
+                individualTime.indexOf(time) === -1
+                    ? theme.typography.fontWeightRegular
+                    : theme.typography.fontWeightMedium,
+        };
+    }//end getTimeStyles
+
+    const [individualTime, setIndividualTime] = useState([]);
+    const handleTimeChange = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setIndividualTime(
+            // On autofill we get a the stringified value.
+            typeof value === 'string' ? value.split(',') : value,
+        );
+    };//end handleChange
+
 
     const [individualDate, setIndividualDate] = useState([]);
-    const handleChange = (event) => {
+    const handleDateChange = (event) => {
         const {
             target: { value },
         } = event;
@@ -125,15 +153,15 @@ function SubmissionPage() {
                                         id="demo-multiple-name"
                                         multiple
                                         value={individualDate}
-                                        onChange={handleChange}
-                                        input={<OutlinedInput label="Name" />}
+                                        onChange={handleDateChange}
+                                        input={<OutlinedInput label="Date" />}
                                         MenuProps={MenuProps}
                                     >
                                         {dates.map((date) => (
                                             <MenuItem
                                                 key={date}
                                                 value={date}
-                                                style={getStyles(date, individualDate, theme)}
+                                                style={getDateStyles(date, individualDate, theme)}
                                             >
                                                 {date}
                                             </MenuItem>
@@ -149,15 +177,31 @@ function SubmissionPage() {
                         </Box>
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom>Which time do you prefer to host? </Typography>
-                            <Typography variant="caption" display="block" gutterBottom> TCSW is packed with events! As we piece together our calendar, we will work with you to find a great slot for your event. </Typography>
-                            <FormControl component="fieldset">
-                                <RadioGroup defaultValue="Morning 8am - 11am " name="radio-buttons-group">
-                                    <FormControlLabel value="Morning 8am - 11am" control={<Radio />} label="Morning 8am - 11am" />
-                                    <FormControlLabel value="Midday 11am - 2pm" control={<Radio />} label="Midday 11 am - 2pm" />
-                                    <FormControlLabel value="Afternoon 2pm - 5pm" control={<Radio />} label="Afternoon 2pm - 5pm" />
-                                    <FormControlLabel value="Evening 5pm - 9pm" control={<Radio />} label="Afternoon 5pm - 9pm" />
-                                </RadioGroup>
-                            </FormControl>
+                            <Typography variant="caption" display="block" gutterBottom> TCSW is packed with events! As we piece together our calendar, we will work with you to find a great slot for your event. Please select all that apply. </Typography>
+                            <div>
+                                <FormControl sx={{ m: 1, width: 300 }}>
+                                    <InputLabel id="demo-multiple-name-label">Time</InputLabel>
+                                    <Select
+                                        labelId="demo-multiple-name-label"
+                                        id="demo-multiple-name"
+                                        multiple
+                                        value={individualTime}
+                                        onChange={handleTimeChange}
+                                        input={<OutlinedInput label="Time" />}
+                                        MenuProps={MenuProps}
+                                    >
+                                        {times.map((time) => (
+                                            <MenuItem
+                                                key={time}
+                                                value={time}
+                                                style={getTimeStyles(time, individualTime, theme)}
+                                            >
+                                                {time}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </div>
                         </Box>
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom>What is the event format? </Typography>
