@@ -65,6 +65,27 @@ function SubmissionPage() {
                             <Typography variant="caption" display="block" gutterBottom> We would love to host community, culture, art, etc. events at our TCSW Community Hub or other cool spaces in the Cities.</Typography>
                             <TextField fullWidth id="outlined-basic" label="Location" variant="outlined" />
                         </Box>
+                        <Box p={1}>
+                            <Typography variant="body2" gutterBottom>What day(s) work for you to host your event? Select all that apply (NEED TO USE MULTISELECT). </Typography>
+                            <FormControl component="fieldset">
+                                <RadioGroup defaultValue="Saturday, September 17, 2022 " name="radio-buttons-group">
+                                    <FormControlLabel value="Saturday, September 17, 2022" control={<Radio />} label="Saturday, September 17, 2022" />
+                                    <FormControlLabel value="Sunday, September 18, 2022 " control={<Radio />} label="Sunday, September 18, 2022" />
+                                    <FormControlLabel value="Monday, September 19, 2022" control={<Radio />} label="Monday, September 19, 2022" />
+                                    <FormControlLabel value="Tuesday, September 20, 2022" control={<Radio />} label="Tuesday, September 20, 2022" />
+                                    <FormControlLabel value="Wendesday, September 21, 2022" control={<Radio />} label="Wednesday, September 21, 2022" />
+                                    <FormControlLabel value="Thursday, September 22, 2022" control={<Radio />} label="Thursday, September 22, 2022" />
+                                    <FormControlLabel value="Friday, September 23, 2022" control={<Radio />} label="Friday, September 23, 2022" />
+                                </RadioGroup>
+                            </FormControl>
+                        </Box>
+                        <Box p={1}>
+                            <Typography variant="body2" gutterBottom> Approximately how long will your event be?</Typography>
+                            <Typography variant="caption" display="block" gutterBottom>Please keep in mind people need time to travel between events. </Typography>
+                            <TextField fullWidth id="outlined-basic" label="Length" variant="outlined" />
+                        </Box>
+                        
+
 
 
 
