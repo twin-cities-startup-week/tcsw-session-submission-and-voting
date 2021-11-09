@@ -50,6 +50,28 @@ function SubmissionPage() {
         'Evening: 5pm - 9pm',
     ]//end times
 
+    const industries = [
+        'General Entrepreneuership',
+        'Technology',
+        'Healthcare',
+        'Retail',
+        'Food and Ag',
+        'Education and Training',
+        'Sales',
+        'Marketing and Advertising',
+        'Investing',
+        'Cryptocurrency',
+        'Creative Economy',
+        'Med Device/MedTech',
+        'FinTech',
+        'Hemp & Cannabis',
+        'Smart Cities',
+        'Social Impact',
+        'Art & Culture',
+        'Other',
+
+    ]
+
     const theme = useTheme();
 
     function getDateStyles(date, individualDate, theme) {
@@ -70,6 +92,27 @@ function SubmissionPage() {
         };
     }//end getTimeStyles
 
+    function getIndustryStyles(industry, individualIndustry, theme) {
+        return {
+            fontWeight:
+                individualIndustry.indexOf(industry) === -1
+                    ? theme.typography.fontWeightRegular
+                    : theme.typography.fontWeightMedium,
+        };
+    }//end getIndustryStyles
+
+    const [individualIndustry, setIndividualIndustry] = useState([]);
+    const handleIndustryChange = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setIndividualIndustry(
+            // On autofill we get a the stringified value.
+            typeof value === 'string' ? value.split(',') : value,
+        );
+    };//end handleTimeChange
+
+
     const [individualTime, setIndividualTime] = useState([]);
     const handleTimeChange = (event) => {
         const {
@@ -79,7 +122,7 @@ function SubmissionPage() {
             // On autofill we get a the stringified value.
             typeof value === 'string' ? value.split(',') : value,
         );
-    };//end handleChange
+    };//end handleTimeChange
 
 
     const [individualDate, setIndividualDate] = useState([]);
@@ -91,7 +134,7 @@ function SubmissionPage() {
             // On autofill we get a the stringified value.
             typeof value === 'string' ? value.split(',') : value,
         );
-    };//end handleChange
+    };//end handleDateChange
 
     return (
         <>
@@ -100,7 +143,6 @@ function SubmissionPage() {
                     TCSW Session Submission 2022
                 </Typography>
             </Box>
-
             <Box p={3}>
                 <Container component={Paper}>
                     <FormControl>
@@ -226,28 +268,31 @@ function SubmissionPage() {
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom>What industry are you focusing on? </Typography>
                             <Typography variant="caption" display="block" gutterBottom> Please select all that are applicable. </Typography>
-                            <FormControl component="fieldset">
-                                <RadioGroup defaultValue="General Entrepreneurship" name="radio-buttons-group">
-                                    <FormControlLabel value="General Entrepreneurship" control={<Radio />} label="General Entrepreneurship" />
-                                    <FormControlLabel value="Technology" control={<Radio />} label="Technology" />
-                                    <FormControlLabel value="Healthcare" control={<Radio />} label="Healthcare" />
-                                    <FormControlLabel value="Retail" control={<Radio />} label="Retail" />
-                                    <FormControlLabel value="Food and Ag" control={<Radio />} label="Food and Ag" />
-                                    <FormControlLabel value="Education and Training" control={<Radio />} label="Education and Training" />
-                                    <FormControlLabel value="Sales" control={<Radio />} label="Sales" />
-                                    <FormControlLabel value="Marketing and Advertising" control={<Radio />} label="Marketing and Advertising" />
-                                    <FormControlLabel value="Investing" control={<Radio />} label="Investing" />
-                                    <FormControlLabel value="Cryptocurrency" control={<Radio />} label="Cryptocurrency" />
-                                    <FormControlLabel value="Creative Economy" control={<Radio />} label="Creative Economy" />
-                                    <FormControlLabel value="Med Device/MedTech" control={<Radio />} label="Med Device/MedTech" />
-                                    <FormControlLabel value="Fintech" control={<Radio />} label="Fintech" />
-                                    <FormControlLabel value="Hemp and Cannabis" control={<Radio />} label="Hemp and Cannabis" />
-                                    <FormControlLabel value="Smart Cities" control={<Radio />} label="Smart Cities" />
-                                    <FormControlLabel value="Social Impact" control={<Radio />} label="Social Impact" />
-                                    <FormControlLabel value="Arts and Culture" control={<Radio />} label="Arts and Culture" />
-                                    <FormControlLabel value="Other" control={<Radio />} label="Other" />
-                                </RadioGroup>
-                            </FormControl>
+                            <div>
+                                <FormControl sx={{ m: 1, width: 300 }}>
+                                    <InputLabel id="demo-multiple-name-label">Industry</InputLabel>
+                                    <Select
+                                        labelId="demo-multiple-name-label"
+                                        id="demo-multiple-name"
+                                        multiple
+                                        value={individualIndustry}
+                                        onChange={handleIndustryChange}
+                                        input={<OutlinedInput label="Industry" />}
+                                        MenuProps={MenuProps}
+                                    >
+                                        {industries.map((industry) => (
+                                            <MenuItem
+                                                key={industry}
+                                                value={industry}
+                                                style={getIndustryStyles(industry, individualIndustry, theme)}
+                                            >
+                                                {industry}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </div>
+
                         </Box>
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom>In which track would you like your event featured? </Typography>
@@ -308,8 +353,8 @@ function SubmissionPage() {
                             <TextField fullWidth id="outlined-basic" label="Media" variant="outlined" />
                         </Box>
                         <Box p={1}>
-                            <Typography variant="body2" gutterBottom>Please share any related media you would like to have included on your TCSW session listing.  </Typography>
-                            <TextField fullWidth id="outlined-basic" label="Media" variant="outlined" />
+                            <Typography variant="body2" gutterBottom>Please share a session image (file upload - to do ).  </Typography>
+                            <TextField fullWidth id="outlined-basic" label="Image" variant="outlined" />
                         </Box>
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom>What does success look like for your event? </Typography>
