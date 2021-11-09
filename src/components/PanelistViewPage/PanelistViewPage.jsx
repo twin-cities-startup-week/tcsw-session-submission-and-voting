@@ -1,12 +1,21 @@
+import { useState } from 'react'
 import { useHistory } from 'react-router-dom';
+import { MenuItem, Select, FormControl, InputLabel } from '@mui/material';
+
 
 function PanelViewPage() {
     const history = useHistory();
+
+    const [track, setTrack] = useState('');
 
     // navigates user to the details page of the speaker on click
     const moveToSelectedPage = () => {
         history.push('/user')
     }
+
+    const handleChange = (event) => {
+        setTrack(event.target.value);
+      };
 
     return(
         <div>
@@ -53,6 +62,27 @@ function PanelViewPage() {
 
                     <button>RESET</button>
                     <button>SEARCH</button>
+
+                    <FormControl fullWidth>
+                        <InputLabel id='track-filter'>Track</InputLabel>
+                            <Select
+                                labelId="track-filter"
+                                id="track-filter-select"
+                                value={track}
+                                label="Track"
+                                onChange={handleChange}
+                            >
+                                <MenuItem value='{Growth}'>Growth</MenuItem>
+                                <MenuItem value='{Founder}'>Founder</MenuItem>
+                                <MenuItem value='{Designer}'>Designer</MenuItem>
+                                <MenuItem value='{Maker}'>Maker</MenuItem>
+                                <MenuItem value='{Product}'>Product</MenuItem>
+                                <MenuItem value='{Developer}'>Developer</MenuItem>
+                                <MenuItem value='{People}'>People</MenuItem>
+                                <MenuItem value='{Spolight}'>Spolight</MenuItem>
+                                <MenuItem value='{Other}'>Other</MenuItem>
+                            </Select>
+                    </FormControl>
 
                     <h5>Track</h5>
                     <input
