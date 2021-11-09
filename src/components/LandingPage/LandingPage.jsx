@@ -15,7 +15,7 @@ function LandingPage() {
 
   return (
     <div className="container">
-      <h2>{heading}</h2>
+      <h2 id="landing-welcome">{heading}</h2>
 
       <div className="">
         <div>
