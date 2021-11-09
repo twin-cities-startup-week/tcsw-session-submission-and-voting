@@ -3,20 +3,31 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function RegisterForm() {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
   const registerUser = (event) => {
     event.preventDefault();
 
+    if ( password === confirmPassword ) {
     dispatch({
       type: 'REGISTER',
       payload: {
         username: username,
         password: password,
+        email: email,
+        firstName: firstName,
+        lastName: lastName
       },
     });
+  } else {
+    alert('Passwords must match. Please try again.')
+  }
   }; // end registerUser
 
   return (
@@ -48,6 +59,54 @@ function RegisterForm() {
             value={password}
             required
             onChange={(event) => setPassword(event.target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label htmlFor="confirmPassword">
+          Confirm Password:
+          <input
+            type="password"
+            name="confirmPassword"
+            value={confirmPassword}
+            required
+            onChange={(event) => setConfirmPassword(event.target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label htmlFor="email">
+          Email Address:
+          <input
+            type="email"
+            name="email"
+            value={email}
+            required
+            onChange={(event) => setEmail(event.target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label htmlFor="firstName">
+          First Name:
+          <input
+            type="firstName"
+            name="firstName"
+            value={firstName}
+            required
+            onChange={(event) => setFirstName(event.target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label htmlFor="lastName">
+          Last Name:
+          <input
+            type="lastName"
+            name="lastName"
+            value={lastName}
+            required
+            onChange={(event) => setLastName(event.target.value)}
           />
         </label>
       </div>
