@@ -80,6 +80,10 @@ function PanelViewPage() {
 
                 </form>
 
+                <br />
+
+                <button>LeaderBoard</button>
+
             </div>
         </div>
     )
