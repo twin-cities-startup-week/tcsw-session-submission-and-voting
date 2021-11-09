@@ -85,7 +85,7 @@ Alert
   padding: 15px 10px;
   margin: 15px 0;
   border: 2px solid #e01616;
-  background-color: #efefef;
+  background-color: #A7A9AC;
   border-radius: 3px;
   color: #e01616;
   font-size: 0.8rem;
@@ -109,4 +109,21 @@ Form Treatment
 input {
   margin: 5px;
   margin-bottom: 10px;
+}
+
+.registerForm {
+  box-sizing: border-box;
+  width: 400px;
+  max-width: 100%;
+  padding: 25px;
+  margin: 0 auto 20px;
+  background-color: #efefef;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgb(0, 0, 0, 0.4);
+}
+
+.registerHeader {
+  color: #0C495A;
+  margin-bottom: 5px;
+  margin-top: 10px;
 }
