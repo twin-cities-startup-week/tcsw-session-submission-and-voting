@@ -150,6 +150,12 @@ function SubmissionPage() {
             description: description,
             attendees: attendees,
             location: location,
+            location_details: locationDetails,
+            date: date, //need to look at this more specifically - goes with multiselect
+            length: length,
+            time: time, //need to look at this one too - goes with multi select
+            format: format,
+            industry: industry, //another multiselect to fix
 
 
 
@@ -168,6 +174,8 @@ function SubmissionPage() {
     const [attendees, setAttendees ] = useState('');
     const [location, setLocation ] = useState('');
     const [locationDetails, setLocationDetails ] = useState('');
+    const [length, setLength] = useState('');
+    const [format, setFormat ] = useState('');
 
     return (
         <>
@@ -250,7 +258,7 @@ function SubmissionPage() {
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom> Approximately how long will your event be?</Typography>
                             <Typography variant="caption" display="block" gutterBottom>Please keep in mind people need time to travel between events. </Typography>
-                            <TextField fullWidth id="outlined-basic" label="Length" variant="outlined" />
+                            <TextField fullWidth id="outlined-basic" label="Length" variant="outlined" required value={length} onChange={(event) => setLength(event.target.value)} />
                         </Box>
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom>Which time do you prefer to host? </Typography>
@@ -282,19 +290,19 @@ function SubmissionPage() {
                         </Box>
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom>What is the event format? </Typography>
-                            <FormControl component="fieldset">
+                            <FormControl component="fieldset" required value={format} onChange={(event) => setFormat(event.target.value)}>
                                 <RadioGroup defaultValue="Presentation " name="radio-buttons-group">
-                                    <FormControlLabel value="Presentation" control={<Radio />} label="Presentation" />
-                                    <FormControlLabel value="Panel" control={<Radio />} label="Panel" />
-                                    <FormControlLabel value="Workshop" control={<Radio />} label="Workshop" />
-                                    <FormControlLabel value="Keynote" control={<Radio />} label="Keynote" />
-                                    <FormControlLabel value="Roundtable" control={<Radio />} label="Roundtable" />
-                                    <FormControlLabel value="Fireside Chat" control={<Radio />} label="Fireside Chat" />
-                                    <FormControlLabel value="Showcase" control={<Radio />} label="Showcase" />
-                                    <FormControlLabel value="Demo" control={<Radio />} label="Demo" />
-                                    <FormControlLabel value="Meetup" control={<Radio />} label="Meetup" />
-                                    <FormControlLabel value="Pitch" control={<Radio />} label="Pitch" />
-                                    <FormControlLabel value="Other" control={<Radio />} label="Other" />
+                                    <FormControlLabel value={1} control={<Radio />} label="Presentation" />
+                                    <FormControlLabel value={2} control={<Radio />} label="Panel" />
+                                    <FormControlLabel value={3} control={<Radio />} label="Workshop" />
+                                    <FormControlLabel value={4} control={<Radio />} label="Keynote" />
+                                    <FormControlLabel value={5} control={<Radio />} label="Roundtable" />
+                                    <FormControlLabel value={6} control={<Radio />} label="Fireside Chat" />
+                                    <FormControlLabel value={7} control={<Radio />} label="Showcase" />
+                                    <FormControlLabel value={8} control={<Radio />} label="Demo" />
+                                    <FormControlLabel value={9} control={<Radio />} label="Meetup" />
+                                    <FormControlLabel value={10} control={<Radio />} label="Pitch" />
+                                    <FormControlLabel value={11} control={<Radio />} label="Other" />
                                 </RadioGroup>
                             </FormControl>
                         </Box>
