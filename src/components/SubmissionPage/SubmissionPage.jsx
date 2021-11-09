@@ -84,6 +84,103 @@ function SubmissionPage() {
                             <Typography variant="caption" display="block" gutterBottom>Please keep in mind people need time to travel between events. </Typography>
                             <TextField fullWidth id="outlined-basic" label="Length" variant="outlined" />
                         </Box>
+                        <Box p={1}>
+                            <Typography variant="body2" gutterBottom>Which time do you prefer to host? </Typography>
+                            <Typography variant="caption" display="block" gutterBottom> TCSW is packed with events! As we piece together our calendar, we will work with you to find a great slot for your event. </Typography>
+                            <FormControl component="fieldset">
+                                <RadioGroup defaultValue="Morning 8am - 11am " name="radio-buttons-group">
+                                    <FormControlLabel value="Morning 8am - 11am" control={<Radio />} label="Morning 8am - 11am" />
+                                    <FormControlLabel value="Midday 11am - 2pm" control={<Radio />} label="Midday 11 am - 2pm" />
+                                    <FormControlLabel value="Afternoon 2pm - 5pm" control={<Radio />} label="Afternoon 2pm - 5pm" />
+                                    <FormControlLabel value="Evening 5pm - 9pm" control={<Radio />} label="Afternoon 5pm - 9pm" />
+                                </RadioGroup>
+                            </FormControl>
+                        </Box>
+                        <Box p={1}>
+                            <Typography variant="body2" gutterBottom>What is the event format? </Typography>
+                            <FormControl component="fieldset">
+                                <RadioGroup defaultValue="Presentation " name="radio-buttons-group">
+                                    <FormControlLabel value="Presentation" control={<Radio />} label="Presentation" />
+                                    <FormControlLabel value="Panel" control={<Radio />} label="Panel" />
+                                    <FormControlLabel value="Workshop" control={<Radio />} label="Workshop" />
+                                    <FormControlLabel value="Keynote" control={<Radio />} label="Keynote" />
+                                    <FormControlLabel value="Roundtable" control={<Radio />} label="Roundtable" />
+                                    <FormControlLabel value="Fireside Chat" control={<Radio />} label="Fireside Chat" />
+                                    <FormControlLabel value="Showcase" control={<Radio />} label="Showcase" />
+                                    <FormControlLabel value="Demo" control={<Radio />} label="Demo" />
+                                    <FormControlLabel value="Meetup" control={<Radio />} label="Meetup" />
+                                    <FormControlLabel value="Pitch" control={<Radio />} label="Pitch" />
+                                    <FormControlLabel value="Other" control={<Radio />} label="Other" />
+                                </RadioGroup>
+                            </FormControl>
+                        </Box>
+                        <Box p={1}>
+                            <Typography variant="body2" gutterBottom>What industry are you focusing on? </Typography>
+                            <Typography variant="caption" display="block" gutterBottom> Please select all that are applicable. </Typography>
+                            <FormControl component="fieldset">
+                                <RadioGroup defaultValue="General Entrepreneurship" name="radio-buttons-group">
+                                    <FormControlLabel value="General Entrepreneurship" control={<Radio />} label="General Entrepreneurship" />
+                                    <FormControlLabel value="Technology" control={<Radio />} label="Technology" />
+                                    <FormControlLabel value="Healthcare" control={<Radio />} label="Healthcare" />
+                                    <FormControlLabel value="Retail" control={<Radio />} label="Retail" />
+                                    <FormControlLabel value="Food and Ag" control={<Radio />} label="Food and Ag" />
+                                    <FormControlLabel value="Education and Training" control={<Radio />} label="Education and Training" />
+                                    <FormControlLabel value="Sales" control={<Radio />} label="Sales" />
+                                    <FormControlLabel value="Marketing and Advertising" control={<Radio />} label="Marketing and Advertising" />
+                                    <FormControlLabel value="Investing" control={<Radio />} label="Investing" />
+                                    <FormControlLabel value="Cryptocurrency" control={<Radio />} label="Cryptocurrency" />
+                                    <FormControlLabel value="Creative Economy" control={<Radio />} label="Creative Economy" />
+                                    <FormControlLabel value="Med Device/MedTech" control={<Radio />} label="Med Device/MedTech" />
+                                    <FormControlLabel value="Fintech" control={<Radio />} label="Fintech" />
+                                    <FormControlLabel value="Hemp and Cannabis" control={<Radio />} label="Hemp and Cannabis" />
+                                    <FormControlLabel value="Smart Cities" control={<Radio />} label="Smart Cities" />
+                                    <FormControlLabel value="Social Impact" control={<Radio />} label="Social Impact" />
+                                    <FormControlLabel value="Arts and Culture" control={<Radio />} label="Arts and Culture" />
+                                    <FormControlLabel value="Other" control={<Radio />} label="Other" />
+                                </RadioGroup>
+                            </FormControl>
+                        </Box>
+                        <Box p={1}>
+                            <Typography variant="body2" gutterBottom>In which track would you like your event featured? </Typography>
+                            <FormControl component="fieldset">
+                                <RadioGroup defaultValue="Growth" name="radio-buttons-group">
+                                    <FormControlLabel value="Growth" control={<Radio />} label="Growth" />
+                                    <FormControlLabel value="Founder" control={<Radio />} label="Founder" />
+                                    <FormControlLabel value="Designer" control={<Radio />} label="Designer" />
+                                    <FormControlLabel value="Maker" control={<Radio />} label="Maker" />
+                                    <FormControlLabel value="Product" control={<Radio />} label="Product" />
+                                    <FormControlLabel value="Developer" control={<Radio />} label="Developer" />
+                                    <FormControlLabel value="People" control={<Radio />} label="People" />
+                                    <FormControlLabel value="Spotlight" control={<Radio />} label="Spotlight" />
+                                    <FormControlLabel value="Other" control={<Radio />} label="Other" />
+                                </RadioGroup>
+                            </FormControl>
+                        </Box>
+                        <Box p={1}>
+                            <Typography variant="body2" gutterBottom>What is the purpose of your event? </Typography>
+                            <FormControl component="fieldset">
+                                <RadioGroup defaultValue="Celebrating and empowering female leaders" name="radio-buttons-group">
+                                    <FormControlLabel value="Celebrating and empowering female leaders" control={<Radio />} label="Celebrating and empowering female leaders" />
+                                    <FormControlLabel value="Supporting diversity and inclusion" control={<Radio />} label="Supporting diversity and inclusion" />
+                                    <FormControlLabel value="Supporting student and youth entrepreneurs" control={<Radio />} label="Supporting student and youth entrepreneurs" />
+                                    <FormControlLabel value="Highlighting arts and culture" control={<Radio />} label="Highlighting arts and culture" />
+                                    <FormControlLabel value="Engaging investors" control={<Radio />} label="Engaging investors" />
+                                    <FormControlLabel value="Supporting impact ventures or social enterprises" control={<Radio />} label="Supporting impact ventures or social enterprises" />
+                                    <FormControlLabel value="None of these specifically" control={<Radio />} label="None of these specifically" />
+                                    <FormControlLabel value="Other" control={<Radio />} label="Other" />
+                                </RadioGroup>
+                            </FormControl>
+                        </Box>
+                        <Box p={1}>
+                            <Typography variant="body2" gutterBottom>We require all TCSW events with three or more speakers have gender and/or race/ethnicity diversity with regard to its organization, participation, and content. Will your event align with this requirement? </Typography>
+                            <FormControl component="fieldset">
+                                <RadioGroup defaultValue="Yes" name="radio-buttons-group">
+                                    <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+                                    <FormControlLabel value="No" control={<Radio />} label="No"/>
+                                </RadioGroup>
+                            </FormControl>
+                        </Box>
+
                         
 
 
