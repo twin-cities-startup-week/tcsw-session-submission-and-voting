@@ -8,10 +8,150 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
+import { useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+
 
 
 function SubmissionPage() {
 
+    //for styling for multi select drop down menu
+    const ITEM_HEIGHT = 48;
+    const ITEM_PADDING_TOP = 8;
+    const MenuProps = {
+        PaperProps: {
+            style: {
+                maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                width: 250,
+            },
+        },
+    };//end MenuProps
+
+    //options for multiselect drop down date menu
+    const dates = [
+        'Saturday, September 17, 2022',
+        'Sunday, September 18, 2022',
+        'Monday, September 19, 2022',
+        'Tuesday, September 20, 2022',
+        'Wednesday, September 21, 2022',
+        'Thursday, September 22, 2022',
+        'Friday, September 23, 2022',
+    ]//end dates
+
+    //options for multiselect drop down time menu
+    const times = [
+        'Morning: 8am - 11am',
+        'Midday: 11 am - 2pm',
+        'Afternoon: 2pm - 5pm',
+        'Evening: 5pm - 9pm',
+    ]//end times
+
+    //options for multiselect drop down industries menu
+    const industries = [
+        'General Entrepreneuership',
+        'Technology',
+        'Healthcare',
+        'Retail',
+        'Food and Ag',
+        'Education and Training',
+        'Sales',
+        'Marketing and Advertising',
+        'Investing',
+        'Cryptocurrency',
+        'Creative Economy',
+        'Med Device/MedTech',
+        'FinTech',
+        'Hemp & Cannabis',
+        'Smart Cities',
+        'Social Impact',
+        'Art & Culture',
+        'Other',
+    ]
+
+    const theme = useTheme();
+
+    function getDateStyles(date, individualDate, theme) {
+        return {
+            fontWeight:
+                individualDate.indexOf(date) === -1
+                    ? theme.typography.fontWeightRegular
+                    : theme.typography.fontWeightMedium,
+        };
+    }//end getDateStyles
+
+    function getTimeStyles(time, individualTime, theme) {
+        return {
+            fontWeight:
+                individualTime.indexOf(time) === -1
+                    ? theme.typography.fontWeightRegular
+                    : theme.typography.fontWeightMedium,
+        };
+    }//end getTimeStyles
+
+    function getIndustryStyles(industry, individualIndustry, theme) {
+        return {
+            fontWeight:
+                individualIndustry.indexOf(industry) === -1
+                    ? theme.typography.fontWeightRegular
+                    : theme.typography.fontWeightMedium,
+        };
+    }//end getIndustryStyles
+
+    const [individualIndustry, setIndividualIndustry] = useState([]);
+    const handleIndustryChange = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setIndividualIndustry(
+            // On autofill we get a the stringified value.
+            typeof value === 'string' ? value.split(',') : value,
+        );
+    };//end handleTimeChange
+
+
+    const [individualTime, setIndividualTime] = useState([]);
+    const handleTimeChange = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setIndividualTime(
+            // On autofill we get a the stringified value.
+            typeof value === 'string' ? value.split(',') : value,
+        );
+    };//end handleTimeChange
+
+
+    const [individualDate, setIndividualDate] = useState([]);
+    const handleDateChange = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setIndividualDate(
+            // On autofill we get a the stringified value.
+            typeof value === 'string' ? value.split(',') : value,
+        );
+    };//end handleDateChange
+
+    const dispatch = useDispatch();
+
+    const addSubmission = (event) => {
+        console.log('adding a new submission');
+        const newSubmission ={
+            email: email,
+
+        }
+        console.log('The new submission is', newSubmission );
+    }
+
+    //variables for individual form questions
+
+    const [email, setEmail] = useState('');
 
     return (
         <>
@@ -20,14 +160,13 @@ function SubmissionPage() {
                     TCSW Session Submission 2022
                 </Typography>
             </Box>
-
             <Box p={3}>
                 <Container component={Paper}>
-                    <FormControl>
+                    <FormControl onSubmit={addSubmission}>
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom> Email Address:</Typography>
                             <Typography variant="caption" display="block" gutterBottom>This is the email we will use for all TCSW-related communications.</Typography>
-                            <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" />
+                            <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" required value={email} onChange={(event) => setEmail(event.target.value)}/>
                         </Box>
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom> Phone:</Typography>
@@ -66,18 +205,31 @@ function SubmissionPage() {
                             <TextField fullWidth id="outlined-basic" label="Location" variant="outlined" />
                         </Box>
                         <Box p={1}>
-                            <Typography variant="body2" gutterBottom>What day(s) work for you to host your event? Select all that apply (NEED TO USE MULTISELECT). </Typography>
-                            <FormControl component="fieldset">
-                                <RadioGroup defaultValue="Saturday, September 17, 2022 " name="radio-buttons-group">
-                                    <FormControlLabel value="Saturday, September 17, 2022" control={<Radio />} label="Saturday, September 17, 2022" />
-                                    <FormControlLabel value="Sunday, September 18, 2022 " control={<Radio />} label="Sunday, September 18, 2022" />
-                                    <FormControlLabel value="Monday, September 19, 2022" control={<Radio />} label="Monday, September 19, 2022" />
-                                    <FormControlLabel value="Tuesday, September 20, 2022" control={<Radio />} label="Tuesday, September 20, 2022" />
-                                    <FormControlLabel value="Wendesday, September 21, 2022" control={<Radio />} label="Wednesday, September 21, 2022" />
-                                    <FormControlLabel value="Thursday, September 22, 2022" control={<Radio />} label="Thursday, September 22, 2022" />
-                                    <FormControlLabel value="Friday, September 23, 2022" control={<Radio />} label="Friday, September 23, 2022" />
-                                </RadioGroup>
-                            </FormControl>
+                            <Typography variant="body2" gutterBottom>What day(s) work for you to host your event? Select all that apply. </Typography>
+                            <div>
+                                <FormControl sx={{ m: 1, width: 300 }}>
+                                    <InputLabel id="demo-multiple-name-label">Date</InputLabel>
+                                    <Select
+                                        labelId="demo-multiple-name-label"
+                                        id="demo-multiple-name"
+                                        multiple
+                                        value={individualDate}
+                                        onChange={handleDateChange}
+                                        input={<OutlinedInput label="Date" />}
+                                        MenuProps={MenuProps}
+                                    >
+                                        {dates.map((date) => (
+                                            <MenuItem
+                                                key={date}
+                                                value={date}
+                                                style={getDateStyles(date, individualDate, theme)}
+                                            >
+                                                {date}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </div>
                         </Box>
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom> Approximately how long will your event be?</Typography>
@@ -86,15 +238,31 @@ function SubmissionPage() {
                         </Box>
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom>Which time do you prefer to host? </Typography>
-                            <Typography variant="caption" display="block" gutterBottom> TCSW is packed with events! As we piece together our calendar, we will work with you to find a great slot for your event. </Typography>
-                            <FormControl component="fieldset">
-                                <RadioGroup defaultValue="Morning 8am - 11am " name="radio-buttons-group">
-                                    <FormControlLabel value="Morning 8am - 11am" control={<Radio />} label="Morning 8am - 11am" />
-                                    <FormControlLabel value="Midday 11am - 2pm" control={<Radio />} label="Midday 11 am - 2pm" />
-                                    <FormControlLabel value="Afternoon 2pm - 5pm" control={<Radio />} label="Afternoon 2pm - 5pm" />
-                                    <FormControlLabel value="Evening 5pm - 9pm" control={<Radio />} label="Afternoon 5pm - 9pm" />
-                                </RadioGroup>
-                            </FormControl>
+                            <Typography variant="caption" display="block" gutterBottom> TCSW is packed with events! As we piece together our calendar, we will work with you to find a great slot for your event. Please select all that apply. </Typography>
+                            <div>
+                                <FormControl sx={{ m: 1, width: 300 }}>
+                                    <InputLabel id="demo-multiple-name-label">Time</InputLabel>
+                                    <Select
+                                        labelId="demo-multiple-name-label"
+                                        id="demo-multiple-name"
+                                        multiple
+                                        value={individualTime}
+                                        onChange={handleTimeChange}
+                                        input={<OutlinedInput label="Time" />}
+                                        MenuProps={MenuProps}
+                                    >
+                                        {times.map((time) => (
+                                            <MenuItem
+                                                key={time}
+                                                value={time}
+                                                style={getTimeStyles(time, individualTime, theme)}
+                                            >
+                                                {time}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </div>
                         </Box>
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom>What is the event format? </Typography>
@@ -117,28 +285,31 @@ function SubmissionPage() {
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom>What industry are you focusing on? </Typography>
                             <Typography variant="caption" display="block" gutterBottom> Please select all that are applicable. </Typography>
-                            <FormControl component="fieldset">
-                                <RadioGroup defaultValue="General Entrepreneurship" name="radio-buttons-group">
-                                    <FormControlLabel value="General Entrepreneurship" control={<Radio />} label="General Entrepreneurship" />
-                                    <FormControlLabel value="Technology" control={<Radio />} label="Technology" />
-                                    <FormControlLabel value="Healthcare" control={<Radio />} label="Healthcare" />
-                                    <FormControlLabel value="Retail" control={<Radio />} label="Retail" />
-                                    <FormControlLabel value="Food and Ag" control={<Radio />} label="Food and Ag" />
-                                    <FormControlLabel value="Education and Training" control={<Radio />} label="Education and Training" />
-                                    <FormControlLabel value="Sales" control={<Radio />} label="Sales" />
-                                    <FormControlLabel value="Marketing and Advertising" control={<Radio />} label="Marketing and Advertising" />
-                                    <FormControlLabel value="Investing" control={<Radio />} label="Investing" />
-                                    <FormControlLabel value="Cryptocurrency" control={<Radio />} label="Cryptocurrency" />
-                                    <FormControlLabel value="Creative Economy" control={<Radio />} label="Creative Economy" />
-                                    <FormControlLabel value="Med Device/MedTech" control={<Radio />} label="Med Device/MedTech" />
-                                    <FormControlLabel value="Fintech" control={<Radio />} label="Fintech" />
-                                    <FormControlLabel value="Hemp and Cannabis" control={<Radio />} label="Hemp and Cannabis" />
-                                    <FormControlLabel value="Smart Cities" control={<Radio />} label="Smart Cities" />
-                                    <FormControlLabel value="Social Impact" control={<Radio />} label="Social Impact" />
-                                    <FormControlLabel value="Arts and Culture" control={<Radio />} label="Arts and Culture" />
-                                    <FormControlLabel value="Other" control={<Radio />} label="Other" />
-                                </RadioGroup>
-                            </FormControl>
+                            <div>
+                                <FormControl sx={{ m: 1, width: 300 }}>
+                                    <InputLabel id="demo-multiple-name-label">Industry</InputLabel>
+                                    <Select
+                                        labelId="demo-multiple-name-label"
+                                        id="demo-multiple-name"
+                                        multiple
+                                        value={individualIndustry}
+                                        onChange={handleIndustryChange}
+                                        input={<OutlinedInput label="Industry" />}
+                                        MenuProps={MenuProps}
+                                    >
+                                        {industries.map((industry) => (
+                                            <MenuItem
+                                                key={industry}
+                                                value={industry}
+                                                style={getIndustryStyles(industry, individualIndustry, theme)}
+                                            >
+                                                {industry}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </div>
+
                         </Box>
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom>In which track would you like your event featured? </Typography>
@@ -199,15 +370,15 @@ function SubmissionPage() {
                             <TextField fullWidth id="outlined-basic" label="Media" variant="outlined" />
                         </Box>
                         <Box p={1}>
-                            <Typography variant="body2" gutterBottom>Please share any related media you would like to have included on your TCSW session listing.  </Typography>
-                            <TextField fullWidth id="outlined-basic" label="Media" variant="outlined" />
+                            <Typography variant="body2" gutterBottom>Please share a session image (file upload - to do ).  </Typography>
+                            <TextField fullWidth id="outlined-basic" label="Image" variant="outlined" />
                         </Box>
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom>What does success look like for your event? </Typography>
                             <TextField fullWidth id="outlined-basic" label="Success looks like:" variant="outlined" />
                         </Box>
                         <Box p={1}>
-                            <Typography variant="body2" gutterBottom>What makes you most excited to host an event during Twin Cities Startup Week? </Typography> 
+                            <Typography variant="body2" gutterBottom>What makes you most excited to host an event during Twin Cities Startup Week? </Typography>
                             <TextField fullWidth id="outlined-basic" label="Most excited to host because:" variant="outlined" />
                         </Box>
                         <Box p={1}>
