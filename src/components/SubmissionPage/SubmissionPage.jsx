@@ -7,7 +7,7 @@ import Container from '@mui/material/Container';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
+import Button from '@mui/material/Button';
 
 
 function SubmissionPage() {
@@ -176,15 +176,51 @@ function SubmissionPage() {
                             <FormControl component="fieldset">
                                 <RadioGroup defaultValue="Yes" name="radio-buttons-group">
                                     <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
-                                    <FormControlLabel value="No" control={<Radio />} label="No"/>
+                                    <FormControlLabel value="No" control={<Radio />} label="No" />
                                 </RadioGroup>
                             </FormControl>
                         </Box>
-
-                        
-
-
-
+                        <Box p={1}>
+                            <Typography variant="body2" gutterBottom> Who would you like to speak at your event? </Typography>
+                            <Typography variant="caption" display="block" gutterBottom>Planning to have speakers? Awesome! We'd love to know who you had in mind. Don't worry, this can change down the road. If you need help finding speakers, please list that too! </Typography>
+                            <TextField fullWidth id="outlined-basic" label="Speakers" variant="outlined" />
+                        </Box>
+                        <Box p={1}>
+                            <Typography variant="body2" gutterBottom>We require all TCSW session hosts to commit to following Covid safety protocols, which will be released by TCSW in August based on CDC and State Guidelines.  Do you commit to following all TCSW Covid Safety protocols? </Typography>
+                            <FormControl component="fieldset">
+                                <RadioGroup defaultValue="Yes" name="radio-buttons-group">
+                                    <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+                                    <FormControlLabel value="No" control={<Radio />} label="No" />
+                                </RadioGroup>
+                            </FormControl>
+                        </Box>
+                        <Box p={1}>
+                            <Typography variant="body2" gutterBottom>Please share any related media you would like to have included on your TCSW session listing.  </Typography>
+                            <TextField fullWidth id="outlined-basic" label="Media" variant="outlined" />
+                        </Box>
+                        <Box p={1}>
+                            <Typography variant="body2" gutterBottom>Please share any related media you would like to have included on your TCSW session listing.  </Typography>
+                            <TextField fullWidth id="outlined-basic" label="Media" variant="outlined" />
+                        </Box>
+                        <Box p={1}>
+                            <Typography variant="body2" gutterBottom>What does success look like for your event? </Typography>
+                            <TextField fullWidth id="outlined-basic" label="Success looks like:" variant="outlined" />
+                        </Box>
+                        <Box p={1}>
+                            <Typography variant="body2" gutterBottom>What makes you most excited to host an event during Twin Cities Startup Week? </Typography> 
+                            <TextField fullWidth id="outlined-basic" label="Most excited to host because:" variant="outlined" />
+                        </Box>
+                        <Box p={1}>
+                            <Typography variant="body2" gutterBottom> Who else should be hosting an event? (referral)</Typography>
+                            <Typography variant="caption" display="block" gutterBottom>We love working with new event hosts and businesses during the week! Do know of any individuals or organizations that have a story to tell, something to teach or incredible content to share? Please list their name, email address and tell us a little bit about why they'd make a great event host - we'll make sure to reach out to them!</Typography>
+                            <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" />
+                        </Box>
+                        <Box p={1}>
+                            <Typography variant="body2" gutterBottom> More to share?</Typography>
+                            <Typography variant="caption" display="block" gutterBottom>Did we miss anything? Do you have questions? Is there something else about your event you want to share that didn't fit in the questions above? Let us know!</Typography>
+                            <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" />
+                        </Box>
+                        <Button variant="contained">Submit Submission</Button>
 
                     </FormControl>
                 </Container>
