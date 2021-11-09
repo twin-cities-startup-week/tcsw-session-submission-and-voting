@@ -14,6 +14,7 @@ function RegisterForm() {
   const registerUser = (event) => {
     event.preventDefault();
 
+    if ( password === confirmPassword ) {
     dispatch({
       type: 'REGISTER',
       payload: {
@@ -21,6 +22,9 @@ function RegisterForm() {
         password: password,
       },
     });
+  } else {
+    alert('Passwords must match. Please try again.')
+  }
   }; // end registerUser
 
   return (
