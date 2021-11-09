@@ -32,87 +32,55 @@ function LoginForm() {
   }; // end login
 
   return (
-    // <form className="formPanel" onSubmit={login}>
-    //   <h2>Login</h2>
-    //   {errors.loginMessage && (
-    //     <h3 className="alert" role="alert">
-    //       {errors.loginMessage}
-    //     </h3>
-    //   )}
-    //   <div>
-    //     <label htmlFor="username">
-    //       Username:
-    //       <input
-    //         type="text"
-    //         name="username"
-    //         required
-    //         value={username}
-    //         onChange={(event) => setUsername(event.target.value)}
-    //       />
-    //     </label>
-    //   </div>
-    //   <div>
-    //     <label htmlFor="password">
-    //       Password:
-    //       <input
-    //         type="password"
-    //         name="password"
-    //         required
-    //         value={password}
-    //         onChange={(event) => setPassword(event.target.value)}
-    //       />
-    //     </label>
-    //   </div>
-    //   <div>
-    //     <input className="btn" type="submit" name="submit" value="Log In" />
-    //   </div>
-      <Container component={Paper} elevation={8} 
-    sx={{ width: 1/2, m: 'auto', p: 1, pl: 4, pb: 3, bgcolor: '#A7A9AC' }}>
-    <form onSubmit={login}>
+    <Container component={Paper} elevation={8} 
+      sx={{ width: 1/2, m: 'auto', p: 1, pl: 4, pb: 3, bgcolor: '#A7A9AC' }}>
+
       <h2 className="registerHeader">Login</h2>
-      {errors.registrationMessage && (
-        <h3 className="alert" role="alert">
-          {errors.registrationMessage}
-        </h3>
-      )}
       <Box sx={{ textAlign: 'center' }}>
-      <Button variant="contained" type="submit" value="Register"
+        <Button variant="contained" type="submit" value=""
         sx={{ p: 2, width: 350, height: 50, bgcolor: '#0C495A', color: '#FBBD19', mb: 1 }}
-          > Sign in with Google</Button>
-      <Box sx={{ m: 1 }}>
-        <label htmlFor="username">
-          <TextField sx={{ width: 500, height: 50, bgcolor: '#FFFFFF', borderRadius: 1, height: 50 }}
-            type="text"
-            name="username"
-            label="Username"
-            variant="filled"
-            value={username}
-            required
-            onChange={(event) => setUsername(event.target.value)}
-          />
-        </label>
+            > Sign in with Google</Button>
       </Box>
-      <Box sx={{ m: 1 }}>
-        <label htmlFor="password">
-          <TextField sx={{ width: 500, height: 50, bgcolor: '#FFFFFF', borderRadius: 1 }}
-            type="password"
-            name="password"
-            label="Password"
-            variant="filled"
-            value={password}
-            required
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </label>
-      </Box>
-      <Box>
-        <Button variant="contained" type="submit" name="submit" value="Log In"
-        sx={{ mt: 1, p: 2, width: 350, height: 50, bgcolor: '#0C495A', color: '#FBBD19' }}
-          > Login</Button>
-        {/* <input className="btn" type="submit" name="submit" value="Register" /> */}
-      </Box>
-      </Box>
-    </form>
+
+      <form onSubmit={login}>
+        {errors.registrationMessage && (
+          <h3 className="alert" role="alert">
+            {errors.registrationMessage}
+          </h3>
+        )}
+        <Box sx={{ textAlign: 'center' }}>
+          <Box sx={{ m: 1 }}>
+            <label htmlFor="username">
+              <TextField sx={{ width: 500, bgcolor: '#FFFFFF', borderRadius: 1 }}
+                type="text"
+                name="username"
+                label="Username"
+                variant="filled"
+                value={username}
+                required
+                onChange={(event) => setUsername(event.target.value)}
+              />
+            </label>
+          </Box>
+          <Box sx={{ m: 1 }}>
+            <label htmlFor="password">
+              <TextField sx={{ width: 500, bgcolor: '#FFFFFF', borderRadius: 1 }}
+                type="password"
+                name="password"
+                label="Password"
+                variant="filled"
+                value={password}
+                required
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </label>
+          </Box>
+          <Button variant="contained" type="submit" name="submit" value="Log In"
+          sx={{ mt: 1, p: 2, width: 350, height: 50, bgcolor: '#0C495A', color: '#FBBD19' }}
+            > Login</Button>
+          {/* <input className="btn" type="submit" name="submit" value="Register" /> */}
+        </Box>
+      </form>
     </Container>
     // </form>
   );
