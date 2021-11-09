@@ -14,6 +14,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -50,6 +52,7 @@ function SubmissionPage() {
         'Evening: 5pm - 9pm',
     ]//end times
 
+    //options for multiselect drop down industries menu
     const industries = [
         'General Entrepreneuership',
         'Technology',
@@ -69,7 +72,6 @@ function SubmissionPage() {
         'Social Impact',
         'Art & Culture',
         'Other',
-
     ]
 
     const theme = useTheme();
@@ -136,6 +138,21 @@ function SubmissionPage() {
         );
     };//end handleDateChange
 
+    const dispatch = useDispatch();
+
+    const addSubmission = (event) => {
+        console.log('adding a new submission');
+        const newSubmission ={
+            email: email,
+
+        }
+        console.log('The new submission is', newSubmission );
+    }
+
+    //variables for individual form questions
+
+    const [email, setEmail] = useState('');
+
     return (
         <>
             <Box p={2}>
@@ -145,11 +162,11 @@ function SubmissionPage() {
             </Box>
             <Box p={3}>
                 <Container component={Paper}>
-                    <FormControl>
+                    <FormControl onSubmit={addSubmission}>
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom> Email Address:</Typography>
                             <Typography variant="caption" display="block" gutterBottom>This is the email we will use for all TCSW-related communications.</Typography>
-                            <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" />
+                            <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" required value={email} onChange={(event) => setEmail(event.target.value)}/>
                         </Box>
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom> Phone:</Typography>
