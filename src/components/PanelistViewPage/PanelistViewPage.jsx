@@ -7,19 +7,29 @@ function PanelViewPage() {
     const history = useHistory();
 
     const [track, setTrack] = useState('');
+    const [format, setFormat] = useState('');
+    const [level, setLevel] = useState('');
 
     // navigates user to the details page of the speaker on click
     const moveToSelectedPage = () => {
         history.push('/user')
     }
 
-    const handleChange = (event) => {
+    const handleTrackChange = (event) => {
         setTrack(event.target.value);
+      };
+
+      const handleFormatChange = (event) => {
+        setFormat(event.target.value);
+      };
+
+      const handleLevelChange = (event) => {
+        setLevel(event.target.value);
       };
 
     return(
         <div>
-            <div>
+            <div class='table-section'>
                 <h1>TCSW Panelists</h1>
                 <h5>Community Voting: date-date</h5>
 
@@ -50,7 +60,7 @@ function PanelViewPage() {
                     </tbody>
                 </table>
             </div>
-            <div>
+            <div class='search-section'>
                 <h2>Search</h2>
                 <form>
                     <input
@@ -63,6 +73,8 @@ function PanelViewPage() {
                     <button>RESET</button>
                     <button>SEARCH</button>
 
+                    <br />
+
                     <FormControl fullWidth>
                         <InputLabel id='track-filter'>Track</InputLabel>
                             <Select
@@ -70,7 +82,7 @@ function PanelViewPage() {
                                 id="track-filter-select"
                                 value={track}
                                 label="Track"
-                                onChange={handleChange}
+                                onChange={handleTrackChange}
                             >
                                 <MenuItem value='{Growth}'>Growth</MenuItem>
                                 <MenuItem value='{Founder}'>Founder</MenuItem>
@@ -92,6 +104,28 @@ function PanelViewPage() {
                         placeholder='track'
                     />
 
+
+                    <FormControl fullWidth>
+                        <InputLabel id='format-filter'>Format</InputLabel>
+                            <Select
+                                labelId="format-filter"
+                                id="format-filter-select"
+                                value={format}
+                                label="Format"
+                                onChange={handleFormatChange}
+                            >
+                                <MenuItem value='{Growth}'>Growth</MenuItem>
+                                <MenuItem value='{Founder}'>Founder</MenuItem>
+                                <MenuItem value='{Designer}'>Designer</MenuItem>
+                                <MenuItem value='{Maker}'>Maker</MenuItem>
+                                <MenuItem value='{Product}'>Product</MenuItem>
+                                <MenuItem value='{Developer}'>Developer</MenuItem>
+                                <MenuItem value='{People}'>People</MenuItem>
+                                <MenuItem value='{Spolight}'>Spolight</MenuItem>
+                                <MenuItem value='{Other}'>Other</MenuItem>
+                            </Select>
+                    </FormControl>
+
                     <h5>Format</h5>
                     <input
                         id='format-filter'
@@ -100,12 +134,33 @@ function PanelViewPage() {
                         placeholder='format'
                     />
                     
+                    {/* <FormControl fullWidth>
+                        <InputLabel id='level-filter'>Level</InputLabel>
+                            <Select
+                                labelId="level-filter"
+                                id="level-filter-select"
+                                value={level}
+                                label="Level"
+                                onChange={handleLevelChange}
+                            >
+                                <MenuItem value='{Growth}'>Growth</MenuItem>
+                                <MenuItem value='{Founder}'>Founder</MenuItem>
+                                <MenuItem value='{Designer}'>Designer</MenuItem>
+                                <MenuItem value='{Maker}'>Maker</MenuItem>
+                                <MenuItem value='{Product}'>Product</MenuItem>
+                                <MenuItem value='{Developer}'>Developer</MenuItem>
+                                <MenuItem value='{People}'>People</MenuItem>
+                                <MenuItem value='{Spolight}'>Spolight</MenuItem>
+                                <MenuItem value='{Other}'>Other</MenuItem>
+                            </Select>
+                    </FormControl>
+
                     <h5>Level</h5>
                     <input
                         id='level-filter'
                         type='text'
                         name='level'
-                        placeholder='level'
+                        placeholder='level' */}
                     />
 
                 </form>
