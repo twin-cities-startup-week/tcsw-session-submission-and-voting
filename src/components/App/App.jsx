@@ -20,7 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import SubmissionPage from '../SubmissionPage/SubmissionPage';
-import PanelistView from '../PanelistViewPage/PanelistViewPage'
+import PanelistViewPage from '../PanelistViewPage/PanelistViewPage'
 
 import './App.css';
 
