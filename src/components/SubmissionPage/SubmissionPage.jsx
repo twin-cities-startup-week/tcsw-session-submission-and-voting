@@ -156,6 +156,9 @@ function SubmissionPage() {
             time: time, //need to look at this one too - goes with multi select
             format: format,
             industry: industry, //another multiselect to fix
+            track: track,
+            purpose: purpose,
+            area_of_interest: areaOfInterest,
 
 
 
@@ -176,6 +179,9 @@ function SubmissionPage() {
     const [locationDetails, setLocationDetails ] = useState('');
     const [length, setLength] = useState('');
     const [format, setFormat ] = useState('');
+    const [track, setTrack ] = useState('');
+    const [areaOfInterest, setAreaOfInterest] = useState('');
+
 
     return (
         <>
@@ -337,32 +343,32 @@ function SubmissionPage() {
                         </Box>
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom>In which track would you like your event featured? </Typography>
-                            <FormControl component="fieldset">
+                            <FormControl component="fieldset" required value={track} onChange={(event) => setTrack(event.target.value)}>
                                 <RadioGroup defaultValue="Growth" name="radio-buttons-group">
-                                    <FormControlLabel value="Growth" control={<Radio />} label="Growth" />
-                                    <FormControlLabel value="Founder" control={<Radio />} label="Founder" />
-                                    <FormControlLabel value="Designer" control={<Radio />} label="Designer" />
-                                    <FormControlLabel value="Maker" control={<Radio />} label="Maker" />
-                                    <FormControlLabel value="Product" control={<Radio />} label="Product" />
-                                    <FormControlLabel value="Developer" control={<Radio />} label="Developer" />
-                                    <FormControlLabel value="People" control={<Radio />} label="People" />
-                                    <FormControlLabel value="Spotlight" control={<Radio />} label="Spotlight" />
-                                    <FormControlLabel value="Other" control={<Radio />} label="Other" />
+                                    <FormControlLabel value={1} control={<Radio />} label="Growth" />
+                                    <FormControlLabel value={2} control={<Radio />} label="Founder" />
+                                    <FormControlLabel value={3} control={<Radio />} label="Designer" />
+                                    <FormControlLabel value={4} control={<Radio />} label="Maker" />
+                                    <FormControlLabel value={5} control={<Radio />} label="Product" />
+                                    <FormControlLabel value={6} control={<Radio />} label="Developer" />
+                                    <FormControlLabel value={7} control={<Radio />} label="People" />
+                                    <FormControlLabel value={8} control={<Radio />} label="Spotlight" />
+                                    <FormControlLabel value={9} control={<Radio />} label="Other" />
                                 </RadioGroup>
                             </FormControl>
                         </Box>
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom>What is the purpose of your event? </Typography>
-                            <FormControl component="fieldset">
+                            <FormControl component="fieldset" required value={areaOfInterest} onChange={(event) => setAreaOfInterest(event.target.value)}>
                                 <RadioGroup defaultValue="Celebrating and empowering female leaders" name="radio-buttons-group">
-                                    <FormControlLabel value="Celebrating and empowering female leaders" control={<Radio />} label="Celebrating and empowering female leaders" />
-                                    <FormControlLabel value="Supporting diversity and inclusion" control={<Radio />} label="Supporting diversity and inclusion" />
-                                    <FormControlLabel value="Supporting student and youth entrepreneurs" control={<Radio />} label="Supporting student and youth entrepreneurs" />
-                                    <FormControlLabel value="Highlighting arts and culture" control={<Radio />} label="Highlighting arts and culture" />
-                                    <FormControlLabel value="Engaging investors" control={<Radio />} label="Engaging investors" />
-                                    <FormControlLabel value="Supporting impact ventures or social enterprises" control={<Radio />} label="Supporting impact ventures or social enterprises" />
-                                    <FormControlLabel value="None of these specifically" control={<Radio />} label="None of these specifically" />
-                                    <FormControlLabel value="Other" control={<Radio />} label="Other" />
+                                    <FormControlLabel value={1} control={<Radio />} label="Celebrating and empowering female leaders" />
+                                    <FormControlLabel value={2} control={<Radio />} label="Supporting diversity and inclusion" />
+                                    <FormControlLabel value={3} control={<Radio />} label="Supporting student and youth entrepreneurs" />
+                                    <FormControlLabel value={4} control={<Radio />} label="Highlighting arts and culture" />
+                                    <FormControlLabel value={5} control={<Radio />} label="Engaging investors" />
+                                    <FormControlLabel value={6} control={<Radio />} label="Supporting impact ventures or social enterprises" />
+                                    <FormControlLabel value={7} control={<Radio />} label="None of these specifically" />
+                                    <FormControlLabel value={8} control={<Radio />} label="Other" />
                                 </RadioGroup>
                             </FormControl>
                         </Box>
