@@ -28,6 +28,10 @@ function Nav() {
               Home
             </Link>
 
+            <Link className="navLink" to="/submission">
+              Submission Form
+            </Link>
+
             <Link className="navLink" to="/info">
               Info Page
             </Link>

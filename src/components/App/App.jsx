@@ -69,12 +69,12 @@ function App() {
             <InfoPage />
           </ProtectedRoute>
 
-          <Route
+          <ProtectedRoute
             exact
             path="/submission"
           >
             <SubmissionPage />
-          </Route>
+          </ProtectedRoute>
 
           <Route
             exact
