@@ -20,6 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import SubmissionPage from '../SubmissionPage/SubmissionPage';
+import ForgotPassword from '../ForgotPassword/ForgotPassword';
 
 import './App.css';
 
@@ -51,6 +52,7 @@ function App() {
 
           <Route
             exact path="/forgotPassword">
+              <ForgotPassword/>
           </Route>
 
           {/* For protected routes, the view could show one of several things on the same route.
