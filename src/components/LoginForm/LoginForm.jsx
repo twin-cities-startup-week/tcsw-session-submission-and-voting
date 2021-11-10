@@ -71,11 +71,17 @@ function LoginForm() {
             </label>
           </Box>
           <Button variant="contained" type="submit" name="submit" value="Log In"
-          sx={{ mt: 1, p: 2, width: 350, height: 50, bgcolor: '#0C495A', color: '#FBBD19' }}
+          sx={{ mt: 1, p: 2, width: 300, height: 50, bgcolor: '#0C495A', color: '#FBBD19' }}
             > Login</Button>
-          {/* <input className="btn" type="submit" name="submit" value="Register" /> */}
         </Box>
       </form>
+      <Box component={Paper} elevation={8} sx={{ bgcolor: '#FBBD19', borderRadius: 1, mt: 2 }}>
+        <h4 className="sign-up-question">Need to Sign up?</h4>
+        <Button variant="contained" type="submit" name="submit" value="Log In"
+          sx={{ mt: 1, p: 2, width: 200, height: 40, bgcolor: '#0C495A', 
+          color: '#FBBD19', m: 1, ml: 43 }}
+          > Create Account</Button>
+      </Box>
     </Container>
     // </form>
   );
