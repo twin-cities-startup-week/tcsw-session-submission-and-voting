@@ -142,7 +142,8 @@ function SubmissionPage() {
 
     const addSubmission = (event) => {
         console.log('adding a new submission');
-        const newSubmission ={
+        event.preventDefault();
+        const newSubmission = {
             email: email,
             phone: phone,
             host: host,
@@ -168,9 +169,9 @@ function SubmissionPage() {
             excited: excited,
             other_hosts: otherHosts,
             other_info: otherInfo,
-
         }
         console.log('The new submission is', newSubmission );
+        dispatch({ type: 'POST_SUBMISSION_TO_SERVER', payload: newSubmission});
     }
 
     //variables for individual form questions
@@ -206,7 +207,8 @@ function SubmissionPage() {
             </Box>
             <Box p={3}>
                 <Container component={Paper}>
-                    <FormControl onSubmit={addSubmission}>
+                    <form onSubmit={addSubmission}>
+                    <FormControl>
                         <Box p={1}>
                             <Typography variant="body2" gutterBottom> Email Address:</Typography>
                             <Typography variant="caption" display="block" gutterBottom>This is the email we will use for all TCSW-related communications.</Typography>
@@ -435,9 +437,9 @@ function SubmissionPage() {
                             <Typography variant="caption" display="block" gutterBottom>Did we miss anything? Do you have questions? Is there something else about your event you want to share that didn't fit in the questions above? Let us know!</Typography>
                             <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" required value={otherInfo} onChange={(event) => setOtherInfo(event.target.value)} />
                         </Box>
-                        <Button variant="contained">Submit Submission</Button>
-
+                        <Button variant="contained" type="submit">Submit Submission</Button>
                     </FormControl>
+                    </form>
                 </Container>
             </Box>
         </>
