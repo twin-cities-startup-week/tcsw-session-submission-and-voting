@@ -19,7 +19,19 @@ Container
 -------------------------------------------------------------------------------- */
 
 .container {
-  padding: 20px;
+  margin: auto;
+  text-align: center;
+}
+
+#landing-welcome {
+  text-align: center;
+  font-size: xx-large;
+}
+
+#landing-description {
+  text-align: center;
+  width: 1000px;
+  margin: auto;
 }
 
 /* --------------------------------------------------------------------------------
