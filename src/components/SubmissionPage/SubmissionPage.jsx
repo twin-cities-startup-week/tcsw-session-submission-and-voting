@@ -152,13 +152,12 @@ function SubmissionPage() {
             attendees: attendees,
             location: location,
             location_details: locationDetails,
-            date: date.id, //need to look at this more specifically - goes with multiselect
+            date: individualDate.id, //need to look at this more specifically - goes with multiselect
             length: length,
-            time: time.id, //need to look at this one too - goes with multi select
+            time: individualTime.id, //need to look at this one too - goes with multi select
             format: format,
-            industry: industry.id, //another multiselect to fix
+            industry: individualIndustry.id, //another multiselect to fix
             track: track,
-            purpose: purpose,
             area_of_interest: areaOfInterest,
             diversity: diversity,
             speakers: speakers,
@@ -259,15 +258,15 @@ function SubmissionPage() {
                                         labelId="demo-multiple-name-label"
                                         id="demo-multiple-name"
                                         multiple
-                                        value={individualDate}
+                                        value={dates}
                                         onChange={handleDateChange}
                                         input={<OutlinedInput label="Date" />}
                                         MenuProps={MenuProps}
                                     >
                                         {dates.map((date) => (
                                             <MenuItem
-                                                key={date}
-                                                value={date}
+                                                key={date.id}
+                                                value={date.id}
                                                 style={getDateStyles(date, individualDate, theme)}
                                             >
                                                 {date}
@@ -292,15 +291,15 @@ function SubmissionPage() {
                                         labelId="demo-multiple-name-label"
                                         id="demo-multiple-name"
                                         multiple
-                                        value={individualTime}
+                                        value={times}
                                         onChange={handleTimeChange}
                                         input={<OutlinedInput label="Time" />}
                                         MenuProps={MenuProps}
                                     >
                                         {times.map((time) => (
                                             <MenuItem
-                                                key={time}
-                                                value={time}
+                                                key={time.id}
+                                                value={time.id}
                                                 style={getTimeStyles(time, individualTime, theme)}
                                             >
                                                 {time}
@@ -338,15 +337,15 @@ function SubmissionPage() {
                                         labelId="demo-multiple-name-label"
                                         id="demo-multiple-name"
                                         multiple
-                                        value={individualIndustry}
+                                        value={industries}
                                         onChange={handleIndustryChange}
                                         input={<OutlinedInput label="Industry" />}
                                         MenuProps={MenuProps}
                                     >
                                         {industries.map((industry) => (
                                             <MenuItem
-                                                key={industry}
-                                                value={industry}
+                                                key={industry.id}
+                                                value={industry.id}
                                                 style={getIndustryStyles(industry, individualIndustry, theme)}
                                             >
                                                 {industry}
