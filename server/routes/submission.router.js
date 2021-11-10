@@ -12,15 +12,14 @@ router.get('/', (req, res) => {
     // GET route code here
 });
 //POST route for session submission form
-router.post('/', rejectUnauthenticated, (req, res) => {
+router.post('/', (req, res) => {
     const newSubmission = req.body;
     console.log('The new rec is', newSubmission);
     const queryText = `INSERT INTO "session" ("title", "email", "phone", "user_id","industry_id",
     "track_id", "rehersal", "covid", "speakers", "diversity", "purpose_id", 
     "location_id", "location_details", "time_id", "date_id", "host", 
     "description", "attendees", "length", "format_id", "area_of_interest_id", 
-    "media", "image", "success", "excited", "other_hosts", "other_info", 
-    "awaiting_approval", "approved") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,
+    "media", "image", "success", "excited", "other_hosts", "other_info" ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,
         $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27)`
     pool.query(queryText,
         [newSubmission.title,
