@@ -105,7 +105,6 @@ function LoginForm() {
 
       </Box>
     </Container>
-    // </form>
   );
 }
 
