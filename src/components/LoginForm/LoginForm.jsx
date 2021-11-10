@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import {useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -14,6 +14,7 @@ function LoginForm() {
   const [password, setPassword] = useState('');
   const errors = useSelector(store => store.errors);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const login = (event) => {
     event.preventDefault();
@@ -30,6 +31,10 @@ function LoginForm() {
       dispatch({ type: 'LOGIN_INPUT_ERROR' });
     }
   }; // end login
+
+  const createAccount = () => {
+    history.push('/registration');
+  }
 
   return (
     <Container component={Paper} elevation={8} 
@@ -71,15 +76,19 @@ function LoginForm() {
             </label>
           </Box>
           <Button variant="contained" type="submit" name="submit" value="Log In"
-          sx={{ mt: 1, p: 2, width: 300, height: 50, bgcolor: '#0C495A', color: '#FBBD19' }}
+          sx={{ mt: 1, mb: 3, p: 2, width: 300, height: 50, bgcolor: '#0C495A', color: '#FBBD19' }}
             > Login</Button>
         </Box>
       </form>
-      <Box component={Paper} elevation={8} sx={{ bgcolor: '#FBBD19', borderRadius: 1, mt: 2 }}>
-        <h4 className="sign-up-question">Need to Sign up?</h4>
-        <Button variant="contained" type="submit" name="submit" value="Log In"
+      <Box component={Paper} elevation={8} 
+        sx={{ bgcolor: '#FBBD19', borderRadius: 1, width: 500, height: 55, m: 'auto' }}>
+        <Typography sx={{ display: 'inline-block', textAlign: 'center', mt: 2, ml: 10 }}
+          >Need to Sign up?</Typography>
+        <Button component={Paper} elevation={8} 
+        variant="contained" type="submit" name="submit" value="Log In"
           sx={{ mt: 1, p: 2, width: 200, height: 40, bgcolor: '#0C495A', 
-          color: '#FBBD19', m: 1, ml: 43 }}
+          color: '#FBBD19', m: 1, float: 'right' }}
+          onClick={createAccount}
           > Create Account</Button>
       </Box>
     </Container>
