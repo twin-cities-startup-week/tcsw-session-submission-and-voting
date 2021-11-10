@@ -12,23 +12,25 @@ import Button from '@mui/material/Button';
 function ForgotPassword () {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const errors = useSelector(store => store.errors);
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const login = (event) => {
+    const reset = (event) => {
         event.preventDefault();
-    
-        if (username && password) {
+        
+        if (password === confirmPassword) {
           dispatch({
-            type: 'LOGIN',
+            type: 'RESET_PASSWORD',
             payload: {
               username: username,
               password: password,
             },
           });
+          history.push('/login');
         } else {
-          dispatch({ type: 'LOGIN_INPUT_ERROR' });
+          alert('Passwords must match. Please try again.');
         }
       }; // end login
 
@@ -38,7 +40,7 @@ function ForgotPassword () {
   
         <h2 className="forgot-password-header">Reset Password</h2>
   
-        <form onSubmit={login}>
+        <form onSubmit={reset}>
           {errors.loginMessage && (
             <h3 className="alert" role="alert">
               {errors.loginMessage}
@@ -46,10 +48,20 @@ function ForgotPassword () {
           )}
           <Box sx={{ textAlign: 'center' }}>
             <Box sx={{ m: 1 }}>
+                <label htmlFor="username">
+                    <TextField sx={{ width: 500, bgcolor: '#FFFFFF', borderRadius: 1, mb: 2 }}
+                    type="text" name="username" label="Username" variant="filled"
+                    value={username}
+                    required
+                    onChange={(event) => setUsername(event.target.value)}
+                    />
+                </label>
+            </Box>
+            <Box sx={{ m: 1 }}>
               <label htmlFor="username">
                 <TextField sx={{ width: 500, bgcolor: '#FFFFFF', borderRadius: 1, mb: 2 }}
-                  type="text" name="password" label="Password" variant="filled"
-                  value={username}
+                  type="password" name="password" label="Password" variant="filled"
+                  value={password}
                   required
                   onChange={(event) => setPassword(event.target.value)}
                 />
@@ -59,9 +71,9 @@ function ForgotPassword () {
               <label htmlFor="password">
                 <TextField sx={{ width: 500, bgcolor: '#FFFFFF', borderRadius: 1, mb: 1 }}
                   type="password" name="password" label="Confirm Password" variant="filled"
-                  value={password}
+                  value={confirmPassword}
                   required
-                  onChange={(event) => setPassword(event.target.value)}
+                  onChange={(event) => setConfirmPassword(event.target.value)}
                 />
               </label>
             </Box>
