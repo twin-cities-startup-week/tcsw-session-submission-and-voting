@@ -50,4 +50,20 @@ router.post('/logout', (req, res) => {
   res.sendStatus(200);
 });
 
+router.put('/resetpassword', ( req, res ) => {
+  const username = req.body.username;
+  const password = encryptLib.encryptPassword(req.body.password);
+
+  const sqlText = `
+    UPDATE "user"
+    SET "password" = $1
+    WHERE "username" = $2`;
+  pool.query(sqlText, [password, username])
+    .then(() => {
+      res.sendStatus(201);
+    }).catch((error) => {
+      console.log('Error in password reset', error);
+    })
+})
+
 module.exports = router;
