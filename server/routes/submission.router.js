@@ -11,7 +11,7 @@ const {
 router.get('/', (req, res) => {
     // GET route code here
 });
-//POST route for session submission form
+//POST route for session submission form - WORKING on postman
 router.post('/', (req, res) => {
     const newSubmission = req.body;
     console.log('The new rec is', newSubmission);

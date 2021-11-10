@@ -15,7 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+
 
 
 
@@ -76,6 +76,7 @@ function SubmissionPage() {
 
     const theme = useTheme();
 
+    //DATES MULTISELECT FUNCTIONS
     function getDateStyles(date, individualDate, theme) {
         return {
             fontWeight:
@@ -94,6 +95,8 @@ function SubmissionPage() {
         };
     }//end getTimeStyles
 
+
+    //INDUSTRY MULTISELECT FUNCTIONS
     function getIndustryStyles(industry, individualIndustry, theme) {
         return {
             fontWeight:
@@ -112,9 +115,9 @@ function SubmissionPage() {
             // On autofill we get a the stringified value.
             typeof value === 'string' ? value.split(',') : value,
         );
-    };//end handleTimeChange
+    };//end handleIndustryChange
 
-
+    //TIME MULTISELECT FUNCTIONS
     const [individualTime, setIndividualTime] = useState([]);
     const handleTimeChange = (event) => {
         const {
@@ -140,6 +143,7 @@ function SubmissionPage() {
 
     const dispatch = useDispatch();
 
+    //posting new submission to db as an object
     const addSubmission = (event) => {
         console.log('adding a new submission');
         event.preventDefault();
@@ -171,9 +175,9 @@ function SubmissionPage() {
         }
         console.log('The new submission is', newSubmission );
         dispatch({ type: 'POST_SUBMISSION_TO_SERVER', payload: newSubmission});
-    }
+    }//end addSubmission
 
-    //variables for individual form questions
+    //variables for individual form questions (multiselects are above)
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [host, setHost] = useState('');
