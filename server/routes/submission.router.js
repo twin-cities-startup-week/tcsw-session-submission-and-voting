@@ -5,6 +5,10 @@ const {
     rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
 
+const {
+    rejectUnauthenticated,
+  } = require('../modules/authentication-middleware');
+
 /**
  * GET route template
  */
