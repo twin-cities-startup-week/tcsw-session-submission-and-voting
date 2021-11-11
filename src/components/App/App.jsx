@@ -23,6 +23,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import FaqPage from '../FaqPage/FaqPage';
 
 import SubmissionPage from '../SubmissionPage/SubmissionPage';
+import ForgotPassword from '../ForgotPassword/ForgotPassword';
 
 import './App.css';
 
@@ -67,12 +68,17 @@ function App() {
           </Route>
 
           <Route
+            exact path="/forgotPassword">
+              <ForgotPassword/>
+          </Route>
+
             // shows FaqPage at all times (logged in or not)
             exact
             path="/faq"
           >
             <FaqPage />
           </Route>
+
 
 
 

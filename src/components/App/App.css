@@ -143,3 +143,13 @@ Welcomes and Headers
   margin-bottom: 5px;
   margin-top: 10px;
 }
+
+.sign-up-question {
+  display: inline;
+}
+
+.forgot-password-header {
+  color: #0C495A;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
