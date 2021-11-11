@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
-function* resetPassword () {
+function* resetPassword (action) {
     try {
-        const response = yield axios.put('/api/user/resetpassword', config);
-        yield put({ type: 'SET_NEW_PASSWORD', payload: response.data })
+        const userInfo = action.payload;
+
+        yield axios.put('/api/user/reset', userInfo);
+        yield put({ type: 'SET_USER' })
     } catch (error) {
         console.log('Error in resetting password.', error)
     }
