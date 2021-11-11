@@ -5,6 +5,10 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import EmailIcon from '@mui/icons-material/Email';
 import { makeStyles } from '@mui/styles';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import {useHistory} from 'react-router-dom';
+
+
 
 // This is one of our simplest components
 // It doesn't have local state, so it can be a function component.
@@ -12,24 +16,17 @@ import Box from '@mui/material/Box';
 // or even care what the redux state is, so it doesn't need 'connect()'
 
 function Footer() {
-
-  const useStyles = makeStyles({
-    icons: {
-      display: 'flex',
-      alignItems: 'center',
-     
-    }
-
-})
-
-  const classes = useStyles();
+  
+    
 
 
-  return <footer> #TCSW22
+  return <footer> 
+    #TCSW22
+  {/* icons need links */}
   <Box display="flex"
   justifyContent="center"
   alignItems="center">
-  <InstagramIcon fontSize="large" />
+  <InstagramIcon fontSize="large"/> 
   <TwitterIcon fontSize="large" />
   <EmailIcon fontSize="large" />
   </Box>

@@ -23,6 +23,19 @@ import SubmissionPage from '../SubmissionPage/SubmissionPage';
 
 import './App.css';
 
+import {createMuiTheme, ThemeProvider} from '@mui/material/styles';
+
+const theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: '#0C495A'
+      },
+    },
+    typography: {
+      fontFamily: 'Proxima Nova'
+    },
+})
+
 function App() {
   const dispatch = useDispatch();
 
@@ -33,6 +46,7 @@ function App() {
   }, [dispatch]);
 
   return (
+    <ThemeProvider theme={theme}>
     <Router>
       <div>
         <Nav />
@@ -126,6 +140,7 @@ function App() {
         <Footer />
       </div>
     </Router>
+    </ThemeProvider>
   );
 }
 
