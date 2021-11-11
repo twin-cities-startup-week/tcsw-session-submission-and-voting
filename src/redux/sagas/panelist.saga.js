@@ -3,10 +3,10 @@ import { put, takeLatest } from 'redux-saga/effects'
 
 function* fetchPanelists() {
     try{
-        const viewPanelist = yield axios.get('/api/location')
-        console.log('panelist', viewPanelist);
+        const viewPanelist = yield axios.get('/api/panelists')
+        console.log('these are the panelist', viewPanelist);
 
-        yield put({ type: 'PLACE_LOCATION', payload: viewPanelist.data })
+        yield put({ type: 'PLACE_PANELIST', payload: viewPanelist.data })
     } catch (error) {
         console.log('error in getting Panelists', error );
     }

@@ -3,10 +3,8 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 router.get('/', ( req, res ) => {
-    let sessionId = req.session.id;
-
-    const queryText = `SELECT * FROM "session"`;
-    pool.query( queryText, [ sessionId ] )
+    const queryText = `SELECT * FROM "session";`;
+    pool.query( queryText )
     .then(( result ) => {
         res.send( result.rows )
     }).catch(( error ) => {

@@ -1,4 +1,5 @@
 import './PanelistViewPage.css';
+import useReduxStore from '../../hooks/useReduxStore';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { MenuItem, Select, FormControl, InputLabel, TextField } from '@mui/material';
@@ -8,19 +9,22 @@ import { useDispatch } from 'react-redux';
 function PanelViewPage() {
     const dispatch = useDispatch();
     const history = useHistory();
+    const store = useReduxStore();
+
+    console.log(store.panelistReducer);
 
     const [track, setTrack] = useState('');
     const [format, setFormat] = useState('');
 
-    // useEffect(() => {
-    //     fetchPanelist();
-    // }, []);
+    useEffect(() => {
+        fetchPanelist();
+    }, []);
 
-    // const fetchPanelist = () => {
-    //     dispatch({
-    //         type: 'FETCH_PANELIST', payload: session
-    //     })
-    // }
+    const fetchPanelist = ( session ) => {
+        dispatch({
+            type: 'FETCH_PANELIST', payload: session
+        })
+    }
 
     // navigates user to the details page of the speaker on click.
     const moveToSelectedPage = () => {
@@ -146,11 +150,13 @@ function PanelViewPage() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td onClick={moveToSelectedPage}>Rain green</td>
-                            <td>TCSW</td>
-                            <td>Technology</td>
-                        </tr>
+                        {store.panelistReducer.map((panelist) => (
+                            <tr>
+                                <td onClick={moveToSelectedPage}>{panelist.title}</td>
+                                <td>{panelist.location_details}</td>
+                                <td>{panelist.industry_id}</td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
