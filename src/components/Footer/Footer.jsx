@@ -19,7 +19,7 @@ function Footer() {
 
 
   return <footer>
-    #TCSW22
+   <a href="https://www.twincitiesstartupweek.com/" className="icon" target="_blank"> #TCSW22</a>
     {/* icons need links */}
     <Box display="flex"
       justifyContent="center"
