@@ -23,7 +23,10 @@ import { makeStyles } from '@mui/styles';
 function SubmissionPage() {
 
     const useStyles = makeStyles({
-        
+        title: {
+            fontFamily: 'Gotham Black',
+            color: '#0C495A'
+        },
     })
 
     const classes = useStyles();
@@ -210,13 +213,12 @@ function SubmissionPage() {
 
     return (
         <>
-            <div className="title">
+            
             <Box p={2}>
-                <Typography variant="h5" align="left">
-                    TCSW Session Submission 2022
+                <Typography variant="h5" align="center" className={classes.title}>
+                    TCSW Session Submission Form
                 </Typography>
             </Box>
-            </div>
             <Box p={3}>
                 <Container component={Paper}>
                     <form onSubmit={addSubmission}>
@@ -449,7 +451,9 @@ function SubmissionPage() {
                                 <Typography variant="caption" display="block" gutterBottom>Did we miss anything? Do you have questions? Is there something else about your event you want to share that didn't fit in the questions above? Let us know!</Typography>
                                 <TextField fullWidth id="outlined-basic" label="More to share?" variant="outlined" required value={otherInfo} onChange={(event) => setOtherInfo(event.target.value)} />
                             </Box>
-                            <Button variant="contained" type="submit">Submit Submission</Button>
+                            
+                            <Button variant="contained" type="submit">Submit</Button>
+                        
                         </FormControl>
                     </form>
                 </Container>
