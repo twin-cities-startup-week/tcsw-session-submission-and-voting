@@ -64,9 +64,7 @@ router.put('/reset', userStrategy.authenticate('local'), (req, res) => {
     AND "email" = $3`;
   pool.query(sqlText, [password, username, email])
     .then(() => {
-      res.sendStatus(201);
-    }).catch((error) => {
-      console.log('Error in password reset', error);
+      res.sendStatus(200);
     })
 })
 
