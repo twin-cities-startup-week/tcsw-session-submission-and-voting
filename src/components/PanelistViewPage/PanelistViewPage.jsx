@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import './PanelistViewPage.css';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { MenuItem, Select, FormControl, InputLabel, TextField } from '@mui/material';
 
@@ -9,59 +10,31 @@ function PanelViewPage() {
     const [track, setTrack] = useState('');
     const [format, setFormat] = useState('');
 
-    // navigates user to the details page of the speaker on click
+    // navigates user to the details page of the speaker on click.
     const moveToSelectedPage = () => {
         history.push('/user')
     }
 
+    // allow the drop downs to show what has been selected.
     const handleTrackChange = (event) => {
         setTrack(event.target.value);
-      };
+    };
 
       const handleFormatChange = (event) => {
         setFormat(event.target.value);
-      };
+    };
 
     return(
         <div>
-            <div class='table-section'>
-                <h1>TCSW Panelists</h1>
-                <h5>Community Voting: date-date</h5>
-
-                <br/>
-
-                <h5>page</h5>
-
-                <h5>
-                    page
-                    <button>back</button>
-                    <button>forward</button>
-                </h5>
-
-                <table className='panelist-table'>
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Location</th>
-                            <th>Industry</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td onClick={moveToSelectedPage}>Rain green</td>
-                            <td>TCSW</td>
-                            <td>Technology</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class='search-bar'>
+            <div class='search-section'>
                 <h2>Search</h2>
                 <TextField id="outlined-basic" label="Outlined" variant="outlined" />
                 {/* <form> */}
+
+                <div>
                     <button>RESET</button>
                     <button>SEARCH</button>
+                </div>
 
                     <br />
 
@@ -132,6 +105,42 @@ function PanelViewPage() {
 
                 <button>LeaderBoard</button>
 
+            </div>
+
+            <br />
+            
+
+            {/* this will be implementing Material UI */}
+            <div class='table-section'>
+                <h1>TCSW Panelists</h1>
+                <h5>Community Voting: date-date</h5>
+
+                <br/>
+
+                <h5>page</h5>
+
+                <h5>
+                    page
+                    <button>back</button>
+                    <button>forward</button>
+                </h5>
+
+                <table className='panelist-table'>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Location</th>
+                            <th>Industry</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td onClick={moveToSelectedPage}>Rain green</td>
+                            <td>TCSW</td>
+                            <td>Technology</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     )
