@@ -52,6 +52,7 @@ router.post('/logout', (req, res) => {
 });
 
 router.put('/reset', ( req, res ) => {
+  console.log('req.body - ', req.body)
   const username = req.body.username;
   const email = req.body.email;
   const password = encryptLib.encryptPassword(req.body.password);
