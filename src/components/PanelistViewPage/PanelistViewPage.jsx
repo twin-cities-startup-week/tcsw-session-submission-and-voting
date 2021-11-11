@@ -1,5 +1,5 @@
 import './PanelistViewPage.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { MenuItem, Select, FormControl, InputLabel, TextField } from '@mui/material';
 import { useDispatch } from 'react-redux';
@@ -12,11 +12,15 @@ function PanelViewPage() {
     const [track, setTrack] = useState('');
     const [format, setFormat] = useState('');
 
-    const fetchPanelist = () => {
-        dispatch({
-            type: 'FETCH_PANELIST', payload: title
-        })
-    }
+    // useEffect(() => {
+    //     fetchPanelist();
+    // }, []);
+
+    // const fetchPanelist = () => {
+    //     dispatch({
+    //         type: 'FETCH_PANELIST', payload: session
+    //     })
+    // }
 
     // navigates user to the details page of the speaker on click.
     const moveToSelectedPage = () => {
@@ -36,10 +40,10 @@ function PanelViewPage() {
         <div>
             <div class='search-section'>
                 <h2>Search</h2>
-                <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                <TextField id='search-bar' label='search' variant="outlined" />
                 {/* <form> */}
 
-                <div>
+                <div class='filter-buttons'>
                     <button class='reset-button'>RESET</button>
                     <button class='search-button'>SEARCH</button>
                 </div>
