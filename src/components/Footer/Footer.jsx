@@ -6,7 +6,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import { makeStyles } from '@mui/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -16,20 +16,20 @@ import {useHistory} from 'react-router-dom';
 // or even care what the redux state is, so it doesn't need 'connect()'
 
 function Footer() {
-  
-    
 
 
-  return <footer> 
+
+
+  return <footer>
     #TCSW22
-  {/* icons need links */}
-  <Box display="flex"
-  justifyContent="center"
-  alignItems="center">
-  <InstagramIcon fontSize="large"/> 
-  <TwitterIcon fontSize="large" />
-  <EmailIcon fontSize="large" />
-  </Box>
+    {/* icons need links */}
+    <Box display="flex"
+      justifyContent="center"
+      alignItems="center">
+        <a href="https://www.instagram.com/tcstartupweek/?hl=en" className="icon" target="_blank"><InstagramIcon fontSize="large" /> </a>
+        <a href="https://twitter.com/tcstartupweek?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" className="icon" target="_blank"><TwitterIcon fontSize="large" /></a>
+        <a href="mailto:hello@beta.mn" className="icon" target="_blank"> <EmailIcon fontSize="large" /></a>
+    </Box>
   </footer>
 
 }

@@ -27,6 +27,9 @@ function SubmissionPage() {
             fontFamily: 'Gotham Black',
             color: '#0C495A'
         },
+        paper: {
+            backgroundColor: '#A7A9AC'
+        }
     })
 
     const classes = useStyles();
@@ -220,7 +223,7 @@ function SubmissionPage() {
                 </Typography>
             </Box>
             <Box p={3}>
-                <Container component={Paper}>
+                <Container component={Paper} elevation={6}>
                     <form onSubmit={addSubmission}>
                         <FormControl>
                             <Box p={1}>
