@@ -28,7 +28,7 @@ import {createMuiTheme, ThemeProvider} from '@mui/material/styles';
 const theme = createMuiTheme({
     palette: {
       primary: {
-        main: '#0C495A'
+        main: '#0C495A',
       },
     },
     typography: {

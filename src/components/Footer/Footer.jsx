@@ -3,10 +3,8 @@ import './Footer.css';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import EmailIcon from '@mui/icons-material/Email';
-import { makeStyles } from '@mui/styles';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { useHistory } from 'react-router-dom';
+
 
 
 

@@ -29,6 +29,9 @@ function SubmissionPage() {
         },
         paper: {
             backgroundColor: '#A7A9AC'
+        },
+        buttonText: {
+            color: '#FBBD19'
         }
     })
 
@@ -455,7 +458,7 @@ function SubmissionPage() {
                                 <TextField fullWidth id="outlined-basic" label="More to share?" variant="outlined" required value={otherInfo} onChange={(event) => setOtherInfo(event.target.value)} />
                             </Box>
                             
-                            <Button variant="contained" type="submit">Submit</Button>
+                            <Button variant="contained" type="submit" className={classes.buttonText}>Submit</Button>
                         
                         </FormControl>
                     </form>
