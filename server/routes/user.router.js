@@ -59,7 +59,7 @@ router.put('/resetpassword', ( req, res ) => {
     UPDATE "user"
     SET "password" = $1
     WHERE "username" = $2
-    AND "email" = $3`;
+    AND "email" = $3`; 
   pool.query(sqlText, [password, username, email])
     .then(() => {
       res.sendStatus(201);
