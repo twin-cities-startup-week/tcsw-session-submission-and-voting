@@ -19,10 +19,26 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+
+import FaqPage from '../FaqPage/FaqPage';
+
 import SubmissionPage from '../SubmissionPage/SubmissionPage';
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
 
 import './App.css';
+
+import {createMuiTheme, ThemeProvider} from '@mui/material/styles';
+
+const theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: '#0C495A',
+      },
+    },
+    typography: {
+      fontFamily: 'Proxima Nova'
+    },
+})
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +50,7 @@ function App() {
   }, [dispatch]);
 
   return (
+    <ThemeProvider theme={theme}>
     <Router>
       <div>
         <Nav />
@@ -55,6 +72,17 @@ function App() {
               <ForgotPassword/>
           </Route>
 
+            // shows FaqPage at all times (logged in or not)
+            exact
+            path="/faq"
+          >
+            <FaqPage />
+          </Route>
+
+
+
+
+
           {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
@@ -75,12 +103,12 @@ function App() {
             <InfoPage />
           </ProtectedRoute>
 
-          <Route
+          <ProtectedRoute
             exact
             path="/submission"
           >
             <SubmissionPage />
-          </Route>
+          </ProtectedRoute>
 
           <Route
             exact
@@ -132,6 +160,7 @@ function App() {
         <Footer />
       </div>
     </Router>
+    </ThemeProvider>
   );
 }
 
