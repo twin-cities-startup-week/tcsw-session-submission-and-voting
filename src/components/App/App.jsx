@@ -20,8 +20,9 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import SubmissionPage from '../SubmissionPage/SubmissionPage';
-import PanelistViewPage from '../PanelistViewPage/PanelistViewPage'
+import PanelistViewPage from '../PanelistViewPage/PanelistViewPage';
 import Panelists from '../PanelistViewPage/Panelists'
+import VotePage from '../VotePage/VotePage'; 
 
 import './App.css';
 
@@ -81,6 +82,11 @@ function App() {
           <Route exact path = "/panelistView">
             {/* <Panelists /> */}
             <PanelistViewPage />
+          </Route>
+
+          <Route exact path = "/votepage">
+            {/* <Panelists /> */}
+            <VotePage />
           </Route>
 
           <Route
