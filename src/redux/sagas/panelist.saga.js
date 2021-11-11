@@ -5,6 +5,8 @@ function* fetchPanelists() {
     try{
         const viewPanelist = yield axios.get('/api/location')
         console.log('panelist', viewPanelist);
+
+        yield put({ type: 'PLACE_LOCATION', payload: viewPanelist.data })
     } catch (error) {
         console.log('error in getting Panelists', error );
     }
