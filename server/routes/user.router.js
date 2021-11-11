@@ -52,13 +52,15 @@ router.post('/logout', (req, res) => {
 
 router.put('/resetpassword', ( req, res ) => {
   const username = req.body.username;
+  const email = req.body.email;
   const password = encryptLib.encryptPassword(req.body.password);
 
   const sqlText = `
     UPDATE "user"
     SET "password" = $1
-    WHERE "username" = $2`;
-  pool.query(sqlText, [password, username])
+    WHERE "username" = $2
+    AND "email" = $3`;
+  pool.query(sqlText, [password, username, email])
     .then(() => {
       res.sendStatus(201);
     }).catch((error) => {

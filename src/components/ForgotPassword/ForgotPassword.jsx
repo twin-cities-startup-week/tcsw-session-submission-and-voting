@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 
 function ForgotPassword () {
     const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const errors = useSelector(store => store.errors);
@@ -25,8 +26,9 @@ function ForgotPassword () {
             type: 'RESET_PASSWORD',
             payload: {
               username: username,
+              email: email,
               password: password,
-            },
+            }, 
           });
           history.push('/login');
         } else {
@@ -58,6 +60,16 @@ function ForgotPassword () {
                 </label>
             </Box>
             <Box sx={{ m: 1 }}>
+                <label htmlFor="username">
+                    <TextField sx={{ width: 500, bgcolor: '#FFFFFF', borderRadius: 1, mb: 2 }}
+                    type="text" name="email" label="Email Address" variant="filled"
+                    value={email} 
+                    required
+                    onChange={(event) => setEmail(event.target.value)}
+                    />
+                </label>
+            </Box>
+            <Box sx={{ m: 1 }}>
               <label htmlFor="username">
                 <TextField sx={{ width: 500, bgcolor: '#FFFFFF', borderRadius: 1, mb: 2 }}
                   type="password" name="password" label="Password" variant="filled"
@@ -80,7 +92,8 @@ function ForgotPassword () {
 
             <Button variant="contained" type="submit" name="submit" value="Log In"
             sx={{ mb: 2, p: 2, width: 300, height: 50, bgcolor: '#0C495A', color: '#FBBD19' }}
-              > Reset Password</Button>
+              >Reset Password
+            </Button>
           </Box>
         </form>
   
@@ -89,14 +102,16 @@ function ForgotPassword () {
   
           <Typography 
             sx={{ display: 'inline-block', textAlign: 'center', mt: 2, ml: 10 }}
-            >Need to Sign up?</Typography>
+                >Need to Sign up?
+          </Typography>
   
           <Button component={Paper} elevation={8} 
             variant="contained" type="submit" name="submit" value="Log In"
             sx={{ mt: 1, p: 2, width: 200, height: 40, bgcolor: '#0C495A', 
             color: '#FBBD19', m: 1, float: 'right' }}
             onClick={() => history.push('/registration')}
-            > Create Account</Button>
+                >Create Account
+          </Button>
   
         </Box>
       </Container>

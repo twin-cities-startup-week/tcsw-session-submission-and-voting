@@ -6,7 +6,7 @@ function* resetPassword () {
         const response = yield axios.put('/api/user/resetpassword', config);
         yield put({ type: 'SET_NEW_PASSWORD', payload: response.data })
     } catch (error) {
-
+        console.log('Error in resetting password.', error)
     }
 }
 

@@ -84,7 +84,7 @@ function LoginForm() {
             </button>
           </center>
           <Button variant="contained" type="submit" name="submit" value="Log In"
-          sx={{ mt: 2, mb: 2, p: 2, width: 300, height: 50, bgcolor: '#0C495A', color: '#FBBD19' }}
+          sx={{ mt: 2, mb: 2, p: 2, width: 350, height: 50, bgcolor: '#0C495A', color: '#FBBD19' }}
             > Sign In</Button>
         </Box>
       </form>
