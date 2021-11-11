@@ -7,8 +7,12 @@ function* resetPassword (action) {
         console.log('userInfo - ', userInfo );
 
         yield axios.put('/api/user/reset', userInfo);
+        yield put({ type: 'FETCH_USER' })
     } catch (error) {
         console.log('Error in resetting password.', error)
+        if ( error.response.status === 401 ) {
+            yield put({ type: 'PASSWORD_RESET_FAILED' });
+        }
     }
 }
 

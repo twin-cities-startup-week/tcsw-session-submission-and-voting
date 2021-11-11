@@ -51,7 +51,7 @@ router.post('/logout', (req, res) => {
   res.sendStatus(200);
 });
 
-router.put('/reset', (req, res) => {
+router.put('/reset', userStrategy.authenticate('local'), (req, res) => {
   console.log('req.body - ', req.body)
   const username = req.body.username;
   const email = req.body.email;
