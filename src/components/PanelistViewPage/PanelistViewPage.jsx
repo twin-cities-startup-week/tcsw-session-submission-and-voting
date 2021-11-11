@@ -2,13 +2,21 @@ import './PanelistViewPage.css';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { MenuItem, Select, FormControl, InputLabel, TextField } from '@mui/material';
+import { useDispatch } from 'react-redux';
 
 
 function PanelViewPage() {
+    const dispatch = useDispatch();
     const history = useHistory();
 
     const [track, setTrack] = useState('');
     const [format, setFormat] = useState('');
+
+    const fetchPanelist = () => {
+        dispatch({
+            type: 'FETCH_PANELIST', payload: title
+        })
+    }
 
     // navigates user to the details page of the speaker on click.
     const moveToSelectedPage = () => {
@@ -32,8 +40,8 @@ function PanelViewPage() {
                 {/* <form> */}
 
                 <div>
-                    <button>RESET</button>
-                    <button>SEARCH</button>
+                    <button class='reset-button'>RESET</button>
+                    <button class='search-button'>SEARCH</button>
                 </div>
 
                     <br />
