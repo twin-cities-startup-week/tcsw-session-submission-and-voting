@@ -5,10 +5,11 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
+import submissionReducer from '../../redux/reducers/submission.reducer';
 
 function Leaderboard() {
     const dispatch = useDispatch();
-    const store = useSelector(store => store.submission.approvedSubmissions);
+    const approvedSubmissions = useSelector(store => store.submission.approvedSubmissions);
 
     useEffect(() => {
         dispatch({ type: 'GET_APPROVED_SUBMISSIONS' })
@@ -40,9 +41,14 @@ function Leaderboard() {
         </div>
         <Container component={Paper} sx={{ mt: 15 }}>
         <div>
-            {JSON.stringify(store)}
+            {JSON.stringify(approvedSubmissions)}
         </div>
-            <DataGrid rows={rows} columns={columns}/>
+            <DataGrid 
+                rows={approvedSubmissions.map(submission => (
+                    <SubmissionListItem key={submission.id} submission={submission}/>
+                ))} 
+                columns={columns}
+            />
         </Container>
         </>
     )
