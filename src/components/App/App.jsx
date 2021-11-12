@@ -25,6 +25,7 @@ import PanelistViewPage from '../PanelistViewPage/PanelistViewPage';
 import Panelists from '../PanelistViewPage/Panelists'
 import VotePage from '../VotePage/VotePage'; 
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
+import Leaderboard from '../Leaderboard/Leaderboard';
 
 import './App.css';
 
@@ -79,10 +80,10 @@ function App() {
           >
             <FaqPage />
           </Route>
-        
-
-
-
+          <Route
+            exact path='/leaderboard'>
+              <Leaderboard/>
+          </Route>        
 
           {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.

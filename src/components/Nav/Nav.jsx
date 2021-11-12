@@ -47,7 +47,11 @@ function Nav() {
 
         <Link className="navLink" to="/faq">
           Faq
-          </Link>
+        </Link>
+
+        <Link className="navLink" to='/leaderboard'>
+          Leaderboard
+        </Link>
 
         <Link className="navLink" to="/login">
           Sign In

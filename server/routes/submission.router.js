@@ -11,6 +11,21 @@ const {
 router.get('/', (req, res) => {
     // GET route code here
 });
+
+// GET route for all APPROVED submissions
+router.get('/approved', (req, res) => {
+    const queryText = `
+        SELECT * FROM "session"
+        WHERE "approved" = TRUE;`;
+        
+    pool.query (queryText)
+    .then(result => {
+        res.send(result.rows)
+    }).catch(error => {
+        console.log('Error in GET approved submissions, ', error)
+    })
+})
+
 //POST route for session submission form - WORKING on postman
 router.post('/', (req, res) => {
     const newSubmission = req.body;
@@ -55,7 +70,6 @@ router.post('/', (req, res) => {
             console.log('error with post to db', error);
             res.sendStatus(500);
         })
-
 });
 
 module.exports = router;
