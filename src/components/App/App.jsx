@@ -21,6 +21,9 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import FaqPage from '../FaqPage/FaqPage';
 import SubmissionPage from '../SubmissionPage/SubmissionPage';
+import PanelistViewPage from '../PanelistViewPage/PanelistViewPage';
+import Panelists from '../PanelistViewPage/Panelists'
+import VotePage from '../VotePage/VotePage'; 
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
 
 import './App.css';
@@ -107,6 +110,16 @@ function App() {
           >
             <SubmissionPage />
           </ProtectedRoute>
+
+          <Route exact path = "/panelistView">
+            <Panelists />
+            {/* <PanelistViewPage /> */}
+          </Route>
+
+          <Route exact path = "/votepage">
+            {/* <Panelists /> */}
+            <VotePage />
+          </Route>
 
           <Route
             exact
