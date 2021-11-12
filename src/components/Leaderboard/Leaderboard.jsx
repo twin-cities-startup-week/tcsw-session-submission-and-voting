@@ -8,6 +8,7 @@ import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 
 function Leaderboard() {
     const dispatch = useDispatch();
+    const store = useSelector(store => store.submission.approvedSubmissions);
 
     useEffect(() => {
         dispatch({ type: 'GET_APPROVED_SUBMISSIONS' })
@@ -38,6 +39,9 @@ function Leaderboard() {
             <span></span>
         </div>
         <Container component={Paper} sx={{ mt: 15 }}>
+        <div>
+            {JSON.stringify(store)}
+        </div>
             <DataGrid rows={rows} columns={columns}/>
         </Container>
         </>

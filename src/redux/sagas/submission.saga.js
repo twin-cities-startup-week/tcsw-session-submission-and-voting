@@ -22,7 +22,7 @@ function* sendSubmissionToServer(action){
 function* getApprovedSubmissions(){
     try {
         const approvedSubmissions = yield axios.get('/api/submission/approved');
-        yield put({ type: 'SET_APPROVED_SUBMISSION', payload: approvedSubmissions })
+        yield put({ type: 'SET_APPROVED_SUBMISSIONS', payload: approvedSubmissions.data })
     } catch (error) {
         console.log('Error posting submission to DB', error );
     }
