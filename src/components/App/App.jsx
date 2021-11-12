@@ -80,8 +80,8 @@ function App() {
           </Route>
 
           <Route exact path = "/panelistView">
-            {/* <Panelists /> */}
-            <PanelistViewPage />
+            <Panelists />
+            {/* <PanelistViewPage /> */}
           </Route>
 
           <Route exact path = "/votepage">

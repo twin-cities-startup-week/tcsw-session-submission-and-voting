@@ -7,9 +7,11 @@ function VotePage() {
     return(
         <div>
             <h1>Details Page</h1>
-            {store.panelistReducer.map((panelist) => (
-                <h2>{panelist.title}</h2>
-            ))}
+            {/* {store.panelistReducer.map(( details ) => (
+                <div key={details.id}>
+                    <p>{details.title}</p>
+                </div>
+            ))} */}
         </div>
     )
 }

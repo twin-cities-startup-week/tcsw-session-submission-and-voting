@@ -11,7 +11,7 @@ function PanelViewPage() {
     const history = useHistory();
     const store = useReduxStore();
 
-    console.log(store.panelistReducer);
+    console.log('these are the current panelists', store.panelistReducer);
 
     const [track, setTrack] = useState('');
     const [format, setFormat] = useState('');
@@ -150,13 +150,13 @@ function PanelViewPage() {
                         </tr>
                     </thead>
                     <tbody>
-                        {store.panelistReducer.map((panelist) => (
+                        {/* {store.panelistReducer.map((panelist) => (
                             <tr>
                                 <td onClick={moveToSelectedPage}>{panelist.title}</td>
                                 <td>{panelist.location_details}</td>
                                 <td>{panelist.industry_id}</td>
                             </tr>
-                        ))}
+                        ))} */}
                     </tbody>
                 </table>
             </div>
