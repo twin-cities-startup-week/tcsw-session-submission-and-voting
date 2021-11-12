@@ -49,6 +49,10 @@ function Nav() {
           Faq
           </Link>
 
+          <Link className="navLink" to="/admin">
+          Admin
+          </Link>
+
         <Link className="navLink" to="/login">
           Sign In
         </Link>

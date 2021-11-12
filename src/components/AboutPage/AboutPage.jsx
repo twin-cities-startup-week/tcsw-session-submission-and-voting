@@ -1,14 +1,33 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-import { Paper, makeStyles } from "@material-ui/core";
+import { Paper,Button, makeStyles } from "@material-ui/core";
 
 // This is one of our simplest components
 // It doesn't have local state,
 // It doesn't dispatch any redux actions or display any part of redux state
 // or even care what the redux state is'
 
+ // Styling
+ const useStyles = makeStyles({
+  root: {
+      width: '100%',
+      maxWidth: '768px',
+      margin: '0 auto',
+      padding: '15px',
+      margin: '15px', 
+      padding: '15px', 
+      // backgroundColor: '#fff', 
+      // borderRadius: '8px',
+      // boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
+
+  }
+});
+
 function AboutPage() {
+
+  const classes = useStyles();
+
   const [learnMore, setLearnMore] = useState(false);
 
   const learnMoreInfo = () => {
@@ -16,8 +35,7 @@ function AboutPage() {
   };
 
   return (
-    <Paper elevation={15}>
-      <div className="container">
+      <div className={classes.root}>
         <div>
           <h2>TCSW Session Submission & Voting</h2>
           <h4>2022 Session Submission Dates</h4>
@@ -29,7 +47,7 @@ function AboutPage() {
           <p>
             Interested in hosting a session? If you are an individual, business,
             or community organization doing amazing things in the world of
-            startups and innovation, we'd love to work with you!{" "}
+            startups and innovation, we'd love to work with you!
           </p>
 
           <p>There are a few steps to organizing a TCSW session:</p>
@@ -91,10 +109,10 @@ function AboutPage() {
             hesitate to reach out to kelly@beta.mn.
           </p>
 
-          <button type="submit" onClick={learnMoreInfo}>
+          <Button variant="contained" color="primary" onClick={learnMoreInfo}>
             
             Learn More
-          </button>
+          </Button>
         </div>
         {learnMore && (
           <p>
@@ -105,7 +123,6 @@ function AboutPage() {
           </p>
         )}
       </div>
-    </Paper>
   );
 }
 

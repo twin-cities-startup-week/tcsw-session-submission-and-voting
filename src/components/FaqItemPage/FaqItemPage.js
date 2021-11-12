@@ -19,7 +19,22 @@ import { Paper, makeStyles } from "@material-ui/core";
 
         position: 'relative',
         fontSize: '20px',
-        paddingRight: '80px'
+        paddingRight: '80px',
+
+        backgroundImage: 'url(./arrow-down-mint.svg)',
+        backgroundPosition: 'center',
+        backgroundSize: 'contain',
+        backgroundRepeat: 'no-repeat',
+
+
+        // // content: '',
+        // // position: 'absolute', 
+        // // top: '50%',
+        // right: '0px',
+        // // transform: 'translateY(-50%)',
+        // width: '30px',
+        // height: '30px'
+
 
     }
   });

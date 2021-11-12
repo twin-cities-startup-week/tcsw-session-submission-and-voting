@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import FaqItemPage from '../FaqItemPage/FaqItemPage';
+import './Faq.css';
 
 //Material-ui
 import { Paper, makeStyles } from "@material-ui/core";
@@ -34,9 +35,7 @@ function FaqPage (){
             answer: 'You have to be a registered user, and your topic have to be approved',
         }
     ])
-    // const openFaqs = () => {
-    //     setFaqs(!faqs)
-    // } 
+  
     return (
         <div>
        <h2>TCSW Session Submission & Voting</h2>
