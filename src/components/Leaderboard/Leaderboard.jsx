@@ -3,19 +3,14 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@mui/styles';
-import { createTheme } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import {
-  GridColumnMenu,
-  GridColumnMenuContainer,
-  GridFilterMenuItem,
-  SortGridMenuItems,
-  useGridApiRef,
-  DataGridPro,
-} from '@mui/x-data-grid-pro';
-import StarOutlineIcon from '@mui/icons-material/StarOutline';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import InboxIcon from '@mui/icons-material/Inbox';
+import DraftsIcon from '@mui/icons-material/Drafts';
 
 function Leaderboard() {
     return (
