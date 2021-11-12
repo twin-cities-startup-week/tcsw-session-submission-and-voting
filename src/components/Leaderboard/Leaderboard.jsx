@@ -3,16 +3,25 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import InboxIcon from '@mui/icons-material/Inbox';
-import DraftsIcon from '@mui/icons-material/Drafts';
+import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 
 function Leaderboard() {
+
+    const rows: GridRowsProp = [
+        { id: 1, col1: 'Hello', col2: 'World' },
+        { id: 2, col1: 'DataGridPro', col2: 'is Awesome' },
+        { id: 3, col1: 'MUI', col2: 'is Amazing' },
+        { id: 4, col1: 'MUI', col2: 'is Amazing' },
+    ];
+
+    const columns: GridColDef[] = [
+        { field: 'col1', headerName: 'Session Title', width: 250 },
+        { field: 'col2', headerName: 'Industry', width: 120 },
+        { field: 'col3', headerName: 'Track', width: 120 },
+        { field: 'col4', headerName: 'Location', width: 120 },
+        { field: 'col5', headerName: 'Date', width: 120 },
+    ];
+
     return (
         <>
         <div className="bar">
@@ -23,7 +32,7 @@ function Leaderboard() {
             <span></span>
         </div>
         <Container component={Paper} sx={{ mt: 15 }}>
-            <p>Something text text text</p>
+            <DataGrid rows={rows} columns={columns}/>
         </Container>
         </>
     )
