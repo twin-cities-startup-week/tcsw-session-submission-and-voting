@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -6,6 +7,11 @@ import Container from '@mui/material/Container';
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 
 function Leaderboard() {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch({ type: 'GET_APPROVED_SUBMISSIONS' })
+    }, [])
 
     const rows: GridRowsProp = [
         { id: 1, col1: 'Hello', col2: 'World' },

@@ -5,7 +5,7 @@ import axios from 'axios';
 function* submissionSaga(){
     console.log('submission saga is firing');
     yield takeEvery('POST_SUBMISSION_TO_SERVER', sendSubmissionToServer );
-    yield takeEvery('GET_APPROVED_SUBMISSION', getApprovedSubmissions);
+    yield takeEvery('GET_APPROVED_SUBMISSIONS', getApprovedSubmissions);
 }
 
 function* sendSubmissionToServer(action){
