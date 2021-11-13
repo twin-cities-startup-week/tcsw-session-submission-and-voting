@@ -15,9 +15,23 @@ function* fetchSession(){
 
 
 
+//admin Saga: will be fired on 'FETCH_AWAITING_APPROVAL'
+function* fetchAwaitingApproval(){
+    try{
+        const response = yield axios.get('/api/session/awaitingApproval')
+        console.log('This is FETCH_AWAITING_APPROVAL response', response.data)
+        yield put({type: 'SET_AWAITING_APPROVAL', payload: response.data})
+    }catch(error){
+        console.log('Session get request failed', error );
+    }
+}
+
+
 
 function* sessionSaga (){
     yield takeLatest('FETCH_SESSION', fetchSession);
+    yield takeLatest('FETCH_AWAITING_APPROVAL', fetchAwaitingApproval);
+
 }
 
 
