@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
-import submissionReducer from '../../redux/reducers/submission.reducer';
 
 function Leaderboard() {
     const dispatch = useDispatch();
@@ -15,19 +12,24 @@ function Leaderboard() {
         dispatch({ type: 'GET_APPROVED_SUBMISSIONS' })
     }, [])
 
-    const rows: GridRowsProp = [
-        { id: 1, col1: 'Hello', col2: 'World' },
-        { id: 2, col1: 'DataGridPro', col2: 'is Awesome' },
-        { id: 3, col1: 'MUI', col2: 'is Amazing' },
-        { id: 4, col1: 'MUI', col2: 'is Amazing' },
-    ];
+    let rows = [];
+    rows = approvedSubmissions.map((submission, index) => {
+        return (rows = {
+            id: index,
+            title: submission.title,
+            industry: submission.industry_id,
+            track: submission.track_id,
+            location: submission.location_id,
+            date: submission.date_id
+        });
+    });
 
-    const columns: GridColDef[] = [
-        { field: 'col1', headerName: 'Session Title', width: 250 },
-        { field: 'col2', headerName: 'Industry', width: 120 },
-        { field: 'col3', headerName: 'Track', width: 120 },
-        { field: 'col4', headerName: 'Location', width: 120 },
-        { field: 'col5', headerName: 'Date', width: 120 },
+    const columns = [
+        { field: 'title', headerName: 'Session Title', width: 250 },
+        { field: 'industry', headerName: 'Industry', width: 120 },
+        { field: 'track', headerName: 'Track', width: 120 },
+        { field: 'location', headerName: 'Location', width: 120 },
+        { field: 'date', headerName: 'Date', width: 120 },
     ];
 
     return (
@@ -41,12 +43,10 @@ function Leaderboard() {
         </div>
         <Container component={Paper} sx={{ mt: 15 }}>
         <div>
-            {JSON.stringify(approvedSubmissions)}
+            {/* {JSON.stringify(rows)} */}
         </div>
             <DataGrid 
-                rows={approvedSubmissions.map(submission => (
-                    <SubmissionListItem key={submission.id} submission={submission}/>
-                ))} 
+                rows={rows}
                 columns={columns}
             />
         </Container>
