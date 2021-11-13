@@ -5,13 +5,20 @@ import { useHistory } from 'react-router-dom';
 
 //Material-ui
 import { Button, Paper, Card, makeStyles} from "@material-ui/core";
+import { session } from 'passport';
 
    // Styling
    const useStyles = makeStyles({
     root: {
-        marginRight: '800px',
+        marginRight: '1000px',
         marginLeft: '10px',
-        paddingTop: '200px',
+        paddingTop: '100px',
+        border: '2px solid',
+        justifyContent: 'center',
+        // textAlign: 'justify',
+        // position: 'relative',
+        // bottom: '20px'
+       
 
     }
   });
@@ -27,7 +34,7 @@ const dispatch = useDispatch();
 
 //Get all the session
 useEffect(() => {
-    dispatch({type: "FETCH_SESSION"});
+    dispatch({type: "FETCH_SESSION", payload: session.title});
 }, [dispatch]);
 
 
@@ -36,7 +43,7 @@ useEffect(() => {
         <Card className={classes.root} variant="outlined">
             {/* {JSON.stringify(setSessionList)} */}
                 {setSessionList.map((session, index) => (
-                    <div  key={index}> {session.title}</div>
+                    <div  key={index}> <p>Total Number of Sessions Submitted:</p>{session.count}</div>
                 ))}
             </Card>
 
