@@ -26,17 +26,17 @@ router.get('/total', (req, res) => {
 // /**
 //  * GET route admin
 //  */
-//  router.get('/awaitingApproval', (req, res) => {
-//     // GET route code here
-//     pool.query(`SELECT count(session.title) from session 
-//     WHERE session.awaiting_approval = $1`, [req.session.id])
-//     .then((results) =>
-//      res.send(results.rows))
-//      .catch((error) => {
-//          console.log('Error making GET request:', error);
-//          res.sendStatus(500);
-//      });
-// });
+ router.get('/awaitingApproval', (req, res) => {
+    // GET route code here
+    pool.query(`SELECT count(session.title) from session 
+    WHERE session.awaiting_approval = $1`, [req.session.id])
+    .then((results) =>
+     res.send(results.rows))
+     .catch((error) => {
+         console.log('Error making GET request:', error);
+         res.sendStatus(500);
+     });
+});
 
 
 module.exports = router;
