@@ -18,7 +18,7 @@
   font-weight: 700;
   font-family: 'Gotham Black';
   color: #0C495A;
-  padding-left: 10px;
+  padding-left: 30px;
   margin: 0;
 }
 
@@ -42,3 +42,10 @@
 .navLink:hover {
   background-color: #008183;
 } */
+
+img {
+  padding-top: 1px;
+  padding-right: 1px;
+  padding-bottom: 1px;
+  padding-left: 10px;
+}

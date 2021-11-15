@@ -10,9 +10,11 @@ function Nav() {
   return (
     
     <div className="nav">
+      <div>
+     <a href="https://www.twincitiesstartupweek.com/" target="_blank"> <img src="images/TCSW_Logo_Navy.png" alt="TCSW logo" width="100" height="50"></img></a>
+      </div>
       <Link to="/home">
         <h2 className="nav-title">Session Selector and Voting</h2>
-        <img src="images/TCSW_Logo_Navy.png" alt="TCSW logo" width="100" height="100"></img>
       </Link>
       <div>
         {/* If no user is logged in, show these links */}
