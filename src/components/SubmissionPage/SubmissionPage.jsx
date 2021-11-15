@@ -161,7 +161,7 @@ function SubmissionPage() {
 
     //posting new submission to db as an object
     const addSubmission = (event) => {
-        console.log('adding a new submission');
+        console.log('adding a new submission' );
         event.preventDefault();
         const newSubmission = {
             email: email,
@@ -206,9 +206,9 @@ function SubmissionPage() {
     const [format, setFormat] = useState('');
     const [track, setTrack] = useState('');
     const [areaOfInterest, setAreaOfInterest] = useState('');
-    const [diversity, setDiversity] = useState('');
+    const [diversity, setDiversity] = useState(true);
     const [speakers, setSpeakers] = useState('');
-    const [covid, setCovid] = useState('');
+    const [covid, setCovid] = useState(true);
     const [media, setMedia] = useState('');
     const [image, setImage] = useState('');
     const [success, setSuccess] = useState('');
@@ -222,7 +222,7 @@ function SubmissionPage() {
             
             <Box p={2}>
                 <Typography variant="h5" align="center" className={classes.title}>
-                    TCSW Session Submission Form
+                    TCSW Session Selector Form
                 </Typography>
             </Box>
             <Box p={3}>
@@ -279,14 +279,14 @@ function SubmissionPage() {
                                             labelId="demo-multiple-name-label"
                                             id="demo-multiple-name"
                                             multiple
-                                            value={dates}
+                                            value={individualDate}
                                             onChange={handleDateChange}
                                             input={<OutlinedInput label="Date" />}
                                             MenuProps={MenuProps}
                                         >
                                             {dates.map((date) => (
                                                 <MenuItem
-                                                    key={date.id}
+                                                    key={date}
                                                     value={date.id}
                                                     style={getDateStyles(date, individualDate, theme)}
                                                 >
@@ -312,14 +312,14 @@ function SubmissionPage() {
                                             labelId="demo-multiple-name-label"
                                             id="demo-multiple-name"
                                             multiple
-                                            value={times}
+                                            value={individualTime}
                                             onChange={handleTimeChange}
                                             input={<OutlinedInput label="Time" />}
                                             MenuProps={MenuProps}
                                         >
                                             {times.map((time) => (
                                                 <MenuItem
-                                                    key={time.id}
+                                                    key={time}
                                                     value={time.id}
                                                     style={getTimeStyles(time, individualTime, theme)}
                                                 >
@@ -358,14 +358,14 @@ function SubmissionPage() {
                                             labelId="demo-multiple-name-label"
                                             id="demo-multiple-name"
                                             multiple
-                                            value={industries}
+                                            value={individualIndustry}
                                             onChange={handleIndustryChange}
                                             input={<OutlinedInput label="Industry" />}
                                             MenuProps={MenuProps}
                                         >
                                             {industries.map((industry) => (
                                                 <MenuItem
-                                                    key={industry.id}
+                                                    key={industry}
                                                     value={industry.id}
                                                     style={getIndustryStyles(industry, individualIndustry, theme)}
                                                 >
