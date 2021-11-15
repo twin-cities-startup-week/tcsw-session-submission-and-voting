@@ -83,6 +83,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
 
 // Route includes
 const userRouter = require('./routes/user.router');
+const panelistRouter = require('./routes/panelist.router');
 const submissionRouter = require('./routes/submission.router');
 
 // Body parser middleware
@@ -128,6 +129,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
 
 /* Routes */
 app.use('/api/user', userRouter);
+app.use('/api/panelists', panelistRouter);
 app.use('/api/submission', submissionRouter );
 
 // Serve static files
