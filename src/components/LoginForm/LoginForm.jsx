@@ -33,16 +33,22 @@ function LoginForm() {
     }
   }; // end login
 
+  const handleGoogleLogin = () => {
+    // dispatch({ type: 'GOOGLE_LOGIN' })
+    window.location.href='http://localhost:5000/auth/google';
+  }
+
   return (
     <Container component={Paper} elevation={8} 
       sx={{ width: 1/2, m: 'auto', p: 1, pl: 4, pb: 3, bgcolor: '#A7A9AC' }}>
 
       <h2 className="registerHeader">Sign In</h2>
 
-      <GoogleSignin/>
+      {/* <GoogleSignin/> */}
       <Box sx={{ textAlign: 'center' }}>
         <Button variant="contained" type="submit" value=""
         sx={{ p: 2, width: 350, height: 50, bgcolor: '#0C495A', color: '#FBBD19', mb: 1 }}
+        onClick={handleGoogleLogin}
             > Sign in with Google</Button>
       </Box>
 
