@@ -51,43 +51,43 @@ function SubmissionPage() {
 
     //options for multiselect drop down date menu
     const dates = [
-        { id: 1, date: 'Saturday, September 17, 2022' },
-        { id: 2, date: 'Sunday, September 18, 2022' },
-        { id: 3, date: 'Monday, September 19, 2022' },
-        { id: 4, date: 'Tuesday, September 20, 2022' },
-        { id: 5, date: 'Wednesday, September 21, 2022' },
-        { id: 6, date: 'Thursday, September 22, 2022' },
-        { id: 7, date: 'Friday, September 23, 2022' },
+        'Saturday, September 17, 2022',
+        'Sunday, September 18, 2022',
+        'Monday, September 19, 2022',
+        'Tuesday, September 20, 2022',
+        'Wednesday, September 21, 2022',
+        'Thursday, September 22, 2022',
+        'Friday, September 23, 2022',
     ]//end dates
 
     //options for multiselect drop down time menu
     const times = [
-        { id: 1, time: 'Morning: 8am - 11am' },
-        { id: 2, time: 'Midday: 11 am - 2pm' },
-        { id: 3, time: 'Afternoon: 2pm - 5pm' },
-        { id: 4, time: 'Evening: 5pm - 9pm' },
+        'Morning: 8am - 11am',
+        'Midday: 11 am - 2pm',
+        'Afternoon: 2pm - 5pm',
+        'Evening: 5pm - 9pm',
     ]//end times
 
     //options for multiselect drop down industries menu
     const industries = [
-        { id: 1, name: 'General Entrepreneuership' },
-        { id: 2, name: 'Technology' },
-        { id: 3, name: 'Healthcare' },
-        { id: 4, name: 'Retail' },
-        { id: 5, name: 'Food and Ag' },
-        { id: 6, name: 'Education and Training' },
-        { id: 7, name: 'Sales' },
-        { id: 8, name: 'Marketing and Advertising' },
-        { id: 9, name: 'Investing' },
-        { id: 10, name: 'Cryptocurrency' },
-        { id: 11, name: 'Creative Economy' },
-        { id: 12, name: 'Med Device/MedTech' },
-        { id: 13, name: 'FinTech' },
-        { id: 14, name: 'Hemp & Cannabis' },
-        { id: 15, name: 'Smart Cities' },
-        { id: 16, name: 'Social Impact' },
-        { id: 17, name: 'Art & Culture' },
-        { id: 18, name: 'Other' },
+        'General Entrepreneuership',
+        'Technology',
+        'Healthcare',
+        'Retail',
+        'Food and Ag',
+        'Education and Training',
+        'Sales',
+        'Marketing and Advertising',
+        'Investing',
+        'Cryptocurrency',
+        'Creative Economy',
+        'Med Device/MedTech',
+        'FinTech',
+        'Hemp & Cannabis',
+        'Smart Cities',
+        'Social Impact',
+        'Art & Culture',
+        'Other',
     ]
 
     const theme = useTheme();
@@ -161,7 +161,7 @@ function SubmissionPage() {
 
     //posting new submission to db as an object
     const addSubmission = (event) => {
-        console.log('adding a new submission' );
+        console.log('adding a new submission');
         event.preventDefault();
         const newSubmission = {
             email: email,
@@ -172,11 +172,11 @@ function SubmissionPage() {
             attendees: attendees,
             location: location,
             location_details: locationDetails,
-            date: individualDate.id, //need to look at this more specifically - goes with multiselect
+            date: individualDate, //need to look at this more specifically - goes with multiselect
             length: length,
-            time: individualTime.id, //need to look at this one too - goes with multi select
+            time: individualTime, //need to look at this one too - goes with multi select
             format: format,
-            industry: individualIndustry.id, //another multiselect to fix
+            industry: individualIndustry, //another multiselect to fix
             track: track,
             area_of_interest: areaOfInterest,
             diversity: diversity,
@@ -219,7 +219,7 @@ function SubmissionPage() {
 
     return (
         <>
-            
+
             <Box p={2}>
                 <Typography variant="h5" align="center" className={classes.title}>
                     TCSW Session Selector Form
@@ -287,7 +287,7 @@ function SubmissionPage() {
                                             {dates.map((date) => (
                                                 <MenuItem
                                                     key={date}
-                                                    value={date.id}
+                                                    value={date}
                                                     style={getDateStyles(date, individualDate, theme)}
                                                 >
                                                     {date}
@@ -320,7 +320,7 @@ function SubmissionPage() {
                                             {times.map((time) => (
                                                 <MenuItem
                                                     key={time}
-                                                    value={time.id}
+                                                    value={time}
                                                     style={getTimeStyles(time, individualTime, theme)}
                                                 >
                                                     {time}
@@ -366,7 +366,7 @@ function SubmissionPage() {
                                             {industries.map((industry) => (
                                                 <MenuItem
                                                     key={industry}
-                                                    value={industry.id}
+                                                    value={industry}
                                                     style={getIndustryStyles(industry, individualIndustry, theme)}
                                                 >
                                                     {industry}
@@ -457,9 +457,9 @@ function SubmissionPage() {
                                 <Typography variant="caption" display="block" gutterBottom>Did we miss anything? Do you have questions? Is there something else about your event you want to share that didn't fit in the questions above? Let us know!</Typography>
                                 <TextField fullWidth id="outlined-basic" label="More to share?" variant="outlined" required value={otherInfo} onChange={(event) => setOtherInfo(event.target.value)} />
                             </Box>
-                            
+
                             <Button variant="contained" type="submit" className={classes.buttonText}>Submit</Button>
-                        
+
                         </FormControl>
                     </form>
                 </Container>
