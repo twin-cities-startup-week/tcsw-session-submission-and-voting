@@ -30,6 +30,19 @@ Before you get started, make sure you have the following software installed on y
 4. Run `npm run server` and `npm run client` 
 5. Navigate to `localhost:3000` and voila!
 
+## Setting up Google Auth
+
+In order to use Google Auth, a `GOOGLE CLIENT ID` and `GOOGLE CLIENT SECRET` must be added to your .env file.
+
+1. Create a Google Cloud Project Account: https://console.cloud.google.com/
+2. Create an account with one of your email accounts and agree to terms of service.
+3. In the left hand menu, click `APIs and Services`
+4. Click `OAuth and Consent` Screen
+5. Click `Create Project` on the right hand side.
+6. Name your project (Session Selector)
+7. Click `external` under `user type`
+8. 
+
 
 ## Technologies Used
 - Javascript, HTML, CSS, Material UI, React, Redux, Redux Sagas, Express, Node, PostgreSQL, Google OAuth
