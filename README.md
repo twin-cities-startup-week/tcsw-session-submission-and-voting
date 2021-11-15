@@ -35,7 +35,7 @@ Before you get started, make sure you have the following software installed on y
 - Javascript, HTML, CSS, Material UI, React, Redux, Redux Sagas, Express, Node, PostgreSQL, Google OAuth
 
 ## Acknowledgements
-We would like to thank our instructor, Chris Black, as well as everyone in the Proth Cohort and everyone on staff at Prime Digital Academy for turning us into full stack developers in a matter of weeks. Additional thanks to Kelly Schultze at Beta.mn for giving us the opportunity to develop the submission portal for Twin Cities Startup Week 2022!
+We would like to thank our instructor, Chris Black, as well as everyone in the Proth Cohort and everyone on staff at Prime Digital Academy for turning us into full stack developers in a mere matter of weeks! Additional thanks to Kelly Schultze and her team at Beta.MN for giving us the opportunity to develop the submission portal for Twin Cities Startup Week 2022!
 
 ## Support
 If you have feedback or issues with the app, you can contact us at
