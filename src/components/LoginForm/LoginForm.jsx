@@ -8,6 +8,7 @@ import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
+import GoogleSignin from '../GoogleSignin/GoogleSignin';
 
 function LoginForm() {
   const [username, setUsername] = useState('');
@@ -32,8 +33,9 @@ function LoginForm() {
     }
   }; // end login
 
-  const createAccount = () => {
-    history.push('/registration');
+  const handleGoogleLogin = () => {
+    // dispatch({ type: 'GOOGLE_LOGIN' })
+    window.location.href='http://localhost:5000/auth/google';
   }
 
   return (
@@ -42,9 +44,11 @@ function LoginForm() {
 
       <h2 className="registerHeader">Sign In</h2>
 
+      {/* <GoogleSignin/> */}
       <Box sx={{ textAlign: 'center' }}>
         <Button variant="contained" type="submit" value=""
         sx={{ p: 2, width: 350, height: 50, bgcolor: '#0C495A', color: '#FBBD19', mb: 1 }}
+        onClick={handleGoogleLogin}
             > Sign in with Google</Button>
       </Box>
 
