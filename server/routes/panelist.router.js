@@ -4,6 +4,7 @@ const router = express.Router();
 
 router.get('/', ( req, res ) => {
     const queryText = `SELECT * FROM "session";`;
+
     pool.query( queryText )
     .then(( result ) => {
         res.send( result.rows )
@@ -15,9 +16,10 @@ router.get('/', ( req, res ) => {
 
 router.get('/details/:id', ( req, res ) => {
     const queryText = 'SELECT * FROM "session" WHERE "id" = $1';
-    pool.query( queryText, [ req.params.id  ])
+    
+    pool.query( queryText, [ req.params.id  ] )
     .then(( result ) => {
-        res.send( result.rows[0] )
+        res.send( result.rows )
     }).catch(( error ) => {
         console.log('error in router get movie details', error );
         res.send(500)

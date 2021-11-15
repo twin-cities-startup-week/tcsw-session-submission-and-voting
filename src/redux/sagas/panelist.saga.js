@@ -15,9 +15,12 @@ function* fetchPanelists() {
 function* fetchPanelDetails( action ) {
     try{
         const detail = action.payload;
-        console.log('this is the action payload for panel details', action.payload);
+        console.log('this is the detail action.payload', action.payload);
         
         const viewDetails = yield axios.get(`/api/panelists/details/${detail.id}`)
+        console.log('this is the panelist details', viewDetails);
+        
+
         yield put({ type: 'SET_PANEL_DETAILS', payload: viewDetails.data })
     } catch (error) {
         console.log('error in GET panelist details', error );

@@ -27,7 +27,7 @@ function Panelists() {
     }
 
     const goToPanelDetails = ( session ) => {
-        dispatch({ type: 'FETCH_PANELIST', payload: session})
+        dispatch({ type: 'FETCH_PANEL_DETAILS', payload: session})
 
         history.push('/votepage')
     }
@@ -101,7 +101,7 @@ function Panelists() {
                 <tbody>
                     {store.panelistReducer.map((panelist) => (
                         <tr>
-                            <td onClick={goToPanelDetails}>{panelist.title}</td>
+                            <td onClick={ () => goToPanelDetails( panelist )}>{panelist.title}</td>
                             <td>{panelist.location_details}</td>
                         </tr>
                     ))}
