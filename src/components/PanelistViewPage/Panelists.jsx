@@ -54,7 +54,7 @@ function Panelists() {
             }).map((speakers, key) => {
                 return(
                     <div className='search-list' key={key}>
-                        <p onClick={goToPanelDetails}>{speakers.title}</p>
+                        <p onClick={ () => goToPanelDetails( speakers )}>{speakers.title}</p>
                     </div>
                 )
                 
