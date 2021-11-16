@@ -62,13 +62,13 @@ CREATE TABLE "session" (
     "phone" VARCHAR (255), /* Additional contact phone */
     "user_id" integer REFERENCES "user",
     "industry" VARCHAR(255),
-    "track_id" integer REFERENCES "track",
+    "track" VARCHAR(255),
     "rehersal" BOOLEAN,
     "covid" BOOLEAN,
     "speakers" VARCHAR (500), /* Who would you like to speak at your event? */
     "diversity" BOOLEAN,
-    "purpose_id" integer REFERENCES "purpose",
-    "location_id" integer REFERENCES "location",
+    "purpose" VARCHAR(255),
+    "location" VARCHAR(255),
     "location_details" VARCHAR (500),
     "time" VARCHAR(255),
     "date" VARCHAR(255), 
@@ -77,8 +77,8 @@ CREATE TABLE "session" (
     "description" VARCHAR (1000),
     "attendees" VARCHAR (255),
     "length" VARCHAR (255), /* Approx how long will your event be? */
-    "format_id" integer REFERENCES "format",
-    "area_of_interest_id" integer REFERENCES "area_of_interest", /* Does your event cater to one or more of the following? */
+    "format" VARCHAR(255),
+    "area_of_interest" VARCHAR(255), /* Does your event cater to one or more of the following? */
     "media" VARCHAR (500), /* links to youtube? */
     "image" VARCHAR (500), /* STRETCH, AWS S3 bucket. */
     "success" VARCHAR (500),
