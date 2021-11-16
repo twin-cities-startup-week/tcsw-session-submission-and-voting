@@ -190,11 +190,11 @@ function SubmissionPage() {
             other_info: otherInfo,
         }
         console.log('The new submission is', newSubmission);
-        if( email === '' || phone === '' || host === '' || title === '' || description === '' || attendees === '' || location === '' || locationDetails === '' || length === '' || format === '' || track === '' || areaOfInterest === ''
-        || diversity === '' || speakers === '' || covid === '' || media === '' || success === '' || excited === '' || otherHosts === '' || otherInfo === '' || individualIndustry === '' || individualTime === '' || indvidualDate === '' ){
-            alert('All fields must be completed in order to submit the form!');
-            return;
-        }
+        // if( email === '' || phone === '' || host === '' || title === '' || description === '' || attendees === '' || location === '' || locationDetails === '' || length === '' || format === '' || track === '' || areaOfInterest === ''
+        // || diversity === '' || speakers === '' || covid === '' || media === '' || success === '' || excited === '' || otherHosts === '' || otherInfo === '' || individualIndustry === '' || individualTime === '' || indvidualDate === '' ){
+        //     alert('All fields must be completed in order to submit the form!');
+        //     return;
+        // }
         dispatch({ type: 'POST_SUBMISSION_TO_SERVER', payload: newSubmission });
     }//end addSubmission
 
@@ -204,13 +204,13 @@ function SubmissionPage() {
     const [host, setHost] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [attendees, setAttendees] = useState('');
+    const [attendees, setAttendees] = useState('Online via the TCSW virtual venue');
     const [location, setLocation] = useState('');
     const [locationDetails, setLocationDetails] = useState('');
     const [length, setLength] = useState('');
-    const [format, setFormat] = useState('');
-    const [track, setTrack] = useState('');
-    const [areaOfInterest, setAreaOfInterest] = useState('');
+    const [format, setFormat] = useState('Presentation');
+    const [track, setTrack] = useState('Growth');
+    const [areaOfInterest, setAreaOfInterest] = useState('Celebrating and empowering female leaders');
     const [diversity, setDiversity] = useState(true);
     const [speakers, setSpeakers] = useState('');
     const [covid, setCovid] = useState(true);

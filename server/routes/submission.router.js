@@ -30,12 +30,12 @@ router.get('/approved', (req, res) => {
 router.post('/', (req, res) => {
     const newSubmission = req.body;
     console.log('The new rec is', newSubmission);
-    const queryText = `INSERT INTO "session" ("title", "email", "phone", "user_id","industry_id",
-    "track_id", "rehersal", "covid", "speakers", "diversity", "purpose_id", 
-    "location_id", "location_details", "time_id", "date_id", "host", 
-    "description", "attendees", "length", "format_id", "area_of_interest_id", 
-    "media", "image", "success", "excited", "other_hosts", "other_info" ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,
-        $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27)`
+    const queryText = `INSERT INTO "session" ("title", "email", "phone", "user_id","industry",
+    "track", "rehersal", "covid", "speakers", "diversity", "purpose", 
+    "location", "location_details", "time", "date", "host", 
+    "description", "attendees", "length", "format", "area_of_interest", 
+    "media", "success", "excited", "other_hosts", "other_info" ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,
+        $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26)`
     pool.query(queryText,
         [newSubmission.title,
         newSubmission.email,
@@ -59,8 +59,7 @@ router.post('/', (req, res) => {
         newSubmission.format,
         newSubmission.area_of_interest,
         newSubmission.media,
-        newSubmission.image,
-        newSubmission.sucess,
+        newSubmission.success,
         newSubmission.excited,
         newSubmission.other_hosts,
         newSubmission.other_info,
