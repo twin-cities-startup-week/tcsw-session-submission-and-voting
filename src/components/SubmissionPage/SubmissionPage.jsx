@@ -172,18 +172,18 @@ function SubmissionPage() {
             attendees: attendees,
             location: location,
             location_details: locationDetails,
-            date: individualDate, //need to look at this more specifically - goes with multiselect
+            date: individualDate, 
             length: length,
-            time: individualTime, //need to look at this one too - goes with multi select
+            time: individualTime, 
             format: format,
-            industry: individualIndustry, //another multiselect to fix
+            industry: individualIndustry, 
             track: track,
             area_of_interest: areaOfInterest,
             diversity: diversity,
             speakers: speakers,
             covid: covid,
             media: media,
-            image: image, //need to ask Sarah F about this/do more research
+            // image: image, stretch goal: AWS 
             success: success,
             excited: excited,
             other_hosts: otherHosts,
@@ -432,13 +432,14 @@ function SubmissionPage() {
                                 </FormControl>
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom>Please share any related media you would like to have included on your TCSW session listing.  </Typography>
+                                <Typography variant="body2" gutterBottom>Please share any related media you would like to have included on your TCSW session listing (YouTube links, etc).  </Typography>
                                 <TextField fullWidth id="outlined-basic" label="Media" variant="outlined" required value={media} onChange={(event) => setMedia(event.target.value)} />
                             </Box>
-                            <Box p={1}>
+                            {/* This field is for uploading files and will need to be completed/updated */}
+                            {/* <Box p={1}>
                                 <Typography variant="body2" gutterBottom>Please share a session image (file upload - to do ).  </Typography>
                                 <TextField fullWidth id="outlined-basic" label="Image" variant="outlined" required value={image} onChange={(event) => setImage(event.target.value)} />
-                            </Box>
+                            </Box> */}
                             <Box p={1}>
                                 <Typography variant="body2" gutterBottom>What does success look like for your event? </Typography>
                                 <TextField fullWidth id="outlined-basic" label="Success looks like:" variant="outlined" required value={success} onChange={(event) => setSuccess(event.target.value)} />
