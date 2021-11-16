@@ -204,12 +204,13 @@ function SubmissionPage() {
     const [host, setHost] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [attendees, setAttendees] = useState('Online via the TCSW virtual venue');
-    const [location, setLocation] = useState('');
+    const [attendees, setAttendees] = useState('');
+    const [location, setLocation] = useState('Online via the TCSW virtual venue');
     const [locationDetails, setLocationDetails] = useState('');
     const [length, setLength] = useState('');
     const [format, setFormat] = useState('Presentation');
     const [track, setTrack] = useState('Growth');
+    const [purpose, setPurpose] = useState('To enable: Help teach a skill or set of skills')
     const [areaOfInterest, setAreaOfInterest] = useState('Celebrating and empowering female leaders');
     const [diversity, setDiversity] = useState(true);
     const [speakers, setSpeakers] = useState('');
@@ -402,6 +403,16 @@ function SubmissionPage() {
                             </Box>
                             <Box p={1}>
                                 <Typography variant="body2" gutterBottom>What is the purpose of your event? </Typography>
+                                <FormControl component="fieldset" value={purpose} onChange={(event) => setPurpose(event.target.value)}>
+                                    <RadioGroup defaultValue="Online via the TCSW virtual venue" name="radio-buttons-group">
+                                        <FormControlLabel value={'To Enable: Help teach a skill or set of skills'} control={<Radio />} label="To Enable: Help teach a skill or set of skills" />
+                                        <FormControlLabel value={'To Inspire: Inspire attendees through showcasing'} control={<Radio />} label="To Inspire: Inspire attendeess through showcasing" />
+                                        <FormControlLabel value={'To Connect: Help bring like minded people together so they can connect and network'} control={<Radio />} label="To Connect: Help bring like minded people together so they can connect and network" />
+                                    </RadioGroup>
+                                </FormControl>
+                            </Box>
+                            <Box p={1}>
+                                <Typography variant="body2" gutterBottom>Does your event cater to one or more of the following? </Typography>
                                 <FormControl component="fieldset" required value={areaOfInterest} onChange={(event) => setAreaOfInterest(event.target.value)}>
                                     <RadioGroup defaultValue="Celebrating and empowering female leaders" name="radio-buttons-group">
                                         <FormControlLabel value={'Celebrating and empowering female leaders'} control={<Radio />} label="Celebrating and empowering female leaders" />
