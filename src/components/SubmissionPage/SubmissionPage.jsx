@@ -170,7 +170,7 @@ function SubmissionPage() {
         event.preventDefault();
         dispatch({ type: 'GET_USER_ID'});
         const newSubmission = {
-            id: submission.id,
+            // id: submission.id,
             email: email,
             phone: phone,
             host: host,
