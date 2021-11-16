@@ -196,7 +196,31 @@ function SubmissionPage() {
         //     return;
         // }
         dispatch({ type: 'POST_SUBMISSION_TO_SERVER', payload: newSubmission });
-        dispatch({ type: 'CLEAR_INPUTS'});
+        //need to add dispatch to get user_id
+        setEmail('');
+        setPhone('');
+        setHost('');
+        setTitle('');
+        setDescription('');
+        setAttendees('');
+        setLocation('Online via the TCSW virtual venue');
+        setLocationDetails('');
+        setIndividualDate('');
+        setLength('');
+        setIndividualTime('');
+        setFormat('Presentation');
+        setIndividualIndustry('');
+        setTrack('Growth');
+        setPurpose('To Enable: Help teach a skill or set of skills');
+        setAreaOfInterest('Celebrating and empowering female leaders');
+        setDiversity('Yes');
+        setCovid('Yes');
+        setMedia('');
+        setSuccess('');
+        setExcited('');
+        setOtherHosts('');
+        setOtherInfo('');
+        
     }//end addSubmission
 
     //variables for individual form questions (multiselects are above)
@@ -342,7 +366,7 @@ function SubmissionPage() {
                             <Box p={1}>
                                 <Typography variant="body2" gutterBottom>What is the event format? </Typography>
                                 <FormControl component="fieldset" required value={format} onChange={(event) => setFormat(event.target.value)}>
-                                    <RadioGroup defaultValue="Presentation " name="radio-buttons-group">
+                                    <RadioGroup defaultValue="Presentation" name="radio-buttons-group">
                                         <FormControlLabel value={'Presentation'} control={<Radio />} label="Presentation" />
                                         <FormControlLabel value={'Panel'} control={<Radio />} label="Panel" />
                                         <FormControlLabel value={'Workshop'} control={<Radio />} label="Workshop" />
@@ -405,7 +429,7 @@ function SubmissionPage() {
                             <Box p={1}>
                                 <Typography variant="body2" gutterBottom>What is the purpose of your event? </Typography>
                                 <FormControl component="fieldset" value={purpose} onChange={(event) => setPurpose(event.target.value)}>
-                                    <RadioGroup defaultValue="Online via the TCSW virtual venue" name="radio-buttons-group">
+                                    <RadioGroup defaultValue="To Enable: Help teach a skill or set of skills" name="radio-buttons-group">
                                         <FormControlLabel value={'To Enable: Help teach a skill or set of skills'} control={<Radio />} label="To Enable: Help teach a skill or set of skills" />
                                         <FormControlLabel value={'To Inspire: Inspire attendees through showcasing'} control={<Radio />} label="To Inspire: Inspire attendeess through showcasing" />
                                         <FormControlLabel value={'To Connect: Help bring like minded people together so they can connect and network'} control={<Radio />} label="To Connect: Help bring like minded people together so they can connect and network" />
