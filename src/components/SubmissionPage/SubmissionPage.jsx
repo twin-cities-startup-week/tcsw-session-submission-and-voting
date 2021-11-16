@@ -196,6 +196,7 @@ function SubmissionPage() {
         //     return;
         // }
         dispatch({ type: 'POST_SUBMISSION_TO_SERVER', payload: newSubmission });
+        dispatch({ type: 'CLEAR_INPUTS'});
     }//end addSubmission
 
     //variables for individual form questions (multiselects are above)
