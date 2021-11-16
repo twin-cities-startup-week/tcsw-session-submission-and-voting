@@ -8,7 +8,7 @@
 
 CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (255),
+    "username" VARCHAR (255) UNIQUE,
     "first_name" VARCHAR (255),
     "last_name" VARCHAR (255),
     "email" VARCHAR (255),
@@ -62,13 +62,13 @@ CREATE TABLE "session" (
     "phone" VARCHAR (255), /* Additional contact phone */
     "user_id" integer REFERENCES "user",
     "industry" VARCHAR(255),
-    "track_id" integer REFERENCES "track",
+    "track" VARCHAR(255),
     "rehersal" BOOLEAN,
     "covid" BOOLEAN,
     "speakers" VARCHAR (500), /* Who would you like to speak at your event? */
     "diversity" BOOLEAN,
-    "purpose_id" integer REFERENCES "purpose",
-    "location_id" integer REFERENCES "location",
+    "purpose" VARCHAR(255),
+    "location" VARCHAR(255),
     "location_details" VARCHAR (500),
     "time" VARCHAR(255),
     "date" VARCHAR(255), 
@@ -77,8 +77,8 @@ CREATE TABLE "session" (
     "description" VARCHAR (1000),
     "attendees" VARCHAR (255),
     "length" VARCHAR (255), /* Approx how long will your event be? */
-    "format_id" integer REFERENCES "format",
-    "area_of_interest_id" integer REFERENCES "area_of_interest", /* Does your event cater to one or more of the following? */
+    "format" VARCHAR(255),
+    "area_of_interest" VARCHAR(255), /* Does your event cater to one or more of the following? */
     "media" VARCHAR (500), /* links to youtube? */
     "image" VARCHAR (500), /* STRETCH, AWS S3 bucket. */
     "success" VARCHAR (500),
@@ -181,30 +181,28 @@ SET "genre_id" = '13'
 WHERE "movie_id" = '10'
 
 INSERT INTO "session" ("title", "email", "phone", "user_id","industry",
-"track_id", "rehersal", "covid", "speakers", "diversity", "purpose_id", 
-"location_id", "location_details", "time", "date", "votes", "host", 
-"description", "attendees", "length", "format_id", "area_of_interest_id", 
+"track", "rehersal", "covid", "speakers", "diversity", "purpose", 
+"location", "location_details", "time", "date", "votes", "host", 
+"description", "attendees", "length", "format", "area_of_interest", 
 "media", "image", "success", "excited", "other_hosts", "other_info", 
 "awaiting_approval", "approved")
 VALUES ('Session Test',
 'someonetocontact@notawebsiteatall.nope', 
-'1234567890', '2', 'Healthcare', '1', true, true, 'Dr. Speaker McSpeakerson', true,
-'2', '1','Event will be only online','Evening 5pm-9pm','Wednesday, Sept. 21st','0','',
+'1234567890', '2', 'Healthcare', 'Founder', true, true, 'Dr. Speaker McSpeakerson', true,
+'To Enable: Help teach a skill or set of skills', 'In-person','Event will be only online','Evening 5pm-9pm','Wednesday, Sept. 21st','0','',
 'This is a description of the event. Lorum ipsum dolor sit amet...', '15-20', 
-'About 30min', '2', '2', '', 'Image', 'Success looks like success', 
+'About 30min', 'Workshop', 'Supporting impact ventures or social enterprises', '', 'Image', 'Success looks like success', 
 'I am excited to meet people who enjoy this type of event.', 'No comment', 
 'No additional info.', false, true);
 
 INSERT INTO "session" ("title", "email", "phone", "user_id","industry",
-"track_id", "rehersal", "covid", "speakers", "diversity", "purpose_id", 
-"location_id", "location_details", "time", "date", "votes", "host", 
-"description", "attendees", "length", "format_id", "area_of_interest_id", 
+"track", "rehersal", "covid", "speakers", "diversity", "purpose", 
+"location", "location_details", "time", "date", "votes", "host", 
+"description", "attendees", "length", "format", "area_of_interest", 
 "media", "image", "success", "excited", "other_hosts", "other_info", 
 "awaiting_approval", "approved")
 VALUES ('Another Session Test',
 'personemail@notawebsiteatall.nope', 
-'0001237654', '1', 'General Entrepreneurship', '1', true, true, 'Mr. TalksALot', true,'1', '2',
-'','Morning 8am-11am','Sunday, Sept. 18th','0','','This is a description of the event. Lorum ipsum dolor sit amet...', 
-'40ish', '1 hour', '3', '1', '', 'A picture', 'Lots of people and lots of talking', 
+'0001237654', '1', 'General Entrepreneurship', 'Developer', true, true, 'Mr. TalksALot', true, 'To Inspire: Inspire attendees through showcasing', 'Online via TCSW virtual venue', '','Morning 8am-11am','Sunday, Sept. 18th','0','','This is a description of the event. Lorum ipsum dolor sit amet...', '40ish', '1 hour', 'Fireside Chat', 'Celebrating and empowering female founders', '', 'A picture', 'Lots of people and lots of talking', 
 'Talking to people who enjoy what I do.', 'No comment', 'No additional info.', 
 true, false);
