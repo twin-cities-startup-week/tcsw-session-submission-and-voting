@@ -4,6 +4,8 @@ const submission = ( state = [], action ) => {
     switch(action.type){
         case 'ADD_SUBMISSION':
             return [...state, action.payload ];
+        case 'SET_USER_ID':
+                return action.payload;
         default:
             return state;
     }

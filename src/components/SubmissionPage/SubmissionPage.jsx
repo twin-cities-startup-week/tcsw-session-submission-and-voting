@@ -14,7 +14,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@mui/styles';
 import {useHistory} from 'react-router-dom';
 
@@ -25,6 +25,7 @@ function SubmissionPage() {
 
 
     const history = useHistory();
+    const userId = useSelector(store=>store.submission.id);
 
     const useStyles = makeStyles({
         title: {
@@ -37,9 +38,6 @@ function SubmissionPage() {
         buttonText: {
             color: '#FBBD19'
         },
-        inputHeading: {
-            fo
-        }
     })
 
     const classes = useStyles();
@@ -172,6 +170,7 @@ function SubmissionPage() {
         event.preventDefault();
         dispatch({ type: 'GET_USER_ID'});
         const newSubmission = {
+            id: submission.id,
             email: email,
             phone: phone,
             host: host,
@@ -259,7 +258,7 @@ function SubmissionPage() {
 
     return (
         <>
-
+                {JSON.stringify({userId})}
             <Box p={2}>
                 <Typography variant="h5" align="center" className={classes.title}>
                     TCSW Session Selector Form

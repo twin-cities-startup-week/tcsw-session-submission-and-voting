@@ -7,7 +7,9 @@ const {
 
 //GET route to fetch user id for submission form
 router.get('/userId', (req, res) => {
-    const queryText = `SELECT * FROM "user" WHERE "id" = $1`;
+    const queryText = `SELECT * from "user"
+    JOIN "session" ON "user"."id"="session"."user_id"
+    WHERE "user"."id" = $1;`;
     pool.query(queryText)
     .then(result => {
         res.send(result.rows);
