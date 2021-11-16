@@ -17,10 +17,10 @@ function Leaderboard() {
         return (rows = {
             id: index,
             title: submission.title,
-            industry: submission.industry_id,
-            track: submission.track_id,
-            location: submission.location_id,
-            date: submission.date_id
+            industry: submission.industry,
+            track: submission.track,
+            location: submission.location,
+            date: submission.date
         });
     });
 
