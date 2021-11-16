@@ -259,9 +259,9 @@ function SubmissionPage() {
                                 <Typography variant="body2" gutterBottom>Where will your event be hosted? </Typography>
                                 <FormControl component="fieldset" value={location} onChange={(event) => setLocation(event.target.value)}>
                                     <RadioGroup defaultValue="Online via the TCSW virtual venue" name="radio-buttons-group">
-                                        <FormControlLabel value={1} control={<Radio />} label="Online via the TCSW virtual venue" />
-                                        <FormControlLabel value={2} control={<Radio />} label="In-person" />
-                                        <FormControlLabel value={3} control={<Radio />} label="Other" />
+                                        <FormControlLabel value={'Online via the TCSW virtual venue'} control={<Radio />} label="Online via the TCSW virtual venue" />
+                                        <FormControlLabel value={'In-person'} control={<Radio />} label="In-person" />
+                                        <FormControlLabel value={'Other'} control={<Radio />} label="Other" />
                                     </RadioGroup>
                                 </FormControl>
                             </Box>
@@ -334,17 +334,17 @@ function SubmissionPage() {
                                 <Typography variant="body2" gutterBottom>What is the event format? </Typography>
                                 <FormControl component="fieldset" required value={format} onChange={(event) => setFormat(event.target.value)}>
                                     <RadioGroup defaultValue="Presentation " name="radio-buttons-group">
-                                        <FormControlLabel value={1} control={<Radio />} label="Presentation" />
-                                        <FormControlLabel value={2} control={<Radio />} label="Panel" />
-                                        <FormControlLabel value={3} control={<Radio />} label="Workshop" />
-                                        <FormControlLabel value={4} control={<Radio />} label="Keynote" />
-                                        <FormControlLabel value={5} control={<Radio />} label="Roundtable" />
-                                        <FormControlLabel value={6} control={<Radio />} label="Fireside Chat" />
-                                        <FormControlLabel value={7} control={<Radio />} label="Showcase" />
-                                        <FormControlLabel value={8} control={<Radio />} label="Demo" />
-                                        <FormControlLabel value={9} control={<Radio />} label="Meetup" />
-                                        <FormControlLabel value={10} control={<Radio />} label="Pitch" />
-                                        <FormControlLabel value={11} control={<Radio />} label="Other" />
+                                        <FormControlLabel value={'Presentation'} control={<Radio />} label="Presentation" />
+                                        <FormControlLabel value={'Panel'} control={<Radio />} label="Panel" />
+                                        <FormControlLabel value={'Workshop'} control={<Radio />} label="Workshop" />
+                                        <FormControlLabel value={'Keynote'} control={<Radio />} label="Keynote" />
+                                        <FormControlLabel value={'Roundtable'} control={<Radio />} label="Roundtable" />
+                                        <FormControlLabel value={'Fireside Chat'} control={<Radio />} label="Fireside Chat" />
+                                        <FormControlLabel value={'Showcase'} control={<Radio />} label="Showcase" />
+                                        <FormControlLabel value={'Demo'} control={<Radio />} label="Demo" />
+                                        <FormControlLabel value={'Meetup'} control={<Radio />} label="Meetup" />
+                                        <FormControlLabel value={'Pitch'} control={<Radio />} label="Pitch" />
+                                        <FormControlLabel value={'Other'} control={<Radio />} label="Other" />
                                     </RadioGroup>
                                 </FormControl>
                             </Box>
@@ -381,15 +381,15 @@ function SubmissionPage() {
                                 <Typography variant="body2" gutterBottom>In which track would you like your event featured? </Typography>
                                 <FormControl component="fieldset" required value={track} onChange={(event) => setTrack(event.target.value)}>
                                     <RadioGroup defaultValue="Growth" name="radio-buttons-group">
-                                        <FormControlLabel value={1} control={<Radio />} label="Growth" />
-                                        <FormControlLabel value={2} control={<Radio />} label="Founder" />
-                                        <FormControlLabel value={3} control={<Radio />} label="Designer" />
-                                        <FormControlLabel value={4} control={<Radio />} label="Maker" />
-                                        <FormControlLabel value={5} control={<Radio />} label="Product" />
-                                        <FormControlLabel value={6} control={<Radio />} label="Developer" />
-                                        <FormControlLabel value={7} control={<Radio />} label="People" />
-                                        <FormControlLabel value={8} control={<Radio />} label="Spotlight" />
-                                        <FormControlLabel value={9} control={<Radio />} label="Other" />
+                                        <FormControlLabel value={'Growth'} control={<Radio />} label="Growth" />
+                                        <FormControlLabel value={'Founder'} control={<Radio />} label="Founder" />
+                                        <FormControlLabel value={'Designer'} control={<Radio />} label="Designer" />
+                                        <FormControlLabel value={'Maker'} control={<Radio />} label="Maker" />
+                                        <FormControlLabel value={'Product'} control={<Radio />} label="Product" />
+                                        <FormControlLabel value={'Developer'} control={<Radio />} label="Developer" />
+                                        <FormControlLabel value={'People'} control={<Radio />} label="People" />
+                                        <FormControlLabel value={'Spotlight'} control={<Radio />} label="Spotlight" />
+                                        <FormControlLabel value={'Other'} control={<Radio />} label="Other" />
                                     </RadioGroup>
                                 </FormControl>
                             </Box>
@@ -397,14 +397,14 @@ function SubmissionPage() {
                                 <Typography variant="body2" gutterBottom>What is the purpose of your event? </Typography>
                                 <FormControl component="fieldset" required value={areaOfInterest} onChange={(event) => setAreaOfInterest(event.target.value)}>
                                     <RadioGroup defaultValue="Celebrating and empowering female leaders" name="radio-buttons-group">
-                                        <FormControlLabel value={1} control={<Radio />} label="Celebrating and empowering female leaders" />
-                                        <FormControlLabel value={2} control={<Radio />} label="Supporting diversity and inclusion" />
-                                        <FormControlLabel value={3} control={<Radio />} label="Supporting student and youth entrepreneurs" />
-                                        <FormControlLabel value={4} control={<Radio />} label="Highlighting arts and culture" />
-                                        <FormControlLabel value={5} control={<Radio />} label="Engaging investors" />
-                                        <FormControlLabel value={6} control={<Radio />} label="Supporting impact ventures or social enterprises" />
-                                        <FormControlLabel value={7} control={<Radio />} label="None of these specifically" />
-                                        <FormControlLabel value={8} control={<Radio />} label="Other" />
+                                        <FormControlLabel value={'Celebrating and empowering female leaders'} control={<Radio />} label="Celebrating and empowering female leaders" />
+                                        <FormControlLabel value={'Supporting diversity and inclusion'} control={<Radio />} label="Supporting diversity and inclusion" />
+                                        <FormControlLabel value={'Support student and youth entrepreneurs'} control={<Radio />} label="Supporting student and youth entrepreneurs" />
+                                        <FormControlLabel value={'Highlighting arts and culture'} control={<Radio />} label="Highlighting arts and culture" />
+                                        <FormControlLabel value={'Engaging investors'} control={<Radio />} label="Engaging investors" />
+                                        <FormControlLabel value={'Supporting impact ventures or social enterprises'} control={<Radio />} label="Supporting impact ventures or social enterprises" />
+                                        <FormControlLabel value={'None of these specifically'} control={<Radio />} label="None of these specifically" />
+                                        <FormControlLabel value={'Other'} control={<Radio />} label="Other" />
                                     </RadioGroup>
                                 </FormControl>
                             </Box>
