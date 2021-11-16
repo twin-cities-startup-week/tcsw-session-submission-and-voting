@@ -6,6 +6,7 @@ function* submissionSaga(){
     console.log('submission saga is firing');
     yield takeEvery('POST_SUBMISSION_TO_SERVER', sendSubmissionToServer );
     yield takeEvery('GET_APPROVED_SUBMISSIONS', getApprovedSubmissions);
+    yield takeEvery('GET_USER_ID', getUserId )
 }
 
 function* sendSubmissionToServer(action){
@@ -25,6 +26,15 @@ function* getApprovedSubmissions(){
         yield put({ type: 'SET_APPROVED_SUBMISSIONS', payload: approvedSubmissions.data })
     } catch (error) {
         console.log('Error posting submission to DB', error );
+    }
+}
+
+function* getUserId(){
+    try{
+        const userId = yield axios.get('/api/submission/userId');
+        yield put({ type: 'SET_USER_ID', payload: userId.data })
+    } catch (error){
+        console.error('error retrieving user id from db', error );
     }
 }
 

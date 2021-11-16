@@ -36,6 +36,9 @@ function SubmissionPage() {
         },
         buttonText: {
             color: '#FBBD19'
+        },
+        inputHeading: {
+            fo
         }
     })
 
@@ -167,6 +170,7 @@ function SubmissionPage() {
     const addSubmission = (event) => {
         console.log('adding a new submission');
         event.preventDefault();
+        dispatch({ type: 'GET_USER_ID'});
         const newSubmission = {
             email: email,
             phone: phone,
@@ -200,7 +204,6 @@ function SubmissionPage() {
         //     return;
         // }
         dispatch({ type: 'POST_SUBMISSION_TO_SERVER', payload: newSubmission });
-        //need to add dispatch to get user_id
         setEmail('');
         setPhone('');
         setHost('');

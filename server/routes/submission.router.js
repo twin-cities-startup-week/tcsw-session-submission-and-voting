@@ -5,11 +5,15 @@ const {
     rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
 
-/**
- * GET route template
- */
-router.get('/', (req, res) => {
-    // GET route code here
+//GET route to fetch user id for submission form
+router.get('/userId', (req, res) => {
+    const queryText = `SELECT * FROM "user" WHERE "id" = $1`;
+    pool.query(queryText)
+    .then(result => {
+        res.send(result.rows);
+    }).catch (error => {
+        console.log('Error with GET of user id', error );
+    })
 });
 
 // GET route for all APPROVED submissions
@@ -26,7 +30,7 @@ router.get('/approved', (req, res) => {
     })
 })
 
-//POST route for session submission form - WORKING on postman
+//POST route for session submission form 
 router.post('/', (req, res) => {
     const newSubmission = req.body;
     console.log('The new rec is', newSubmission);
@@ -70,5 +74,7 @@ router.post('/', (req, res) => {
             res.sendStatus(500);
         })
 });
+
+
 
 module.exports = router;
