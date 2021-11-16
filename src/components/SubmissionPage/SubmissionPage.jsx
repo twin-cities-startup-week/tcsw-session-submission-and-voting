@@ -16,11 +16,15 @@ import Select from '@mui/material/Select';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { makeStyles } from '@mui/styles';
+import {useHistory} from 'react-router-dom';
 
 
 
 
 function SubmissionPage() {
+
+
+    const history = useHistory();
 
     const useStyles = makeStyles({
         title: {
@@ -220,7 +224,7 @@ function SubmissionPage() {
         setExcited('');
         setOtherHosts('');
         setOtherInfo('');
-        
+        history.push('/leaderboard');
     }//end addSubmission
 
     //variables for individual form questions (multiselects are above)
