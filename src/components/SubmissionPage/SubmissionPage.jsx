@@ -412,7 +412,6 @@ function SubmissionPage() {
                                         </Select>
                                     </FormControl>
                                 </div>
-
                             </Box>
                             <Box p={1}>
                                 <Typography variant="body2" gutterBottom>In which track would you like your event featured? </Typography>
@@ -505,9 +504,9 @@ function SubmissionPage() {
                                 <Typography variant="caption" display="block" gutterBottom>Did we miss anything? Do you have questions? Is there something else about your event you want to share that didn't fit in the questions above? Let us know!</Typography>
                                 <TextField fullWidth id="outlined-basic" label="More to share?" variant="outlined" required value={otherInfo} onChange={(event) => setOtherInfo(event.target.value)} />
                             </Box>
-
-                            <Button variant="contained" type="submit" className={classes.buttonText}>Submit</Button>
-
+                            <Box p={2}>
+                            <Button fullWidth variant="contained" type="submit" className={classes.buttonText}>Submit</Button>
+                            </Box>
                         </FormControl>
                     </form>
                 </Container>
