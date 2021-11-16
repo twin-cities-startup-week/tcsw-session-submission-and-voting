@@ -190,6 +190,11 @@ function SubmissionPage() {
             other_info: otherInfo,
         }
         console.log('The new submission is', newSubmission);
+        if( email === '' || phone === '' || host === '' || title === '' || description === '' || attendees === '' || location === '' || locationDetails === '' || length === '' || format === '' || track === '' || areaOfInterest === ''
+        || diversity === '' || speakers === '' || covid === '' || media === '' || success === '' || excited === '' || otherHosts === '' || otherInfo === '' || individualIndustry === '' || individualTime === '' || indvidualDate === '' ){
+            alert('All fields must be completed in order to submit the form!');
+            return;
+        }
         dispatch({ type: 'POST_SUBMISSION_TO_SERVER', payload: newSubmission });
     }//end addSubmission
 
@@ -210,11 +215,13 @@ function SubmissionPage() {
     const [speakers, setSpeakers] = useState('');
     const [covid, setCovid] = useState(true);
     const [media, setMedia] = useState('');
-    const [image, setImage] = useState('');
+    // const [image, setImage] = useState('');
     const [success, setSuccess] = useState('');
     const [excited, setExcited] = useState('');
     const [otherHosts, setOtherHosts] = useState('');
     const [otherInfo, setOtherInfo] = useState('');
+
+    
 
 
     return (
