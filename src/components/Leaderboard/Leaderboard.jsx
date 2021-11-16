@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
-import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 
 function Leaderboard() {
     const dispatch = useDispatch();
@@ -41,11 +41,11 @@ function Leaderboard() {
             <span></span>
             <span></span>
         </div>
-        <Container component={Paper} sx={{ mt: 15 }}>
+        <Container sx={{ mt: 15 }}>
         <div>
             {/* {JSON.stringify(rows)} */}
         </div>
-            <DataGrid 
+            <DataGrid
                 rows={rows}
                 columns={columns}
             />
