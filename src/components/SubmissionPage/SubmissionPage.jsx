@@ -25,7 +25,7 @@ function SubmissionPage() {
 
 
     const history = useHistory();
-    const userId = useSelector(store=>store.submission.id);
+    const userId = useSelector(store => store.user.id);
 
     const useStyles = makeStyles({
         title: {
@@ -170,7 +170,7 @@ function SubmissionPage() {
         event.preventDefault();
         dispatch({ type: 'GET_USER_ID'});
         const newSubmission = {
-            // id: submission.id,
+            user_id: userId,
             email: email,
             phone: phone,
             host: host,
@@ -258,7 +258,7 @@ function SubmissionPage() {
 
     return (
         <>
-                {JSON.stringify({userId})}
+                {/* {JSON.stringify({userId})} */}
             <Box p={2}>
                 <Typography variant="h5" align="center" className={classes.title}>
                     TCSW Session Selector Form

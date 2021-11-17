@@ -6,17 +6,17 @@ const {
 } = require('../modules/authentication-middleware');
 
 //GET route to fetch user id for submission form
-router.get('/userId', (req, res) => {
-    const queryText = `SELECT * from "user"
-    JOIN "session" ON "user"."id"="session"."user_id"
-    WHERE "user"."id" = $1;`;
-    pool.query(queryText)
-    .then(result => {
-        res.send(result.rows);
-    }).catch (error => {
-        console.log('Error with GET of user id', error );
-    })
-});
+// router.get('/userId', (req, res) => {
+//     const queryText = `SELECT * from "user"
+//     JOIN "session" ON "user"."id"="session"."user_id"
+//     WHERE "user"."id" = $1;`;
+//     pool.query(queryText)
+//     .then(result => {
+//         res.send(result.rows);
+//     }).catch (error => {
+//         console.log('Error with GET of user id', error );
+//     })
+// });
 
 // GET route for all APPROVED submissions
 router.get('/approved', (req, res) => {
