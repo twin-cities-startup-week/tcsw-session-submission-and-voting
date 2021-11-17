@@ -47,28 +47,34 @@ function Panelists() {
 
             {store.panelistReducer.filter((speakers) => {
                 if( searchTerm == '') {
-                    return speakers
+                    return speakers;
                 }else if( speakers.title.toLowerCase().includes(searchTerm.toLowerCase())) {
-                    return speakers
+                    return speakers;
                 }
             }).map((speakers, key) => {
                 return(
                     <div className='search-list' key={key}>
-                        <p onClick={ () => goToPanelDetails( speakers )}>{speakers.title}</p>
+                        {/* <p onClick={ () => goToPanelDetails( speakers )}>{speakers.title}</p> */}
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Title </th>
+                                    <th>Location</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr>
+                                        <td onClick={ () => goToPanelDetails( speakers )}>{speakers.title}</td>
+                                        <td>{speakers.location_details}</td>
+                                    </tr>
+                            </tbody>
+                        </table>
                     </div>
                 )
                 
             })}
 
             <form>
-                <input
-                    type='text'
-                    placeholder='search....'
-                />
-
-                <button>reset</button>
-                <button>search</button>
-
                 <div>
                     <h5>Track</h5>
                     <select>
@@ -85,30 +91,11 @@ function Panelists() {
                         <option value="format2">format</option>
                         <option value="format3">format</option>
                     </select>
-                </div>
-                
-
-
+                </div> 
             </form>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Location</th>
-                        <th>Time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {store.panelistReducer.map((panelist) => (
-                        <tr>
-                            <td onClick={ () => goToPanelDetails( panelist )}>{panelist.title}</td>
-                            <td>{panelist.location_details}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
         </div>
-        )
+    )
 }
 
 export default Panelists;
