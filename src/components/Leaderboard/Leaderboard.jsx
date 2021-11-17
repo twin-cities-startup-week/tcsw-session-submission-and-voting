@@ -15,8 +15,9 @@ function Leaderboard() {
     }, [])
 
     const pushToDetailPage = (params) => {
-        console.log('Id of the clicked row - ', params.row.id)
-        history.push(`/votepage/${params.id}`)
+        console.log('Details of clicked row - ', params.row)
+        dispatch({ type: 'FETCH_PANEL_DETAILS', payload: params.row })
+        history.push(`/votepage`)
     }
 
     let rows = [];
