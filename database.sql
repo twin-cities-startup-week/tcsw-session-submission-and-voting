@@ -64,7 +64,6 @@ CREATE TABLE "session" (
     "user_id" integer REFERENCES "user",
     "industry" VARCHAR(255),
     "track" VARCHAR(255),
-    "rehersal" BOOLEAN,
     "covid" BOOLEAN,
     "speakers" VARCHAR (500), /* Who would you like to speak at your event? */
     "diversity" BOOLEAN,
