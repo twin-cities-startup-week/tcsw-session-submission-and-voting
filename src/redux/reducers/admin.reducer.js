@@ -1,8 +1,10 @@
 const setSessionList = (state = [], action) => {
-    if (action.type === 'SET_SESSION'){
-        return action.payload;
+    switch(action.type){
+        case 'SET_SESSION':
+            return action.payload;
+        default: 
+            return state;
     }
-    return state;
 }
 
 

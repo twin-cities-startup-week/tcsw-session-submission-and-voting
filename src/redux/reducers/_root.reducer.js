@@ -4,6 +4,10 @@ import user from './user.reducer';
 import submission from './submission.reducer';
 import setSessionList from './admin.reducer';
 import setAwaitingApproval from './approvedAwaiting.reducer';
+import setHighestVoting from './highestVoting.reducer';
+import setAllSession from './fetchAllSession.reducer';
+import setApprovalAwaitingInfo from './approvalAwaitingInfo.reducer';
+import setApprovedInfo from './approvedInfo.reducer';
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
 // This is imported in index.js as rootSaga
@@ -16,6 +20,10 @@ const rootReducer = combineReducers({
   submission,
   setSessionList,
   setAwaitingApproval,
+  setHighestVoting,
+  setAllSession,
+  setApprovalAwaitingInfo,
+  setApprovedInfo,
 });
 
 export default rootReducer;
