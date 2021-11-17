@@ -168,7 +168,6 @@ function SubmissionPage() {
     const addSubmission = (event) => {
         console.log('adding a new submission');
         event.preventDefault();
-        dispatch({ type: 'GET_USER_ID'});
         const newSubmission = {
             user_id: userId,
             email: email,
@@ -247,7 +246,7 @@ function SubmissionPage() {
     const [speakers, setSpeakers] = useState('');
     const [covid, setCovid] = useState(true);
     const [media, setMedia] = useState('');
-    // const [image, setImage] = useState('');
+    // const [image, setImage] = useState(''); stretch goal for uploading with AWS S3 bucket
     const [success, setSuccess] = useState('');
     const [excited, setExcited] = useState('');
     const [otherHosts, setOtherHosts] = useState('');
@@ -483,7 +482,7 @@ function SubmissionPage() {
                                 <Typography variant="body2" gutterBottom>Please share any related media you would like to have included on your TCSW session listing (YouTube links, etc).  </Typography>
                                 <TextField fullWidth id="outlined-basic" label="Media" variant="outlined" required value={media} onChange={(event) => setMedia(event.target.value)} />
                             </Box>
-                            {/* This field is for uploading files and will need to be completed/updated */}
+                            {/* This field is for uploading files and will need to be completed/updated - AWS S3 bucket */}
                             {/* <Box p={1}>
                                 <Typography variant="body2" gutterBottom>Please share a session image (file upload - to do ).  </Typography>
                                 <TextField fullWidth id="outlined-basic" label="Image" variant="outlined" required value={image} onChange={(event) => setImage(event.target.value)} />
