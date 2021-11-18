@@ -8,52 +8,53 @@
 
 CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (255) UNIQUE NOT NULL,
-    "password" VARCHAR (255) NOT NULL,
+    "username" VARCHAR (255) UNIQUE,
     "first_name" VARCHAR (255),
     "last_name" VARCHAR (255),
-    "email" VARCHAR (255)
-);
+    "email" VARCHAR (255),
+    "password" VARCHAR (255),
+    "google_id" VARCHAR (255)
+)
 
 CREATE TABLE "format" (
     "id" SERIAL PRIMARY KEY,
     "type" VARCHAR (255)
-);
+)
 
 CREATE TABLE "purpose" (
     "id" SERIAL PRIMARY KEY,
     "name" VARCHAR (255)
-);
+)
 
 CREATE TABLE "location" (
     "id" SERIAL PRIMARY KEY,
     "type" VARCHAR (255)
-);
+)
 
 CREATE TABLE "time" (
     "id" SERIAL PRIMARY KEY,
     "time_of_day" VARCHAR (255)
-);
+)
 
 CREATE TABLE "date" (
     "id" SERIAL PRIMARY KEY,
     "date_of_event" VARCHAR (255)
-);
+)
 
 CREATE TABLE "area_of_interest" (
     "id" SERIAL PRIMARY KEY,
     "type" VARCHAR (255)
-);
+)
 
 CREATE TABLE "industry" (
     "id" SERIAL PRIMARY KEY,
     "name" VARCHAR (255)    
-);
+)
 
 CREATE TABLE "track" (
     "id" SERIAL PRIMARY KEY,
     "name" VARCHAR (255)
-);
+)
 
 CREATE TABLE "session" (
     "id" SERIAL PRIMARY KEY,
@@ -61,26 +62,26 @@ CREATE TABLE "session" (
     "email" VARCHAR (255), /* Additional contact email */
     "phone" VARCHAR (255), /* Additional contact phone */
     "user_id" integer REFERENCES "user",
-    "industry_id" integer REFERENCES "industry",
-    "track_id" integer REFERENCES "track",
+    "industry" VARCHAR(255),
+    "track" VARCHAR(255),
     "rehersal" BOOLEAN,
     "covid" BOOLEAN,
     "speakers" VARCHAR (500), /* Who would you like to speak at your event? */
     "diversity" BOOLEAN,
-    "purpose_id" integer REFERENCES "purpose",
-    "location_id" integer REFERENCES "location",
+    "purpose" VARCHAR(255),
+    "location" VARCHAR(255),
     "location_details" VARCHAR (500),
-    "time_id" integer REFERENCES "time",
-    "date_id" integer REFERENCES "date", 
+    "time" VARCHAR(255),
+    "date" VARCHAR(255), 
     "votes" integer,
     "host" VARCHAR (255),
     "description" VARCHAR (1000),
     "attendees" VARCHAR (255),
-    "length" VARCHAR (255), /* Approx how long will your event be */
-    "format_id" integer REFERENCES "format",
-    "area_of_interest_id" integer REFERENCES "area_of_interest", /* Does your event cater to one or more of the following? */
+    "length" VARCHAR (255), /* Approx how long will your event be? */
+    "format" VARCHAR(255),
+    "area_of_interest" VARCHAR(255), /* Does your event cater to one or more of the following? */
     "media" VARCHAR (500), /* links to youtube? */
-    "image" VARCHAR (500), /* This might be deleted, depending on how AWS S3 bucket works */
+    "image" VARCHAR (500), /* STRETCH, AWS S3 bucket. */
     "success" VARCHAR (500),
     "excited" VARCHAR (500),
     "other_hosts" VARCHAR (500),
@@ -100,23 +101,23 @@ VALUES ('Presentation'),
 ('Demo'),
 ('Meetup'),
 ('Pitch'),
-('Other');
+('Other')
 
 INSERT INTO "purpose" ("name")
 VALUES ('To Enable: Help teach a skill or set of skills'),
 ('To Inspire: Inspire attendees through showcasing'),
-('To Connect: Help bring like minded people together so they can connect and network');
+('To Connect: Help bring like minded people together so they can connect and network')
 
 INSERT INTO "location" ("type")
 VALUES ('Online via TCSW virtual venue'),
 ('In-person'),
-('Other');
+('Other')
 
 INSERT INTO "time" ("time_of_day")
 VALUES ('Morning 8am-11am'),
 ('Midday 11am-2pm'),
 ('Afternoon 2pm-5pm'),
-('Evening 5pm-9pm');
+('Evening 5pm-9pm')
 
 INSERT INTO "date" ("date_of_event")
 VALUES ('Saturday, Sept. 17th'),
@@ -125,7 +126,7 @@ VALUES ('Saturday, Sept. 17th'),
 ('Tuesday, Sept. 20th'),
 ('Wednesday, Sept. 21st'),
 ('Thursday, Sept. 22nd'),
-('Friday, Sept. 23rd');
+('Friday, Sept. 23rd')
 
 INSERT INTO "area_of_interest" ("type")
 VALUES ('Celebrating and empowering female founders'),
@@ -135,7 +136,7 @@ VALUES ('Celebrating and empowering female founders'),
 ('Engaging investors'),
 ('Supporting impact ventures or social enterprises'),
 ('None of these specifically'),
-('Other');
+('Other')
 
 INSERT INTO "industry" ("name")
 VALUES ('General Entrepreneurship'),
@@ -155,7 +156,7 @@ VALUES ('General Entrepreneurship'),
 ('Smart Cities'),
 ('Social Impact'),
 ('Art & Culture'),
-('Other');
+('Other')
 
 INSERT INTO "track" ("name")
 VALUES ('Growth'),
@@ -166,38 +167,43 @@ VALUES ('Growth'),
 ('Developer'),
 ('People'),
 ('Spotlight'),
-('Other');
+('Other')
 
-INSERT INTO "user" ("first_name", "last_name", "email", "password")
-VALUES ('Jess','Bucks','example@notawebsite.com','superDUPERsecret'),
-('Timmy','South','timSouth@notawebsite.com','secretish'),
-('Samantha','Mittens','stuffandthings@notawebsite.com','alsoasecret');
+---------------------------------------------------------------
+-- TEST DATA BELOW THIS LINE
+---------------------------------------------------------------
 
-INSERT INTO "session" ("title", "email", "phone", "user_id","industry_id",
-"track_id", "rehersal", "covid", "speakers", "diversity", "purpose_id", 
-"location_id", "location_details", "time_id", "date_id", "votes", "host", 
-"description", "attendees", "length", "format_id", "area_of_interest_id", 
+UPDATE "user"
+SET "password" = '12345'
+WHERE "username" = 'test1' AND "email" = 'example.test@testtest.blah';
+
+UPDATE "movies_genres"
+SET "genre_id" = '13'
+WHERE "movie_id" = '10'
+
+INSERT INTO "session" ("title", "email", "phone", "user_id","industry",
+"track", "rehersal", "covid", "speakers", "diversity", "purpose", 
+"location", "location_details", "time", "date", "votes", "host", 
+"description", "attendees", "length", "format", "area_of_interest", 
 "media", "image", "success", "excited", "other_hosts", "other_info", 
 "awaiting_approval", "approved")
 VALUES ('Session Test',
 'someonetocontact@notawebsiteatall.nope', 
-'1234567890', '2', '3', '1', true, true, 'Dr. Speaker McSpeakerson', true,
-'2', '1','Event will be only online','4','1','0','',
+'1234567890', '2', 'Healthcare', 'Founder', true, true, 'Dr. Speaker McSpeakerson', true,
+'To Enable: Help teach a skill or set of skills', 'In-person','Event will be only online','Evening 5pm-9pm','Wednesday, Sept. 21st','0','',
 'This is a description of the event. Lorum ipsum dolor sit amet...', '15-20', 
-'About 30min', '2', '2', '', 'Image', 'Success looks like success', 
+'About 30min', 'Workshop', 'Supporting impact ventures or social enterprises', '', 'Image', 'Success looks like success', 
 'I am excited to meet people who enjoy this type of event.', 'No comment', 
-'No additional info.', false, false);
+'No additional info.', false, true);
 
-INSERT INTO "session" ("title", "email", "phone", "user_id","industry_id",
-"track_id", "rehersal", "covid", "speakers", "diversity", "purpose_id", 
-"location_id", "location_details", "time_id", "date_id", "votes", "host", 
-"description", "attendees", "length", "format_id", "area_of_interest_id", 
+INSERT INTO "session" ("title", "email", "phone", "user_id","industry",
+"track", "rehersal", "covid", "speakers", "diversity", "purpose", 
+"location", "location_details", "time", "date", "votes", "host", 
+"description", "attendees", "length", "format", "area_of_interest", 
 "media", "image", "success", "excited", "other_hosts", "other_info", 
 "awaiting_approval", "approved")
 VALUES ('Another Session Test',
 'personemail@notawebsiteatall.nope', 
-'0001237654', '1', '2', '1', true, true, 'Mr. TalksALot', true,'1', '2',
-'','2','2','0','','This is a description of the event. Lorum ipsum dolor sit amet...', 
-'40ish', '1 hour', '3', '1', '', 'A picture', 'Lots of people and lots of talking', 
+'0001237654', '1', 'General Entrepreneurship', 'Developer', true, true, 'Mr. TalksALot', true, 'To Inspire: Inspire attendees through showcasing', 'Online via TCSW virtual venue', '','Morning 8am-11am','Sunday, Sept. 18th','0','','This is a description of the event. Lorum ipsum dolor sit amet...', '40ish', '1 hour', 'Fireside Chat', 'Celebrating and empowering female founders', '', 'A picture', 'Lots of people and lots of talking', 
 'Talking to people who enjoy what I do.', 'No comment', 'No additional info.', 
-false, false);
+true, false);

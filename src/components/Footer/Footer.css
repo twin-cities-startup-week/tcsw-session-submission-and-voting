@@ -1,5 +1,28 @@
 footer {
-  margin-top: 80px;
+  margin-top: 265px;
   padding: 20px;
-  text-align: center;
+  text-align: left;
+  background-color: #0C495A;
+  font-family: 'Gotham Black';
+  color: #FBBD19;
+}
+
+.icon:link {
+  color:#FBBD19;
+  text-decoration: none;
+}
+
+.icon:visited {
+  color:#FBBD19;
+  text-decoration: none;
+}
+
+.icon:hover{
+  color:#FBBD19;
+  text-decoration: none;
+}
+
+.icon:active{
+  color:#FBBD19;
+  text-decoration: none;
 }

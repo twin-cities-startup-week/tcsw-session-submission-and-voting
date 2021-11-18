@@ -20,10 +20,31 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import FaqPage from '../FaqPage/FaqPage';
+<<<<<<< HEAD
 import AdminPage from '../AdminPage/AdminPage';
+=======
+>>>>>>> master
 import SubmissionPage from '../SubmissionPage/SubmissionPage';
+import PanelistViewPage from '../PanelistViewPage/PanelistViewPage';
+import Panelists from '../PanelistViewPage/Panelists'
+import VotePage from '../VotePage/VotePage'; 
+import ForgotPassword from '../ForgotPassword/ForgotPassword';
+import Leaderboard from '../Leaderboard/Leaderboard';
 
 import './App.css';
+
+import {createMuiTheme, ThemeProvider} from '@mui/material/styles';
+
+const theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: '#0C495A',
+      },
+    },
+    typography: {
+      fontFamily: 'Proxima Nova'
+    },
+})
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +56,7 @@ function App() {
   }, [dispatch]);
 
   return (
+    <ThemeProvider theme={theme}>
     <Router>
       <div>
         <Nav />
@@ -52,12 +74,17 @@ function App() {
           </Route>
 
           <Route
+            exact path="/forgotPassword">
+              <ForgotPassword/>
+          </Route>
+          <Route
             // shows FaqPage at all times (logged in or not)
             exact
             path="/faq"
           >
             <FaqPage />
           </Route>
+<<<<<<< HEAD
 
           <Route
             // shows adminPage at all times (logged in or not)
@@ -69,6 +96,12 @@ function App() {
 
 
 
+=======
+          <Route
+            exact path='/leaderboard'>
+              <Leaderboard/>
+          </Route>        
+>>>>>>> master
 
           {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
@@ -96,6 +129,16 @@ function App() {
           >
             <SubmissionPage />
           </ProtectedRoute>
+
+          <Route exact path = "/panelistView">
+            <Panelists />
+            {/* <PanelistViewPage /> */}
+          </Route>
+
+          <Route exact path = "/votepage">
+            {/* <Panelists /> */}
+            <VotePage />
+          </Route>
 
           <Route
             exact
@@ -147,6 +190,7 @@ function App() {
         <Footer />
       </div>
     </Router>
+    </ThemeProvider>
   );
 }
 

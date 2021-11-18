@@ -1,121 +1,102 @@
 
-# EDA Project
-This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
+# Twin Cities Startup Week Session Selector and Voting Portal
+The TCSW Session Selector and Voting App will be used in conjunction with TCSW's primary website and September 2022 conference. When the portal is open for submissions from the public (April 4, 2022 - May 15, 2022), a user will login and be able to submit their proposed "session" (e.g. panel, roundtable, etc. ) after filling out a form with a list of questions. An admin (separate login) will be able to login and "approve" or "reject" sessions from a queue from the general public. Once submissions have closed (May 15,2022), users will be invited to up vote or down vote on the panels that have been approved. There will be one up vote/down vote per person per submitted session and sessions with the most up votes will have some influence on the schedule for TCSW 2022, but other factors will also be taken into consideration (voting will be open from May 23, 2022 - June 5, 2022). Users will also be able to search for a specific panel and sort by certain panel parameters as well as generate a link to share voting info on social media. Finally, there will be a leaderboard page to show logged in users where their panels stand in the voting ranks.
 
-We **STRONGLY** recommend following these instructions carefully. It's a lot, and will take some time to set up, but your life will be much easier this way in the long run.
+Stretch Goals:
+Google Analytics
+Download DB as a .csv file
 
-## Use the Template for This Repository (Don't Clone)
 
-- Don't Fork or Clone. Instead, click the `Use this Template` button, and make a copy to your personal account.
+A deployed version of the app can be found here: ADD LINK ONCE DEPLOYED
 
+## Screenshots
+
+[ADD SCREENSHOTS HERE]
 
 ## Prerequisites
 
 Before you get started, make sure you have the following software installed on your computer:
 
-- [Node.js](https://nodejs.org/en/)
-- [PostrgeSQL](https://www.postgresql.org/)
-- [Nodemon](https://nodemon.io/)
+* [Node.js](https://nodejs.org/en/)
+* [PostrgeSQL](https://www.postgresql.org/)
+* [Nodemon](https://nodemon.io/)
 
-## Create database and table
+## Installation
 
-Create a new database called `prime_app` and create a `user` table:
+1. Create a database named `session_submission`.
+2. The queries in the `database.sql` file are all set up for you. This project was built in Postgres, so you will need to have that installed and we recommend using Postico to run queries, as that is what we used to test our data.
+3. In the .env file, you will need to update the session secret, otherwise you will get a warning. You can use https://passwordsgenerator.net/ to generate a random string for your session secret password.
+3. Open your code editor of choice and run `npm install` to install all dependencies.
+4. Run `npm run server` and `npm run client` 
+5. Navigate to `localhost:3000` and voila!
 
-```SQL
-CREATE TABLE "user" (
-    "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL
-);
-```
+## Setting up Google Auth
 
-If you would like to name your database something else, you will need to change `prime_app` to the name of your new database name in `server/modules/pool.js`
+In order to use Google Auth, a `GOOGLE CLIENT ID` and `GOOGLE CLIENT SECRET` must be added to your .env file.
 
-## Development Setup Instructions
+1. Create a Google Cloud Project Account: https://console.cloud.google.com/
+2. Create an account with one of your email accounts and agree to terms of service.
+3. In the left hand menu, click `APIs and Services`
+4. Click `OAuth and Consent` Screen
+5. Click `Create Project` on the right hand side.
+6. Name your project (Session Selector)
+7. Click `external` under `user type`
+  * If you are not automatically brought to the User Type page, click 'APIs and Services' on the left side menu, the OAuth Consent Screen.
+8. Click 'Create'
+9. App Information:
+  * App Name: Session Selector
+  * User Support Email: your email address
+  * Developer contact information: your email address
+  * If this app is about to go to production, this information will need to be changed to the developer's and the client's information that will be handling app support.
+10. Scope: You don't need any of this. Scroll down to the bottom and click 'Save' and continue.
+11. Test Users:
+  * Click + ADD USERS and add yourself for testing purposes. You will need to click 'ADD' twice in the pop out.
+  * Click 'Save and Continue'
+12. Summary Page: scroll down to the bottom and click 'Back to the Dashboard'
+13. On the lefthand side, click 'Credentials'
+  * Click + CREATE CREDENTIALS at the top of the page
+  * Select OAuth Client ID
+14. On the Create OAuth Client ID page [Photo]('public/images/photo 1 google oauth.png')
+  * Application type: Web Application
+  * Name: Session Selector
+  * Add the Javascript URIs:
+    * http://localhost:3000
+    * http://localhost:5000
+  * Add the redirect URIs:
+    * http://localhost:3000
+    * http://localhost:5000/auth/google/callback
+15.  Click 'Create'
+16. You will be brought back to the Credentials page. Click the project name you just created under OAuth 2.0 Client IDs.
+17.  On the right hand side of your page you will see your own Client ID and Client Secret. DO NOT SHARE THESE. [Photo]('public/images/photo 2 google oauth.png')
+18. In your text editor, (VSCode or equivalent), add a .env file at the same level as your .gitignore
+19. Add the Client ID to your .env file as:
+  * GOOGLE_CLIENT_ID=YOURIDHERE
+20. Add the Client Secret to your .env as:
+  * GOOGLE_CLIENT_SECRET=YOURSECRETHERE
+  * Make sure there are no spaces in this file.
+21. If for some reason you accidentally share your client secret, the button at the top of your page labeled RESET SECRET can be reset at any time. Just remember to update it in your .env file!
 
-- Run `npm install`
-- Create a `.env` file at the root of the project and paste this line into the file:
-  ```
-  SERVER_SESSION_SECRET=superDuperSecret
-  ```
-  While you're in your new `.env` file, take the time to replace `superDuperSecret` with some long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep your application secure. Here's a site that can help you: [https://passwordsgenerator.net/](https://passwordsgenerator.net/). If you don't do this step, create a secret with less than eight characters, or leave it as `superDuperSecret`, you will get a warning.
-- Start postgres if not running already by using `brew services start postgresql`
-- Run `npm run server`
-- Run `npm run client`
-- Navigate to `localhost:3000`
 
-## Debugging
+## Technologies Used
+- Javascript, HTML, CSS, Material UI, React, Redux, Redux Sagas, Express, Node, PostgreSQL, Google OAuth
 
-To debug, you will need to run the client-side separately from the server. Start the client by running the command `npm run client`. Start the debugging server by selecting the Debug button.
+## Acknowledgements
+We would like to thank our instructor, Chris Black, as well as everyone in the Proth Cohort and everyone on staff at Prime Digital Academy for turning us into full stack developers in a mere matter of weeks! Additional thanks to Kelly Schultze and her team at Beta.MN for giving us the opportunity to develop the submission portal for Twin Cities Startup Week 2022!
 
-![VSCode Toolbar](documentation/images/vscode-toolbar.png)
+## Support
+If you have feedback or issues with the app, you can contact us at:
 
-Then make sure `Launch Program` is selected from the dropdown, then click the green play arrow.
+Jessica Buckwalter: jessica.a.buckwalter@gmail.com
+Sarah Helgen: sarah.helgen@gmail.com
+Ahmed Noor: ahmednoor7252@gmail.com
+Tou Xiong: tlxiong.prime@outlook.com
 
-![VSCode Debug Bar](documentation/images/vscode-debug-bar.png)
 
-## Testing Routes with Postman
 
-To use Postman with this repo, you will need to set up requests in Postman to register a user and login a user at a minimum.
 
-Keep in mind that once you using the login route, Postman will manage your session cookie for you just like a browser, ensuring it is sent with each subsequent request. If you delete the `localhost` cookie in Postman, it will effectively log you out.
 
-1. Start the server - `npm run server`
-2. Import the sample routes JSON file [v2](./PostmanPrimeSoloRoutesv2.json) by clicking `Import` in Postman. Select the file.
-3. Click `Collections` and `Send` the following three calls in order:
-   1. `POST /api/user/register` registers a new user, see body to change username/password
-   2. `POST /api/user/login` will login a user, see body to change username/password
-   3. `GET /api/user` will get user information, by default it's not very much
 
-After running the login route above, you can try any other route you've created that requires a logged in user!
 
-## Production Build
 
-Before pushing to Heroku, run `npm run build` in terminal. This will create a build folder that contains the code Heroku will be pointed at. You can test this build by typing `npm start`. Keep in mind that `npm start` will let you preview the production build but will **not** auto update.
 
-- Start postgres if not running already by using `brew services start postgresql`
-- Run `npm start`
-- Navigate to `localhost:5000`
 
-## Lay of the Land
-
-There are a few videos linked below that show a walkthrough the client and sever setup to help acclimatize to the boilerplate. Please take some time to watch the videos in order to get a better understanding of what the boilerplate is like.
-
-- [Initial Set](https://vimeo.com/453297271)
-- [Server Walkthrough](https://vimeo.com/453297212)
-- [Client Walkthrough](https://vimeo.com/453297124)
-
-Directory Structure:
-
-- `src/` contains the React application
-- `public/` contains static assets for the client-side
-- `build/` after you build the project, contains the transpiled code from `src/` and `public/` that will be viewed on the production site
-- `server/` contains the Express App
-
-This code is also heavily commented. We recommend reading through the comments, getting a lay of the land, and becoming comfortable with how the code works before you start making too many changes. If you're wondering where to start, consider reading through component file comments in the following order:
-
-- src/components
-  - App/App
-  - Footer/Footer
-  - Nav/Nav
-  - AboutPage/AboutPage
-  - InfoPage/InfoPage
-  - UserPage/UserPage
-  - LoginPage/LoginPage
-  - RegisterPage/RegisterPage
-  - LogOutButton/LogOutButton
-  - ProtectedRoute/ProtectedRoute
-
-## Deployment
-
-1. Create a new Heroku project
-1. Link the Heroku project to the project GitHub Repo
-1. Create an Heroku Postgres database
-1. Connect to the Heroku Postgres database from Postico
-1. Create the necessary tables
-1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security
-1. In the deploy section, select manual deploy
-
-## Update Documentation
-
-Customize this ReadMe and the code comments in this project to read less like a starter repo and more like a project. Here is an example: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
