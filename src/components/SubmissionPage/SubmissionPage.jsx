@@ -38,6 +38,9 @@ function SubmissionPage() {
         buttonText: {
             color: '#FBBD19'
         },
+        boldText: {
+            fontWeight: 'bold',
+        }
     })
 
     const classes = useStyles();
@@ -268,33 +271,33 @@ function SubmissionPage() {
                     <form onSubmit={addSubmission}>
                         <FormControl>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom> Email Address:</Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom> Email Address:</Typography>
                                 <Typography variant="caption" display="block" gutterBottom>This is the email we will use for all TCSW-related communications.</Typography>
                                 <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" required value={email} onChange={(event) => setEmail(event.target.value)} />
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom> Phone:</Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom> Phone:</Typography>
                                 <Typography variant="caption" display="block" gutterBottom>This is the phone number we will use for all TCSW-related communications.</Typography>
                                 <TextField fullWidth id="outlined-basic" label="Phone" variant="outlined" required value={phone} onChange={(event) => setPhone(event.target.value)} />
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom>Is this event being hosted by an organization, company or other entity? If so, list here. If not, tell us a little bit about yourself.</Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>Is this event being hosted by an organization, company or other entity? If so, list here. If not, tell us a little bit about yourself.</Typography>
                                 <TextField fullWidth id="outlined-basic" label="Host" variant="outlined" required value={host} onChange={(event) => setHost(event.target.value)} />
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom>Title of your event: </Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>Title of your event: </Typography>
                                 <TextField fullWidth id="outlined-basic" label="Title" variant="outlined" required value={title} onChange={(event) => setTitle(event.target.value)} />
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom>Describe your event in 150 words or less: </Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>Describe your event in 150 words or less: </Typography>
                                 <TextField fullWidth id="outlined-multiline-flexible" multiline maxRows={5} label="Description" variant="outlined" required value={description} onChange={(event) => setDescription(event.target.value)} />
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom>Approximately how many attendees do you expect? </Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>Approximately how many attendees do you expect? </Typography>
                                 <TextField fullWidth id="outlined-basic" label="Attendees" variant="outlined" required value={attendees} onChange={(event) => setAttendees(event.target.value)} />
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom>Where will your event be hosted? </Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>Where will your event be hosted? </Typography>
                                 <FormControl component="fieldset" value={location} onChange={(event) => setLocation(event.target.value)}>
                                     <RadioGroup defaultValue="Online via the TCSW virtual venue" name="radio-buttons-group">
                                         <FormControlLabel value={'Online via the TCSW virtual venue'} control={<Radio />} label="Online via the TCSW virtual venue" />
@@ -304,14 +307,15 @@ function SubmissionPage() {
                                 </FormControl>
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom>If your event is being held in-person, please share where you would like it to be hosted. </Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>If your event is being held in-person, please share where you would like it to be hosted. </Typography>
                                 <Typography variant="caption" display="block" gutterBottom> We would love to host community, culture, art, etc. events at our TCSW Community Hub or other cool spaces in the Cities.</Typography>
                                 <TextField fullWidth id="outlined-basic" label="Location Details" variant="outlined" value={locationDetails} onChange={(event) => setLocationDetails(event.target.value)} />
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom>What day(s) work for you to host your event? Select all that apply. </Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>What day(s) work for you to host your event? </Typography>
+                                <Typography variant="caption" display="block" gutterBottom> Select all that apply. </Typography>
                                 <div>
-                                    <FormControl sx={{ m: 1, width: 300 }}>
+                                    <FormControl fullWidth>
                                         <InputLabel id="demo-multiple-name-label">Date</InputLabel>
                                         <Select
                                             labelId="demo-multiple-name-label"
@@ -321,6 +325,7 @@ function SubmissionPage() {
                                             onChange={handleDateChange}
                                             input={<OutlinedInput label="Date" />}
                                             MenuProps={MenuProps}
+                                            
                                         >
                                             {dates.map((date) => (
                                                 <MenuItem
@@ -336,15 +341,15 @@ function SubmissionPage() {
                                 </div>
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom> Approximately how long will your event be?</Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom> Approximately how long will your event be?</Typography>
                                 <Typography variant="caption" display="block" gutterBottom>Please keep in mind people need time to travel between events. </Typography>
                                 <TextField fullWidth id="outlined-basic" label="Length" variant="outlined" required value={length} onChange={(event) => setLength(event.target.value)} />
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom>Which time do you prefer to host? </Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>Which time do you prefer to host? </Typography>
                                 <Typography variant="caption" display="block" gutterBottom> TCSW is packed with events! As we piece together our calendar, we will work with you to find a great slot for your event. Please select all that apply. </Typography>
                                 <div>
-                                    <FormControl sx={{ m: 1, width: 300 }}>
+                                    <FormControl fullWidth>
                                         <InputLabel id="demo-multiple-name-label">Time</InputLabel>
                                         <Select
                                             labelId="demo-multiple-name-label"
@@ -369,7 +374,7 @@ function SubmissionPage() {
                                 </div>
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom>What is the event format? </Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>What is the event format? </Typography>
                                 <FormControl component="fieldset" required value={format} onChange={(event) => setFormat(event.target.value)}>
                                     <RadioGroup defaultValue="Presentation" name="radio-buttons-group">
                                         <FormControlLabel value={'Presentation'} control={<Radio />} label="Presentation" />
@@ -387,10 +392,10 @@ function SubmissionPage() {
                                 </FormControl>
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom>What industry are you focusing on? </Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>What industry are you focusing on? </Typography>
                                 <Typography variant="caption" display="block" gutterBottom> Please select all that are applicable. </Typography>
                                 <div>
-                                    <FormControl sx={{ m: 1, width: 300 }}>
+                                    <FormControl fullWidth>
                                         <InputLabel id="demo-multiple-name-label">Industry</InputLabel>
                                         <Select
                                             labelId="demo-multiple-name-label"
@@ -415,7 +420,7 @@ function SubmissionPage() {
                                 </div>
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom>In which track would you like your event featured? </Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>In which track would you like your event featured? </Typography>
                                 <FormControl component="fieldset" required value={track} onChange={(event) => setTrack(event.target.value)}>
                                     <RadioGroup defaultValue="Growth" name="radio-buttons-group">
                                         <FormControlLabel value={'Growth'} control={<Radio />} label="Growth" />
@@ -442,6 +447,7 @@ function SubmissionPage() {
                             </Box>
                             <Box p={1}>
                                 <Typography variant="body2" gutterBottom>Does your event cater to one or more of the following? </Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>What is the purpose of your event? </Typography>
                                 <FormControl component="fieldset" required value={areaOfInterest} onChange={(event) => setAreaOfInterest(event.target.value)}>
                                     <RadioGroup defaultValue="Celebrating and empowering female leaders" name="radio-buttons-group">
                                         <FormControlLabel value={'Celebrating and empowering female leaders'} control={<Radio />} label="Celebrating and empowering female leaders" />
@@ -456,7 +462,7 @@ function SubmissionPage() {
                                 </FormControl>
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom>We require all TCSW events with three or more speakers have gender and/or race/ethnicity diversity with regard to its organization, participation, and content. Will your event align with this requirement? </Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>We require all TCSW events with three or more speakers have gender and/or race/ethnicity diversity with regard to its organization, participation, and content. Will your event align with this requirement? </Typography>
                                 <FormControl component="fieldset" required value={diversity} onChange={(event) => setDiversity(event.target.value)}>
                                     <RadioGroup defaultValue="Yes" name="radio-buttons-group">
                                         <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
@@ -465,12 +471,12 @@ function SubmissionPage() {
                                 </FormControl>
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom> Who would you like to speak at your event? </Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom> Who would you like to speak at your event? </Typography>
                                 <Typography variant="caption" display="block" gutterBottom>Planning to have speakers? Awesome! We'd love to know who you had in mind. Don't worry, this can change down the road. If you need help finding speakers, please list that too! </Typography>
                                 <TextField fullWidth id="outlined-basic" label="Speakers" variant="outlined" required value={speakers} onChange={(event) => setSpeakers(event.target.value)} />
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom>We require all TCSW session hosts to commit to following Covid safety protocols, which will be released by TCSW in August based on CDC and State Guidelines.  Do you commit to following all TCSW Covid Safety protocols? </Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>We require all TCSW session hosts to commit to following Covid safety protocols, which will be released by TCSW in August based on CDC and State Guidelines.  Do you commit to following all TCSW Covid Safety protocols? </Typography>
                                 <FormControl component="fieldset" required value={covid} onChange={(event) => setCovid(event.target.value)}>
                                     <RadioGroup defaultValue="Yes" name="radio-buttons-group">
                                         <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
@@ -485,23 +491,28 @@ function SubmissionPage() {
                             {/* This field is for uploading files and will need to be completed/updated - AWS S3 bucket */}
                             {/* <Box p={1}>
                                 <Typography variant="body2" gutterBottom>Please share a session image (file upload - to do ).  </Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>Please share any related media you would like to have included on your TCSW session listing.  </Typography>
+                                <TextField fullWidth id="outlined-basic" label="Media" variant="outlined" required value={media} onChange={(event) => setMedia(event.target.value)} />
+                            </Box>
+                            <Box p={1}>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>Please share a session image (file upload - to do ).  </Typography>
                                 <TextField fullWidth id="outlined-basic" label="Image" variant="outlined" required value={image} onChange={(event) => setImage(event.target.value)} />
                             </Box> */}
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom>What does success look like for your event? </Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>What does success look like for your event? </Typography>
                                 <TextField fullWidth id="outlined-basic" label="Success looks like:" variant="outlined" required value={success} onChange={(event) => setSuccess(event.target.value)} />
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom>What makes you most excited to host an event during Twin Cities Startup Week? </Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>What makes you most excited to host an event during Twin Cities Startup Week? </Typography>
                                 <TextField fullWidth id="outlined-basic" label="Most excited to host because:" variant="outlined" required value={excited} onChange={(event) => setExcited(event.target.value)} />
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom> Who else should be hosting an event? (referral)</Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom> Who else should be hosting an event? (referral)</Typography>
                                 <Typography variant="caption" display="block" gutterBottom>We love working with new event hosts and businesses during the week! Do know of any individuals or organizations that have a story to tell, something to teach or incredible content to share? Please list their name, email address and tell us a little bit about why they'd make a great event host - we'll make sure to reach out to them!</Typography>
                                 <TextField fullWidth id="outlined-basic" label="Referral" variant="outlined" required value={otherHosts} onChange={(event) => setOtherHosts(event.target.value)} />
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom> More to share?</Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom> More to share?</Typography>
                                 <Typography variant="caption" display="block" gutterBottom>Did we miss anything? Do you have questions? Is there something else about your event you want to share that didn't fit in the questions above? Let us know!</Typography>
                                 <TextField fullWidth id="outlined-basic" label="More to share?" variant="outlined" required value={otherInfo} onChange={(event) => setOtherInfo(event.target.value)} />
                             </Box>
