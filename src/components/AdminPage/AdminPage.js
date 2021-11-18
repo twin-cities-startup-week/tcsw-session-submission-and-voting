@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import AdminPageItem from "./AdminPageItem/AdminPageItem";
 //Material-ui
-import {
-  Card, Paper, makeStyles, Table, TableBody, TableCell, 
+import { Grid, Card, Container, Paper, makeStyles, Table, TableBody, TableCell, 
   TableContainer, TableHead, TableRow } from "@material-ui/core";
 
 // Styling
@@ -25,7 +24,7 @@ const useStylish = makeStyles({
   rooty: {
     marginLeft: "400px",
     marginRight: "600px",
-    marginTop: "-180px",
+    marginTop: "-200px",
     paddingTop: "40px",
     border: "2px solid",
     justifyContent: "center",
@@ -37,17 +36,38 @@ const useStyle = makeStyles({
   roots: {
     marginLeft: "800px",
     marginRight: "300px",
-    marginTop: "-150px",
+    marginTop: "-130px",
     paddingTop: "40px",
+    paddingRight: '20px',
     border: "2px solid",
     justifyContent: "center",
   },
 });
 
+
+// Styling
+const useSty = makeStyles({
+    center: {
+        marginLeft: 'auto'
+    }
+  });
+
+
+// Styling
+const useStyli = makeStyles({
+    right: {
+        marginLeft: '-100px',
+       
+    }
+  });
+
 function AdminPage() {
   const classes = useStyles();
   const classic = useStylish();
   const classy = useStyle();
+  const classics = useStyli();
+  const clay = useSty();
+
 
   //set selector
   const reduxStore = useSelector((store) => store);
@@ -119,10 +139,13 @@ function AdminPage() {
         </Card>
       </div>
       <h3> Awaiting Approval</h3>
-      <div>
+      <Container >
+      <Grid container spacing={3}>
+      <Grid container direction="row" justify="space-between" alignItems="center">
+      <Grid item xs={4}>
         <TableContainer component={Paper}>
           <Table sx={{ width: "20%" }} aria-label="simple table">
-            <TableHead className={classes.tableStyles}>
+            <TableHead className={classics.center}>
               <TableRow>
                 <TableCell>
                   <h4>Title</h4>
@@ -142,13 +165,19 @@ function AdminPage() {
             </TableBody>
           </Table>
         </TableContainer>
-      </div>
+        </Grid>
+      </Grid>
+      </Grid>
+      </Container>
 
-      <div>
-        <h3>Approved</h3>
+      <h3>Approved</h3>
+      <Container>
+      <Grid container spacing={3}>
+      <Grid container direction="row" justify="space-between" alignItems="center">
+      <Grid item xs={4}>
         <TableContainer component={Paper}>
           <Table sx={{ width: "20%" }} aria-label="simple table">
-            <TableHead className={classes.tableStyles}>
+            <TableHead className={clay.right}>
               <TableRow>
                 <TableCell>
                   <h4>Title</h4>
@@ -168,7 +197,10 @@ function AdminPage() {
             </TableBody>
           </Table>
         </TableContainer>
-      </div>
+        </Grid>
+        </Grid>
+        </Grid>
+        </Container>
     </>
   );
 }
