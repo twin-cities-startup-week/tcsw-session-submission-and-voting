@@ -436,7 +436,7 @@ function SubmissionPage() {
                                 </FormControl>
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom>What is the purpose of your event? </Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>What is the purpose of your event? </Typography>
                                 <FormControl component="fieldset" value={purpose} onChange={(event) => setPurpose(event.target.value)}>
                                     <RadioGroup defaultValue="To Enable: Help teach a skill or set of skills" name="radio-buttons-group">
                                         <FormControlLabel value={'To Enable: Help teach a skill or set of skills'} control={<Radio />} label="To Enable: Help teach a skill or set of skills" />
@@ -446,8 +446,7 @@ function SubmissionPage() {
                                 </FormControl>
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom>Does your event cater to one or more of the following? </Typography>
-                                <Typography variant="body2" className={classes.boldText} gutterBottom>What is the purpose of your event? </Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>Does your event cater to one or more of the following? </Typography>
                                 <FormControl component="fieldset" required value={areaOfInterest} onChange={(event) => setAreaOfInterest(event.target.value)}>
                                     <RadioGroup defaultValue="Celebrating and empowering female leaders" name="radio-buttons-group">
                                         <FormControlLabel value={'Celebrating and empowering female leaders'} control={<Radio />} label="Celebrating and empowering female leaders" />
@@ -485,7 +484,7 @@ function SubmissionPage() {
                                 </FormControl>
                             </Box>
                             <Box p={1}>
-                                <Typography variant="body2" gutterBottom>Please share any related media you would like to have included on your TCSW session listing (YouTube links, etc).  </Typography>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>Please share any related media you would like to have included on your TCSW session listing (YouTube links, etc).</Typography>
                                 <TextField fullWidth id="outlined-basic" label="Media" variant="outlined" required value={media} onChange={(event) => setMedia(event.target.value)} />
                             </Box>
                             {/* This field is for uploading files and will need to be completed/updated - AWS S3 bucket */}
