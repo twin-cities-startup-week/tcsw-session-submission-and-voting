@@ -10,13 +10,12 @@ function Nav() {
   return (
     
     <div className="nav">
-      <div>
-     <a href="https://www.twincitiesstartupweek.com/" target="_blank"> <img src="images/TCSW_Logo_Navy.png" alt="TCSW logo" width="100" height="50"></img></a>
-      </div>
+      <a href="https://www.twincitiesstartupweek.com/" target="_blank"> 
+        <img src="images/TCSW_Logo_Navy.png" alt="TCSW logo" width="110" height="50"></img>
+      </a>
       <Link to="/home">
         <h2 className="nav-title">Session Selector and Voting</h2>
       </Link>
-      <div>
         {/* If no user is logged in, show these links */}
         {user.id === null &&
           // If there's no user, show login/registration links
@@ -28,9 +27,9 @@ function Nav() {
         {/* If a user is logged in, show these links */}
         {user.id && (
           <>
-            <Link className="navLink" to="/user">
+            {/* <Link className="navLink" to="/user">
               Home
-            </Link>
+            </Link> */}
 
             <Link className="navLink" to="/submission">
               Submission Form
@@ -38,6 +37,10 @@ function Nav() {
 
             <Link className="navLink" to="/info">
               Info Page
+            </Link>
+
+            <Link className="navSignin" to="/login">
+              Sign In
             </Link>
 
             <LogOutButton className="navLink" />
@@ -52,14 +55,9 @@ function Nav() {
           Faq
         </Link>
 
-        <Link className="navLink" to='/leaderboard'>
-          Leaderboard
-        </Link>
-
-        <Link className="navLink" to="/login">
+        <Link className="navSignin" to="/login">
           Sign In
         </Link>
-      </div>
     </div>
   )
 }
