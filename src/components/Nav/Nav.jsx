@@ -35,13 +35,9 @@ function Nav() {
               Submission Form
             </Link>
 
-            <Link className="navLink" to="/info">
+            {/* <Link className="navLink" to="/info">
               Info Page
-            </Link>
-
-            <Link className="navSignin" to="/login">
-              Sign In
-            </Link>
+            </Link> */}
 
             <LogOutButton className="navLink" />
           </>

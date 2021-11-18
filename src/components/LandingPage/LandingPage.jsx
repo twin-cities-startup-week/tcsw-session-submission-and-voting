@@ -10,7 +10,7 @@ import Paper from '@mui/material/Paper';
 import RegisterForm from '../RegisterForm/RegisterForm';
 
 function LandingPage() {
-  const [heading, setHeading] = useState('Welcome to Session Submission & Voting');
+  const [heading, setHeading] = useState('Welcome to Session Selector & Voting');
   const history = useHistory();
 
   const onLogin = (event) => {
