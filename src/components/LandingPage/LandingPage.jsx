@@ -10,7 +10,7 @@ import Paper from '@mui/material/Paper';
 import RegisterForm from '../RegisterForm/RegisterForm';
 
 function LandingPage() {
-  const [heading, setHeading] = useState('Welcome to Session Submission & Voting');
+  const [heading, setHeading] = useState('Welcome to Session Selector & Voting');
   const history = useHistory();
 
   const onLogin = (event) => {
@@ -40,13 +40,14 @@ function LandingPage() {
             <Button variant="contained" type="submit" value="Register"
             sx={{ p: 2, width: 350, height: 50, bgcolor: '#0C495A', 
             color: '#FBBD19', mt: 2, mb: 2 }}
+            onClick={() => history.push('/about')}
             > Learn More</Button>
           </Box>
 
           <Container component={Paper} elevation={8} 
-          sx={{ width: 1000, height: 300, p: 0 }}>
+          sx={{ width: 1000, height: 300, pl: 0, pr: 0 }}>
 
-            <Box sx={{ p: 0.1, bgcolor: '#A7A9AC', borderRadius: 1 }}>
+            <Box sx={{ p: 1, bgcolor: '#A7A9AC', borderRadius: 1, m: 0, pl: 0 }}>
               <h2>How to Submit A Session</h2>
             </Box>
 
