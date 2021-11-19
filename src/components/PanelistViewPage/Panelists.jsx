@@ -46,47 +46,67 @@ function Panelists() {
                 onChange={ event => { setSearchTerm( event.target.value )}}
             />
 
-            {store.panelistReducer.filter((speakers) => {
-                if( searchTerm == '') {
-                    return speakers;
-                }else if( speakers.title.toLowerCase().includes(searchTerm.toLowerCase())) {
-                    return speakers;
-                }
-            }).map((speakers, key) => {
-                return(
-                    <div className='search-list' key={key}>
-                        {/* <p onClick={ () => goToPanelDetails( speakers )}>{speakers.title}</p> */}
+            
+            <div className='search-list' >
+            {/* <p onClick={ () => goToPanelDetails( speakers )}>{speakers.title}</p> */}
 
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Title </th>
-                                    <th>Location</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                    <tr>
-                                        <td onClick={ () => goToPanelDetails( speakers )}>{speakers.title}</td>
-                                        <td>{speakers.location_details}</td>
-                                    </tr>
+            {/* <ul>
+                <li onClick={ () => goToPanelDetails( speakers )}>{speakers.title}</li>
+            </ul> */}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title </th>
+                        <th>Location</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        {/* .map((speakers, key) => {
+                            return( */}
+
+                                    {store.panelistReducer.filter( panel  => panel.title.toLowerCase().includes(searchTerm.toLowerCase())).map( panel => (
+                                        // if( searchTerm == '') {
+                                        //     return panel;
+                                        // }else if( speakers.title.toLowerCase().includes(searchTerm.toLowerCase())) { 
+                                            <tr>
+                                                <td onClick={goToPanelDetails}>{panel.title}</td>
+                                                <td>{panel.location_details}</td>
+                                                <td>{panel.industry_id}</td>
+                                            </tr>
+                                            ) 
+                                    )}
+                                    
+                                        
+                              
+                                    //     {/* <td onClick={ () => goToPanelDetails( speakers )}>{speakers.title}</td>
+                                    //     <td>{speakers.location_details}</td>
+                                    // </tr> */}
                             </tbody>
                         </table>
                     </div>
                 )
                 
-            })}
+            {/* })} */}
 
-            <form>
+            {/* <form>
                 <div>
                     <h5>Track</h5>
+                        <button>Devloper</button>
+                        <button>Designer</button>
+                        <button>Product</button>
+                    <h5>Track</h5>
                     <select className='track-selector'>
-                        <option value="growth" onSelect={votePageGo}>growth</option>
+                        <option value="growth"><p onClick={votePageGo}>growth</p></option>
                         <option value="founder">founder</option>
                         <option value="designer">designer</option>
                     </select>
                 </div>
 
                 <div>
+                    <h5>Format</h5>
+                        <button>Presentation</button>
+                        <button>Key Note</button>
+                        <button>Showcase</button>
                     <h5>Format</h5>
                     <select>
                         <option value="format1">format</option>
@@ -95,7 +115,7 @@ function Panelists() {
                     </select>
                 </div> 
             </form>
-                
+                 */}
                 
 
         </div>

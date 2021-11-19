@@ -17,6 +17,7 @@
     "cookie-session": "^2.0.0-rc.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "filter-material-ui": "^2.9.0",
     "google-auth-library": "^7.10.2",
     "passport": "^0.4.1",
     "passport-google-oauth": "^2.0.0",
