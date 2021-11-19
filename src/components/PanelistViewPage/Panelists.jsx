@@ -1,6 +1,6 @@
-import Select from 'react-dropdown-select';
+import './Panelists.css';
 import useReduxStore from '../../hooks/useReduxStore';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
@@ -14,7 +14,7 @@ function Panelists() {
     console.log('this is the information from the panelistReducer', store.panelistReducer);
 
     const [ searchTerm, setSearchTerm ] = useState('');
-    const [ filteredData, setFilteredData ] = useState(''); 
+    const [ trackState, setTrackState ] = useState(''); 
 
     useEffect(() => {
             fetchPanelist();
@@ -32,8 +32,9 @@ function Panelists() {
         history.push('/votepage')
     }
 
-
-
+    const votePageGo = () => {
+        history.push('/votepage');
+    }
     return(
         <div>
             <h1>Panelist</h1>
@@ -55,6 +56,7 @@ function Panelists() {
                 return(
                     <div className='search-list' key={key}>
                         {/* <p onClick={ () => goToPanelDetails( speakers )}>{speakers.title}</p> */}
+
                         <table>
                             <thead>
                                 <tr>
@@ -77,10 +79,10 @@ function Panelists() {
             <form>
                 <div>
                     <h5>Track</h5>
-                    <select>
-                        <option value="track1">growth</option>
-                        <option value="track2">founder</option>
-                        <option value="track3">designer</option>
+                    <select className='track-selector'>
+                        <option value="growth" onSelect={votePageGo}>growth</option>
+                        <option value="founder">founder</option>
+                        <option value="designer">designer</option>
                     </select>
                 </div>
 
@@ -93,6 +95,8 @@ function Panelists() {
                     </select>
                 </div> 
             </form>
+                
+                
 
         </div>
     )
