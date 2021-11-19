@@ -81,6 +81,8 @@ function AdminPage() {
   const { setApprovalAwaitingInfo } = reduxStore;
   const { setApprovedInfo } = reduxStore;
 
+  const history = useHistory();
+
   //Get all the session
   useEffect(() => {
     dispatch({ type: "FETCH_SESSION" });
@@ -90,6 +92,12 @@ function AdminPage() {
     dispatch({ type: "FETCH_APPROVAL_AWAITING_INFO" });
     dispatch({ type: "FETCH_APPROVED_INFO" });
   }, [dispatch]);
+
+  const gotoDetails = (session) =>{
+    dispatch({ type: 'FETCH_PANEL_DETAILS', payload: session})
+
+    history.push('/votepage')
+  }
 
   return (
     <>
@@ -158,7 +166,7 @@ function AdminPage() {
             <TableBody>
               {setApprovalAwaitingInfo.map((session, index) => (
                 <TableRow key={index}>
-                  <TableCell>{session.title}</TableCell>
+                  <TableCell><p onClick={() => gotoDetails (session)}>{session.title}</p></TableCell>
                   <TableCell>{session.votes}</TableCell>
                 </TableRow>
               ))}
@@ -190,7 +198,7 @@ function AdminPage() {
             <TableBody>
               {setApprovedInfo.map((session, index) => (
                 <TableRow key={index}>
-                  <TableCell>{session.title}</TableCell>
+                  <TableCell > <p onClick={() => gotoDetails (session)}>{session.title}</p></TableCell>
                   <TableCell>{session.votes}</TableCell>
                 </TableRow>
               ))}
@@ -201,6 +209,7 @@ function AdminPage() {
         </Grid>
         </Grid>
         </Container>
+       
     </>
   );
 }

@@ -39,75 +39,34 @@ function AboutPage() {
         <div>
           <h2>TCSW Session Submission & Voting</h2>
           <h4>2022 Session Submission Dates</h4>
-          <p> Session Submission Deadline: May 15, 2022</p>
-          <p> Session Voting Deadline: June 5, 2022</p>
+          <p> Session Submission Deadline: April 4, 2022 to May 15, 2022</p>
+          <p> Session Voting Deadline: May 23, 2021 to June 5, 2022</p>
+      <p>   "Twin Cities Startup Week is a week-long celebration of Minnesota entrepreneurs and innovators, created by and for the community. This year, we’re taking the experience to a whole new level by introducing the TCSW Session Selector, a platform to empower community members to influence the panels, speakers, and sessions that will be showcased on the schedule throughout the week. Thank you for your help highlighting the best of the Startup Capital of the North!”
+– Kelly Schultze, Managing Director of Twin Cities Startup Week
 
-          <p>Twin Cities Startup Week is back from September 16 - 23, 2022!</p>
+The TCSW Session Selector provides a way for the community to be more involved in the sessions, workshops, panels, and events at TCSW. Whether you are hosting an event for TCSW 2022 or just want to have a say in what’s presented, you’re in the right place.
 
-          <p>
-            Interested in hosting a session? If you are an individual, business,
-            or community organization doing amazing things in the world of
-            startups and innovation, we'd love to work with you!
-          </p>
+Make an account, submit your session application for TCSW 2022, and vote on content you want to see — all in one platform. 
+You can also leave comments on why you think certain sessions are important!</p>
 
-          <p>There are a few steps to organizing a TCSW session:</p>
+<p>Got questions? Check out our FAQ pag</p>
 
-          <p>SESSION PROPOSALS ARE DUE MAY 1ST - NEED TO UPDATE</p>
+<p>Got an idea? Start submitting now!</p>
 
-          <p>
-            1. Use this form to submit your session proposal by May 1st. Once
-            submitted, we will reach out with any questions that we have. We
-            will notify you by ????? whether your sessions was accepted or not.
-            Every year we receive more sessions that we have time slots on the
-            schedule so if your session is not accepted, please think about
-            applying next year!
-          </p>
+HISTORY:
 
-          <p>
-            2. If your session is accepted, final details are due ???. This will
-            include speaker information, content summary, location, and
-            timing/length. We know that things may change, but ask that you
-            submit as much as possible so we can upload information into our
-            master calendar prior to our schedule being announced on ????.
-          </p>
+<p>This is the first year the TCSW team is trying out this process. We heard from the community in 2020 and 2021, and wanted to make sure all ideas and input were considered. 
 
-          <p>
-            3: Spread the word! We will work with you to help promote your
-            session and make sure you - and your attendees - have an incredible
-            experience. On ??? we will host an Event Host Webinar focused on how
-            to prepare for and promote your TCSW session.
-          </p>
+We worked with Prime Digital Academy to make the platform come to life — you can learn more about them here!
 
-          <p>
-            4: (Virtual sessions) Attend one of the Session Host TCSW Dress
-            Rehearsals to test and practice using the technology and make sure
-            you and your speakers are comfortable with the Hopin platform
-            (taking place in August).
-          </p>
+APPLICATION PROCESS:
 
-          <p>
-            5: Attend the TCSW Event Host Happy Hour on ????. This will be a
-            time you can learn more about other events happening throughout the
-            week and connect with other event hosts.
-          </p>
+We encourage anyone in the community with valuable thought leadership to submit an application through the Session Selector between April 4, 2022 - May 15, 2022! 
 
-          <p>
-            6: Host your event! We're planning on having about 200 events this
-            year.
-          </p>
+Once applications close, the TCSW team will be in touch if your session made it to community voting.
+Then, it’s time for the community to vote on what they want to see during the week! Sessions are selected based on a combination of community voting and input from the TCSW team. 
+Find the full timeline here. </p>
 
-          <p>
-            7: Provide feedback. It is important to us that event hosts,
-            partners and attendees are given an opportunity to provide feedback.
-            As an event host, we will send you a survey to gather feedback and
-            capture any stories that came out of your events. We will also
-            provide you a few questions to ask your attendees.
-          </p>
-
-          <p>
-            If you have any questions or concerns about TCSW 2021, please don't
-            hesitate to reach out to kelly@beta.mn.
-          </p>
 
           <Button variant="contained" color="primary" onClick={learnMoreInfo}>
             
@@ -123,6 +82,7 @@ function AboutPage() {
           </p>
         )}
       </div>
+      
   );
 }
 

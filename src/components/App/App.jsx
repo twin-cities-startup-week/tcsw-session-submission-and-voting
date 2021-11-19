@@ -20,10 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import FaqPage from '../FaqPage/FaqPage';
-<<<<<<< HEAD
 import AdminPage from '../AdminPage/AdminPage';
-=======
->>>>>>> master
 import SubmissionPage from '../SubmissionPage/SubmissionPage';
 import PanelistViewPage from '../PanelistViewPage/PanelistViewPage';
 import Panelists from '../PanelistViewPage/Panelists'
@@ -84,7 +81,6 @@ function App() {
           >
             <FaqPage />
           </Route>
-<<<<<<< HEAD
 
           <Route
             // shows adminPage at all times (logged in or not)
@@ -96,12 +92,10 @@ function App() {
 
 
 
-=======
           <Route
             exact path='/leaderboard'>
               <Leaderboard/>
           </Route>        
->>>>>>> master
 
           {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
