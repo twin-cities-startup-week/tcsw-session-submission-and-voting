@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     marginLeft: "10px",
     marginBottom: "100px",
     // paddingTop: '300px',
-    //paddingLeft: '3000px',
+    paddingLeft: '30px',
     border: "2px solid",
   },
 });
@@ -24,8 +24,9 @@ const useStylish = makeStyles({
   rooty: {
     marginLeft: "400px",
     marginRight: "600px",
-    marginTop: "-200px",
-    paddingTop: "40px",
+    marginTop: "-190px",
+    paddingTop: "30px",
+    paddingRight: '80px',
     border: "2px solid",
     justifyContent: "center",
   },
@@ -34,11 +35,11 @@ const useStylish = makeStyles({
 // Styling
 const useStyle = makeStyles({
   roots: {
-    marginLeft: "800px",
+    marginLeft: "700px",
     marginRight: "300px",
-    marginTop: "-130px",
-    paddingTop: "40px",
-    paddingRight: '20px',
+    marginTop: "-100px",
+    //paddingTop: "40px",
+    paddingRight: '30px',
     border: "2px solid",
     justifyContent: "center",
   },
