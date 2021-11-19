@@ -108,6 +108,10 @@ function Nav() {
           </List>
         </div>
         }
+
+          <Link className="navLink" to="/admin">
+          Admin
+          </Link>
     </div>
   )
 }
