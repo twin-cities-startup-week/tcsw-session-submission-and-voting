@@ -56,6 +56,10 @@ function Nav() {
           Leaderboard
         </Link>
 
+          <Link className="navLink" to="/admin">
+          Admin
+          </Link>
+
         <Link className="navLink" to="/login">
           Sign In
         </Link>
