@@ -40,68 +40,62 @@ function Panelists() {
     return(
         <div>
             <h1>Panelist</h1>
+            <div>
+                <form className='filter-buttons'>
+                    <div>
+                        <input 
+                            type='text'
+                            placeholder='search....'
+                            onChange={ event => { setSearchTerm( event.target.value )}}
+                        />
+                    </div>
 
-            <form className='filter-buttons'>
-                <div>
-                    <input 
-                        type='text'
-                        placeholder='search....'
-                        onChange={ event => { setSearchTerm( event.target.value )}}
-                    />
-                    {/* <h5>Track</h5>
-                        <button>Devloper</button>
-                        <button>Designer</button>
-                        <button>Product</button> */}
+                    <div>
+                        <h5>Track</h5>
+                        <select className='track-selector' onChange={ event => setTrackState( event.target.value )}>
+                            {console.log('this is the setTrackState',setTrackState)}
+                            {console.log('this is the trackState', trackState)}
+                            <option value=''> </option>
+                            <option value="Developer">Developer</option>
+                            <option value="Founder">Founder</option>
+                            <option value="Designer">Designer</option>
+                            <option value="Maker">Maker</option>
+                            <option value="Product">Product</option>
+                            <option value="Growth">Growth</option>
+                            <option value="People">People</option>
+                            <option value="Spotlight">Spotlight</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
 
-                    <h5>Track</h5>
-                    <select className='track-selector' onChange={ event => setTrackState( event.target.value )}>
-                        {console.log('this is the setTrackState',setTrackState)}
-                        {console.log('this is the trackState', trackState)}
-                        <option value=''> </option>
-                        <option value="Developer">Developer</option>
-                        <option value="Founder">Founder</option>
-                        <option value="Designer">Designer</option>
-                        <option value="Maker">Maker</option>
-                        <option value="Product">Product</option>
-                        <option value="Growth">Growth</option>
-                        <option value="People">People</option>
-                        <option value="Spotlight">Spotlight</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-
-                <div>
-                    {/* <h5>Format</h5>
-                        <button>Presentation</button>
-                        <button>Key Note</button>
-                        <button>Showcase</button> */}
-
-                    <h5>Format</h5>
-                    <select onChange={ event => setFormatState( event.target.value )}>
-                        <option value=''> </option>
-                        <option value="Presentation">Presentation</option>
-                        <option value="Panel">Panel</option>
-                        <option value="Workshop">Workshop</option>
-                        <option value="Keynote">Keynote</option>
-                        <option value="Roundtable">Roundtable</option>
-                        <option value="Fireside Chat">Fireside Chat</option>
-                        <option value="Showcase">Showcase</option>
-                        <option value="Demo">Demo</option>
-                        <option value="Meetup">Meetup</option>
-                        <option value="Pitch">Pitch</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div> 
-            </form>
+                    <div>
+                        <h5>Format</h5>
+                        <select onChange={ event => setFormatState( event.target.value )}>
+                            <option value=''> </option>
+                            <option value="Presentation">Presentation</option>
+                            <option value="Panel">Panel</option>
+                            <option value="Workshop">Workshop</option>
+                            <option value="Keynote">Keynote</option>
+                            <option value="Roundtable">Roundtable</option>
+                            <option value="Fireside Chat">Fireside Chat</option>
+                            <option value="Showcase">Showcase</option>
+                            <option value="Demo">Demo</option>
+                            <option value="Meetup">Meetup</option>
+                            <option value="Pitch">Pitch</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div> 
+                </form>
+            </div>
 
             
             <div className='search-list' >
                 <table>
                     <thead>
                         <tr>
-                            <th>Title </th>
-                            <th>Track</th>
-                            <th>Format</th>
+                            <th className="title-header">Title </th>
+                            <th className='track-header'>Track</th>
+                            <th className='format-header'>Format</th>
                         </tr>
                     </thead>
 
@@ -135,10 +129,6 @@ function Panelists() {
 
                         ))}
 
-
-                                    
-                            {/* panel => panel.track = setTrackState .map */}
-    
                     </tbody>
                     }
 
@@ -154,10 +144,6 @@ function Panelists() {
 
                         ))}
 
-
-                                    
-                            {/* panel => panel.track = setTrackState .map */}
-    
                     </tbody>
                     }
 
@@ -173,10 +159,6 @@ function Panelists() {
 
                         ))}
 
-
-                                    
-                            {/* panel => panel.track = setTrackState .map */}
-    
                     </tbody>
                     }
 
@@ -192,10 +174,6 @@ function Panelists() {
 
                         ))}
 
-
-                                    
-                            {/* panel => panel.track = setTrackState .map */}
-    
                     </tbody>
                     }
 
@@ -211,10 +189,6 @@ function Panelists() {
 
                         ))}
 
-
-                                    
-                            {/* panel => panel.track = setTrackState .map */}
-    
                     </tbody>
                     }
 
@@ -230,10 +204,6 @@ function Panelists() {
 
                         ))}
 
-
-                                    
-                            {/* panel => panel.track = setTrackState .map */}
-    
                     </tbody>
                     }
 
@@ -249,10 +219,6 @@ function Panelists() {
 
                         ))}
 
-
-                                    
-                            {/* panel => panel.track = setTrackState .map */}
-    
                     </tbody>
                     }
 
@@ -268,10 +234,6 @@ function Panelists() {
 
                         ))}
 
-
-                                    
-                            {/* panel => panel.track = setTrackState .map */}
-    
                     </tbody>
                     }
 
@@ -287,10 +249,6 @@ function Panelists() {
 
                         ))}
 
-
-                                    
-                            {/* panel => panel.track = setTrackState .map */}
-    
                     </tbody>
                     }
 
@@ -309,10 +267,6 @@ function Panelists() {
 
                         ))}
 
-
-                                    
-                            {/* panel => panel.track = setTrackState .map */}
-    
                     </tbody>
                     }
 
@@ -328,10 +282,6 @@ function Panelists() {
 
                         ))}
 
-
-                                    
-                            {/* panel => panel.track = setTrackState .map */}
-    
                     </tbody>
                     }
 
@@ -347,10 +297,6 @@ function Panelists() {
 
                         ))}
 
-
-                                    
-                            {/* panel => panel.track = setTrackState .map */}
-    
                     </tbody>
                     }
 
@@ -366,10 +312,6 @@ function Panelists() {
 
                         ))}
 
-
-                                    
-                            {/* panel => panel.track = setTrackState .map */}
-    
                     </tbody>
                     }
 
@@ -385,10 +327,6 @@ function Panelists() {
 
                         ))}
 
-
-                                    
-                            {/* panel => panel.track = setTrackState .map */}
-    
                     </tbody>
                     }
 
@@ -405,10 +343,6 @@ function Panelists() {
 
                         ))}
 
-
-                                    
-                            {/* panel => panel.track = setTrackState .map */}
-    
                     </tbody>
                     }
                     
@@ -424,10 +358,6 @@ function Panelists() {
 
                         ))}
 
-
-                                    
-                            {/* panel => panel.track = setTrackState .map */}
-    
                     </tbody>
                     }
 
@@ -443,10 +373,6 @@ function Panelists() {
 
                         ))}
 
-
-                                    
-                            {/* panel => panel.track = setTrackState .map */}
-    
                     </tbody>
                     }
 
@@ -462,10 +388,6 @@ function Panelists() {
 
                         ))}
 
-
-                                    
-                            {/* panel => panel.track = setTrackState .map */}
-    
                     </tbody>
                     }
 
@@ -481,10 +403,6 @@ function Panelists() {
 
                         ))}
 
-
-                                    
-                            {/* panel => panel.track = setTrackState .map */}
-    
                     </tbody>
                     }
 
@@ -500,10 +418,6 @@ function Panelists() {
 
                         ))}
 
-
-                                    
-                            {/* panel => panel.track = setTrackState .map */}
-    
                     </tbody>
                     }
 
