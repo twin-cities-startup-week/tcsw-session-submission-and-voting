@@ -37,7 +37,7 @@ function LandingPage() {
             luctus. Duis a sapien metus.
           </p>
         </div>
-
+          {!user.id &&
           <Box sx={{ textAlign: 'center' }}>
             <Button variant="contained" type="submit" value="Register"
             sx={{ p: 2, width: 350, height: 50, bgcolor: '#0C495A', 
@@ -45,6 +45,23 @@ function LandingPage() {
             onClick={() => history.push('/about')}
             > Learn More</Button>
           </Box>
+          }
+
+          {user.id && 
+            <Box sx={{ textAlign: 'center' }}>
+              <Button variant="contained"
+                sx={{ p: 2, width: 350, height: 50, bgcolor: '#0C495A', 
+                color: '#FBBD19', mt: 2, mb: 2 }}
+                onClick={() => history.push('/submission')}
+              > Submission Form</Button>
+
+              <Button variant="contained"
+                sx={{ p: 2, width: 350, height: 50, bgcolor: '#0C495A', 
+                color: '#FBBD19', mt: 2, mb: 2, ml: 2 }}
+                onClick={() => history.push('/panelistView')}
+              > Search Sessions</Button>
+          </Box>
+          }
 
           <Paper elevation={8} 
           sx={{ width: 1000, height: 300, pl: 0, pr: 0, m: 'auto' }}>
@@ -67,7 +84,15 @@ function LandingPage() {
             }
             {user.id && 
             <div>
-
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
+            id felis metus. Vestibulum et pulvinar tortor. Morbi pharetra lacus
+            ut ex molestie blandit. Etiam et turpis sit amet risus mollis
+            interdum. Suspendisse et justo vitae metus bibendum fringilla sed
+            sed justo. Aliquam sollicitudin dapibus lectus, vitae consequat odio
+            elementum eget. Praesent efficitur eros vitae nunc interdum, eu
+            interdum justo facilisis. Sed pulvinar nulla ac dignissim efficitur.
+            Quisque eget eros metus. Vestibulum bibendum fringilla nibh a
+            luctus. Duis a sapien metus.
             </div>
             }
           </Paper>
