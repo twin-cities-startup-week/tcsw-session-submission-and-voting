@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import './LandingPage.css';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -10,6 +11,7 @@ import Paper from '@mui/material/Paper';
 import RegisterForm from '../RegisterForm/RegisterForm';
 
 function LandingPage() {
+  const user = useSelector((store) => store.user);
   const [heading, setHeading] = useState('Welcome to Session Selector & Voting');
   const history = useHistory();
 
@@ -44,19 +46,31 @@ function LandingPage() {
             > Learn More</Button>
           </Box>
 
-          <Container component={Paper} elevation={8} 
-          sx={{ width: 1000, height: 300, pl: 0, pr: 0 }}>
+          <Paper elevation={8} 
+          sx={{ width: 1000, height: 300, pl: 0, pr: 0, m: 'auto' }}>
 
             <Box sx={{ p: 1, bgcolor: '#A7A9AC', borderRadius: 1, m: 0, pl: 0 }}>
               <h2>How to Submit A Session</h2>
             </Box>
+          {!user.id && 
+          <div>
+          <p className="interested-text">
+            Interested in submiting a session to Twin Cities Start up Week 2022?<br/>
+             Click the Sign in button to get started!</p>
+             <br/>
+          <p className="submission">
+            2022 Session Submission Dates
+            Session Submission Deadline: April 4, 2022 to May 15, 2022
+            <br/>
+            Session Voting Deadline: May 23, 2021 to June 5, 2022</p>
+            </div>
+            }
+            {user.id && 
+            <div>
 
-          <p>Interested in submiting a session to Twin Cities Start up Week 2022?<br/>
-          Click the Sign in button to get started!</p>
-          <p className="submission">Submission period starts on April ?? 2022 and ends on April ?? 2022<br/>
-          Voting Period starts on May ?? 2022 and ends on May ?? 2022 </p>
-
-          </Container>
+            </div>
+            }
+          </Paper>
       </div>
     </div>
   );
