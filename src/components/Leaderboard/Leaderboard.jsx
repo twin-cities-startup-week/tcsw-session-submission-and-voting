@@ -22,10 +22,28 @@ function Leaderboard() {
         history.push(`/votepage`)
     }
 
+        /* Takes in the index provided and adds st, nd, or rd 
+        based on the number provided. This is purely for display purposes */
+        const placement = (index) => {
+            let j = index % 10,
+                k = index % 100;
+            if (j == 1 && k != 11) {
+                return index + "st";
+            }
+            if (j == 2 && k != 12) {
+                return index + "nd";
+            }
+            if (j == 3 && k != 13) {
+                return index + "rd";
+            }
+            return index + "th";
+        }
+
     let rows = [];
-    rows = approvedSubmissions.map((submission) => {
+    rows = approvedSubmissions.map((submission, index) => {
         return (
             rows = {
+            placement: placement(index + 1),
             id: submission.id,
             title: submission.title,
             industry: submission.industry,
@@ -36,6 +54,7 @@ function Leaderboard() {
     });
 
     const columns = [
+        { field: 'placement', headerName: 'Placement', width: 100 },
         { field: 'title', headerName: 'Session Title', width: 250 },
         { field: 'industry', headerName: 'Industry', width: 180 },
         { field: 'track', headerName: 'Track', width: 160 },
