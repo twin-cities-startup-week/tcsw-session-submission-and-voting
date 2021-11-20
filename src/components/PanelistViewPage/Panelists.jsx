@@ -69,13 +69,14 @@ function Panelists() {
                                         //     return panel;
                                         // }else if( speakers.title.toLowerCase().includes(searchTerm.toLowerCase())) { 
                                             <tr>
-                                                <td onClick={goToPanelDetails}>{panel.title}</td>
+                                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
                                                 <td>{panel.location_details}</td>
                                                 <td>{panel.industry_id}</td>
                                             </tr>
                                             ) 
                                     )}
                                     
+                                        panel => panel.track = setTrackState .map
                                         
                               
                                     //     {/* <td onClick={ () => goToPanelDetails( speakers )}>{speakers.title}</td>
