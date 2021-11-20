@@ -1,3 +1,4 @@
+import './VotePage.css'
 import useReduxStore from '../../hooks/useReduxStore';
 import { useEffect } from 'react';
 
@@ -31,19 +32,19 @@ function VotePage() {
             </div>
              ))}
 
+            
             {store.panelistDetailsReducer.map(( details ) => (
                 <div className= 'right-bar' key={details.id}>
                     <h2>{details.title}</h2>
                         <p>{details.description}</p>
 
-                    <h3>Related Media</h3>
-
-                    <h3>Takeaways</h3>
-
                     <h3>Speakers</h3>
                         <p>{details.speakers}</p>
 
-                    <h3>Orginizer</h3>
+                    <h3>Organizers</h3>
+                        <p>{details.first_name} {details.last_name}</p>
+
+                    <h3>Related Media</h3>
                     {/* the name of the panelist who submitted the form */}
                         
                    

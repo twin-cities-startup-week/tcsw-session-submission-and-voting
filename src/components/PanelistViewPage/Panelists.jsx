@@ -32,15 +32,11 @@ function Panelists() {
 
         history.push('/votepage')
     }
-
-    const votePageGo = () => {
-        history.push('/votepage');
-    }
     
     return(
         <div>
             <h1>Panelist</h1>
-            <div>
+            <div className='filter-section'>
                 <form className='filter-buttons'>
                     <div>
                         <input 

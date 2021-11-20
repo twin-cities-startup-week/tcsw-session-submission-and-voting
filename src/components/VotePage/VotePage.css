@@ -1,0 +1,10 @@
+.left-bar{
+    float: left;
+    background-color: orange;
+    padding-right: 50px;
+}
+
+.right-bar{
+    background-color: lightgrey;
+    margin-left: 250px;
+}
