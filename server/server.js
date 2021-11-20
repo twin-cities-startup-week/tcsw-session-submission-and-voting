@@ -85,6 +85,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
 const userRouter = require('./routes/user.router');
 const panelistRouter = require('./routes/panelist.router');
 const submissionRouter = require('./routes/submission.router');
+const adminRouter = require('./routes/admin.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -131,6 +132,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
 app.use('/api/user', userRouter);
 app.use('/api/panelists', panelistRouter);
 app.use('/api/submission', submissionRouter );
+app.use('/api/session', adminRouter);
 
 // Serve static files
 app.use(express.static('build'));

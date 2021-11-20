@@ -13,7 +13,8 @@ CREATE TABLE "user" (
     "last_name" VARCHAR (255),
     "email" VARCHAR (255),
     "password" VARCHAR (255),
-    "google_id" VARCHAR (255)
+    "google_id" VARCHAR (255),
+    "admin" BOOLEAN DEFAULT false
 )
 
 CREATE TABLE "format" (

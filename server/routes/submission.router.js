@@ -22,7 +22,8 @@ const {
 router.get('/approved', (req, res) => {
     const queryText = `
         SELECT * FROM "session"
-        WHERE "approved" = TRUE;`;
+        WHERE "approved" = TRUE
+        ORDER BY "votes" DESC;`;
         
     pool.query (queryText)
     .then(result => {

@@ -20,6 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import FaqPage from '../FaqPage/FaqPage';
+import AdminPage from '../AdminPage/AdminPage';
 import SubmissionPage from '../SubmissionPage/SubmissionPage';
 import PanelistViewPage from '../PanelistViewPage/PanelistViewPage';
 import Panelists from '../PanelistViewPage/Panelists'
@@ -73,6 +74,11 @@ function App() {
             exact path="/forgotPassword">
               <ForgotPassword/>
           </Route>
+
+          <Route
+            exact path="/home">
+              <LandingPage/>
+          </Route>
           <Route
             // shows FaqPage at all times (logged in or not)
             exact
@@ -80,6 +86,17 @@ function App() {
           >
             <FaqPage />
           </Route>
+
+          <Route
+            // shows adminPage at all times (logged in or not)
+            exact
+            path="/admin"
+          >
+            <AdminPage />
+          </Route>
+
+
+
           <Route
             exact path='/leaderboard'>
               <Leaderboard/>
@@ -89,21 +106,22 @@ function App() {
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
             Even though it seems like they are different pages, the user is always on localhost:3000/user */}
-          <ProtectedRoute
+          
+          {/* <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
             exact
             path="/user"
           >
             <UserPage />
-          </ProtectedRoute>
-
+          </ProtectedRoute> */}
+{/* 
           <ProtectedRoute
             // logged in shows InfoPage else shows LoginPage
             exact
             path="/info"
           >
             <InfoPage />
-          </ProtectedRoute>
+          </ProtectedRoute> */}
 
           <ProtectedRoute
             exact
@@ -129,7 +147,7 @@ function App() {
             {user.id ?
               // If the user is already logged in, 
               // redirect to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/home" />
               :
               // Otherwise, show the login page
               <LoginPage />
@@ -142,8 +160,8 @@ function App() {
           >
             {user.id ?
               // If the user is already logged in, 
-              // redirect them to the /user page
-              <Redirect to="/user" />
+              // redirect them to the /home page
+              <Redirect to="/home" />
               :
               // Otherwise, show the registration page
               <RegisterPage />
@@ -156,8 +174,8 @@ function App() {
           >
             {user.id ?
               // If the user is already logged in, 
-              // redirect them to the /user page
-              <Redirect to="/user" />
+              // redirect them to the /home page
+              <Redirect to="/home" />
               :
               // Otherwise, show the Landing page
               <LandingPage />

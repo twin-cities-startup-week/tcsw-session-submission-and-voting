@@ -7,6 +7,12 @@ import panelistSaga from './panelist.saga';
 import passwordSaga from './password.saga';
 
 import submissionSaga from './submission.saga';
+import sessionSaga from './admin.saga';
+import approvedAwaitingSaga from './approvedAwaiting.saga';
+import highestVotingSaga from './highestVoting.saga';
+import fetchSessionSaga from './fetchAllSession.saga';
+import approvalAwaitingInfoSaga from './approvalAwaitingInfo.saga';
+import approvedInfoSaga from './approvedInfo.saga';
 
 
 // rootSaga is the primary saga.
@@ -24,5 +30,11 @@ export default function* rootSaga() {
     panelistSaga(),
     passwordSaga(),
     submissionSaga(),
+    sessionSaga(),
+    approvedAwaitingSaga(),
+    highestVotingSaga(),
+    fetchSessionSaga(),
+    approvalAwaitingInfoSaga(),
+    approvedInfoSaga(),
   ]);
 }
