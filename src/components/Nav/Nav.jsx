@@ -74,6 +74,12 @@ function Nav() {
               Search
             </Link>
 
+            {user.admin && 
+            <Link className="navLink" to="/admin">
+              Admin
+            </Link>
+            }
+
             {/* <LogOutButton className="navLink" /> */}
           </>
         )}
@@ -108,10 +114,6 @@ function Nav() {
           </List>
         </div>
         }
-
-          <Link className="navLink" to="/admin">
-          Admin
-          </Link>
     </div>
   )
 }
