@@ -15,6 +15,8 @@ function PanelViewPage() {
 
     const [track, setTrack] = useState('');
     const [format, setFormat] = useState('');
+    const [ searchTerm, setSearchTerm ] = useState('');
+    const [ filteredData, setFilteredData ] = useState(''); 
 
     useEffect(() => {
         fetchPanelist();
@@ -26,9 +28,10 @@ function PanelViewPage() {
         })
     }
 
-    // navigates user to the details page of the speaker on click.
-    const moveToSelectedPage = () => {
-        history.push('/user')
+    const goToPanelDetails = ( session ) => {
+        dispatch({ type: 'FETCH_PANEL_DETAILS', payload: session})
+
+        history.push('/votepage')
     }
 
     // allow the drop downs to show what has been selected.
@@ -44,8 +47,46 @@ function PanelViewPage() {
         <div>
             <div class='search-section'>
                 <h2>Search</h2>
-                <TextField id='search-bar' label='search' variant="outlined" />
-                {/* <form> */}
+                <input 
+                type='text'
+                placeholder='search....'
+                onChange={ event => { setSearchTerm( event.target.value )}}
+            />
+
+                {store.panelistReducer.filter((speakers) => {
+                    if( searchTerm == '') {
+                        return speakers
+                    }else if( speakers.title.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        return speakers
+                    }
+                }).map((speakers, key) => {
+                    return(
+                        
+                        <div className='search-list' key={key}>
+                            <p onClick={ () => goToPanelDetails( speakers )}>{speakers.title}</p>
+                            <div>
+                            {/* <table className='panelist-table'>
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Location</th>
+                                        <th>Industry</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {store.panelistReducer.map((panelist) => (
+                                        <tr>
+                                            <td onClick={goToPanelDetails}>{panelist.title}</td>
+                                            <td>{panelist.location_details}</td>
+                                            <td>{panelist.industry_id}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table> */}
+                            </div>
+                        </div>
+                    )
+                })}
 
                 <div class='filter-buttons'>
                     <button class='reset-button'>RESET</button>
@@ -54,7 +95,6 @@ function PanelViewPage() {
 
                     <br />
 
-                    {/* <FormControl fullWidth> */}
                         <InputLabel id='track-filter'>Track</InputLabel>
                             <Select
                                 labelId="track-filter"
@@ -73,17 +113,7 @@ function PanelViewPage() {
                                 <MenuItem value='{Spolight}'>Spolight</MenuItem>
                                 <MenuItem value='{Other}'>Other</MenuItem>
                             </Select>
-                    {/* </FormControl> */}
-
-                    {/* <h5>Track</h5>
-                    <input
-                        id='track-filter'
-                        type='text'
-                        name='track'
-                        placeholder='track'
-                    /> */}
-
-                    {/* <FormControl fullWidth> */}
+                    
                         <InputLabel id='format-filter'>Format</InputLabel>
                             <Select
                                 labelId="format-filter"
@@ -105,17 +135,6 @@ function PanelViewPage() {
                                 <MenuItem value='{Other}'>Other</MenuItem>
                                 
                             </Select>
-                    {/* </FormControl> */}
-
-                    {/* <h5>Format</h5>
-                    <input
-                        id='format-filter'
-                        type='text'
-                        name='format'
-                        placeholder='format'
-                    /> */}
-
-                {/* </form> */}
 
                 <br />
 
@@ -150,13 +169,13 @@ function PanelViewPage() {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {store.panelistReducer.map((panelist) => (
+                        {store.panelistReducer.map((panelist) => (
                             <tr>
-                                <td onClick={moveToSelectedPage}>{panelist.title}</td>
+                                <td onClick={goToPanelDetails}>{panelist.title}</td>
                                 <td>{panelist.location_details}</td>
                                 <td>{panelist.industry_id}</td>
                             </tr>
-                        ))} */}
+                        ))}
                     </tbody>
                 </table>
             </div>

@@ -1,13 +1,23 @@
 import useReduxStore from '../../hooks/useReduxStore';
+import { useEffect } from 'react';
 
 function VotePage() {
     const store = useReduxStore();
 
+   useEffect(() => {
+        fetchPanelistDetails
+   }, [])
+
+   const fetchPanelistDetails = ( session ) => {
+        dispatch({ type: 'FETCH_PANEL_DETAILS', payload: session})
+   } 
+   
+
     return(
         <div>
             <h1>Details Page</h1>
-             {store.panelistDetailsReducer.map(( details ) => (
-            <div>
+             {store.panelistDetailsReducer.map(( details, index ) => (
+            <div className='left-bar'>
                 <h2>TCSW</h2>
                 <p>If you want this speaker! Click Vote!</p>
                 <button>VOTE!</button>
@@ -22,13 +32,11 @@ function VotePage() {
              ))}
 
             {store.panelistDetailsReducer.map(( details ) => (
-                <div key={details.id}>
+                <div className= 'right-bar' key={details.id}>
                     <h2>{details.title}</h2>
                         <p>{details.description}</p>
 
                     <h3>Related Media</h3>
-
-                    <h3>Additional Supporting Materials</h3>
 
                     <h3>Takeaways</h3>
 

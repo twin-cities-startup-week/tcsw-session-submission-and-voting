@@ -21,7 +21,7 @@ router.get('/details/:id', ( req, res ) => {
     .then(( result ) => {
         res.send( result.rows )
     }).catch(( error ) => {
-        console.log('error in router get movie details', error );
+        console.log('error in router get panel details', error );
         res.send(500)
     })
 })
