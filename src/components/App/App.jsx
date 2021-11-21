@@ -30,9 +30,9 @@ import Leaderboard from '../Leaderboard/Leaderboard';
 
 import './App.css';
 
-import {createMuiTheme, ThemeProvider} from '@mui/material/styles';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 
-const theme = createMuiTheme({
+const theme = createTheme({
     palette: {
       primary: {
         main: '#0C495A',

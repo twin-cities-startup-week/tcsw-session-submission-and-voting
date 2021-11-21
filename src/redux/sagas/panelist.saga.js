@@ -28,9 +28,23 @@ function* fetchPanelDetails( action ) {
     }
 }
 
+function* addVote( action ){
+    try{
+        const voteCount = action.payload;
+        console.log('this is the voteCount', action.payload);
+        
+        const addToVote = yield axios.put(`/api/panelist/details/${voteCount.id}`)
+        yield put ({ type: 'SET_VOTE_COUNT', payload: addToVote.data })
+    }catch ( error ) {
+        console.log('error in adding vote to the count', error );
+        
+    }
+}
+
 function* panelistSaga() {
     yield takeLatest( 'FETCH_PANELIST', fetchPanelists )
     yield takeLatest( 'FETCH_PANEL_DETAILS', fetchPanelDetails )
+    yield takeLatest( 'ADD_VOTE_COUNT', addVote )
 }
 
 export default panelistSaga;

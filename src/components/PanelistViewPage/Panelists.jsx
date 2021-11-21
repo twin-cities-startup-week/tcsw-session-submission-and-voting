@@ -15,7 +15,7 @@ function Panelists() {
 
     const [ searchTerm, setSearchTerm ] = useState('');
     const [ trackState, setTrackState ] = useState('');
-    const [ formatState, setFormatState ] =useState('');
+    const [ formatState, setFormatState ] = useState('');
 
     useEffect(() => {
             fetchPanelist();
@@ -31,6 +31,10 @@ function Panelists() {
         dispatch({ type: 'FETCH_PANEL_DETAILS', payload: session})
 
         history.push('/votepage')
+    }
+
+    const restFilters = () => {
+     
     }
     
     return(
@@ -81,6 +85,9 @@ function Panelists() {
                             <option value="Other">Other</option>
                         </select>
                     </div> 
+
+                    <button className='filter-reset-button' onClick={restFilters}>Reset</button>
+
                 </form>
             </div>
 

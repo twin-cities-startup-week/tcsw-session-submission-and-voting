@@ -1,9 +1,13 @@
 import './VotePage.css'
 import useReduxStore from '../../hooks/useReduxStore';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 function VotePage() {
     const store = useReduxStore();
+    const dispatch = useDispatch();
+    
+    const [vote, setVote ] = useState(0);
 
    useEffect(() => {
         fetchPanelistDetails
@@ -12,8 +16,10 @@ function VotePage() {
    const fetchPanelistDetails = ( session ) => {
         dispatch({ type: 'FETCH_PANEL_DETAILS', payload: session})
    } 
-   
 
+   const addVote = ( details ) => {
+    //    dispatch({ type: 'ADD_VOTE_COUNT', payload: details})
+   }
     return(
         <div>
             <h1>Details Page</h1>
@@ -21,13 +27,16 @@ function VotePage() {
             <div className='left-bar'>
                 <h2>TCSW</h2>
                 <p>If you want this speaker! Click Vote!</p>
-                <button>VOTE!</button>
+                {/* <button onClick={() => setVote( vote + 1 )}>VOTE! <span>{vote}</span></button>  */}
+                <button onClick={addVote}>VOTE!</button> 
+         
 
-                <h5>Track: {details.track_id}</h5>
-                <p>Industry: {details.industry_id}</p>
-                <p>Format: {details.format_id}</p>
-                <p>Theme: </p>
-                <p>Level: </p>
+
+                <h5>Track: {details.track}</h5>
+                <p>Industry: {details.industry}</p>
+                <p>Format: {details.format}</p>
+                <p>Time: {details.time}</p>
+                <p>Date: {details.date}</p>
                 <p></p>
             </div>
              ))}

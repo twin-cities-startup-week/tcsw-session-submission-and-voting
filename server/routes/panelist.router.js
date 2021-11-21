@@ -29,6 +29,21 @@ router.get('/details/:id', ( req, res ) => {
     })
 })
 
+router.put('/details/:id', ( req, res ) => {
+    let speakerId = req.params.id;
+
+    const queryText = `UPDATE "session"
+                        SET "votes" = "votes" + 1
+                        WHERE "id" = $1;`;
+
+    pool.query( queryText, [ speakerId ])
+    .then( result => {
+        res.send(200)
+    }).catch ( error => {
+        res.send(500)
+    })
+})
+
 
 // `SELECT *, "user"."first_name", "user"."last_name" FROM "session"
 //                         JOIN "user" 
