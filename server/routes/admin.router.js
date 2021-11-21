@@ -13,7 +13,7 @@ const router = express.Router();
  */
  router.get('/', (req, res) => {
     // GET route code here
-    pool.query(`SELECT * from "sessions"`)
+    pool.query(`SELECT * from "session"`)
     .then((results) =>
      res.send(results.rows))
      .catch((error) => {
@@ -28,8 +28,8 @@ const router = express.Router();
 router.get('/sessionsApproved', (req, res) => {
     // GET route code here
     console.log('This is the sessions you wanted')
-    pool.query(`SELECT count(sessions.title) from "sessions" 
-    WHERE sessions.approved = true`)
+    pool.query(`SELECT count(session.title) from "session" 
+    WHERE session.approved = true`)
     .then((results) => {
         console.log(results.rows)
         res.send(results.rows)
@@ -49,7 +49,7 @@ router.get('/sessionsVotes', (req, res) => {
     // GET route code here
    console.log('This is the sessionsVotes you wanted') 
     //console.log('This is the sessionsVotes you wanted', req.params.sessionsVotes)
-    pool.query(`SELECT title, votes FROM sessions 
+    pool.query(`SELECT title, votes FROM session
     ORDER BY "votes" DESC LIMIT 1;
     `)
     .then((results) =>
@@ -70,8 +70,8 @@ router.get('/awaitingApproval', (req, res) => {
     // GET route code here
     console.log('This is the awaitingApproval you wanted', req.params);
     //console.log(req.params)
-    pool.query(`SELECT count(sessions.id) from "sessions"
-    WHERE sessions.awaiting_approval = true;
+    pool.query(`SELECT count(session.id) from "session"
+    WHERE session.awaiting_approval = true;
     `)
     .then((results) =>
      res.send(results.rows))
@@ -87,7 +87,7 @@ router.get('/awaitingApproval', (req, res) => {
  */
  router.get('/', (req, res) => {
     // GET route code here
-    pool.query(`SELECT * from "sessions" 
+    pool.query(`SELECT * from "session" 
     WHERE awaiting_approval = true`)
     .then((results) =>
      res.send(results.rows))
@@ -104,7 +104,7 @@ router.get('/awaitingApproval', (req, res) => {
  */
  router.get('/', (req, res) => {
     // GET route code here
-    pool.query(`SELECT * from "sessions" 
+    pool.query(`SELECT * from "session" 
     WHERE approved = true`)
     .then((results) =>
      res.send(results.rows))
