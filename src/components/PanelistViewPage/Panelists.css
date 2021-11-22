@@ -11,12 +11,14 @@
 .filter-heading{
     padding-left: 10px;
     margin-bottom: 1px;
+    color: #0c495a;
 }
 
 .filter-suggestion{
     padding-left: 10px;
     margin-top: 1px;
     font-style: italic;
+    color: #0c495a;
 }
 
 .search-bar{
@@ -109,4 +111,8 @@ td {
 
 tr:nth-child(even) {
     background-color: #f2f2f2;
+}
+h5 {
+    color: #0c495a;
+    font-size: medium;
 }
