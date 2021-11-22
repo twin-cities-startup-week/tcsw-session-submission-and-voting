@@ -17,8 +17,9 @@ function VotePage() {
         dispatch({ type: 'FETCH_PANEL_DETAILS', payload: session})
    } 
 
-   const addVote = ( details ) => {
-    //    dispatch({ type: 'ADD_VOTE_COUNT', payload: details})
+   const addVote = ( session ) => {
+       dispatch({ type: 'ADD_VOTE_COUNT', payload: store })
+       console.log(' addVote payload', session);
    }
     return(
         <div>
@@ -28,7 +29,7 @@ function VotePage() {
                 <h2>TCSW</h2>
                 <p>If you want this speaker! Click Vote!</p>
                 {/* <button onClick={() => setVote( vote + 1 )}>VOTE! <span>{vote}</span></button>  */}
-                <button onClick={addVote}>VOTE!</button> 
+                <button onClick={( event ) => addVote( event.target.value )}>VOTE!</button> 
          
 
 

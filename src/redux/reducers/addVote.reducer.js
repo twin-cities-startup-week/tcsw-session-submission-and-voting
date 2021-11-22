@@ -1,7 +1,7 @@
-const addVoteReducer = ( state = [], action ) => {
+const addVoteReducer = ( state = 0, action ) => {
     switch( action.type ) {
         case 'SET_VOTE_COUNT':
-            return action.payload;
+            return state + 1;
         default:
             return state;
     }

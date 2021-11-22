@@ -34,7 +34,8 @@ function Panelists() {
     }
 
     const restFilters = () => {
-     
+        setTrackState('');
+        setFormatState('');
     }
     
     return(

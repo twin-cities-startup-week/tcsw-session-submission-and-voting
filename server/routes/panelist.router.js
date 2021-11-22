@@ -30,7 +30,7 @@ router.get('/details/:id', ( req, res ) => {
 })
 
 router.put('/details/:id', ( req, res ) => {
-    let speakerId = req.params.id;
+    const speakerId = req.body.id;
 
     const queryText = `UPDATE "session"
                         SET "votes" = "votes" + 1
