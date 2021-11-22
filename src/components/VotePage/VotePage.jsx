@@ -1,9 +1,10 @@
 import './VotePage.css'
 import useReduxStore from '../../hooks/useReduxStore';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 function VotePage() {
+    const user = useSelector((store) => store.user);
     const store = useReduxStore();
     const dispatch = useDispatch();
     
@@ -20,12 +21,20 @@ function VotePage() {
         dispatch({ type: 'FETCH_PANEL_DETAILS', payload: session})
    } 
 
-    // function to set Vote Button state to true.   
+    // function to add a Vote to the session vote count.   
    const addVote = ( sessionId ) => {
        dispatch({ type: 'ADD_VOTE_COUNT', payload: sessionId })
        console.log(' addVote payload', sessionId);
         toggleVoteButton(true);
         alert('Awesome! You Have VOTED!')
+   }
+
+   const sessionApprove = ( sessionId ) => {
+       dispatch({ type: 'APPROVE_SESSION', payload: sessionId })
+   }
+
+   const sessionDeny = ( sessionId ) => {
+       dispatch({ type: 'DENY_SESSION', payload: sessionId })
    }
 
     return(
@@ -40,7 +49,7 @@ function VotePage() {
                         <p className='vote-suggestion'>Like this Speaker?! Click Vote!</p>
                         {/* <button onClick={() => setVote( vote + 1 )}>VOTE! <span>{vote}</span></button>  */}
 
-                        { voteButton === false && <button className='vote-button' onClick={( event ) => addVote( details.id )}>VOTE!</button> }
+                        { voteButton === false && <button className='vote-button' onClick={() => addVote( details.id )}>VOTE!</button> }
                     </div>
 
                     <div className='extra-details-section'>
@@ -78,8 +87,17 @@ function VotePage() {
                     <div className='related-media'>
                         <h3>Related Media</h3>
                     </div>    
-                   
-                    
+                        
+                    {/* {user.admin && 
+                        <button>Accept</button>
+                    }
+
+                    {user.admin && 
+                        <button>Deny</button>
+                    } */}
+
+                    <button onClick={() => sessionApprove( details.id )}>Approve</button>
+                    <button onClick={() => sessionDeny( details.id )}>Deny</button>
 
                 </div>
 
