@@ -29,11 +29,11 @@ function* fetchPanelDetails( action ) {
 }
 
 function* addVote( action ){
-    const voteCount = action.payload;
-    console.log('this is the voteCount', voteCount);
+    const sessionId = action.payload;
+
     try{
-        yield axios.put( `/api/panelists/details/:id`, voteCount )
-        yield put ({ type: 'SET_VOTE_COUNT', payload: voteCount.data })
+        yield axios.put( `/api/panelists/details/${sessionId}` )
+        // yield put ({ type: 'SET_VOTE_COUNT', payload: sessionId })
     }catch ( error ) {
         console.log('error in adding vote to the count', error );
         

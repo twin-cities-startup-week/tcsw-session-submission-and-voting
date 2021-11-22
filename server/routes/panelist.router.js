@@ -15,7 +15,7 @@ router.get('/', ( req, res ) => {
 })
 
 router.get('/details/:id', ( req, res ) => {
-    const queryText = `SELECT *, "user"."first_name", "user"."last_name" FROM "session"
+    const queryText = `SELECT "session".*, "user"."first_name", "user"."last_name" FROM "session"
                         JOIN "user" 
                         ON "session"."user_id" = "user"."id"
                         WHERE "session"."id" = $1;`;
@@ -30,7 +30,7 @@ router.get('/details/:id', ( req, res ) => {
 })
 
 router.put('/details/:id', ( req, res ) => {
-    const speakerId = req.body.id;
+    const speakerId = req.params.id;
 
     const queryText = `UPDATE "session"
                         SET "votes" = "votes" + 1
