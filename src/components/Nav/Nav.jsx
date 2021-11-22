@@ -74,11 +74,15 @@ function Nav() {
               Search
             </Link>
 
-            {user.admin && 
+            <Link className="navLink" to="/leaderboard">
+              Leaderboard
+            </Link>
+
+            {/* {user.admin && 
             <Link className="navLink" to="/admin">
               Admin
             </Link>
-            }
+            } */}
 
             {/* <LogOutButton className="navLink" /> */}
           </>
@@ -94,7 +98,8 @@ function Nav() {
         <div className="navSignin">
           <List sx={{ ml: 'auto' }}>
 
-            <ListItemButton onClick={handleClick}>
+            <ListItemButton sx={{ textAlign: 'right' }}
+              onClick={handleClick}>
               <Link className="navSignin" to="/login">
                 Welcome, {user.username}!
               </Link>
@@ -103,6 +108,13 @@ function Nav() {
 
             <Collapse in={open} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
+
+              {user.admin && 
+              <ListItemButton sx={{ textAlign: 'right' }} 
+                onClick={() => history.push('/admin')}>
+                  <ListItemText primary="Admin" />
+              </ListItemButton>
+              }
 
                 <ListItemButton sx={{ textAlign: 'right' }} 
                 onClick={pushToLogout}>
