@@ -9,6 +9,8 @@ function VotePage() {
     
     const [vote, setVote ] = useState(0);
 
+    const [voteButton, toggleVoteButton ] = useState(false)
+
    useEffect(() => {
         fetchPanelistDetails
    }, [])
@@ -18,8 +20,10 @@ function VotePage() {
    } 
 
    const addVote = ( session ) => {
-       dispatch({ type: 'ADD_VOTE_COUNT', payload: store })
-       console.log(' addVote payload', session);
+    //    dispatch({ type: 'ADD_VOTE_COUNT', payload: store })
+    //    console.log(' addVote payload', session);
+        toggleVoteButton(true);
+        alert('Awesome! You Have VOTED!')
    }
     return(
         <div>
@@ -29,7 +33,9 @@ function VotePage() {
                 <h2>TCSW</h2>
                 <p>If you want this speaker! Click Vote!</p>
                 {/* <button onClick={() => setVote( vote + 1 )}>VOTE! <span>{vote}</span></button>  */}
-                <button onClick={( event ) => addVote( event.target.value )}>VOTE!</button> 
+
+                { voteButton === false && <button onClick={( event ) => addVote( event.target.value )}>VOTE!</button> }
+                
          
 
 
