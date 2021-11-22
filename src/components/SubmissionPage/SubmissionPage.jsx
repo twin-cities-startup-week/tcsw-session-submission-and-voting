@@ -182,6 +182,7 @@ function SubmissionPage() {
             location: location,
             location_details: locationDetails,
             date: individualDate, 
+            votes: 0,
             length: length,
             time: individualTime, 
             format: format,
