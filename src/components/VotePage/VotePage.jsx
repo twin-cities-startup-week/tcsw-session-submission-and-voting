@@ -15,16 +15,19 @@ function VotePage() {
         fetchPanelistDetails
    }, [])
 
+    // Fetches dispatches to server for session information   
    const fetchPanelistDetails = ( session ) => {
         dispatch({ type: 'FETCH_PANEL_DETAILS', payload: session})
    } 
 
+    // function to set Vote Button state to true.   
    const addVote = ( session ) => {
     //    dispatch({ type: 'ADD_VOTE_COUNT', payload: store })
     //    console.log(' addVote payload', session);
         toggleVoteButton(true);
         alert('Awesome! You Have VOTED!')
    }
+
     return(
         <div>
             <h1>Details Page</h1>
@@ -36,9 +39,6 @@ function VotePage() {
 
                 { voteButton === false && <button onClick={( event ) => addVote( event.target.value )}>VOTE!</button> }
                 
-         
-
-
                 <h5>Track: {details.track}</h5>
                 <p>Industry: {details.industry}</p>
                 <p>Format: {details.format}</p>
