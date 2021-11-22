@@ -3,6 +3,7 @@ import errors from './errors.reducer';
 import user from './user.reducer';
 import panelistReducer from './panelist.reducer';
 import panelistDetailsReducer from './panelistDetails.reducer';
+import addVoteReducer from './addVote.reducer';
 
 
 
@@ -36,6 +37,7 @@ const rootReducer = combineReducers({
   setAllSession,
   setApprovalAwaitingInfo,
   setApprovedInfo,
+  addVoteReducer,
 });
 
 export default rootReducer;

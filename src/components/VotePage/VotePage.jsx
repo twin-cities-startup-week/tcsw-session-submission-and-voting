@@ -1,8 +1,15 @@
+import './VotePage.css'
 import useReduxStore from '../../hooks/useReduxStore';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 function VotePage() {
     const store = useReduxStore();
+    const dispatch = useDispatch();
+    
+    const [vote, setVote ] = useState(0);
+
+    const [voteButton, toggleVoteButton ] = useState(false)
 
    useEffect(() => {
         fetchPanelistDetails
@@ -11,8 +18,13 @@ function VotePage() {
    const fetchPanelistDetails = ( session ) => {
         dispatch({ type: 'FETCH_PANEL_DETAILS', payload: session})
    } 
-   
 
+   const addVote = ( session ) => {
+    //    dispatch({ type: 'ADD_VOTE_COUNT', payload: store })
+    //    console.log(' addVote payload', session);
+        toggleVoteButton(true);
+        alert('Awesome! You Have VOTED!')
+   }
     return(
         <div>
             <h1>Details Page</h1>
@@ -20,30 +32,35 @@ function VotePage() {
             <div className='left-bar'>
                 <h2>TCSW</h2>
                 <p>If you want this speaker! Click Vote!</p>
-                <button>VOTE!</button>
+                {/* <button onClick={() => setVote( vote + 1 )}>VOTE! <span>{vote}</span></button>  */}
 
-                <h5>Track: {details.track_id}</h5>
-                <p>Industry: {details.industry_id}</p>
-                <p>Format: {details.format_id}</p>
-                <p>Theme: </p>
-                <p>Level: </p>
+                { voteButton === false && <button onClick={( event ) => addVote( event.target.value )}>VOTE!</button> }
+                
+         
+
+
+                <h5>Track: {details.track}</h5>
+                <p>Industry: {details.industry}</p>
+                <p>Format: {details.format}</p>
+                <p>Time: {details.time}</p>
+                <p>Date: {details.date}</p>
                 <p></p>
             </div>
              ))}
 
+            
             {store.panelistDetailsReducer.map(( details ) => (
                 <div className= 'right-bar' key={details.id}>
                     <h2>{details.title}</h2>
                         <p>{details.description}</p>
 
-                    <h3>Related Media</h3>
-
-                    <h3>Takeaways</h3>
-
                     <h3>Speakers</h3>
                         <p>{details.speakers}</p>
 
-                    <h3>Orginizer</h3>
+                    <h3>Organizers</h3>
+                        <p>{details.first_name} {details.last_name}</p>
+
+                    <h3>Related Media</h3>
                     {/* the name of the panelist who submitted the form */}
                         
                    
