@@ -47,7 +47,7 @@ router.post('/', (req, res) => {
         [newSubmission.title,
         newSubmission.email,
         newSubmission.phone,
-        newSubmission.user,
+        newSubmission.user_id,
         newSubmission.industry,
         newSubmission.track,
         newSubmission.rehersal,

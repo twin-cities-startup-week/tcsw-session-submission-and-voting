@@ -200,7 +200,7 @@ function AdminPage() {
                         <h4>Title</h4>
                       </TableCell>
                       <TableCell>
-                        <h4>Votes</h4>
+                        <h4>Email</h4>
                       </TableCell>
                     </TableRow>
                   </TableHead>
@@ -212,7 +212,7 @@ function AdminPage() {
                             {session.title}
                           </p>
                         </TableCell>
-                        <TableCell>{session.votes}</TableCell>
+                        <TableCell>{session.email}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -244,7 +244,7 @@ function AdminPage() {
                         <h4>Title</h4>
                       </TableCell>
                       <TableCell>
-                        <h4>Votes</h4>
+                        <h4>Email</h4>
                       </TableCell>
                     </TableRow>
                   </TableHead>
@@ -256,7 +256,7 @@ function AdminPage() {
                             {session.title}
                           </p>
                         </TableCell>
-                        <TableCell>{session.votes}</TableCell>
+                        <TableCell>{session.email}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

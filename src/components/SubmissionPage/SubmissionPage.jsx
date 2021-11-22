@@ -228,7 +228,7 @@ function SubmissionPage() {
         setExcited('');
         setOtherHosts('');
         setOtherInfo('');
-        history.push('/leaderboard');
+        history.push('/panelistView');
     }//end addSubmission
 
     //variables for individual form questions (multiselects are above)

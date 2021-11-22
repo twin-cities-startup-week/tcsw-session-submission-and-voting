@@ -22,13 +22,9 @@ function Nav() {
     setOpen(!open);
   };
 
-  const pushToSubmission = () => {
+  const pushToAdmin = () => {
     setOpen(!open);
-    history.push('/submission');
-  }
-  const pushToVote = () => {
-    setOpen(!open);
-    history.push('/panelistView');
+    history.push('/admin');
   }
   const pushToLogout = () => {
     setOpen(!open);
@@ -74,11 +70,15 @@ function Nav() {
               Search
             </Link>
 
-            {user.admin && 
+            <Link className="navLink" to="/leaderboard">
+              Leaderboard
+            </Link>
+
+            {/* {user.admin && 
             <Link className="navLink" to="/admin">
               Admin
             </Link>
-            }
+            } */}
 
             {/* <LogOutButton className="navLink" /> */}
           </>
@@ -94,15 +94,23 @@ function Nav() {
         <div className="navSignin">
           <List sx={{ ml: 'auto' }}>
 
-            <ListItemButton onClick={handleClick}>
-              <Link className="navSignin" to="/login">
+            <ListItemButton sx={{ textAlign: 'right' }}
+              onClick={handleClick}>
+              <div className="navSignin">
                 Welcome, {user.username}!
-              </Link>
+              </div>
               {open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
 
             <Collapse in={open} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
+
+              {user.admin && 
+              <ListItemButton sx={{ textAlign: 'right' }} 
+                onClick={pushToAdmin}>
+                  <ListItemText primary="Admin" />
+              </ListItemButton>
+              }
 
                 <ListItemButton sx={{ textAlign: 'right' }} 
                 onClick={pushToLogout}>
