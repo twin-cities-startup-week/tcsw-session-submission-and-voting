@@ -30,44 +30,61 @@ function VotePage() {
 
     return(
         <div>
-            <h1>Details Page</h1>
-             {store.panelistDetailsReducer.map(( details, index ) => (
-            <div className='left-bar'>
-                <h2>TCSW</h2>
-                <p>If you want this speaker! Click Vote!</p>
-                {/* <button onClick={() => setVote( vote + 1 )}>VOTE! <span>{vote}</span></button>  */}
 
-                { voteButton === false && <button onClick={( event ) => addVote( event.target.value )}>VOTE!</button> }
-                
-                <h5>Track: {details.track}</h5>
-                <p>Industry: {details.industry}</p>
-                <p>Format: {details.format}</p>
-                <p>Time: {details.time}</p>
-                <p>Date: {details.date}</p>
-                <p></p>
-            </div>
-             ))}
+            {store.panelistDetailsReducer.map(( details, index ) => (
+
+                <div className='left-bar'>
+
+                    <div className='vote-section'>
+                        <h2 className='left-header'>TCSW 2022</h2>
+                        <p className='vote-suggestion'>Like this Speaker?! Click Vote!</p>
+                        {/* <button onClick={() => setVote( vote + 1 )}>VOTE! <span>{vote}</span></button>  */}
+
+                        { voteButton === false && <button className='vote-button' onClick={( event ) => addVote( event.target.value )}>VOTE!</button> }
+                    </div>
+
+                    <div className='extra-details-section'>
+                        <h5>Track: {details.track}</h5>
+                        <h5>Industry: {details.industry}</h5>
+                        <h5>Format: {details.format}</h5>
+                        <h5>Time: {details.time}</h5>
+                        <h5>Date: {details.date}</h5>
+                    </div>
+
+                </div>
+
+            ))}
 
             
             {store.panelistDetailsReducer.map(( details ) => (
+
                 <div className= 'right-bar' key={details.id}>
-                    <h2>{details.title}</h2>
+
+                    <div className='title'>
+                        <h2>{details.title}</h2>
                         <p>{details.description}</p>
+                    </div>
 
-                    <h3>Speakers</h3>
+                    <div className='speaker'>
+                        <h3>Speakers</h3>
                         <p>{details.speakers}</p>
+                    </div>
 
-                    <h3>Organizers</h3>
+                    <div className='organizers'>
+                        <h3>Organizers</h3>
                         <p>{details.first_name} {details.last_name}</p>
+                    </div>
 
-                    <h3>Related Media</h3>
-                    {/* the name of the panelist who submitted the form */}
-                        
+                    <div className='related-media'>
+                        <h3>Related Media</h3>
+                    </div>    
                    
                     
 
                 </div>
+
             ))}
+
         </div>
     )
 }
