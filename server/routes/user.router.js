@@ -49,10 +49,18 @@ router.post('/login', userStrategy.authenticate('local'), (req, res) => {
 });
 
 // clear all server session information about this user
-router.post('/logout', (req, res) => {
-  // Use passport's built-in method to log out the user
-  req.logout();
-  res.sendStatus(200);
+router.post('/logout', async (req, res) => {
+  try {
+      // Use passport's built-in method to log out the user
+      await req.logout();
+      await res.clearCookie('user');
+      await res.clearCookie('user.sig');
+      req.session = null;
+      res.sendStatus(200);
+  } catch(e) {
+      logError(e);
+      res.sendStatus(500);
+  };
 });
 
 router.put('/reset', userStrategy.authenticate('local'), (req, res) => {
