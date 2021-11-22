@@ -74,6 +74,10 @@ function Nav() {
               Search
             </Link>
 
+            <Link className="navLink" to="/leaderboard">
+              Leaderboard
+            </Link>
+
             {user.admin && 
             <Link className="navLink" to="/admin">
               Admin
