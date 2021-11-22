@@ -22,13 +22,9 @@ function Nav() {
     setOpen(!open);
   };
 
-  const pushToSubmission = () => {
+  const pushToAdmin = () => {
     setOpen(!open);
-    history.push('/submission');
-  }
-  const pushToVote = () => {
-    setOpen(!open);
-    history.push('/panelistView');
+    history.push('/admin');
   }
   const pushToLogout = () => {
     setOpen(!open);
@@ -100,9 +96,9 @@ function Nav() {
 
             <ListItemButton sx={{ textAlign: 'right' }}
               onClick={handleClick}>
-              <Link className="navSignin" to="/login">
+              <div className="navSignin">
                 Welcome, {user.username}!
-              </Link>
+              </div>
               {open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
 
@@ -111,7 +107,7 @@ function Nav() {
 
               {user.admin && 
               <ListItemButton sx={{ textAlign: 'right' }} 
-                onClick={() => history.push('/admin')}>
+                onClick={pushToAdmin}>
                   <ListItemText primary="Admin" />
               </ListItemButton>
               }
