@@ -37,22 +37,27 @@ function Panelists() {
         setTrackState('');
         setFormatState('');
     }
+
+    const goToLeaderBoard = () => {
+        history.push('/leaderboard')
+    }
     
     return(
-        <div>
-            <h1>Panelist</h1>
+        <div className='panel-view-page'>
             <div className='filter-section'>
-                <form className='filter-buttons'>
+                <h2 className='filter-heading'>SEARCH</h2>
+                <p className='filter-suggestion'>Search by Title</p>
                     <div>
                         <input 
+                            className='search-bar'
                             type='text'
                             placeholder='search....'
                             onChange={ event => { setSearchTerm( event.target.value )}}
                         />
                     </div>
 
-                    <div>
-                        <h5>Track</h5>
+                    <div className='filter-dropdown-selectors'>
+                        <h5 className='track-filter-header'>Track</h5>
                         <select className='track-selector' onChange={ event => setTrackState( event.target.value )}>
                             {console.log('this is the setTrackState',setTrackState)}
                             {console.log('this is the trackState', trackState)}
@@ -67,11 +72,9 @@ function Panelists() {
                             <option value="Spotlight">Spotlight</option>
                             <option value="Other">Other</option>
                         </select>
-                    </div>
-
-                    <div>
-                        <h5>Format</h5>
-                        <select onChange={ event => setFormatState( event.target.value )}>
+                    
+                        <h5 className='format-filter-header'>Format</h5>
+                        <select className='format-selector' onChange={ event => setFormatState( event.target.value )}>
                             <option value=''> </option>
                             <option value="Presentation">Presentation</option>
                             <option value="Panel">Panel</option>
@@ -87,345 +90,358 @@ function Panelists() {
                         </select>
                     </div> 
 
-                    <button className='filter-reset-button' onClick={restFilters}>Reset</button>
+                    <br/>
 
-                </form>
-            </div>
+                    <div className='reset-location'>
+                        <button className='filter-reset-button' onClick={restFilters}>Reset</button>
+                    </div>
+                    
+                    <div className='leader-board-button-div'>
+                        <p>Want to see who is leading the Vote race?</p>
+                        <button className='leader-board-button' onClick={goToLeaderBoard}>Leader Board</button>
+                    </div>
+              </div>
 
-            
+            {/* This is where the panel list table starts */}
+
             <div className='search-list' >
-                <table>
-                    <thead>
-                        <tr>
-                            <th className="title-header">Title </th>
-                            <th className='track-header'>Track</th>
-                            <th className='format-header'>Format</th>
-                        </tr>
-                    </thead>
+                <h2 className='search-list-header'>SESSION TOPICS</h2>
+                <p className='voting-notice'>Community Voting Starts: </p>
+                
+                <div className='search-list-table'>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th className="title-header">Title </th>
+                                <th className='track-header'>Track</th>
+                                <th className='format-header'>Format</th>
+                            </tr>
+                        </thead>
 
-                    {(trackState === '' && formatState === '') && 
-                    <tbody>
+                        {(trackState === '' && formatState === '') && 
+                        <tbody>
 
-                        {store.panelistReducer.filter( panel  => panel.title.toLowerCase().includes(searchTerm.toLowerCase())).map( panel => (
-                                    
-                        <tr>
-                            <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
-                            <td>{panel.track}</td>
-                            <td>{panel.format}</td>
-                        </tr>
-                                            
-                        ))}
-                    </tbody>
-                    }
-                    
-                    
-                    {trackState === 'Developer' &&
-                    
-                    <tbody>
+                            {store.panelistReducer.filter( panel  => panel.title.toLowerCase().includes(searchTerm.toLowerCase())).map( panel => (
+                                        
+                            <tr>
+                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
+                                <td>{panel.track}</td>
+                                <td>{panel.format}</td>
+                            </tr>
+                                                
+                            ))}
+                        </tbody>
+                        }
                         
-                        {store.panelistReducer.filter( panel  => panel.track.includes(trackState)).map( panel => (
+                        
+                        {trackState === 'Developer' &&
+                        
+                        <tbody>
+                            
+                            {store.panelistReducer.filter( panel  => panel.track.includes(trackState)).map( panel => (
 
-                        <tr>
-                            <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
-                            <td>{panel.track}</td>
-                            <td>{panel.format}</td>
-                        </tr>
+                            <tr>
+                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
+                                <td>{panel.track}</td>
+                                <td>{panel.format}</td>
+                            </tr>
 
-                        ))}
+                            ))}
 
-                    </tbody>
-                    }
+                        </tbody>
+                        }
+
+                        {trackState === 'Founder' &&
+                        <tbody>
+                            {store.panelistReducer.filter( panel  => panel.track.includes(trackState)).map( panel => (
 
-                    {trackState === 'Founder' &&
-                    <tbody>
-                        {store.panelistReducer.filter( panel  => panel.track.includes(trackState)).map( panel => (
+                            <tr>
+                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
+                                <td>{panel.track}</td>
+                                <td>{panel.format}</td>
+                            </tr>
 
-                        <tr>
-                            <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
-                            <td>{panel.track}</td>
-                            <td>{panel.format}</td>
-                        </tr>
+                            ))}
 
-                        ))}
+                        </tbody>
+                        }
 
-                    </tbody>
-                    }
+                        {trackState === 'Designer' &&
+                        <tbody>
+                            {store.panelistReducer.filter( panel  => panel.track.includes(trackState)).map( panel => (
 
-                    {trackState === 'Designer' &&
-                    <tbody>
-                        {store.panelistReducer.filter( panel  => panel.track.includes(trackState)).map( panel => (
+                            <tr>
+                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
+                                <td>{panel.track}</td>
+                                <td>{panel.format}</td>
+                            </tr>
 
-                        <tr>
-                            <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
-                            <td>{panel.track}</td>
-                            <td>{panel.format}</td>
-                        </tr>
+                            ))}
 
-                        ))}
+                        </tbody>
+                        }
 
-                    </tbody>
-                    }
+                        {trackState === 'Maker' &&
+                        <tbody>
+                            {store.panelistReducer.filter( panel  => panel.track.includes(trackState)).map( panel => (
 
-                    {trackState === 'Maker' &&
-                    <tbody>
-                        {store.panelistReducer.filter( panel  => panel.track.includes(trackState)).map( panel => (
+                            <tr>
+                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
+                                <td>{panel.track}</td>
+                                <td>{panel.format}</td>
+                            </tr>
 
-                        <tr>
-                            <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
-                            <td>{panel.track}</td>
-                            <td>{panel.format}</td>
-                        </tr>
+                            ))}
 
-                        ))}
+                        </tbody>
+                        }
 
-                    </tbody>
-                    }
+                        {trackState === 'Product' &&
+                        <tbody>
+                            {store.panelistReducer.filter( panel  => panel.track.includes(trackState)).map( panel => (
 
-                    {trackState === 'Product' &&
-                    <tbody>
-                        {store.panelistReducer.filter( panel  => panel.track.includes(trackState)).map( panel => (
+                            <tr>
+                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
+                                <td>{panel.track}</td>
+                                <td>{panel.format}</td>
+                            </tr>
 
-                        <tr>
-                            <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
-                            <td>{panel.track}</td>
-                            <td>{panel.format}</td>
-                        </tr>
+                            ))}
 
-                        ))}
+                        </tbody>
+                        }
 
-                    </tbody>
-                    }
+                        {trackState === 'Growth' &&
+                        <tbody>
+                            {store.panelistReducer.filter( panel  => panel.track.includes(trackState)).map( panel => (
 
-                    {trackState === 'Growth' &&
-                    <tbody>
-                        {store.panelistReducer.filter( panel  => panel.track.includes(trackState)).map( panel => (
+                            <tr>
+                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
+                                <td>{panel.track}</td>
+                                <td>{panel.format}</td>
+                            </tr>
 
-                        <tr>
-                            <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
-                            <td>{panel.track}</td>
-                            <td>{panel.format}</td>
-                        </tr>
+                            ))}
 
-                        ))}
+                        </tbody>
+                        }
 
-                    </tbody>
-                    }
+                        {trackState === 'People' &&
+                        <tbody>
+                            {store.panelistReducer.filter( panel  => panel.track.includes(trackState)).map( panel => (
 
-                    {trackState === 'People' &&
-                    <tbody>
-                        {store.panelistReducer.filter( panel  => panel.track.includes(trackState)).map( panel => (
+                            <tr>
+                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
+                                <td>{panel.track}</td>
+                                <td>{panel.format}</td>
+                            </tr>
 
-                        <tr>
-                            <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
-                            <td>{panel.track}</td>
-                            <td>{panel.format}</td>
-                        </tr>
+                            ))}
 
-                        ))}
+                        </tbody>
+                        }
 
-                    </tbody>
-                    }
+                        {trackState === 'Spotlight' &&
+                        <tbody>
+                            {store.panelistReducer.filter( panel  => panel.track.includes(trackState)).map( panel => (
 
-                    {trackState === 'Spotlight' &&
-                    <tbody>
-                        {store.panelistReducer.filter( panel  => panel.track.includes(trackState)).map( panel => (
+                            <tr>
+                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
+                                <td>{panel.track}</td>
+                                <td>{panel.format}</td>
+                            </tr>
 
-                        <tr>
-                            <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
-                            <td>{panel.track}</td>
-                            <td>{panel.format}</td>
-                        </tr>
+                            ))}
 
-                        ))}
+                        </tbody>
+                        }
 
-                    </tbody>
-                    }
+                        {trackState === 'Other' &&
+                        <tbody>
+                            {store.panelistReducer.filter( panel  => panel.track.includes(trackState)).map( panel => (
 
-                    {trackState === 'Other' &&
-                    <tbody>
-                        {store.panelistReducer.filter( panel  => panel.track.includes(trackState)).map( panel => (
+                            <tr>
+                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
+                                <td>{panel.track}</td>
+                                <td>{panel.format}</td>
+                            </tr>
 
-                        <tr>
-                            <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
-                            <td>{panel.track}</td>
-                            <td>{panel.format}</td>
-                        </tr>
+                            ))}
 
-                        ))}
+                        </tbody>
+                        }
 
-                    </tbody>
-                    }
+            {/* Format filtering starts here */}
 
-        {/* Format filtering starts here */}
 
+                        {formatState === 'Presentation' &&
+                        <tbody>
+                            {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
 
-                    {formatState === 'Presentation' &&
-                    <tbody>
-                        {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
+                            <tr>
+                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
+                                <td>{panel.track}</td>
+                                <td>{panel.format}</td>
+                            </tr>
 
-                        <tr>
-                            <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
-                            <td>{panel.track}</td>
-                            <td>{panel.format}</td>
-                        </tr>
+                            ))}
 
-                        ))}
+                        </tbody>
+                        }
 
-                    </tbody>
-                    }
+                        {formatState === 'Panel' &&
+                        <tbody>
+                            {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
 
-                    {formatState === 'Panel' &&
-                    <tbody>
-                        {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
+                            <tr>
+                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
+                                <td>{panel.track}</td>
+                                <td>{panel.format}</td>
+                            </tr>
 
-                        <tr>
-                            <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
-                            <td>{panel.track}</td>
-                            <td>{panel.format}</td>
-                        </tr>
+                            ))}
 
-                        ))}
+                        </tbody>
+                        }
 
-                    </tbody>
-                    }
+                        {formatState === 'Workshop' &&
+                        <tbody>
+                            {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
 
-                    {formatState === 'Workshop' &&
-                    <tbody>
-                        {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
+                            <tr>
+                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
+                                <td>{panel.track}</td>
+                                <td>{panel.format}</td>
+                            </tr>
 
-                        <tr>
-                            <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
-                            <td>{panel.track}</td>
-                            <td>{panel.format}</td>
-                        </tr>
+                            ))}
 
-                        ))}
+                        </tbody>
+                        }
 
-                    </tbody>
-                    }
+                        {formatState === 'Keynote' &&
+                        <tbody>
+                            {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
 
-                    {formatState === 'Keynote' &&
-                    <tbody>
-                        {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
+                            <tr>
+                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
+                                <td>{panel.track}</td>
+                                <td>{panel.format}</td>
+                            </tr>
 
-                        <tr>
-                            <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
-                            <td>{panel.track}</td>
-                            <td>{panel.format}</td>
-                        </tr>
+                            ))}
 
-                        ))}
+                        </tbody>
+                        }
 
-                    </tbody>
-                    }
+                        {formatState === 'Roundtable' &&
+                        <tbody>
+                            {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
 
-                    {formatState === 'Roundtable' &&
-                    <tbody>
-                        {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
+                            <tr>
+                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
+                                <td>{panel.track}</td>
+                                <td>{panel.format}</td>
+                            </tr>
 
-                        <tr>
-                            <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
-                            <td>{panel.track}</td>
-                            <td>{panel.format}</td>
-                        </tr>
+                            ))}
 
-                        ))}
+                        </tbody>
+                        }
 
-                    </tbody>
-                    }
 
+                        {formatState === 'Fireside Chat' &&
+                        <tbody>
+                            {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
 
-                    {formatState === 'Fireside Chat' &&
-                    <tbody>
-                        {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
+                            <tr>
+                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
+                                <td>{panel.track}</td>
+                                <td>{panel.format}</td>
+                            </tr>
 
-                        <tr>
-                            <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
-                            <td>{panel.track}</td>
-                            <td>{panel.format}</td>
-                        </tr>
+                            ))}
 
-                        ))}
+                        </tbody>
+                        }
+                        
+                        {formatState === 'Showcase' &&
+                        <tbody>
+                            {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
 
-                    </tbody>
-                    }
-                    
-                    {formatState === 'Showcase' &&
-                    <tbody>
-                        {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
+                            <tr>
+                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
+                                <td>{panel.track}</td>
+                                <td>{panel.format}</td>
+                            </tr>
 
-                        <tr>
-                            <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
-                            <td>{panel.track}</td>
-                            <td>{panel.format}</td>
-                        </tr>
+                            ))}
 
-                        ))}
+                        </tbody>
+                        }
 
-                    </tbody>
-                    }
+                        {formatState === 'Demo' &&
+                        <tbody>
+                            {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
 
-                    {formatState === 'Demo' &&
-                    <tbody>
-                        {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
+                            <tr>
+                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
+                                <td>{panel.track}</td>
+                                <td>{panel.format}</td>
+                            </tr>
 
-                        <tr>
-                            <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
-                            <td>{panel.track}</td>
-                            <td>{panel.format}</td>
-                        </tr>
+                            ))}
 
-                        ))}
+                        </tbody>
+                        }
 
-                    </tbody>
-                    }
+                        {formatState === 'Meetup' &&
+                        <tbody>
+                            {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
 
-                    {formatState === 'Meetup' &&
-                    <tbody>
-                        {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
+                            <tr>
+                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
+                                <td>{panel.track}</td>
+                                <td>{panel.format}</td>
+                            </tr>
 
-                        <tr>
-                            <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
-                            <td>{panel.track}</td>
-                            <td>{panel.format}</td>
-                        </tr>
+                            ))}
 
-                        ))}
+                        </tbody>
+                        }
 
-                    </tbody>
-                    }
+                        {formatState === 'Pitch' &&
+                        <tbody>
+                            {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
 
-                    {formatState === 'Pitch' &&
-                    <tbody>
-                        {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
+                            <tr>
+                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
+                                <td>{panel.track}</td>
+                                <td>{panel.format}</td>
+                            </tr>
 
-                        <tr>
-                            <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
-                            <td>{panel.track}</td>
-                            <td>{panel.format}</td>
-                        </tr>
+                            ))}
 
-                        ))}
+                        </tbody>
+                        }
 
-                    </tbody>
-                    }
+                        {formatState === 'Other' &&
+                        <tbody>
+                            {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
 
-                    {formatState === 'Other' &&
-                    <tbody>
-                        {store.panelistReducer.filter( panel  => panel.format.includes(formatState)).map( panel => (
+                            <tr>
+                                <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
+                                <td>{panel.track}</td>
+                                <td>{panel.format}</td>
+                            </tr>
 
-                        <tr>
-                            <td onClick={() => goToPanelDetails( panel )}>{panel.title}</td>
-                            <td>{panel.track}</td>
-                            <td>{panel.format}</td>
-                        </tr>
+                            ))}
 
-                        ))}
+                        </tbody>
+                        }
 
-                    </tbody>
-                    }
-
-                </table>
+                    </table>
+                </div>
             </div>       
 
         </div>
