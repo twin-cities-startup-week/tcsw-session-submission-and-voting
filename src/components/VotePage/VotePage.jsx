@@ -21,9 +21,9 @@ function VotePage() {
    } 
 
     // function to set Vote Button state to true.   
-   const addVote = ( session ) => {
-    //    dispatch({ type: 'ADD_VOTE_COUNT', payload: store })
-    //    console.log(' addVote payload', session);
+   const addVote = ( sessionId ) => {
+       dispatch({ type: 'ADD_VOTE_COUNT', payload: sessionId })
+       console.log(' addVote payload', sessionId);
         toggleVoteButton(true);
         alert('Awesome! You Have VOTED!')
    }
@@ -40,7 +40,7 @@ function VotePage() {
                         <p className='vote-suggestion'>Like this Speaker?! Click Vote!</p>
                         {/* <button onClick={() => setVote( vote + 1 )}>VOTE! <span>{vote}</span></button>  */}
 
-                        { voteButton === false && <button className='vote-button' onClick={( event ) => addVote( event.target.value )}>VOTE!</button> }
+                        { voteButton === false && <button className='vote-button' onClick={( event ) => addVote( details.id )}>VOTE!</button> }
                     </div>
 
                     <div className='extra-details-section'>
