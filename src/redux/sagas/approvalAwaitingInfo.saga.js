@@ -6,7 +6,7 @@ function* fetchApprovalAwaitingInfo(){
 
     console.log('LET ME KNOW WHAT THIS SAGA IS. I NEED HELP PLEASE')
     try{
-        const response = yield axios.get(`/api/session`)
+        const response = yield axios.get(`/api/session/awaitingApprovalList`)
         console.log('This is FETCH_APPROVAL_AWAITING_INFO response', response.data)
         yield put({type: 'SET_APPROVAL_AWAITING_INFO', payload: response.data})
     }catch(error){
