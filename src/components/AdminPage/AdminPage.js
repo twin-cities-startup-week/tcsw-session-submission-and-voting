@@ -4,17 +4,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import AdminPageItem from "./AdminPageItem/AdminPageItem";
 //Material-ui
-import { Grid, Card, Container, Paper, makeStyles, Table, TableBody, TableCell, 
-  TableContainer, TableHead, TableRow } from "@material-ui/core";
+import {
+  Grid,
+  Card,
+  Container,
+  Paper,
+  makeStyles,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@material-ui/core";
+
+import "./AdminPage.css";
 
 // Styling
 const useStyles = makeStyles({
   root: {
-    marginRight: "1000px",
-    marginLeft: "10px",
-    marginBottom: "100px",
-    // paddingTop: '300px',
-    //paddingLeft: '3000px',
+    margin: "0px 10px",
+    textAlign: "center",
+    fontSize: "20px",
     border: "2px solid",
   },
 });
@@ -22,44 +33,50 @@ const useStyles = makeStyles({
 // Styling
 const useStylish = makeStyles({
   rooty: {
-    marginLeft: "400px",
-    marginRight: "600px",
-    marginTop: "-200px",
-    paddingTop: "40px",
+    margin: "0px 10px",
+    fontSize: "20px",
+
+    // marginLeft: "400px",
+    // marginRight: "600px",
+    // //marginTop: "-190px",
+    // paddingTop: "30px",
+    // paddingRight: '80px',
     border: "2px solid",
-    justifyContent: "center",
+    textAlign: "center",
   },
 });
 
 // Styling
 const useStyle = makeStyles({
   roots: {
-    marginLeft: "800px",
-    marginRight: "300px",
-    marginTop: "-130px",
-    paddingTop: "40px",
-    paddingRight: '20px',
+    margin: "0px 10px",
+    fontSize: "20px",
+
+    // marginLeft: "700px",
+    // marginRight: "300px",
+    //marginTop: "-100px",
+    //paddingTop: "40px",
+    // paddingRight: '30px',
     border: "2px solid",
-    justifyContent: "center",
+    textAlign: "center",
+
+    // justifyContent: "center",
   },
 });
 
-
 // Styling
 const useSty = makeStyles({
-    center: {
-        marginLeft: 'auto'
-    }
-  });
-
+  center: {
+    // marginLeft: 'auto'
+  },
+});
 
 // Styling
 const useStyli = makeStyles({
-    right: {
-        marginLeft: '-100px',
-       
-    }
-  });
+  right: {
+    //marginLeft: '-100px',
+  },
+});
 
 function AdminPage() {
   const classes = useStyles();
@@ -67,7 +84,6 @@ function AdminPage() {
   const classy = useStyle();
   const classics = useStyli();
   const clay = useSty();
-
 
   //set selector
   const reduxStore = useSelector((store) => store);
@@ -93,11 +109,11 @@ function AdminPage() {
     dispatch({ type: "FETCH_APPROVED_INFO" });
   }, [dispatch]);
 
-  const gotoDetails = (session) =>{
-    dispatch({ type: 'FETCH_PANEL_DETAILS', payload: session})
+  const gotoDetails = (session) => {
+    dispatch({ type: "FETCH_PANEL_DETAILS", payload: session });
 
-    history.push('/votepage')
-  }
+    history.push("/votepage");
+  };
 
   return (
     <>
@@ -108,108 +124,148 @@ function AdminPage() {
         ))}
       </div>
 
-      <div>
-        <Card className={classes.root} variant="outlined">
-          {/* {JSON.stringify(setSessionList)} */}
-          {setSessionList.map((session, index) => (
-            <div key={index}>
-              {" "}
-              <p>Total Number of Sessions Approved:</p>
-              {session.count}
-            </div>
-          ))}
-        </Card>
+      <div className="threeBlockGrid">
+        <div>
+          <Card
+            className={classes.root}
+            //card 1
+            variant="outlined"
+          >
+            {/* {JSON.stringify(setSessionList)} */}
+            {setSessionList.map((session, index) => (
+              <div key={index}>
+                {" "}
+                <p>Total Number of Sessions Approved:</p>
+                <h3>{session.count}</h3>
+              </div>
+            ))}
+          </Card>
+        </div>
+
+        <div>
+          <Card
+            className={classic.rooty}
+            //card 2
+            variant="outlined"
+          >
+            {/* {JSON.stringify(setHighestVoting)} */}
+            {setHighestVoting.map((session, index) => (
+              <div key={index}>
+                {" "}
+                <p>Highest Ranked Session:</p>
+                <h3>{session.title}</h3>
+              </div>
+            ))}
+          </Card>
+        </div>
+
+        <div>
+          <Card
+            className={classy.roots}
+            //card 3
+            variant="outlined"
+          >
+            {/* {JSON.stringify(setAwaitingApproval)} */}
+            {setAwaitingApproval.map((session, index) => (
+              <div key={index}>
+                {" "}
+                <p>Number of Sessions Awaiting Approval:</p>
+                <h3>{session.count}</h3>
+              </div>
+            ))}
+          </Card>
+        </div>
       </div>
 
-      <div>
-        <Card className={classic.rooty} variant="outlined">
-          {/* {JSON.stringify(setHighestVoting)} */}
-          {setHighestVoting.map((session, index) => (
-            <div key={index}>
-              {" "}
-              <p>Highest Ranked Session:</p>
-              {session.title}
-            </div>
-          ))}
-        </Card>
-      </div>
+      <div className="masterTableContainer">
+        <div className="leftTable">
+          <div
+            style={{
+              border: "2px solid black",
+              borderRadius: "4px",
+              backgroundColor: "#0c495a",
+              margin: "10px 14px 13px",
+              color: 'yellow'
+            }}
+          >
+            <h3 style={{ textAlign: "center" }}>Awaiting Approval</h3>
+          </div>
+          <Container>
+            <Grid container spacing={3}>
+              <TableContainer component={Paper}>
+                <Table sx={{ width: "20%" }} aria-label="simple table">
+                  <TableHead className={classics.center}>
+                    <TableRow className="tableRow">
+                      <TableCell>
+                        <h4>Title</h4>
+                      </TableCell>
+                      <TableCell>
+                        <h4>Votes</h4>
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {setApprovalAwaitingInfo.map((session, index) => (
+                      <TableRow key={index}>
+                        <TableCell>
+                          <p onClick={() => gotoDetails(session)}>
+                            {session.title}
+                          </p>
+                        </TableCell>
+                        <TableCell>{session.votes}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Grid>
+          </Container>
+        </div>
 
-      <div>
-        <Card className={classy.roots} variant="outlined">
-          {/* {JSON.stringify(setAwaitingApproval)} */}
-          {setAwaitingApproval.map((session, index) => (
-            <div key={index}>
-              {" "}
-              <p>Number of Sessions Awaiting Approval:</p>
-              {session.count}
-            </div>
-          ))}
-        </Card>
+        <div className="rightTable">
+          <div
+            style={{
+              border: "2px solid black",
+              borderRadius: "4px",
+              backgroundColor: "#0c495a",
+              margin: "10px 14px 13px",
+              color: 'yellow'
+            }}
+          >
+            <h3 style={{ textAlign: "center" }}>Approved</h3>
+          </div>
+          <Container>
+            <Grid container spacing={3}>
+              <TableContainer component={Paper}>
+                <Table sx={{ width: "20%" }} aria-label="simple table">
+                  <TableHead className={clay.right}>
+                    <TableRow>
+                      <TableCell>
+                        <h4>Title</h4>
+                      </TableCell>
+                      <TableCell>
+                        <h4>Votes</h4>
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {setApprovedInfo.map((session, index) => (
+                      <TableRow key={index}>
+                        <TableCell>
+                          <p onClick={() => gotoDetails(session)}>
+                            {session.title}
+                          </p>
+                        </TableCell>
+                        <TableCell>{session.votes}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Grid>
+          </Container>
+        </div>
       </div>
-      <h3> Awaiting Approval</h3>
-      <Container >
-      <Grid container spacing={3}>
-      <Grid container direction="row" justify="space-between" alignItems="center">
-      <Grid item xs={4}>
-        <TableContainer component={Paper}>
-          <Table sx={{ width: "20%" }} aria-label="simple table">
-            <TableHead className={classics.center}>
-              <TableRow>
-                <TableCell>
-                  <h4>Title</h4>
-                </TableCell>
-                <TableCell>
-                  <h4>Votes</h4>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {setApprovalAwaitingInfo.map((session, index) => (
-                <TableRow key={index}>
-                  <TableCell><p onClick={() => gotoDetails (session)}>{session.title}</p></TableCell>
-                  <TableCell>{session.votes}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        </Grid>
-      </Grid>
-      </Grid>
-      </Container>
-
-      <h3>Approved</h3>
-      <Container>
-      <Grid container spacing={3}>
-      <Grid container direction="row" justify="space-between" alignItems="center">
-      <Grid item xs={4}>
-        <TableContainer component={Paper}>
-          <Table sx={{ width: "20%" }} aria-label="simple table">
-            <TableHead className={clay.right}>
-              <TableRow>
-                <TableCell>
-                  <h4>Title</h4>
-                </TableCell>
-                <TableCell>
-                  <h4>Votes</h4>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {setApprovedInfo.map((session, index) => (
-                <TableRow key={index}>
-                  <TableCell > <p onClick={() => gotoDetails (session)}>{session.title}</p></TableCell>
-                  <TableCell>{session.votes}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        </Grid>
-        </Grid>
-        </Grid>
-        </Container>
-       
     </>
   );
 }

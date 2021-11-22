@@ -31,7 +31,7 @@ function FaqPage (){
             answer: 'The TCSW Session Selector is a way for the community to be more involved in the content presented at TCSW! Prospective speakers and event hosts can submit their ideas to the Session Selector, which will then be voted on by the community and TCSW team.',
         },
         {
-            question: 'What is the timeline?',
+            question: `What is the timeline?`,
             answer:` April 4th - Session Submissions Open 
             May 15th - Session Submissions Close 
             May 16th-20th - TCSW Team finalizes approved sessions 

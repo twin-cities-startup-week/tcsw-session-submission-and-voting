@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 //Material-ui
 import { Paper, makeStyles } from "@material-ui/core";
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 // Styling
 const useQuestions = makeStyles({
@@ -25,6 +26,7 @@ const useQuestions = makeStyles({
     backgroundSize: "contain",
     backgroundRepeat: "no-repeat",
 
+
     // // content: '',
     // // position: 'absolute',
     // // top: '50%',
@@ -37,25 +39,23 @@ const useQuestions = makeStyles({
 
 // Styling
 const useAnswers = makeStyles({
-  answers: {
-    // opacity: '0',
-    // maxHeight: '0',
-    // overflowY: 'hidden',
-    // transition: 'all 0.4s ease',
+  arrow: {
+    color: 'green'
   },
 });
 
 function FaqItemPage({ faq, index }) {
   const questions = useQuestions();
-  const answers = useAnswers();
+  const arrow = useAnswers();
 
   const [openAnswers, setOpenAnswers] = useState(false);
 
   return (
     <div onClick={() => setOpenAnswers(!openAnswers)} key={index}>
-      <div className={questions.questions}>{faq.question}</div>
+      <div className={questions.questions}>{faq.question}<ArrowDownwardIcon className={arrow}/></div>
 
-      {openAnswers && <div className={answers.answers}>{faq.answer}</div>}
+      {openAnswers && <div >{faq.answer}</div>}
+      {/* className={answers.answers} */}
     </div>
   );
 }
