@@ -29,6 +29,7 @@ function Nav() {
   const pushToLogout = () => {
     setOpen(!open);
     dispatch({ type: 'LOGOUT' });
+    history.push('/login');
   }
 
   return (
