@@ -6,7 +6,7 @@ function* fetchApprovedInfo(){
 
     console.log('LET ME KNOW HOW TO SOLVE THIS PLEASE')
     try{
-        const response = yield axios.get(`/api/session`)
+        const response = yield axios.get(`/api/session/approvedList`)
         console.log('This is FETCH_APPROVED_INFO response', response.data)
         yield put({type: 'SET_APPROVED_INFO', payload: response.data})
     }catch(error){

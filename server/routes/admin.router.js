@@ -85,7 +85,7 @@ router.get('/awaitingApproval', (req, res) => {
 /**
  * GET route admin
  */
- router.get('/', (req, res) => {
+ router.get('/awaitingApprovalList', (req, res) => {
     // GET route code here
     pool.query(`SELECT * from "session" 
     WHERE awaiting_approval = true`)
@@ -102,7 +102,7 @@ router.get('/awaitingApproval', (req, res) => {
 /**
  * GET route admin
  */
- router.get('/', (req, res) => {
+ router.get('/approvedList', (req, res) => {
     // GET route code here
     pool.query(`SELECT * from "session" 
     WHERE approved = true`)
