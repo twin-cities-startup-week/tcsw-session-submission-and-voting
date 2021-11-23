@@ -11,6 +11,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import Button from '@mui/material/Button';
 
 function Nav() {
   const dispatch = useDispatch();
@@ -86,34 +87,46 @@ function Nav() {
         )}
 
         {!user.id &&
-          <Link className="navSignin" to="/login">
+          <Button className="navSignin" onClick={() => history.push('/login')}
+          sx={{ ml: 'auto', mr: '20px', bgcolor: "#0c495a",
+             color: "#FBBD19", '&:hover': { background: "#0c495a"}, p: 2, mb: -1,
+            borderRadius: '5%' }}>
             Sign In
-          </Link>
+          </Button>
         }
         
         {user.id && 
         <div className="navSignin">
           <List sx={{ ml: 'auto' }}>
 
-            <ListItemButton sx={{ textAlign: 'right' }}
+            <ListItemButton sx={{ textAlign: 'right', bgcolor: "#0c495a",
+             color: "#FBBD19", '&:hover': { background: "#0c495a"}, p: 2, mb: -1,
+            borderRadius: '5%' }}
               onClick={handleClick}>
               <div className="navSignin">
-                Welcome, {user.username}!
+                Welcome, {user.first_name}!
               </div>
               {open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
 
-            <Collapse in={open} timeout="auto" unmountOnExit>
+            <Collapse in={open} timeout="auto" unmountOnExit
+            sx={{  }}>
               <List component="div" disablePadding>
 
               {user.admin && 
-              <ListItemButton sx={{ textAlign: 'right' }} 
+              <ListItemButton sx={{ textAlign: 'right',  
+              color: "#FBBD19", bgcolor: "#0c495a", 
+              '&:hover': { background: "#0c495a"},
+              borderBottomLeftRadius: '5%', borderBottomRightRadius: '5%' }} 
                 onClick={pushToAdmin}>
                   <ListItemText primary="Admin" />
               </ListItemButton>
               }
 
-                <ListItemButton sx={{ textAlign: 'right' }} 
+                <ListItemButton sx={{ 
+                  textAlign: 'right', mb: -20, mt: -1, bgcolor: "#0c495a", 
+                  color: "#FBBD19", '&:hover': { background: "#0c495a"},
+                  borderBottomLeftRadius: '5%', borderBottomRightRadius: '5%' }} 
                 onClick={pushToLogout}>
                   <ListItemText primary="Logout" />
                 </ListItemButton>
