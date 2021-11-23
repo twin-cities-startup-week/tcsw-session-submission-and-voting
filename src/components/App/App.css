@@ -23,17 +23,6 @@ Container
   text-align: center;
 }
 
-#landing-welcome {
-  text-align: center;
-  font-size: xx-large;
-}
-
-#landing-description {
-  text-align: center;
-  width: 1000px;
-  margin: auto;
-}
-
 /* --------------------------------------------------------------------------------
 Button
 -------------------------------------------------------------------------------- */
@@ -206,11 +195,47 @@ Leaderboard Ribbon
 }
 .bar span:nth-child(4) {
   border-color: #0c495a transparent #0c495a #0c495a;
-   
   left: 440px;
   box-shadow: -20px 19px 30px -10px grey;
 }
 
 /* --------------------------------------------------------------------------------
-
+Landing Page
 -------------------------------------------------------------------------------- */
+
+.landingList {
+  text-align: left;
+}
+
+.extraText {
+  text-align: left;
+  padding: 0px 20px 0px 20px;
+}
+
+#landing-welcome {
+  font-size: xx-large;
+  margin: auto;
+  text-align: center;
+  padding-bottom: 10px;
+  width: 60%;
+  border-bottom: solid #0c495a;
+  margin-bottom: 15px;
+}
+
+#landing-description {
+  margin: 10px;
+  text-align: center;
+  width: 900px;
+  margin: auto;
+}
+
+.submitSessionDiv {
+  padding: 10px;
+  background-color: #A7A9AC; 
+  border-radius: 1%; 
+  margin: 0;
+}
+
+.submitSessionHeader {
+  margin: 5px;
+}

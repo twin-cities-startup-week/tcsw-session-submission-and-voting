@@ -25,17 +25,13 @@ function LandingPage() {
 
       <div className="">
         <div id="landing-description">
-          <p>
           Twin Cities Startup Week is back from September 16 - 23, 2022!
           <br/>
-          The TCSW Session Selector provides a way for the community to be more 
-          involved in the sessions, workshops, panels, and events at TCSW. Whether 
-          you are hosting an event for TCSW 2022 or just want to have a say in 
-          what’s presented, you’re in the right place.
-          Interested in hosting a session? If you are an individual, business, or 
-          community organization doing amazing things in the world of startups and 
-          innovation, we'd love to work with you! 
-          </p>
+          Welcome to the Twin Cities Startup Week Session Selector! 
+          Here, you can submit a session application, vote on what you want 
+          to see at TCSW 2022, and add comments for the community to consider. 
+          <br/>
+          <b><u>Click Sign In to get started!</u></b>
         </div>
           {!user.id &&
           <Box sx={{ textAlign: 'center' }}>
@@ -66,23 +62,34 @@ function LandingPage() {
           <Paper elevation={8} 
           sx={{ width: 1000, height: 600, pl: 0, pr: 0, m: 'auto' }}>
 
-            <Box sx={{ p: '1px', bgcolor: '#A7A9AC', borderRadius: 1, m: 0, pl: 0 }}>
-              <h2>How to Submit A Session</h2>
-            </Box>
+            <div className="submitSessionDiv">
+              <h2 className="submitSessionHeader">Submit A Session!</h2>
+            </div>
           {!user.id && 
           <div>
+            <div>
           <p className="submission">
             2022 Session Submission Dates
-            Session Submission Deadline: April 4, 2022 to May 15, 2022
             <br/>
-            Session Voting Deadline: May 23, 2021 to June 5, 2022</p>
+            Submission period starts April 4, 2022 and ends May 15, 2022
             <br/>
-            1. Once signed in, use the submit your session proposal by May 1st. 
-            Once submitted, we will reach out with any questions that we have. 
-            We will notify you by April 15th whether your sessions was accepted or not. 
-            Every year we receive more sessions that we have time slots on the 
-            schedule so if your session is not accepted, please think about applying 
-            next year!
+              Community voting starts May 23, 2022 and ends June 6, 2022</p>
+            <p className="extraText">
+              Once signed in, use the submit your session proposal by May 1st. 
+              Once submitted, we will reach out with any questions that we have. 
+              We will notify you by April 15th whether your sessions was accepted or not. 
+              Every year we receive more sessions that we have time slots on the 
+              schedule so if your session is not accepted, please think about applying 
+              next year!
+            </p>
+            </div>
+            <div className="landingList">
+            <ul>
+            <h3>As a user you will have the ability to do the following:</h3>
+            <li>Submit up to 5 Sessions to Twin Cities Sartup Week.</li>
+            <li>Vote once for each session that has been approved.</li>
+            </ul>
+            </div>
             </div>
             }
             {user.id && 
