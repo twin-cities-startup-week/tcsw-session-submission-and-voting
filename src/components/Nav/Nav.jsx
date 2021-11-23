@@ -53,7 +53,7 @@ function Nav() {
         </Link>
 
         <Link className="navLink" to="/faq">
-          Faq
+          FAQ
         </Link>
 
         {/* If a user is logged in, show these links */}
