@@ -3,6 +3,8 @@ import useReduxStore from '../../hooks/useReduxStore';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Button } from '@mui/material';
+
 function VotePage() {
     const user = useSelector((store) => store.user);
     const store = useReduxStore();
@@ -31,14 +33,16 @@ function VotePage() {
 
    const sessionApprove = ( sessionId ) => {
        dispatch({ type: 'APPROVE_SESSION', payload: sessionId })
+       alert('You have APPROVED this session!')
    }
 
    const sessionDeny = ( sessionId ) => {
        dispatch({ type: 'DENY_SESSION', payload: sessionId })
+       alert('You have DENIED this session!')
    }
 
     return(
-        <div>
+        <div className='vote-page-view'>
 
             {store.panelistDetailsReducer.map(( details, index ) => (
 
@@ -49,7 +53,8 @@ function VotePage() {
                         <p className='vote-suggestion'>Like this Speaker?! Click Vote!</p>
                         {/* <button onClick={() => setVote( vote + 1 )}>VOTE! <span>{vote}</span></button>  */}
 
-                        { voteButton === false && <button className='vote-button' onClick={() => addVote( details.id )}>VOTE!</button> }
+                        { voteButton === false && <Button className="vote-button" variant="contained" size="large" onClick={() => addVote( details.id )}>Vote</Button> }
+                        
                     </div>
 
                     <div className='extra-details-section'>
@@ -87,17 +92,18 @@ function VotePage() {
                     <div className='related-media'>
                         <h3>Related Media</h3>
                     </div>    
-                        
-                    {/* {user.admin && 
-                        <button>Accept</button>
+
+                    <div className='approval-buttons'>  
+
+                    {user.admin && 
+                        <Button className='deny-button' variant="contained" color="error" onClick={() => sessionDeny( details.id )}>Deny</Button>
                     }
 
                     {user.admin && 
-                        <button>Deny</button>
-                    } */}
+                        <Button className='approve-button' variant="contained" color="success" onClick={() => sessionApprove( details.id )}>Approve</Button>
+                    }
 
-                    <button onClick={() => sessionApprove( details.id )}>Approve</button>
-                    <button onClick={() => sessionDeny( details.id )}>Deny</button>
+                    </div>
 
                 </div>
 

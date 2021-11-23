@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
-
+import { Button } from '@mui/material';
 
 function Panelists() {
     const dispatch = useDispatch();
@@ -57,6 +57,7 @@ function Panelists() {
                     </div>
 
                     <div className='filter-dropdown-selectors'>
+
                         <h5 className='track-filter-header'>Track</h5>
                         <select className='track-selector' onChange={ event => setTrackState( event.target.value )}>
                             {console.log('this is the setTrackState',setTrackState)}
@@ -93,12 +94,12 @@ function Panelists() {
                     <br/>
 
                     <div className='reset-location'>
-                        <button className='filter-reset-button' onClick={restFilters}>Reset</button>
+                        <Button className='filter-reset-button' variant="contained" onClick={restFilters}>Reset</Button>
                     </div>
                     
                     <div className='leader-board-button-div'>
                         <p>Want to see who is leading the Vote race?</p>
-                        <button className='leader-board-button' onClick={goToLeaderBoard}>Leader Board</button>
+                        <Button className='leader-board-button' variant="contained" onClick={goToLeaderBoard}>Leader Board</Button>
                     </div>
               </div>
 
@@ -107,8 +108,9 @@ function Panelists() {
             <div className='search-list' >
                 <h2 className='search-list-header'>SESSION TOPICS</h2>
                 <p className='voting-notice'>Community Voting Starts: </p>
+    
+                <div className='search-list-table'> 
                 
-                <div className='search-list-table'>
                     <table>
                         <thead>
                             <tr>
