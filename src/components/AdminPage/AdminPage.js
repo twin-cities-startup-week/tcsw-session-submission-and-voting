@@ -185,7 +185,7 @@ function AdminPage() {
               borderRadius: "4px",
               backgroundColor: "#0c495a",
               margin: "10px 14px 13px",
-              color: 'yellow'
+              color: "#fbbd19"
             }}
           >
             <h3 style={{ textAlign: "center" }}>Awaiting Approval</h3>
@@ -229,7 +229,7 @@ function AdminPage() {
               borderRadius: "4px",
               backgroundColor: "#0c495a",
               margin: "10px 14px 13px",
-              color: 'yellow'
+              color: "#fbbd19"
             }}
           >
             <h3 style={{ textAlign: "center" }}>Approved</h3>

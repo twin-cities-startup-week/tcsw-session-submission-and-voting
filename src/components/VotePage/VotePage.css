@@ -1,8 +1,18 @@
+.vote-page-view{
+    background-color: #FBBD19;
+    margin-top: -30px;
+    height: 100%;
+    margin-bottom: -300px;
+}
+
 .left-bar{
     float: left;
-    background-color: #fbbd19;
+    /* background-color: #fbbd19; */
     padding-right: 45px;
-    height: 601px;
+    /* height: 601px; */
+    height: auto;
+    margin-top: -30px;
+    padding-top: 30px;
 }
 
 .vote-section{
@@ -23,7 +33,7 @@
 .vote-button{
     padding-left: 25px;
     padding-right: 25px;
-    height: 30px;
+    width: 100px;
     text-align: left;
     
 }
@@ -32,10 +42,21 @@
 
 
 .right-bar{
-    background-color: white;
+    /* background-color: white;
     margin-left: 250px;
     padding-left: 50px;
     margin-right: 20px;
+    height: 100%;
+    width: 80%; */
+    height: 100%;
+    width: 78.8%;
+    background-color: white;
+    padding-top: 5px;
+    /* padding-right: 25%; */
+    padding-left: 20px;
+    margin-left: 15%;
+    min-height: 700px;
+    padding-right: 83px;
 }
 
 .title{
@@ -52,4 +73,20 @@
 
 .related-media{
     border-bottom: solid black;
+}
+
+.approve-button{
+    height: 50px;
+    width: 100px;
+    float: right;
+}
+
+.deny-button{
+    height: 50px;
+    width: 100px;
+    float: right;
+}
+
+.approval-buttons{
+    margin-top: 50px;
 }
