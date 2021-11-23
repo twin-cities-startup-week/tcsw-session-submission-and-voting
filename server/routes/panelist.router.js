@@ -3,7 +3,8 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 router.get('/', ( req, res ) => {
-    const queryText = `SELECT * FROM "session";`;
+    const queryText = `SELECT * FROM "session"
+                        WHERE "session"."approved" = true;`;
 
     pool.query( queryText )
     .then(( result ) => {
@@ -29,14 +30,14 @@ router.get('/details/:id', ( req, res ) => {
     })
 })
 
-router.put('/details/:id', ( req, res ) => {
-    const speakerId = req.params.id;
+router.put('/vote/:id', ( req, res ) => {
+    const sessionId = req.params.id;
 
     const queryText = `UPDATE "session"
                         SET "votes" = "votes" + 1
                         WHERE "id" = $1;`;
 
-    pool.query( queryText, [ speakerId ])
+    pool.query( queryText, [ sessionId ])
     .then( result => {
         res.send(200)
     }).catch ( error => {
@@ -44,6 +45,35 @@ router.put('/details/:id', ( req, res ) => {
     })
 })
 
+router.put('/approve/:id', ( req, res ) => {
+    const sessionId = req.params.id;
+
+    const queryText = `UPDATE "session"
+                        SET "approved" = true, "awaiting_approval" = false
+                        WHERE "id" = $1;`
+    
+    pool.query( queryText, [ sessionId ])
+    .then( result => {
+        res.send(200)
+    }).catch ( error => {
+        res.send(500)
+    })
+})
+
+router.put('/deny/:id', ( req, res ) => {
+    const sessionId = req.params.id;
+
+    const queryText = `UPDATE "session"
+                        SET "awaiting_approval" = false
+                        WHERE "id" = $1;`
+    
+    pool.query( queryText, [ sessionId ])
+    .then( result => {
+        res.send(200)
+    }).catch ( error => {
+        res.send(500)
+    })
+})
 
 // `SELECT *, "user"."first_name", "user"."last_name" FROM "session"
 //                         JOIN "user" 

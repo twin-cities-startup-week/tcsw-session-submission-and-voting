@@ -32,18 +32,41 @@ function* addVote( action ){
     const sessionId = action.payload;
 
     try{
-        yield axios.put( `/api/panelists/details/${sessionId}` )
-        // yield put ({ type: 'SET_VOTE_COUNT', payload: sessionId })
+        yield axios.put( `/api/panelists/vote/${sessionId}` )
     }catch ( error ) {
         console.log('error in adding vote to the count', error );
         
     }
 }
 
+function* approveSession( action ) {
+    const sessionId = action.payload;
+
+    try{
+        yield axios.put( `/api/panelists/approve/${sessionId}` )
+    }catch ( error ) {
+        console.log('error in admin approve PUT', error);
+        
+    }
+}
+
+function* denySession( action ) {
+    const sessionId = action.payload;
+
+    try{
+        yield axios.put( `/api/panelists/deny/${sessionId}` )
+    }catch ( error ) {
+        console.log('error in admin approve PUT', error);
+        
+    }
+}
+
 function* panelistSaga() {
-    yield takeLatest( 'FETCH_PANELIST', fetchPanelists )
-    yield takeLatest( 'FETCH_PANEL_DETAILS', fetchPanelDetails )
-    yield takeLatest( 'ADD_VOTE_COUNT', addVote )
+    yield takeLatest( 'FETCH_PANELIST', fetchPanelists );
+    yield takeLatest( 'FETCH_PANEL_DETAILS', fetchPanelDetails );
+    yield takeLatest( 'ADD_VOTE_COUNT', addVote );
+    yield takeLatest( 'APPROVE_SESSION', approveSession);
+    yield takeLatest( 'DENY_SESSION', denySession );
 }
 
 export default panelistSaga;
