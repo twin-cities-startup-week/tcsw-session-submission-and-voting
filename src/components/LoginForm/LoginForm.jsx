@@ -35,7 +35,8 @@ function LoginForm() {
 
   const handleGoogleLogin = () => {
     // dispatch({ type: 'GOOGLE_LOGIN' })
-    window.location.href='http://localhost:5000/auth/google';
+    const time = new Date().getTime();
+    window.location.href=`http://localhost:5000/auth/google?t=${time}`;
   }
 
   return (
