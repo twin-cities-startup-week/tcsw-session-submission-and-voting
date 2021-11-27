@@ -21,6 +21,8 @@ function ForgotPassword () {
     const reset = (event) => {
         event.preventDefault();
         
+        /* If both password input and confirm password input match
+            reset password */
         if (password === confirmPassword) {
           dispatch({
             type: 'RESET_PASSWORD',
@@ -32,6 +34,8 @@ function ForgotPassword () {
           });
           history.push('/login');
         } else {
+          /* If password input and confirm password input do not match
+              display the error message, passwords do not match. */
           alert('Passwords must match. Please try again.');
         }
       }; // end login
@@ -48,6 +52,8 @@ function ForgotPassword () {
               {errors.loginMessage}
             </h3>
           )}
+
+          {/* Username input */}
           <Box sx={{ textAlign: 'center' }}>
             <Box sx={{ m: 1 }}>
                 <label htmlFor="username">
@@ -59,6 +65,8 @@ function ForgotPassword () {
                     />
                 </label>
             </Box>
+
+            {/* Email input */}
             <Box sx={{ m: 1 }}>
                 <label htmlFor="username">
                     <TextField sx={{ width: 500, bgcolor: '#FFFFFF', borderRadius: 1, mb: 2 }}
@@ -69,6 +77,8 @@ function ForgotPassword () {
                     />
                 </label>
             </Box>
+
+            {/* Password input */}
             <Box sx={{ m: 1 }}>
               <label htmlFor="username">
                 <TextField sx={{ width: 500, bgcolor: '#FFFFFF', borderRadius: 1, mb: 2 }}
@@ -79,6 +89,8 @@ function ForgotPassword () {
                 />
               </label>
             </Box>
+
+            {/* Confirm password input */}
             <Box sx={{ m: 1 }}>
               <label htmlFor="password">
                 <TextField sx={{ width: 500, bgcolor: '#FFFFFF', borderRadius: 1, mb: 1 }}
@@ -90,25 +102,33 @@ function ForgotPassword () {
               </label>
             </Box>
 
+            {/* Reset password button. When clicked, if all inputs match a user's info, 
+                reset the user's password */}
             <Button variant="contained" type="submit" name="submit" value="Log In"
-            sx={{ mb: 2, p: 2, width: 300, height: 50, bgcolor: '#0C495A', color: '#FBBD19' }}
+              sx={{ mb: 2, p: 2, width: 300, height: 50, bgcolor: '#0C495A', color: '#FBBD19' }}
               >Reset Password
             </Button>
           </Box>
         </form>
-  
+        
+        {/* Yellow container for "Need to sign up?" */}
         <Box component={Paper} elevation={6} 
           sx={{ bgcolor: '#FBBD19', borderRadius: 1, width: 500, height: 55, m: 'auto' }}>
-  
+          
+          {/* Need to sign up text */}
           <Typography 
             sx={{ display: 'inline-block', textAlign: 'center', mt: 2, ml: 10 }}
                 >Need to Sign up?
           </Typography>
-  
+          
+          {/* Create Account button */}
           <Button component={Paper} elevation={8} 
-            variant="contained" type="submit" name="submit" value="Log In"
+            variant="contained" 
+            type="submit" 
+            name="submit" 
+            value="Log In"
             sx={{ mt: 1, p: 2, width: 200, height: 40, bgcolor: '#0C495A', 
-            color: '#FBBD19', m: 1, float: 'right' }}
+                color: '#FBBD19', m: 1, float: 'right' }}
             onClick={() => history.push('/registration')}
                 >Create Account
           </Button>
