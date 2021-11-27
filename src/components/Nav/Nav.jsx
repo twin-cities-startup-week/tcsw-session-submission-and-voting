@@ -23,6 +23,7 @@ function Nav() {
     setOpen(!open);
   };
 
+  /* These two functions close the menu when */
   const pushToAdmin = () => {
     setOpen(!open);
     history.push('/admin');
@@ -35,12 +36,18 @@ function Nav() {
 
   return (
     <div className="nav">
+
+      {/* Twin Cities Startup Week logo, on click will redirect the user to
+        the Twin Cities Startup Week website */}
       <a href="https://www.twincitiesstartupweek.com/" target="_blank"> 
         <img src="images/TCSW_Logo_Navy.png" alt="TCSW logo" width="110" height="50"></img>
       </a>
+      
+      {/* Title, on click will navigate to the landing page page */}
       <Link to="/home">
         <h2 className="nav-title">Session Selector and Voting</h2>
       </Link>
+
         {/* If no user is logged in, show these links */}
         {user.id === null &&
           // If there's no user, show login/registration links
@@ -49,6 +56,7 @@ function Nav() {
           </Link>
         }
 
+        {/* About and FAQ pages are visable at all times. */}
         <Link className="navLink" to="/about">
           About
         </Link>
@@ -88,9 +96,12 @@ function Nav() {
         <div className="navSignin">
           <List sx={{ ml: 'auto' }}>
 
+            {/* This is the button in the upper right hand corner
+            that displays the user's first name */}
             <ListItemButton sx={{ textAlign: 'right', bgcolor: "#0c495a",
-             color: "#FBBD19", '&:hover': { background: "#0c495a"}, p: 2, mb: -1,
-            borderRadius: '5%' }} onClick={handleClick}>
+                color: "#FBBD19", '&:hover': { background: "#0c495a"}, p: 2, mb: -1,
+                borderRadius: '5%' }} onClick={handleClick}>
+
               <div className="navSignin">
                 Welcome, {user.first_name}!
               </div>
@@ -99,26 +110,32 @@ function Nav() {
               {open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
 
-            <Collapse in={open} timeout="auto" unmountOnExit
-            sx={{  }}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
 
+              {/* If the logged in user is an admin, display the admin dropdown option */}
               {user.admin && 
-              <ListItemButton sx={{ textAlign: 'right',  
-              color: "#FBBD19", bgcolor: "#0c495a", 
-              '&:hover': { background: "#0c495a"},
-              borderBottomLeftRadius: '5%', borderBottomRightRadius: '5%' }} 
+              <ListItemButton 
+                sx={{ textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a", 
+                    '&:hover': { background: "#0c495a"}, borderBottomLeftRadius: '5%', 
+                    borderBottomRightRadius: '5%' }} 
                 onClick={pushToAdmin}>
+
                   <ListItemText primary="Admin" />
+
               </ListItemButton>
               }
 
-                <ListItemButton sx={{ 
-                  textAlign: 'right', mb: -20, mt: -1, bgcolor: "#0c495a", 
-                  color: "#FBBD19", '&:hover': { background: "#0c495a"},
-                  borderBottomLeftRadius: '5%', borderBottomRightRadius: '5%' }} 
-                onClick={pushToLogout}>
+                {/* On click of logout button, the user will be moved to the Landing Page
+                  and logged out of their account. */}
+                <ListItemButton 
+                  sx={{ textAlign: 'right', mb: -20, mt: -1, bgcolor: "#0c495a", 
+                      color: "#FBBD19", '&:hover': { background: "#0c495a"},
+                      borderBottomLeftRadius: '5%', borderBottomRightRadius: '5%' }} 
+                  onClick={pushToLogout}>
+
                   <ListItemText primary="Logout" />
+
                 </ListItemButton>
 
               </List>
