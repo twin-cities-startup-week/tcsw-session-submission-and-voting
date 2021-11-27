@@ -21,6 +21,7 @@ function RegisterForm() {
   const registerUser = (event) => {
     event.preventDefault();
 
+    /* if password and confirm password inputs match, the user will be registered */
     if ( password === confirmPassword ) {
     dispatch({
       type: 'REGISTER',
@@ -33,25 +34,37 @@ function RegisterForm() {
       },
     });
   } else {
+    /* If password and confirm password inputs do NOT match, an error message will appear */
     alert('Passwords must match. Please try again.')
   }
   }; // end registerUser
 
   return (
     <Container component={Paper} elevation={8} 
-    sx={{ width: 1/2, m: 'auto', p: 1, pl: 4, pb: 3, bgcolor: '#A7A9AC' }}>
+          sx={{ width: 1/2, m: 'auto', p: 1, pl: 4, pb: 3, bgcolor: '#A7A9AC' }}>
     <form onSubmit={registerUser}>
+
       <h2 className="registerHeader">Registration</h2>
+
+      {/* If user does not fill out registrstion form completely, an error
+        message will display. These messages are stored in the errors reducer */}
       {errors.registrationMessage && (
         <h3 className="alert" role="alert">
           {errors.registrationMessage}
         </h3>
       )}
+
+      {/* Sign up with Google button. Functions the same at the Google Login button. */}
       <Box sx={{ textAlign: 'center' }}>
-      <Button variant="contained" type="submit" value="Register"
-        sx={{ p: 2, width: 350, height: 50, bgcolor: '#0C495A', color: '#FBBD19', mb: 1 }}
-          > Sign up with Google</Button>
+        <Button 
+          variant="contained" 
+          type="submit" 
+          value="Register"
+          sx={{ p: 2, width: 350, height: 50, bgcolor: '#0C495A', color: '#FBBD19', mb: 1 }}
+            > Sign up with Google</Button>
       <Box sx={{ m: 1 }}>
+
+        {/* Username input */}
         <label htmlFor="username">
           <TextField sx={{ width: 500, height: 50, bgcolor: '#FFFFFF', borderRadius: 1, height: 50 }}
             type="text"
@@ -64,6 +77,8 @@ function RegisterForm() {
           />
         </label>
       </Box>
+
+      {/* Password input */}
       <Box sx={{ m: 1 }}>
         <label htmlFor="password">
           <TextField sx={{ width: 500, height: 50, bgcolor: '#FFFFFF', borderRadius: 1 }}
@@ -77,6 +92,8 @@ function RegisterForm() {
           />
         </label>
       </Box>
+
+      {/* Confirm password input */}
       <Box sx={{ m: 1 }}>
         <label htmlFor="confirmPassword">
           <TextField sx={{ width: 500, height: 50, bgcolor: '#FFFFFF', borderRadius: 1 }}
@@ -90,6 +107,8 @@ function RegisterForm() {
           />
         </label>
       </Box>
+
+      {/* Email input */}
       <Box sx={{ m: 1 }}>
         <label htmlFor="email">
           <TextField sx={{ width: 500, height: 50, bgcolor: '#FFFFFF', borderRadius: 1 }}
@@ -103,6 +122,8 @@ function RegisterForm() {
           />
         </label>
       </Box>
+
+      {/* First name input */}
       <Box sx={{ m: 1 }}>
         <label htmlFor="firstName">
           <TextField sx={{ width: 500, height: 50, bgcolor: '#FFFFFF', borderRadius: 1 }}
@@ -116,6 +137,8 @@ function RegisterForm() {
           />
         </label>
       </Box>
+
+      {/* Last name input */}
       <Box sx={{ m: 1 }}>
         <label htmlFor="lastName">
           <TextField sx={{ width: 500, height: 50, bgcolor: '#FFFFFF', borderRadius: 1 }}
@@ -129,15 +152,21 @@ function RegisterForm() {
           />
         </label>
       </Box>
+
+      {/* Register button. On click the user will be signed in and directed to the
+        landing page. */}
       <Box>
-        <Button variant="contained" type="submit" value="Register"
-        sx={{ mt: 1, p: 2, width: 350, height: 50, bgcolor: '#0C495A', color: '#FBBD19' }}
-          > Register</Button>
-        {/* <input className="btn" type="submit" name="submit" value="Register" /> */}
+        <Button 
+          variant="contained" 
+          type="submit" 
+          value="Register"
+          sx={{ mt: 1, p: 2, width: 350, height: 50, bgcolor: '#0C495A', color: '#FBBD19' }}
+            > Register
+        </Button>
       </Box>
-      </Box>
+    </Box>
     </form>
-    </Container>
+  </Container>
   );
 }
 
