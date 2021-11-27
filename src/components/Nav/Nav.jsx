@@ -60,10 +60,6 @@ function Nav() {
         {/* If a user is logged in, show these links */}
         {user.id && (
           <>
-            {/* <Link className="navLink" to="/user">
-              Home
-            </Link> */}
-
             <Link className="navLink" to="/submission">
               Submission Form
             </Link>
@@ -75,14 +71,6 @@ function Nav() {
             <Link className="navLink" to="/leaderboard">
               Leaderboard
             </Link>
-
-            {/* {user.admin && 
-            <Link className="navLink" to="/admin">
-              Admin
-            </Link>
-            } */}
-
-            {/* <LogOutButton className="navLink" /> */}
           </>
         )}
 
@@ -95,17 +83,19 @@ function Nav() {
           </Button>
         }
         
+        {/* If a user is logged in, show the username div dropdown */}
         {user.id && 
         <div className="navSignin">
           <List sx={{ ml: 'auto' }}>
 
             <ListItemButton sx={{ textAlign: 'right', bgcolor: "#0c495a",
              color: "#FBBD19", '&:hover': { background: "#0c495a"}, p: 2, mb: -1,
-            borderRadius: '5%' }}
-              onClick={handleClick}>
+            borderRadius: '5%' }} onClick={handleClick}>
               <div className="navSignin">
                 Welcome, {user.first_name}!
               </div>
+
+              {/* If Open state is true, expand the div with the user's first name */}
               {open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
 

@@ -59,7 +59,7 @@ function Leaderboard() {
         { field: 'industry', headerName: 'Industry', width: 180 },
         { field: 'track', headerName: 'Track', width: 160 },
         { field: 'location', headerName: 'Location', width: 160 },
-        { field: 'date', headerName: 'Date', width: 280 },
+        { field: 'date', headerName: '', width: 280 },
     ];
 
     return (

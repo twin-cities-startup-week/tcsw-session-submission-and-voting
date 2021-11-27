@@ -27,3 +27,11 @@
     padding-top: 25px;
     padding-bottom: 25px;
 } */
+
+.left-bar {
+    padding-right: 30px;
+}
+
+.right-bar {
+    margin-left: 300px;
+}

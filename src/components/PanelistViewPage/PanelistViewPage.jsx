@@ -45,7 +45,7 @@ function PanelViewPage() {
 
     return(
         <div>
-            <div class='search-section'>
+            <div className='search-section'>
                 <h2>Search</h2>
                 <input 
                 type='text'
