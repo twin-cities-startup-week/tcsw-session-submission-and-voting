@@ -18,6 +18,13 @@ function ForgotPassword () {
     const dispatch = useDispatch();
     const history = useHistory();
 
+    /* Currently, for a user to reset their password, you must enter:
+        username, email, new password (password input) and 
+        confirm new password (confirm password) 
+        
+      To make this more secure, it is suggested to impliment security questions or
+      a confirmation email before changing the user's password. */
+
     const reset = (event) => {
         event.preventDefault();
         
