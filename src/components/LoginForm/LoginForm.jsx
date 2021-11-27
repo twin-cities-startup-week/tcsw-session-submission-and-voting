@@ -9,6 +9,7 @@ import Container from '@mui/material/Container';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 import GoogleSignin from '../GoogleSignin/GoogleSignin';
+import { GoogleLogin } from 'react-google-login';
 
 function LoginForm() {
   const [username, setUsername] = useState('');
@@ -46,11 +47,15 @@ function LoginForm() {
       <h2 className="registerHeader">Sign In</h2>
 
       {/* <GoogleSignin/> */}
-      <Box sx={{ textAlign: 'center' }}>
-        <Button variant="contained" type="submit" value=""
-        sx={{ p: 2, width: 350, height: 50, bgcolor: '#0C495A', color: '#FBBD19', mb: 1 }}
-        onClick={handleGoogleLogin}
-            > Sign in with Google</Button>
+      <Box sx={{ textAlign: 'center', mb: 2 }}>
+      <GoogleLogin>
+        <Button 
+          value=""
+          type="submit"
+          onClick={handleGoogleLogin}
+          sx={{ m: 'auto', p: 2, width: 300, height: 20 }}
+            > Sign in with Google </Button>
+      </GoogleLogin>
       </Box>
 
       <form onSubmit={login}>
