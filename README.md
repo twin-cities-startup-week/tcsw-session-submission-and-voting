@@ -7,11 +7,8 @@ Google Analytics
 Download DB as a .csv file
 
 
-A deployed version of the app can be found here: ADD LINK ONCE DEPLOYED
+A deployed version of the app can be found here: https://arcane-hamlet-54349.herokuapp.com/#/home
 
-## Screenshots
-
-[ADD SCREENSHOTS HERE]
 
 ## Prerequisites
 
