@@ -10,12 +10,13 @@ function Leaderboard() {
     const history = useHistory();
     const approvedSubmissions = useSelector(store => store.submission.approvedSubmissions);
 
+    /* Grabs approved submissions ordered from highest to lowest votes on page load */
     useEffect(() => {
         dispatch({ type: 'GET_APPROVED_SUBMISSIONS' })
     }, [])
 
-    // MUI params here provides all details for all rows(sessions)
-    // To get the clicked row, use params.row
+    /* MUI params here provides all details for all rows(sessions)
+       To get the clicked row, use params.row */
     const pushToDetailPage = (params) => {
         console.log('Details of clicked row - ', params.row)
         dispatch({ type: 'FETCH_PANEL_DETAILS', payload: params.row })
@@ -39,6 +40,10 @@ function Leaderboard() {
             return index + "th";
         }
 
+    /*  Approved submissions are fetched on page load from the redux store.
+        Here, they are mapped and each property is listed as a cell of data
+        in the DataGrid for each row. If properties shown need to be added 
+        or changed, you can change them here. */
     let rows = [];
     rows = approvedSubmissions.map((submission, index) => {
         return (
@@ -53,17 +58,22 @@ function Leaderboard() {
         });
     });
 
+    /*  Datagrid matches the "field" listed in the const "columns" with the property 
+        of the row listed above. headerName is what is displayed for the column name.
+        To add a new column, just add another object here with a matching field to the
+        a property above in the rows. */
     const columns = [
         { field: 'placement', headerName: 'Placement', width: 100 },
         { field: 'title', headerName: 'Session Title', width: 250 },
         { field: 'industry', headerName: 'Industry', width: 180 },
         { field: 'track', headerName: 'Track', width: 160 },
         { field: 'location', headerName: 'Location', width: 160 },
-        { field: 'date', headerName: 'Date', width: 280 },
+        { field: 'date', headerName: '', width: 280 },
     ];
 
     return (
         <>
+        {/* Leaderboard ribbon CSS is located in App.css */}
         <div className="bar">
             Leaderboard
             <span></span>
@@ -72,9 +82,6 @@ function Leaderboard() {
             <span></span>
         </div>
         <Container sx={{ mt: 15 }}>
-        <div>
-            {/* {JSON.stringify(rows)} */}
-        </div>
             <DataGrid 
                 rows={rows} 
                 columns={columns}

@@ -22,40 +22,53 @@ function LandingPage() {
   return (
     <div className="container">
       <h2 id="landing-welcome">{heading}</h2>
-
+      
+      {/* Landing Page description, static */}
       <div className="">
         <div id="landing-description">
-          Twin Cities Startup Week is back from September 16 - 23, 2022!
+            Twin Cities Startup Week is back from September 16 - 23, 2022!
           <br/>
-          Welcome to the Twin Cities Startup Week Session Selector! 
-          Here, you can submit a session application, vote on what you want 
-          to see at TCSW 2022, and add comments for the community to consider. 
+            Welcome to the Twin Cities Startup Week Session Selector! 
+            Here, you can submit a session application, vote on what you want 
+            to see at TCSW 2022, and add comments for the community to consider. 
           <br/>
+
+          {/* If the user is NOT signed in, a call to action is underlined in the
+          landing page description. This disappears when the user logs in */}
           {!user.id &&
-          <b><u>Click Sign In to get started!</u></b>
+            <b><u>Click Sign In to get started!</u></b>
           }
         </div>
+
+        {/* If the user is NOT logged in, show the Learn More Button */}
           {!user.id &&
           <Box sx={{ textAlign: 'center' }}>
-            <Button variant="contained" type="submit" value="Register"
-            sx={{ p: 2, width: 350, height: 50, bgcolor: '#0C495A', 
-            color: '#FBBD19', mt: 2, mb: 2 }}
+            <Button 
+              variant="contained" 
+              type="submit" 
+              value="Register"
+              sx={{ p: 2, width: 350, height: 50, bgcolor: '#0C495A', 
+                color: '#FBBD19', mt: 2, mb: 2 }}
             onClick={() => history.push('/about')}
             > Learn More</Button>
           </Box>
           }
 
+          {/* If the user IS logged in, 
+          show the Submission Form and Search Sessions buttons */}
           {user.id && 
             <Box sx={{ textAlign: 'center' }}>
-              <Button variant="contained"
+              <Button 
+                variant="contained"
                 sx={{ p: 2, width: 350, height: 50, bgcolor: '#0C495A', 
-                color: '#FBBD19', mt: 2, mb: 2 }}
+                    color: '#FBBD19', mt: 2, mb: 2 }}
                 onClick={() => history.push('/submission')}
               > Submission Form</Button>
 
-              <Button variant="contained"
+              <Button 
+                variant="contained"
                 sx={{ p: 2, width: 350, height: 50, bgcolor: '#0C495A', 
-                color: '#FBBD19', mt: 2, mb: 2, ml: 2 }}
+                    color: '#FBBD19', mt: 2, mb: 2, ml: 2 }}
                 onClick={() => history.push('/panelistView')}
               > Search Sessions</Button>
           </Box>
@@ -66,13 +79,16 @@ function LandingPage() {
             <div className="submitSessionDiv">
               <h2 className="submitSessionHeader">Submit A Session</h2>
             </div>
+
+          {/* If the user is NOT logged in, show submission deadlines
+              and a overview of how to submit a session */}
           {!user.id && 
           <div>
             <div>
           <p className="submission">
             <b>2022 Session Submission Dates</b>
             <br/>
-            Submission period starts April 4, 2022 and ends May 15, 2022
+              Submission period starts April 4, 2022 and ends May 15, 2022
             <br/>
               Community voting starts May 23, 2022 and ends June 6, 2022</p>
             <p className="extraText">
@@ -84,13 +100,17 @@ function LandingPage() {
               next year!
             </p>
             </div>
+
             <div className="landingList">
-            <ul>
-            <h3>As a user you will have the ability to do the following:</h3>
-            <li>Submit up to 5 Sessions to Twin Cities Sartup Week.</li>
-            <li>Vote once for each session that has been approved.</li>
-            </ul>
+              <ul>
+                <h3>As a user you will have the ability to do the following:</h3>
+                  <li>Submit up to 5 Sessions to Twin Cities Sartup Week.</li>
+                  <li>Vote once for each session that has been approved.</li>
+              </ul>
             </div>
+
+            {/* If a user IS logged in, 
+            Show steps in an ordered list of session submission process */}
             </div>
             }
             {user.id && 

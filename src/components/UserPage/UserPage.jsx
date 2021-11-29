@@ -1,9 +1,11 @@
 import React from 'react';
 import LogOutButton from '../LogOutButton/LogOutButton';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 function UserPage() {
-  // this component doesn't do much to start, just renders some user reducer info to the DOM
+  /* This component is currently not being used, but was intentionally left here in case
+    a user page is requested. */
+
   const user = useSelector((store) => store.user);
   return (
     <div className="container">
