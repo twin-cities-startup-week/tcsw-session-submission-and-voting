@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import ReCAPTCHA from 'react-google-recaptcha';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
@@ -17,26 +18,59 @@ function RegisterForm() {
   const [lastName, setLastName] = useState('');
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
+  const recaptchaRef = React.createRef();
 
-  const registerUser = (event) => {
+  const checkIfEmail = (email) => {
+    if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
+      return true;
+    }
+    return false;
+  }
+
+  const validateForm = () => {
+    let result = true;
+    const isEmail = checkIfEmail(email);
+    if (password.length < 8) {
+      alert('Password must be 8 characters.');
+      result = false;
+    } else if (password !== confirmPassword) {
+      alert('Password must match.');
+      result = false;
+    } else if (username.length < 1) {
+      alert('Username is required.');
+      result = false;
+    } else if (!isEmail) {
+      alert('Valid email is required.');
+      result = false;
+    }
+    return result;
+  }
+
+  const registerUser = async (event) => {
     event.preventDefault();
 
     /* if password and confirm password inputs match, the user will be registered */
-    if ( password === confirmPassword ) {
-    dispatch({
-      type: 'REGISTER',
-      payload: {
-        username: username,
-        password: password,
-        email: email,
-        firstName: firstName,
-        lastName: lastName
-      },
-    });
-  } else {
-    /* If password and confirm password inputs do NOT match, an error message will appear */
-    alert('Passwords must match. Please try again.')
-  }
+    if (validateForm()) {
+      let token;
+      try {
+        token = await recaptchaRef.current.executeAsync();
+        dispatch({
+          type: 'REGISTER',
+          payload: {
+            username: username,
+            password: password,
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            token: token,
+          },
+        });
+      } catch (e) {
+        alert('Unable to validate recaptcha.');
+        return;
+      }
+
+    }
   }; // end registerUser
 
   return (
@@ -152,7 +186,18 @@ function RegisterForm() {
           />
         </label>
       </Box>
-
+      {
+        process.env.REACT_APP_RECAPTCHA_SITE_KEY && (
+          <Box sx={{ m: 1 }}>
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              size="invisible"
+              sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+              badge="bottomleft"
+            />
+          </Box>
+        )
+      }
       {/* Register button. On click the user will be signed in and directed to the
         landing page. */}
       <Box>

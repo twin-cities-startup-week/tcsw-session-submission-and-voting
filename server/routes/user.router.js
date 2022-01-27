@@ -1,4 +1,8 @@
 const express = require('express');
+const axios = require('axios');
+// using Twilio SendGrid's v3 Node.js Library
+// https://github.com/sendgrid/sendgrid-nodejs
+const sgMail = require('@sendgrid/mail');
 const {
   rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
@@ -21,23 +25,66 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 // Handles POST request with new user data
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
-router.post('/register', (req, res, next) => {
-  console.log('req.body - ',req.body)
-  const username = req.body.username;
-  const password = encryptLib.encryptPassword(req.body.password);
-  const email = req.body.email;
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
+router.post('/register', async (req, res, next) => {
+  try {
+    console.log('req.body - ',req.body)
+    const username = req.body.username;
+    const password = encryptLib.encryptPassword(req.body.password);
+    const email = req.body.email;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
 
-  const queryText = `INSERT INTO "user" (username, password, email, first_name, last_name)
-    VALUES ($1, $2, $3, $4, $5) RETURNING id`;
-  pool
-    .query(queryText, [username, password, email, firstName, lastName])
-    .then(() => res.sendStatus(201))
-    .catch((err) => {
-      console.log('User registration failed: ', err);
-      res.sendStatus(500);
-    });
+    let ipAddress = 'unknown';
+    if (req.socket) {
+      ipAddress = req.headers['x-forwarded-for']
+        || req.socket.remoteAddress;
+    }
+    const params = {
+      secret: process.env.RECAPTCHA_SECRET_KEY,
+      response: req.body.token,
+    };
+    if (process.env.NODE_ENV === 'production' && ipAddress) {
+      params.remoteip = ipAddress;
+    }
+    let captcha = {};
+    if (process.env.NODE_ENV === 'test') {
+      captcha = {
+        data: { success: true },
+      };
+    } else {
+      captcha = await axios.post('https://www.google.com/recaptcha/api/siteverify', null, {
+        params,
+      });
+    }
+    if (captcha && captcha.data && captcha.data.success === true) {
+      const queryText = `INSERT INTO "user" (username, password, email, first_name, last_name)
+      VALUES ($1, $2, $3, $4, $5) RETURNING id`;
+      pool
+        .query(queryText, [username, password, email, firstName, lastName])
+        .then(() => {
+          sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+          const msg = {
+            to: email,
+            from: process.env.SENDGRID_FROM_ADDRESS,
+            subject: 'Welcome!',
+            text: `Welcome to the TCSW session selector!`,
+            html: `Welcome to the TCSW session selector!`,
+          };
+          sgMail.send(msg).catch(e => console.log(e));
+          res.sendStatus(201)
+        })
+        .catch((err) => {
+          console.log('User registration failed: ', err);
+          res.sendStatus(500);
+        });
+
+    } else {
+      res.status(500).send('Unable to validate recaptcha.');
+    }
+  } catch (e) {
+    console.log(e);
+    res.status(500).send('Unable to create account.');
+  }
 });
 
 // Handles login form authenticate/login POST
@@ -79,6 +126,54 @@ router.put('/reset', userStrategy.authenticate('local'), (req, res) => {
       res.sendStatus(200);
     })
 })
+
+/**
+ * @api {put} /users/password/reset User Reset Request
+ * @apiName UserResetRequest
+ * @apiGroup User
+ * @apiDescription Send a url to reset the password for the provided email. If no user is found
+ * with the provided email, an error will be thrown.
+ *
+ * @apiParam {String} email                Mandatory user email.
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ */
+router.put('/password/reset', (req, res) => {
+  (async () => {
+    const resetToken = cryptoRandomString({ length: 64, type: 'hex' });
+    // let user = await updateEmployeeResetToken(req.body.email, resetToken);
+    const hasEnvVariables = process.env.SENDGRID_API_KEY && process.env.SENDGRID_FROM_ADDRESS;
+    if (user && user.email && hasEnvVariables) {
+      let resetUrl = `https://${req.hostname}/#/password/reset/${resetToken}`;
+      if (process.env.NODE_ENV !== 'production') {
+        resetUrl = `http://${req.hostname}:3000/#/password/reset/${resetToken}`;
+      }
+      sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+      const msg = {
+        to: user.email,
+        from: process.env.SENDGRID_FROM_ADDRESS,
+        subject: 'Reset Password',
+        text: `If you did not request a password reset, please discard this email. To reset your password, visit this url: ${resetUrl}`,
+        html: `If you did not request a password reset, please discard this email. <a href="${resetUrl}">Click here</a> to reset your password.`,
+      };
+      sgMail.send(msg).catch(e => logError(e));
+      res.sendStatus(200);
+    } else {
+      if (!hasEnvVariables) {
+        logError('Missing SendGrid environment variables.');
+      }
+      res.status(500).send('Unable to reset password.');
+    }
+  })().catch((e) => {
+    logError(e);
+    let errorMessage = `${e.name}: ${e.message}`;
+    if (e.parent && e.parent.detail) {
+      errorMessage += `: ${e.parent.detail}`;
+    }
+    res.status(500).send(errorMessage);
+  });
+});
 
 
 module.exports = router;
