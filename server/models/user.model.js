@@ -16,7 +16,7 @@ class User extends Model {
     toJSON() {
         // hide protected fields
         const attributes = Object.assign({}, this.get());
-        delete attributes.encrypted_password;
+        delete attributes.password;
         delete attributes.reset_password_token;
         return attributes;
     }

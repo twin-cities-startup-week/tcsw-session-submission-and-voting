@@ -27,7 +27,6 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 // is that the password gets encrypted before being inserted
 router.post('/register', async (req, res, next) => {
   try {
-    console.log('req.body - ',req.body)
     const username = req.body.username;
     const password = encryptLib.encryptPassword(req.body.password);
     const email = req.body.email;
@@ -111,7 +110,6 @@ router.post('/logout', async (req, res) => {
 });
 
 router.put('/reset', userStrategy.authenticate('local'), (req, res) => {
-  console.log('req.body - ', req.body)
   const username = req.body.username;
   const email = req.body.email;
   const password = encryptLib.encryptPassword(req.body.password);
