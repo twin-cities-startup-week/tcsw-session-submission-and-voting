@@ -7,6 +7,7 @@ module.exports = {
       STRING,
       BOOLEAN,
       DOUBLE,
+      TEXT,
     } = Sequelize;
     /**
      * Add altering commands here.
@@ -116,8 +117,8 @@ module.exports = {
             type: STRING,
             allowNull: false,
           },
-          password: STRING,
-          google_id: STRING,
+          password: TEXT,
+          google_id: TEXT,
           first_name: {
             type: STRING,
             allowNull: false,
@@ -133,37 +134,39 @@ module.exports = {
           },
           photo_content_type: STRING,
           photo_file_size: INTEGER,
-          photo_file_name: STRING,
+          photo_file_name: STRING(2048),
           photo_updated_at: {
-            type: DATE(6),
+            type: DATE,
           },
           phone: STRING,
-          linkedin_account: STRING,
-          twitter_account: STRING,
-          github_account: STRING,
-          website_link: STRING,
-          reset_password_token: STRING,
+          linkedin_account: STRING(2048),
+          twitter_account: STRING(2048),
+          github_account: STRING(2048),
+          website_link: STRING(2048),
+          reset_password_token: TEXT,
           reset_password_sent_at: {
-            type: DATE(6),
+            type: DATE,
           },
           remember_created_at: {
-            type: DATE(6),
+            type: DATE,
           },
           sign_in_count: INTEGER,
           current_sign_in_at: {
-            type: DATE(6),
+            type: DATE,
           },
           last_sign_in_at: {
-            type: DATE(6),
+            type: DATE,
           },
           current_sign_in_ip: STRING,
           last_sign_in_ip: STRING,
           created_at: {
             type: DATE,
+            allowNull: false,
             defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
           },
           updated_at: {
             type: DATE,
+            allowNull: false,
             defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
           },
         },
@@ -207,13 +210,13 @@ module.exports = {
           date: STRING,
           votes: INTEGER,
           host: STRING,
-          description: STRING,
+          description: TEXT,
           attendees: STRING,
           length: STRING, /* Approx how long will your event be? */
           format: STRING,
           area_of_interest: STRING, /* Does your event cater to one or more of the following? */
-          media: STRING, /* links to youtube? */
-          image: STRING, /* STRETCH, AWS S3 bucket. */
+          media: STRING(2048), /* links to youtube? */
+          image: TEXT, /* STRETCH, AWS S3 bucket. */
           success: STRING,
           excited: STRING,
           other_hosts: STRING,
@@ -228,10 +231,12 @@ module.exports = {
           },
           created_at: {
             type: DATE,
+            allowNull: false,
             defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
           },
           updated_at: {
             type: DATE,
+            allowNull: false,
             defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
           },
         },
@@ -297,10 +302,12 @@ module.exports = {
           },
           created_at: {
             type: DATE,
+            allowNull: false,
             defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
           },
           updated_at: {
             type: DATE,
+            allowNull: false,
             defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
           },
         },
