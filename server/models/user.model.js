@@ -170,7 +170,7 @@ User.init({
 }, {
     underscored: true,
     modelName: 'user',
-    tableName: 'users',
+    tableName: 'user',
     createdAt: 'created_at',
     updatedAt: 'updated_at',
     sequelize,

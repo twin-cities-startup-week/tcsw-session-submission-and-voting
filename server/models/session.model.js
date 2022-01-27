@@ -41,7 +41,7 @@ Session.init({
     user_id: {
         type: INTEGER,
         references: {
-            model: 'users',
+            model: 'user',
             key: 'id'
         },
         onUpdate: 'cascade',
@@ -87,7 +87,7 @@ Session.init({
     updated_at: {
         type: DATE,
         allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        defaultValue: literal('CURRENT_TIMESTAMP'),
     },
 }, {
     underscored: true,

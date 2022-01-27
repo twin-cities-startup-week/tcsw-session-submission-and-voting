@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 
 const app = express();
-const pool = require('./modules/pool');
+const { pool } = require('./modules/pool');
 const sessionMiddleware = require('./modules/session-middleware');
 const passport = require('./strategies/user.strategy');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;

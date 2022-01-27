@@ -102,7 +102,7 @@ module.exports = {
         },
       );
       await queryInterface.createTable(
-        'users',
+        'user',
         {
           id: {
             type: INTEGER,
@@ -191,7 +191,7 @@ module.exports = {
           user_id: {
             type: INTEGER,
             references: {
-              model: 'users',
+              model: 'user',
               key: 'id'
             },
             onUpdate: 'cascade',
@@ -283,7 +283,7 @@ module.exports = {
           user_id: {
             type: INTEGER,
             references: {
-              model: 'users',
+              model: 'user',
               key: 'id',
             },
             onUpdate: 'cascade',
@@ -341,7 +341,7 @@ module.exports = {
       await queryInterface.dropTable('session');
       await queryInterface.dropTable('track');
       await queryInterface.dropTable('time');
-      await queryInterface.dropTable('users');
+      await queryInterface.dropTable('user');
       await transaction.commit();
     } catch (err) {
       await transaction.rollback();
