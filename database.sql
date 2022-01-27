@@ -5,7 +5,7 @@
 -- Otherwise you will have errors!
 
 -- Database name: session_submission
-
+-- Done
 CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
     "username" VARCHAR (255) UNIQUE,
@@ -16,47 +16,47 @@ CREATE TABLE "user" (
     "google_id" VARCHAR (255),
     "admin" BOOLEAN DEFAULT false
 )
-
+-- Done
 CREATE TABLE "format" (
     "id" SERIAL PRIMARY KEY,
     "type" VARCHAR (255)
 )
-
+-- Done
 CREATE TABLE "purpose" (
     "id" SERIAL PRIMARY KEY,
     "name" VARCHAR (255)
 )
-
+-- Done
 CREATE TABLE "location" (
     "id" SERIAL PRIMARY KEY,
     "type" VARCHAR (255)
 )
-
+-- Done
 CREATE TABLE "time" (
     "id" SERIAL PRIMARY KEY,
     "time_of_day" VARCHAR (255)
 )
-
+-- Done
 CREATE TABLE "date" (
     "id" SERIAL PRIMARY KEY,
     "date_of_event" VARCHAR (255)
 )
-
+-- Done
 CREATE TABLE "area_of_interest" (
     "id" SERIAL PRIMARY KEY,
     "type" VARCHAR (255)
 )
-
+-- Done
 CREATE TABLE "industry" (
     "id" SERIAL PRIMARY KEY,
     "name" VARCHAR (255)    
 )
-
+-- Done
 CREATE TABLE "track" (
     "id" SERIAL PRIMARY KEY,
     "name" VARCHAR (255)
 )
-
+-- Done
 CREATE TABLE "session" (
     "id" SERIAL PRIMARY KEY,
     "title" VARCHAR (255),
