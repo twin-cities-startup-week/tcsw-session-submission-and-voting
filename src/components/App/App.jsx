@@ -26,6 +26,7 @@ import PanelistViewPage from '../PanelistViewPage/PanelistViewPage';
 import Panelists from '../PanelistViewPage/Panelists'
 import VotePage from '../VotePage/VotePage'; 
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
+import ResetPassword from '../ResetPassword/ResetPassword';
 import Leaderboard from '../Leaderboard/Leaderboard';
 
 import './App.css';
@@ -74,7 +75,10 @@ function App() {
             exact path="/forgotPassword">
               <ForgotPassword/>
           </Route>
-
+          <Route
+            exact path="/password/reset/:token">
+              <ResetPassword />
+          </Route>
           <Route
             exact path="/home">
               <LandingPage/>

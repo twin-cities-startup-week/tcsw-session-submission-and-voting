@@ -1,7 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const encryptLib = require('../modules/encryption');
-const pool = require('../modules/pool');
+const { pool } = require('../modules/pool');
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -39,7 +39,7 @@ passport.use(
   'local',
   new LocalStrategy((username, password, done) => {
     pool
-      .query('SELECT * FROM "user" WHERE username = $1', [username])
+      .query('SELECT * FROM "user" WHERE email = $1', [username])
       .then((result) => {
         const user = result && result.rows && result.rows[0];
         if (user && encryptLib.comparePassword(password, user.password)) {

@@ -4,6 +4,7 @@ const {
     INTEGER,
     BOOLEAN,
     DATE,
+    literal,
 } = require('sequelize');
 const { sequelize } = require('./../modules/pool.js');
 
@@ -17,7 +18,7 @@ UserVote.init({
     user_id: {
         type: INTEGER,
         references: {
-            model: 'users',
+            model: 'user',
             key: 'id',
         },
         onUpdate: 'cascade',

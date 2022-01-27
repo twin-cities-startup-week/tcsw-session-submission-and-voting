@@ -3,14 +3,21 @@ const axios = require('axios');
 // using Twilio SendGrid's v3 Node.js Library
 // https://github.com/sendgrid/sendgrid-nodejs
 const sgMail = require('@sendgrid/mail');
+const cryptoRandomString = require('crypto-random-string');
 const {
   rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
+const { logError } = require('../modules/logger');
 const encryptLib = require('../modules/encryption');
-const pool = require('../modules/pool');
+const { pool } = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
 
 const router = express.Router();
+
+const {
+  updateResetToken,
+  setPasswordWithToken,
+} = require('../queries/user.query');
 
 // Google OAuth
 const { OAuth2Client } = require('google-auth-library');
@@ -27,7 +34,6 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 // is that the password gets encrypted before being inserted
 router.post('/register', async (req, res, next) => {
   try {
-    const username = req.body.username;
     const password = encryptLib.encryptPassword(req.body.password);
     const email = req.body.email;
     const firstName = req.body.firstName;
@@ -56,10 +62,10 @@ router.post('/register', async (req, res, next) => {
       });
     }
     if (captcha && captcha.data && captcha.data.success === true) {
-      const queryText = `INSERT INTO "user" (username, password, email, first_name, last_name)
+      const queryText = `INSERT INTO "user" (password, email, first_name, last_name)
       VALUES ($1, $2, $3, $4, $5) RETURNING id`;
       pool
-        .query(queryText, [username, password, email, firstName, lastName])
+        .query(queryText, [password, email, firstName, lastName])
         .then(() => {
           sgMail.setApiKey(process.env.SENDGRID_API_KEY);
           const msg = {
@@ -109,21 +115,73 @@ router.post('/logout', async (req, res) => {
   };
 });
 
-router.put('/reset', userStrategy.authenticate('local'), (req, res) => {
-  const username = req.body.username;
-  const email = req.body.email;
-  const password = encryptLib.encryptPassword(req.body.password);
-
-  const sqlText = `
-    UPDATE "user"
-    SET "password" = $1
-    WHERE "username" = $2
-    AND "email" = $3`;
-  pool.query(sqlText, [password, username, email])
-    .then(() => {
+/**
+ * @api {put} /users/password/change User Change Password
+ * @apiName UserChangePassword
+ * @apiGroup User
+ * @apiDescription Change the password for the logged in user.
+ *
+ * @apiParam {String} oldPassword          Mandatory old password.
+ * @apiParam {String} newPassword          Mandatory new password.
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ */
+router.put('/password/change', rejectUnauthenticated, async (req, res) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+    const userId = req.user.id;
+    if (newPassword.length < 8) {
+      res.status(500).send('Password must be 8 characters or more.');
+    } else {
+      await changeUserPassword(userId, oldPassword, newPassword);
       res.sendStatus(200);
-    })
-})
+    }
+  } catch(e) {
+    logError(e);
+    let errorMessage = `${e.name}: ${e.message}`;
+    if (e.parent && e.parent.detail) {
+      errorMessage += `: ${e.parent.detail}`;
+    }
+    res.status(500).send(errorMessage);
+  };
+});
+
+/**
+ * @api {put} /users/password User New Password
+ * @apiName UserNewPassword
+ * @apiGroup User
+ * @apiDescription Set a new password for the user with a reset token.
+ *
+ * @apiParam {String} email                Mandatory user email.
+ * @apiParam {String} newPassword          Mandatory new password.
+ * @apiParam {String} token                Mandatory token.
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ */
+router.put('/password/new', async (req, res) => {
+  try {
+    const { email, password, token } = req.body;
+    if (password.length < 8) {
+      res.status(500).send('Password must be 8 characters or more.');
+      return;
+    }
+    let user = await setPasswordWithToken(email, password, token);
+    if (user && user.email && process.env.SENDGRID_API_KEY) {
+      res.status(200).send(user);
+    } else {
+      res.status(500).send('Unable to reset password.');
+    }
+  } catch(e) {
+    logError(e);
+    let errorMessage = `${e.name}: ${e.message}`;
+    if (e.parent && e.parent.detail) {
+      errorMessage += `: ${e.parent.detail}`;
+    }
+    res.status(500).send(errorMessage);
+  };
+});
 
 /**
  * @api {put} /users/password/reset User Reset Request
@@ -137,10 +195,10 @@ router.put('/reset', userStrategy.authenticate('local'), (req, res) => {
  * @apiSuccessExample {json} Success-Response:
  *      HTTP/1.1 200 OK
  */
-router.put('/password/reset', (req, res) => {
-  (async () => {
+router.put('/password/reset', async (req, res) => {
+  try {
     const resetToken = cryptoRandomString({ length: 64, type: 'hex' });
-    // let user = await updateEmployeeResetToken(req.body.email, resetToken);
+    let user = await updateResetToken(req.body.email, resetToken);
     const hasEnvVariables = process.env.SENDGRID_API_KEY && process.env.SENDGRID_FROM_ADDRESS;
     if (user && user.email && hasEnvVariables) {
       let resetUrl = `https://${req.hostname}/#/password/reset/${resetToken}`;
@@ -163,14 +221,14 @@ router.put('/password/reset', (req, res) => {
       }
       res.status(500).send('Unable to reset password.');
     }
-  })().catch((e) => {
+  } catch(e) {
     logError(e);
     let errorMessage = `${e.name}: ${e.message}`;
     if (e.parent && e.parent.detail) {
       errorMessage += `: ${e.parent.detail}`;
     }
     res.status(500).send(errorMessage);
-  });
+  };
 });
 
 

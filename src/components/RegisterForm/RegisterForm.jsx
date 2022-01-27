@@ -96,21 +96,6 @@ function RegisterForm() {
           value="Register"
           sx={{ p: 2, width: 350, height: 50, bgcolor: '#0C495A', color: '#FBBD19', mb: 1 }}
             > Sign up with Google</Button>
-      <Box sx={{ m: 1 }}>
-
-        {/* Username input */}
-        <label htmlFor="username">
-          <TextField sx={{ width: 500, height: 50, bgcolor: '#FFFFFF', borderRadius: 1, height: 50 }}
-            type="text"
-            name="username"
-            label="Username"
-            variant="filled"
-            value={username}
-            required
-            onChange={(event) => setUsername(event.target.value)}
-          />
-        </label>
-      </Box>
 
       {/* Password input */}
       <Box sx={{ m: 1 }}>

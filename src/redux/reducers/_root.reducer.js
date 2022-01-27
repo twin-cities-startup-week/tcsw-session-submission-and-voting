@@ -4,11 +4,6 @@ import user from './user.reducer';
 import panelistReducer from './panelist.reducer';
 import panelistDetailsReducer from './panelistDetails.reducer';
 import addVoteReducer from './addVote.reducer';
-
-
-
-import password from './password.reducer';
-
 import submission from './submission.reducer';
 import setSessionList from './admin.reducer';
 import setAwaitingApproval from './approvedAwaiting.reducer';
@@ -29,7 +24,6 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   panelistReducer,
   panelistDetailsReducer,
-  password,
   submission,
   setSessionList,
   setAwaitingApproval,

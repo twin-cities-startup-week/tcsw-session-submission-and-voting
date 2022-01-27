@@ -32,11 +32,9 @@ function ForgotPassword () {
             reset password */
         if (password === confirmPassword) {
           dispatch({
-            type: 'RESET_PASSWORD',
+            type: 'REQUEST_PASSWORD_RESET',
             payload: {
-              username: username,
               email: email,
-              password: password,
             }, 
           });
           history.push('/login');
@@ -62,17 +60,6 @@ function ForgotPassword () {
 
           {/* Username input */}
           <Box sx={{ textAlign: 'center' }}>
-            <Box sx={{ m: 1 }}>
-                <label htmlFor="username">
-                    <TextField sx={{ width: 500, bgcolor: '#FFFFFF', borderRadius: 1, mb: 2 }}
-                    type="text" name="username" label="Username" variant="filled"
-                    value={username}
-                    required
-                    onChange={(event) => setUsername(event.target.value)}
-                    />
-                </label>
-            </Box>
-
             {/* Email input */}
             <Box sx={{ m: 1 }}>
                 <label htmlFor="username">
@@ -83,30 +70,6 @@ function ForgotPassword () {
                     onChange={(event) => setEmail(event.target.value)}
                     />
                 </label>
-            </Box>
-
-            {/* Password input */}
-            <Box sx={{ m: 1 }}>
-              <label htmlFor="username">
-                <TextField sx={{ width: 500, bgcolor: '#FFFFFF', borderRadius: 1, mb: 2 }}
-                  type="password" name="password" label="Password" variant="filled"
-                  value={password}
-                  required
-                  onChange={(event) => setPassword(event.target.value)}
-                />
-              </label>
-            </Box>
-
-            {/* Confirm password input */}
-            <Box sx={{ m: 1 }}>
-              <label htmlFor="password">
-                <TextField sx={{ width: 500, bgcolor: '#FFFFFF', borderRadius: 1, mb: 1 }}
-                  type="password" name="password" label="Confirm Password" variant="filled"
-                  value={confirmPassword}
-                  required
-                  onChange={(event) => setConfirmPassword(event.target.value)}
-                />
-              </label>
             </Box>
 
             {/* Reset password button. When clicked, if all inputs match a user's info, 

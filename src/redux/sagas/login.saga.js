@@ -58,9 +58,61 @@ function* logoutUser(action) {
   }
 }
 
+
+// Change password for a logged in user
+function* changePassword(action) {
+  try {
+    yield put({ type: 'SET_SAVE_MODAL_OPEN', payload: { modalOpen: true } });
+    yield axios.put('api/user/password/change', action.payload);
+    yield delay(250);
+  } catch (error) {
+    yield put({ type: 'SET_ERROR', payload: error });
+    yield put({ type: 'SET_ERROR_MODAL', payload: { modalOpen: true } });
+  } finally {
+    // Hide the loading indicator
+    yield put({ type: 'SET_SAVE_MODAL_OPEN', payload: { modalOpen: false } });
+  }
+}
+
+function* requestPasswordReset(action) {
+  try {
+    yield put({ type: 'SET_SAVE_MODAL_OPEN', payload: { modalOpen: true } });
+    yield axios.put('api/user/password/reset', action.payload);
+    yield delay(250);
+    yield put({
+      type: 'SET_GLOBAL_MODAL',
+      payload: {
+        modalOpen: true,
+        title: 'Email Sent',
+        body: 'Please check your email for a reset password link.',
+      },
+    });
+  } catch (error) {
+    yield put({ type: 'SET_ERROR', payload: error });
+    yield put({ type: 'SET_ERROR_MODAL', payload: { modalOpen: true } });
+  } finally {
+    // Hide the loading indicator
+    yield put({ type: 'SET_SAVE_MODAL_OPEN', payload: { modalOpen: false } });
+  }
+}
+
+// Set new password for a user with a reset token (used when user selected forgot password)
+function* setNewPassword(action) {
+  try {
+    yield axios.put('api/user/password/new', action.payload);
+    window.location.href = '/#/login';
+  } catch (error) {
+    yield put({ type: 'SET_ERROR', payload: error });
+    yield put({ type: 'SET_ERROR_MODAL', payload: { modalOpen: true } });
+  }
+}
+
 function* loginSaga() {
   yield takeLatest('LOGIN', loginUser);
   yield takeLatest('LOGOUT', logoutUser);
+  yield takeLatest('REQUEST_PASSWORD_RESET', requestPasswordReset);
+  yield takeLatest('SET_NEW_PASSWORD', setNewPassword);
+  yield takeLatest('CHANGE_PASSWORD', changePassword);
 }
 
 export default loginSaga;

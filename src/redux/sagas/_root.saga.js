@@ -3,9 +3,6 @@ import loginSaga from './login.saga';
 import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
 import panelistSaga from './panelist.saga';
-
-import passwordSaga from './password.saga';
-
 import submissionSaga from './submission.saga';
 import sessionSaga from './admin.saga';
 import approvedAwaitingSaga from './approvedAwaiting.saga';
@@ -28,7 +25,6 @@ export default function* rootSaga() {
     registrationSaga(),
     userSaga(),
     panelistSaga(),
-    passwordSaga(),
     submissionSaga(),
     sessionSaga(),
     approvedAwaitingSaga(),
