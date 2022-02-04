@@ -37,8 +37,8 @@ function RegisterForm() {
       alert('Password must match.');
       result = false;
     } else if (username.length < 1) {
-      alert('Username is required.');
-      result = false;
+      // alert('Username is required.');
+      // result = false;
     } else if (!isEmail) {
       alert('Valid email is required.');
       result = false;

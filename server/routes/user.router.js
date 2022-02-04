@@ -63,7 +63,7 @@ router.post('/register', async (req, res, next) => {
     }
     if (captcha && captcha.data && captcha.data.success === true) {
       const queryText = `INSERT INTO "user" (password, email, first_name, last_name)
-      VALUES ($1, $2, $3, $4, $5) RETURNING id`;
+      VALUES ($1, $2, $3, $4) RETURNING id`;
       pool
         .query(queryText, [password, email, firstName, lastName])
         .then(() => {
