@@ -193,6 +193,7 @@ function SubmissionPage() {
             speakers: speakers,
             covid: covid,
             media: media,
+            purpose: purpose,
             // image: image, stretch goal: AWS 
             success: success,
             excited: excited,
@@ -206,30 +207,30 @@ function SubmissionPage() {
         //     return;
         // }
         dispatch({ type: 'POST_SUBMISSION_TO_SERVER', payload: newSubmission });
-        setEmail('');
-        setPhone('');
-        setHost('');
-        setTitle('');
-        setDescription('');
-        setAttendees('');
-        setLocation('Online via the TCSW virtual venue');
-        setLocationDetails('');
-        setIndividualDate('');
-        setLength('');
-        setIndividualTime('');
-        setFormat('Presentation');
-        setIndividualIndustry('');
-        setTrack('Growth');
-        setPurpose('To Enable: Help teach a skill or set of skills');
-        setAreaOfInterest('Celebrating and empowering female leaders');
-        setDiversity('Yes');
-        setCovid('Yes');
-        setMedia('');
-        setSuccess('');
-        setExcited('');
-        setOtherHosts('');
-        setOtherInfo('');
-        history.push('/panelistView');
+        // setEmail('');
+        // setPhone('');
+        // setHost('');
+        // setTitle('');
+        // setDescription('');
+        // setAttendees('');
+        // setLocation('Online via the TCSW virtual venue');
+        // setLocationDetails('');
+        // setIndividualDate('');
+        // setLength('');
+        // setIndividualTime('');
+        // setFormat('Presentation');
+        // setIndividualIndustry('');
+        // setTrack('Growth');
+        // setPurpose('To Enable: Help teach a skill or set of skills');
+        // setAreaOfInterest('Celebrating and empowering female leaders');
+        // setDiversity('Yes');
+        // setCovid('Yes');
+        // setMedia('');
+        // setSuccess('');
+        // setExcited('');
+        // setOtherHosts('');
+        // setOtherInfo('');
+        // history.push('/panelistView');
     }//end addSubmission
 
     //variables for individual form questions (multiselects are above)
