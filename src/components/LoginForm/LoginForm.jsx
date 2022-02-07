@@ -7,7 +7,6 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import { GoogleLogin } from 'react-google-login';
 
 function LoginForm() {
   const [username, setUsername] = useState('');
@@ -52,14 +51,12 @@ function LoginForm() {
           This uses the user's gmail as the username, and displays their
           first name provided through gmail in the upper right hand corner */}
       <Box sx={{ textAlign: 'center', mb: 2 }}>
-      <GoogleLogin>
         <Button 
           value=""
           type="submit"
           onClick={handleGoogleLogin}
-          sx={{ m: 'auto', p: 2, width: 300, height: 20 }}
+          sx={{ mt: 2, mb: 2, p: 2, width: 350, height: 50, bgcolor: '#0C495A', color: '#FBBD19' }}
             > Sign in with Google </Button>
-      </GoogleLogin>
       </Box>
 
       <form onSubmit={login}>

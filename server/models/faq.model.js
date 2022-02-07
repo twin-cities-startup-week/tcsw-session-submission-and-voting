@@ -2,37 +2,29 @@ const {
     Model,
     STRING,
     INTEGER,
-    BOOLEAN,
+    TEXT,
     DATE,
     literal,
 } = require('sequelize');
 const { sequelize } = require('./../modules/pool.js');
 
-class UserVote extends Model { }
-UserVote.init({
+class FAQ extends Model { }
+FAQ.init({
     id: {
         type: INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
-    user_id: {
+    order: {
         type: INTEGER,
-        references: {
-            model: 'user',
-            key: 'id',
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
+        autoIncrement: true,
+    },
+    answer: {
+        type: TEXT,
         allowNull: false,
     },
-    session_id: {
-        type: INTEGER,
-        references: {
-            model: 'session',
-            key: 'id'
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
+    question: {
+        type: STRING,
         allowNull: false,
     },
     created_at: {
@@ -47,16 +39,11 @@ UserVote.init({
     },
 }, {
     underscored: true,
-    modelName: 'user_vote',
-    tableName: 'user_vote',
+    modelName: 'faq',
+    tableName: 'faq',
     createdAt: 'created_at',
     updatedAt: 'updated_at',
     sequelize,
-    uniqueKeys: {
-        actions_unique: {
-            fields: ['session_id', 'user_id']
-        }
-    }
 });
 
 module.exports = UserVote;

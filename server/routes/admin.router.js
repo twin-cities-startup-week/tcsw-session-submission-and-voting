@@ -2,16 +2,16 @@ const express = require('express');
 const { pool } = require('../modules/pool');
 const router = express.Router();
 
-// const {
-//     rejectUnauthenticated,
-//   } = require('../modules/authentication-middleware');
+const {
+    requireAdmin,
+} = require('../modules/authentication-middleware');
 
 
 
 /**
  * GET route admin
  */
- router.get('/', (req, res) => {
+ router.get('/', requireAdmin, (req, res) => {
     // GET route code here
     pool.query(`SELECT * from "session"`)
     .then((results) =>
@@ -25,7 +25,7 @@ const router = express.Router();
 /**
  * GET route admin
 //  */
-router.get('/sessionsApproved', (req, res) => {
+router.get('/sessionsApproved', requireAdmin, (req, res) => {
     // GET route code here
     console.log('This is the sessions you wanted')
     pool.query(`SELECT count(session.title) from "session" 
@@ -45,7 +45,7 @@ router.get('/sessionsApproved', (req, res) => {
 /**
  * GET route admin
 //  */
-router.get('/sessionsVotes', (req, res) => {
+router.get('/sessionsVotes', requireAdmin, (req, res) => {
     // GET route code here
    console.log('This is the sessionsVotes you wanted') 
     //console.log('This is the sessionsVotes you wanted', req.params.sessionsVotes)
@@ -66,7 +66,7 @@ router.get('/sessionsVotes', (req, res) => {
 // /**
 //  * GET route admin
 // //  */
-router.get('/awaitingApproval', (req, res) => {
+router.get('/awaitingApproval', requireAdmin, (req, res) => {
     // GET route code here
     console.log('This is the awaitingApproval you wanted', req.params);
     //console.log(req.params)
@@ -85,7 +85,7 @@ router.get('/awaitingApproval', (req, res) => {
 /**
  * GET route admin
  */
- router.get('/awaitingApprovalList', (req, res) => {
+ router.get('/awaitingApprovalList', requireAdmin, (req, res) => {
     // GET route code here
     pool.query(`SELECT * from "session" 
     WHERE awaiting_approval = true`)
@@ -102,7 +102,7 @@ router.get('/awaitingApproval', (req, res) => {
 /**
  * GET route admin
  */
- router.get('/approvedList', (req, res) => {
+ router.get('/approvedList', requireAdmin, (req, res) => {
     // GET route code here
     pool.query(`SELECT * from "session" 
     WHERE approved = true`)

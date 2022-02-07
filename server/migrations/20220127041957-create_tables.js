@@ -8,7 +8,7 @@ module.exports = {
       BOOLEAN,
       DOUBLE,
       TEXT,
-    } = Sequelize;
+    } = Sequelize.DataTypes;
     /**
      * Add altering commands here.
      *
@@ -116,6 +116,7 @@ module.exports = {
           email: {
             type: STRING,
             allowNull: false,
+            unique: true,
           },
           password: TEXT,
           google_id: TEXT,

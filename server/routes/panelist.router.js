@@ -2,6 +2,11 @@ const express = require('express');
 const { pool } = require('../modules/pool');
 const router = express.Router();
 
+const {
+    rejectUnauthenticated,
+    requireAdmin,
+} = require('../modules/authentication-middleware');
+
 router.get('/', ( req, res ) => {
     const queryText = `SELECT * FROM "session"
                         WHERE "session"."approved" = true;`;
@@ -30,7 +35,7 @@ router.get('/details/:id', ( req, res ) => {
     })
 })
 
-router.put('/vote/:id', ( req, res ) => {
+router.put('/vote/:id', rejectUnauthenticated, ( req, res ) => {
     const sessionId = req.params.id;
 
     const queryText = `UPDATE "session"
@@ -45,7 +50,7 @@ router.put('/vote/:id', ( req, res ) => {
     })
 })
 
-router.put('/approve/:id', ( req, res ) => {
+router.put('/approve/:id', requireAdmin, ( req, res ) => {
     const sessionId = req.params.id;
 
     const queryText = `UPDATE "session"
@@ -60,7 +65,7 @@ router.put('/approve/:id', ( req, res ) => {
     })
 })
 
-router.put('/deny/:id', ( req, res ) => {
+router.put('/deny/:id', requireAdmin, ( req, res ) => {
     const sessionId = req.params.id;
 
     const queryText = `UPDATE "session"

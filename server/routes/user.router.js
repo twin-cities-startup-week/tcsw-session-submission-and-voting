@@ -67,15 +67,20 @@ router.post('/register', async (req, res, next) => {
       pool
         .query(queryText, [password, email, firstName, lastName])
         .then(() => {
-          sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-          const msg = {
-            to: email,
-            from: process.env.SENDGRID_FROM_ADDRESS,
-            subject: 'Welcome!',
-            text: `Welcome to the TCSW session selector!`,
-            html: `Welcome to the TCSW session selector!`,
-          };
-          sgMail.send(msg).catch(e => console.log(e));
+          if (process.env.SENDGRID_API_KEY && process.env.SENDGRID_API_KEY !== '') {
+            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+            const msg = {
+              to: email,
+              from: process.env.SENDGRID_FROM_ADDRESS,
+              subject: 'Welcome!',
+              text: `Welcome to the TCSW session selector!`,
+              html: `Welcome to the TCSW session selector!`,
+            };
+            sgMail.send(msg).catch(e => console.log(e));
+          } else {
+            console.error('Missing SendGrid environment variables.')
+          }
+
           res.sendStatus(201)
         })
         .catch((err) => {

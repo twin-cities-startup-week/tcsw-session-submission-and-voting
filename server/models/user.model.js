@@ -28,17 +28,6 @@ User.init({
         primaryKey: true,
         autoIncrement: true,
     },
-    username: {
-        type: STRING,
-        validate: {
-            notEmpty: true,
-            len: {
-                args: [0, 50],
-                msg: 'Please provide a value less than 50 characters.',
-            },
-        },
-        allowNull: false,
-    },
     email: {
         type: STRING,
         validate: {
@@ -50,6 +39,7 @@ User.init({
             },
         },
         allowNull: false,
+        unique: true,
     },
     password: TEXT,
     google_id: TEXT,

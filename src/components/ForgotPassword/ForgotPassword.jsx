@@ -10,27 +10,17 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 
 function ForgotPassword () {
-    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
     const errors = useSelector(store => store.errors);
     const dispatch = useDispatch();
     const history = useHistory();
-
-    /* Currently, for a user to reset their password, you must enter:
-        username, email, new password (password input) and 
-        confirm new password (confirm password) 
-        
-      To make this more secure, it is suggested to impliment security questions or
-      a confirmation email before changing the user's password. */
 
     const reset = (event) => {
         event.preventDefault();
         
         /* If both password input and confirm password input match
             reset password */
-        if (password === confirmPassword) {
+        if (email !== '') {
           dispatch({
             type: 'REQUEST_PASSWORD_RESET',
             payload: {
@@ -41,7 +31,7 @@ function ForgotPassword () {
         } else {
           /* If password input and confirm password input do not match
               display the error message, passwords do not match. */
-          alert('Passwords must match. Please try again.');
+          alert('Please enter an email address.');
         }
       }; // end login
 
