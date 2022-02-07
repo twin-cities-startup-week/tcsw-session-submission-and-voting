@@ -29,7 +29,7 @@ router.get('/sessionsApproved', requireAdmin, (req, res) => {
     // GET route code here
     console.log('This is the sessions you wanted')
     pool.query(`SELECT count(session.title) from "session" 
-    WHERE session.approved = true`)
+    WHERE approved = true`)
     .then((results) => {
         console.log(results.rows)
         res.send(results.rows)
