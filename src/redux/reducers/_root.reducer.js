@@ -11,6 +11,7 @@ import setHighestVoting from './highestVoting.reducer';
 import setAllSession from './fetchAllSession.reducer';
 import setApprovalAwaitingInfo from './approvalAwaitingInfo.reducer';
 import setApprovedInfo from './approvedInfo.reducer';
+import content from './content.reducer';
 
 
 // rootReducer is the primary reducer for our entire project
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   setApprovalAwaitingInfo,
   setApprovedInfo,
   addVoteReducer,
+  content,
 });
 
 export default rootReducer;

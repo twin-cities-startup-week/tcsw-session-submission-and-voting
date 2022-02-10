@@ -28,6 +28,7 @@ import VotePage from '../VotePage/VotePage';
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
 import ResetPassword from '../ResetPassword/ResetPassword';
 import Leaderboard from '../Leaderboard/Leaderboard';
+import AdminContentPage from '../AdminContentPage/AdminContentPage';
 
 import './App.css';
 
@@ -99,7 +100,13 @@ function App() {
             <AdminPage />
           </Route>
 
-
+          <Route
+            // shows adminPage at all times (logged in or not)
+            exact
+            path="/admin/content/:content"
+          >
+            <AdminContentPage />
+          </Route>
 
           <Route
             exact path='/leaderboard'>

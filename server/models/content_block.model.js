@@ -8,22 +8,18 @@ const {
 } = require('sequelize');
 const { sequelize } = require('./../modules/pool.js');
 
-class FAQ extends Model { }
-FAQ.init({
+class ContentBlock extends Model { }
+ContentBlock.init({
     id: {
         type: INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
-    order: {
-        type: INTEGER,
-        autoIncrement: true,
-    },
-    answer: {
+    content: {
         type: TEXT,
         allowNull: false,
     },
-    question: {
+    name: {
         type: STRING,
         allowNull: false,
     },
@@ -39,11 +35,11 @@ FAQ.init({
     },
 }, {
     underscored: true,
-    modelName: 'faq',
-    tableName: 'faq',
+    modelName: 'content_block',
+    tableName: 'content_block',
     createdAt: 'created_at',
     updatedAt: 'updated_at',
     sequelize,
 });
 
-module.exports = FAQ;
+module.exports = ContentBlock;

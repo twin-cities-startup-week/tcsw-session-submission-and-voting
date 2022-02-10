@@ -86,6 +86,7 @@ const userRouter = require('./routes/user.router');
 const panelistRouter = require('./routes/panelist.router');
 const submissionRouter = require('./routes/submission.router');
 const adminRouter = require('./routes/admin.router');
+const contentRouter = require('./routes/content.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -133,6 +134,7 @@ app.use('/api/user', userRouter);
 app.use('/api/panelists', panelistRouter);
 app.use('/api/submission', submissionRouter );
 app.use('/api/session', adminRouter);
+app.use('/api/content', contentRouter);
 
 // Serve static files
 app.use(express.static('build'));

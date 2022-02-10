@@ -4,6 +4,7 @@ module.exports = {
       INTEGER,
       STRING,
       TEXT,
+      DATE,
     } = Sequelize.DataTypes
     try {
       const transaction = await queryInterface.sequelize.transaction();
@@ -17,6 +18,16 @@ module.exports = {
           },
           name: STRING,
           content: TEXT,
+          created_at: {
+            type: DATE,
+            allowNull: false,
+            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+          },
+          updated_at: {
+            type: DATE,
+            allowNull: false,
+            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+          },
         },
         {
           transaction,
@@ -33,6 +44,16 @@ module.exports = {
           order: INTEGER,
           question: STRING,
           answer: TEXT,
+          created_at: {
+            type: DATE,
+            allowNull: false,
+            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+          },
+          updated_at: {
+            type: DATE,
+            allowNull: false,
+            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+          },
         },
         {
           transaction,
@@ -48,6 +69,7 @@ module.exports = {
   down: async (queryInterface) => {
     try {
       await queryInterface.dropTable('content_block');
+      await queryInterface.dropTable('faq');
     } catch (err) {
       throw err;
     }
