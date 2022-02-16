@@ -11,21 +11,11 @@ const {
 /**
  * GET route block
  */
-router.get('/block/:name', async (req, res) => {
+router.get('/block', async (req, res) => {
     try {
-        const { name } = req.params;
-        const contentResults = await ContentBlock.findAll({
-            raw: true,
-            where: {
-                name
-            }
-        });
+        const contentResults = await ContentBlock.findAll();
         
-        if (contentResults && contentResults.length > 0) {
-            res.send(contentResults[0]);
-        } else {
-            res.sendStatus(500);
-        }
+        res.send(contentResults);
     } catch (e) {
         res.sendStatus(500);
     }

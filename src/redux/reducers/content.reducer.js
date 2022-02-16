@@ -1,9 +1,16 @@
 import { combineReducers } from 'redux';
 
 const block = (state = {}, action) => {
+    const result = { ...state };
     switch (action.type) {
+        case 'SET_CONTENT_BLOCKS':
+            for(let item of action.payload) {
+                result[item.name] = item.content;
+            }
+            return result;
         case 'SET_CONTENT_BLOCK':
-            return action.payload;
+            result[action.payload.name] = action.payload.content;
+            return result;
         default:
             return state;
     }

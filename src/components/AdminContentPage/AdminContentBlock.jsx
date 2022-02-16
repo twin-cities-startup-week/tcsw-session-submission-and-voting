@@ -40,9 +40,8 @@ const useStylish = makeStyles({
     },
 });
 
-function AdminPage() {
+function AdminContentBlock({ content }) {
     const classic = useStylish();
-    const { content } = useParams();
     //set selector
     const { block } = useSelector((store) => store.content);
     const [selectedTab, setSelectedTab] = useState('write');
@@ -56,13 +55,6 @@ function AdminPage() {
     // };
     const dispatch = useDispatch();
 
-    const history = useHistory();
-
-    //Get all the session
-    useEffect(() => {
-        dispatch({ type: "FETCH_CONTENT_BLOCK", payload: { content } });
-    }, [dispatch, content]);
-
     const handleMdeChange = (value) => {
         // const { dispatch, selectedCourseWork } = this.props;
         // const updatedCoursework = {
@@ -70,12 +62,12 @@ function AdminPage() {
         //     instructor_comment: value,
         // };
         setChanges(true);
-        dispatch({ type: 'SET_CONTENT_BLOCK', payload: {...block, content: value} });
+        dispatch({ type: 'SET_CONTENT_BLOCK', payload: { name: content, content: value } });
     }
 
     const handleSave = () => {
         setChanges(false);
-        dispatch({ type: 'SEND_CONTENT_BLOCK', payload: block });
+        dispatch({ type: 'SEND_CONTENT_BLOCK', payload: { name: content, content: block[content] } });
     }
 
     return (
@@ -85,10 +77,10 @@ function AdminPage() {
                 //card 2
                 variant="outlined"
             >
-                {/* {JSON.stringify(block)} */}
+                {/* {JSON.stringify(block[content])} */}
                 <ReactMde
                     className={classic.feedback}
-                    value={block.content}
+                    value={block[content]}
                     onChange={handleMdeChange}
                     selectedTab={selectedTab}
                     onTabChange={setSelectedTab}
@@ -97,7 +89,7 @@ function AdminPage() {
                     }
                 />
                 <Button
-                    variant="contained" type="submit" name="submit" value="Log In"
+                    variant="contained" type="submit" name="submit" value="save"
                     sx={{
                         mt: 1, p: 2, width: 200, height: 40, bgcolor: '#0C495A',
                         color: '#FBBD19', m: 1, float: 'right'
@@ -109,4 +101,4 @@ function AdminPage() {
     );
 }
 
-export default AdminPage;
+export default AdminContentBlock;

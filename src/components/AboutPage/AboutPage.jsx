@@ -27,13 +27,13 @@ function AboutPage() {
   const { block } = useSelector((store) => store.content);
   //Get all the session
   useEffect(() => {
-    dispatch({ type: "FETCH_CONTENT_BLOCK", payload: { content: 'about-us' } });
+    dispatch({ type: "FETCH_CONTENT_BLOCKS"});
   }, [dispatch]);
 
   return (
       <div className={classes.root}>
         <MarkdownView
-          markdown={block.content}
+          markdown={block['about']}
         />
       </div>
   );

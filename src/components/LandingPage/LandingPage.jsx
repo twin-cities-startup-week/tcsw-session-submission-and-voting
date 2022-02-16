@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
+import MarkdownView from 'react-showdown';
 import './LandingPage.css';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -14,6 +15,12 @@ function LandingPage() {
   const user = useSelector((store) => store.user);
   const [heading, setHeading] = useState('Welcome to Session Selector & Voting');
   const history = useHistory();
+  const dispatch = useDispatch();
+  const { block } = useSelector((store) => store.content);
+  //Get all the session
+  useEffect(() => {
+    dispatch({ type: "FETCH_CONTENT_BLOCKS" });
+  }, [dispatch]);
 
   const onLogin = (event) => {
     history.push('/login');
@@ -115,37 +122,9 @@ function LandingPage() {
             }
             {user.id && 
             <div className="submissionDetailsText">
-              <ol>
-              <li>Use the session submission form to submit your session proposal by May 1st. 
-              Once submitted, we will reach out with any questions that we have. 
-              We will notify you whether your sessions was accepted or not. 
-              Every year we receive more sessions that we have time slots on the 
-              schedule so if your session is not accepted, please think about applying 
-              next year!</li>
-              <br/>
-              <li>If your session is accepted, final details are due. This will 
-              include speaker information, content summary, location, and timing/length. 
-              We know that things may change, but ask that you submit as much as possible 
-              so we can upload information into our master calendar prior to our schedule 
-              being announced on May 1st.</li>
-              <br/>
-              <li>Spread the word! We will work with you to help promote your session and
-              make sure you - and your attendees - have an incredible experience. On May 5th 
-              we will host an Event Host Webinar focused on how to prepare for and promote 
-              your TCSW session.</li>
-              <br/>
-              <li>Attend the TCSW Event Host Happy Hour on May 10th. This will be a time you 
-              can learn more about other events happening throughout the week and connect 
-              with other event hosts.</li>
-              <br/>
-              <li>6: Host your event! We're planning on having about 200 events this year.</li>
-              <br/>
-              <li>Provide feedback. It is important to us that event hosts, partners and 
-              attendees are given an opportunity to provide feedback. As an event host, 
-              we will send you a survey to gather feedback and capture any stories that 
-              came out of your events. We will also provide you a few questions to ask 
-              your attendees.</li>
-              </ol>
+              <MarkdownView
+                markdown={block['home2']}
+              />
             </div>
             }
           </Paper>

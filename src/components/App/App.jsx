@@ -103,7 +103,7 @@ function App() {
           <Route
             // shows adminPage at all times (logged in or not)
             exact
-            path="/admin/content/:content"
+            path="/admin/content"
           >
             <AdminContentPage />
           </Route>

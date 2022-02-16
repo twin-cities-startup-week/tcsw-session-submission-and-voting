@@ -11,10 +11,10 @@ function* fetchTotalSession(){
     }
 }
 
-function* fetchContent(action) {
+function* fetchAllContent() {
     try {
-        const response = yield axios.get(`/api/content/block/${action.payload.content}`);
-        yield put({ type: 'SET_CONTENT_BLOCK', payload: response.data });
+        const response = yield axios.get(`/api/content/block`);
+        yield put({ type: 'SET_CONTENT_BLOCKS', payload: response.data });
     } catch (error) {
         console.log('Session get request failed', error);
     }
@@ -31,7 +31,7 @@ function* sendContent(action) {
 
 function* sessionSaga (){
     yield takeLatest('FETCH_TOTAL_SESSION', fetchTotalSession);
-    yield takeLatest('FETCH_CONTENT_BLOCK', fetchContent);
+    yield takeLatest('FETCH_CONTENT_BLOCKS', fetchAllContent);
     yield takeLatest('SEND_CONTENT_BLOCK', sendContent);
 }
 
