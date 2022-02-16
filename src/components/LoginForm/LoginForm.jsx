@@ -37,7 +37,12 @@ function LoginForm() {
   const handleGoogleLogin = () => {
     // dispatch({ type: 'GOOGLE_LOGIN' })
     const time = new Date().getTime();
-    window.location.href=`http://localhost:5000/auth/google?t=${time}`;
+    if (process.env.NODE_ENV === 'production') {
+      window.location.href = `https://session-selector.herokuapp.com/auth/google?t=${time}`;
+    } else {
+      window.location.href = `http://localhost:5000/auth/google?t=${time}`;
+    }
+    
   }
 
   return (

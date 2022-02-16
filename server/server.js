@@ -8,9 +8,7 @@ const sessionMiddleware = require('./modules/session-middleware');
 const passport = require('./strategies/user.strategy');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-let os = require("os");
-let hostname = os.hostname();
-let callbackURL = `https://${hostname}/auth/google/callback`;
+let callbackURL = `https://session-selector.herokuapp.com/auth/google/callback`;
 if (process.env.NODE_ENV !== 'production') {
     callbackURL = `http://localhost:5000/auth/google/callback`;
 }
@@ -117,13 +115,13 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
   //   login page.  Otherwise, the primary route function function will be called,
   //   which, in this example, will redirect the user to the home page.
   app.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: 'http://localhost:3000/#/login' }),
+    passport.authenticate('google', { failureRedirect: 'https://session-selector.herokuapp.com/#/login' }),
     (req, res) => {
       console.log('HERE: /auth/google/callback');
       if (process.env.NODE_ENV !== 'production') {
-          res.redirect('http://localhost:3000/#/home');
+        res.redirect('http://localhost:3000/#/home');
       } else {
-          res.redirect('/#/home'); // TODO: After login page.
+        res.redirect('https://session-selector.herokuapp.com/#/home'); // TODO: After login page.
       }
     }
   );
