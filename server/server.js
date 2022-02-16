@@ -45,7 +45,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
               const googleId = profile.id;
 
               const queryText = `INSERT INTO "user" (email, password, first_name, last_name, google_id)
-                VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`;
+                VALUES ($1, $2, $3, $4, $5) RETURNING id`;
               await pool.query(queryText, [email, password, firstName, lastName, googleId]);
               const result = await pool.query('SELECT * FROM "user" WHERE email = $1', [email]);
               const user = result && result.rows && result.rows[0];
