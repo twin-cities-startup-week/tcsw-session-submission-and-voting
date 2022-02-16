@@ -32,23 +32,22 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
         if (profile.emails.length > 0) {
           const firstEmail = profile.emails[0];
           if (firstEmail.verified === true) {
-            const result = await pool.query('SELECT * FROM "user" WHERE username = $1', [firstEmail.value]);
+            const result = await pool.query('SELECT * FROM "user" WHERE email = $1', [firstEmail.value]);
             const user = result && result.rows && result.rows[0];
             if (user) {
               console.log('Existing user found!', user);
               return done(null, user);
             } else {
-              const username = firstEmail.value;
               const password = null; // TODO: Make sure this is OK
               const email = firstEmail.value;
               const firstName = profile.name.givenName;
               const lastName = profile.name.familyName;
               const googleId = profile.id;
 
-              const queryText = `INSERT INTO "user" (username, password, email, first_name, last_name, google_id)
+              const queryText = `INSERT INTO "user" (email, password, first_name, last_name, google_id)
                 VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`;
-              await pool.query(queryText, [username, password, email, firstName, lastName, googleId]);
-              const result = await pool.query('SELECT * FROM "user" WHERE username = $1', [email]);
+              await pool.query(queryText, [email, password, firstName, lastName, googleId]);
+              const result = await pool.query('SELECT * FROM "user" WHERE email = $1', [email]);
               const user = result && result.rows && result.rows[0];
               if (user) {
                 console.log('New user created!', user);
