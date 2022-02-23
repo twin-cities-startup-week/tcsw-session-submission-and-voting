@@ -55,7 +55,7 @@ module.exports = {
         }, {
           type: 'In-person',
         }, {
-          type: 'Other',
+          type: 'To be determined',
         },
       ], {
         transaction,
@@ -152,6 +152,10 @@ module.exports = {
           name: 'People',
         }, {
           name: 'Spotlight',
+        }, {
+          name: 'Corporate',
+        }, {
+          name: 'Investor',
         }, {
           name: 'Other',
         },

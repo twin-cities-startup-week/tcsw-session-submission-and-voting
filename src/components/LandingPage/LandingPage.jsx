@@ -54,9 +54,8 @@ function LandingPage() {
               variant="contained" 
               type="submit" 
               value="Register"
-              sx={{ p: 2, width: 350, height: 50, bgcolor: '#0C495A', 
-                color: '#FBBD19', mt: 2, mb: 2 }}
-            onClick={() => history.push('/about')}
+              sx={{mt: 2, mb: 2}}
+              onClick={() => history.push('/about')}
             > Learn More</Button>
           </Box>
           }
@@ -67,15 +66,13 @@ function LandingPage() {
             <Box sx={{ textAlign: 'center' }}>
               <Button 
                 variant="contained"
-                sx={{ p: 2, width: 350, height: 50, bgcolor: '#0C495A', 
-                    color: '#FBBD19', mt: 2, mb: 2 }}
+                sx={{ mt: 2, mb: 2 }}
                 onClick={() => history.push('/submission')}
               > Submission Form</Button>
 
               <Button 
                 variant="contained"
-                sx={{ p: 2, width: 350, height: 50, bgcolor: '#0C495A', 
-                    color: '#FBBD19', mt: 2, mb: 2, ml: 2 }}
+                sx={{ mt: 2, mb: 2, ml: 2 }}
                 onClick={() => history.push('/panelistView')}
               > Search Sessions</Button>
           </Box>

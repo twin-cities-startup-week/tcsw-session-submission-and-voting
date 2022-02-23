@@ -58,9 +58,10 @@ function LoginForm() {
       <Box sx={{ textAlign: 'center', mb: 2 }}>
         <Button 
           value=""
+          variant="contained"
           type="submit"
           onClick={handleGoogleLogin}
-          sx={{ mt: 2, mb: 2, p: 2, width: 350, height: 50, bgcolor: '#0C495A', color: '#FBBD19' }}
+          sx={{ mt: 2, mb: 2 }}
             > Sign in with Google </Button>
       </Box>
 
@@ -111,7 +112,7 @@ function LoginForm() {
 
           {/* Sign in button  */}
           <Button variant="contained" type="submit" name="submit" value="Log In"
-          sx={{ mt: 2, mb: 2, p: 2, width: 350, height: 50, bgcolor: '#0C495A', color: '#FBBD19' }}
+          sx={{ mt: 2, mb: 2 }}
             > Sign In</Button>
         </Box>
       </form>

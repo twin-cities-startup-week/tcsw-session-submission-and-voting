@@ -16,7 +16,7 @@
   display: flex;
   font-size: 26px;
   font-weight: 700;
-  font-family: 'Gotham Black';
+  font-family: 'Poppins', sans-serif;
   color: #0C495A;
   padding-left: 20px;
   padding-right: 10px;
@@ -30,8 +30,8 @@
   text-align: center;
   padding: 24px 10px;
   text-decoration: none;
-  font-size: 15px;
-  font-family: 'Proxima Nova';
+  font-size: 17px;
+  font-family: 'Poppins', sans-serif;
 
   /* these last two make the logout button in
   the nav bar look like another link */

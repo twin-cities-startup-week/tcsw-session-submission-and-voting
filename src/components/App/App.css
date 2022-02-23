@@ -5,13 +5,35 @@ body,
 }
 
 body {
-  font-family: 'Proxima Nova';
+  font-family: 'Poppins', sans-serif;
+  color: #003848;
+  font-size: 17px;
   margin: 0px;
 }
 
 img {
   display: inline-block;
   max-width: 100%;
+}
+
+h1 {
+  font-weight: 700;
+}
+
+h2 {
+  font-weight: 700;
+}
+
+h3 {
+  font-weight: 700;
+}
+
+h4 {
+  font-weight: 700;
+}
+
+p {
+  line-height: 1.4em;
 }
 
 /* --------------------------------------------------------------------------------

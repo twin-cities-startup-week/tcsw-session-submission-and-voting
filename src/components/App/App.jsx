@@ -35,14 +35,35 @@ import './App.css';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 
 const theme = createTheme({
-    palette: {
-      primary: {
-        main: '#0C495A',
+  components: {
+    MuiButton: { // Name of the component / style sheet
+      styleOverrides: {
+        root: { // All variants will get these styles
+          textTransform: 'none',
+          fontWeight: 700,
+          borderRadius: 0, // square corners
+          fontSize: '13px',
+          lineHeight: '1.6em',
+          textTransform: 'uppercase',
+          letterSpacing: '.5px',
+        },
+        contained: {
+          padding: '15px 19px 12px 19px',
+          backgroundColor: '#0C495A',
+          color: '#FBBD19',
+
+        }
       },
     },
-    typography: {
-      fontFamily: 'Proxima Nova'
+  },
+  palette: {
+    primary: {
+      main: '#0C495A',
     },
+  },
+  typography: {
+    fontFamily: 'Poppins'
+  },
 })
 
 function App() {
