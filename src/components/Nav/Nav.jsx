@@ -28,6 +28,10 @@ function Nav() {
     setOpen(!open);
     history.push('/admin');
   }
+  const pushToAdminContent = () => {
+    setOpen(!open);
+    history.push('/admin/content');
+  }
   const pushToLogout = () => {
     setOpen(!open);
     dispatch({ type: 'LOGOUT' });
@@ -125,6 +129,19 @@ function Nav() {
 
               </ListItemButton>
               }
+                {user.admin &&
+                  <ListItemButton
+                    sx={{
+                      textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
+                      '&:hover': { background: "#0c495a" }, borderBottomLeftRadius: '5%',
+                      borderBottomRightRadius: '5%'
+                    }}
+                    onClick={pushToAdminContent}>
+
+                    <ListItemText primary="Edit Content" />
+
+                  </ListItemButton>
+                }
 
                 {/* On click of logout button, the user will be moved to the Landing Page
                   and logged out of their account. */}
