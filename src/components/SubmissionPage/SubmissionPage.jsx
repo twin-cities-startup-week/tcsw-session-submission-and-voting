@@ -29,8 +29,8 @@ function SubmissionPage() {
 
     const useStyles = makeStyles({
         title: {
-            fontFamily: 'Gotham Black',
-            color: '#0C495A'
+            color: '#0C495A',
+            fontWeight: 700,
         },
         paper: {
             backgroundColor: '#A7A9AC'
@@ -39,7 +39,7 @@ function SubmissionPage() {
             color: '#FBBD19'
         },
         boldText: {
-            fontWeight: 'bold',
+            fontWeight: 500,
         }
     })
 
@@ -264,7 +264,7 @@ function SubmissionPage() {
         <>
                 {/* {JSON.stringify({userId})} */}
             <Box p={2}>
-                <Typography variant="h5" align="center" className={classes.title}>
+                <Typography variant="h2" align="center" className={classes.title}>
                     TCSW Session Selector Form
                 </Typography>
             </Box>

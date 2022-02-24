@@ -81,7 +81,7 @@ function LandingPage() {
           <Paper className="submitASessionBox" component={Paper} elevation={8}>
 
             <div className="submitSessionDiv">
-              <h2 className="submitSessionHeader">Submit A Session</h2>
+              <h2 className="submitSessionHeader">Submit a Session</h2>
             </div>
 
           {/* If the user is NOT logged in, show submission deadlines
