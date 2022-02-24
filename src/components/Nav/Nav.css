@@ -14,12 +14,12 @@
 
 .nav-title {
   display: flex;
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 700;
   font-family: 'Poppins', sans-serif;
   color: #0C495A;
   padding-left: 20px;
-  padding-right: 10px;
+  padding-right: 20px;
   margin: 0;
 }
 
@@ -31,8 +31,9 @@
   padding: 24px 10px;
   text-decoration: none;
   font-size: 17px;
+  font-weight: 700;
   font-family: 'Poppins', sans-serif;
-
+  text-transform: uppercase;
   /* these last two make the logout button in
   the nav bar look like another link */
   border: none;
@@ -52,4 +53,5 @@
 
 img {
   padding: 1px 1px 1px 10px;
+  height: auto;
 }

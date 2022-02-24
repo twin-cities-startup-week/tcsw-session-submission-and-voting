@@ -3,21 +3,22 @@ import FaqItemPage from '../FaqItemPage/FaqItemPage';
 import './Faq.css';
 
 //Material-ui
-import { Paper, makeStyles } from "@material-ui/core";
-  
+import { Paper, makeStyles } from "@material-ui/core";  
     //Styling
   const useStyles = makeStyles({
     root: {
         width: '100%',
-        maxWidth: '768px',
+        maxWidth: '920px',
         margin: '0 auto',
-        padding: '15px',
-        margin: '15px', 
         padding: '15px', 
-        backgroundColor: '#fff', 
+
+    },
+    shadow: {
+        backgroundColor: '#fff',
         borderRadius: '8px',
         boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
-
+        padding: '15px',
+        width: '100%',
     }
   });
 
@@ -104,17 +105,21 @@ function FaqPage (){
     ])
   
     return (
-        <div>
-       <h2>TCSW Session Submission & Voting</h2>
-          <h4> 2022 Session Submission Dates</h4>
-              <p> Session Submission Deadline: April 4, 2022 to May 15, 2022</p>
-              <p> Session Voting Deadline: May 23, 2021 to June 5, 2022</p>
-
         <div className={classes.root}> 
-        {faqs.map((faq, i) => 
-            <FaqItemPage faq={faq} index={i}/>
-        )}
-        </div>
+            <div>
+                <h2>TCSW Session Submission & Voting</h2>
+                <h4> 2022 Session Submission Dates</h4>
+                <p> Session Submission Deadline: April 4, 2022 to May 15, 2022</p>
+                <p> Session Voting Deadline: May 23, 2021 to June 5, 2022</p>
+                <br />
+            </div>  
+            <div className={classes.shadow}>
+                {faqs.map((faq, i) =>
+                    <FaqItemPage faq={faq} index={i} />
+                )}
+            </div>      
+
+        
         </div>
     )}
 
