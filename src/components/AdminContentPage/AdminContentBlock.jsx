@@ -3,16 +3,20 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import ReactMde from 'react-mde';
-import ReactMarkdown from 'react-markdown';
+import MarkdownView from 'react-showdown';
 import * as Showdown from "showdown";
 import 'react-mde/lib/styles/css/react-mde-all.css';
 
 //Material-ui
 import {
     Card,
-    makeStyles,
     Button,
-} from "@material-ui/core";
+    Grid,
+} from "@mui/material";
+
+import {
+    makeStyles,
+} from "@mui/styles";
 
 const converter = new Showdown.Converter({
     tables: true,
@@ -25,7 +29,7 @@ const converter = new Showdown.Converter({
 const useStylish = makeStyles({
     rooty: {
         margin: "0px 10px",
-        fontSize: "20px",
+        fontSize: 20,
 
         // marginLeft: "400px",
         // marginRight: "600px",
@@ -38,6 +42,10 @@ const useStylish = makeStyles({
     feedback: {
         backgroundColor: '#fff',
     },
+    preview: {
+        maxHeight: 570,
+        overflow: 'scroll',
+    }
 });
 
 function AdminContentBlock({ content }) {
@@ -77,25 +85,35 @@ function AdminContentBlock({ content }) {
                 //card 2
                 variant="outlined"
             >
-                {/* {JSON.stringify(block[content])} */}
-                <ReactMde
-                    className={classic.feedback}
-                    value={block[content]}
-                    onChange={handleMdeChange}
-                    selectedTab={selectedTab}
-                    onTabChange={setSelectedTab}
-                    generateMarkdownPreview={markdown =>
-                        Promise.resolve(converter.makeHtml(markdown))
-                    }
-                />
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                        <ReactMde
+                            className={classic.feedback}
+                            value={block[content]}
+                            onChange={handleMdeChange}
+                            selectedTab={selectedTab}
+                            onTabChange={setSelectedTab}
+                            minEditorHeight={800}
+                            generateMarkdownPreview={markdown =>
+                                Promise.resolve(converter.makeHtml(markdown))
+                            }
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6} className={classic.preview}>
+                        <MarkdownView
+                            markdown={block[content]}
+                            
+                        />
+                    </Grid>
+                </Grid>
+                <br />
                 <Button
-                    variant="contained" type="submit" name="submit" value="save"
-                    sx={{
-                        mt: 1, p: 2, width: 200, height: 40, bgcolor: '#0C495A',
-                        color: '#FBBD19', m: 1, float: 'right'
-                    }}
+                    variant="contained"
+                    sx={{ mt: 2, mb: 2 }}
                     onClick={handleSave}
                 >Update</Button>
+                <br />
+                <br />
             </Card>
         </>
     );

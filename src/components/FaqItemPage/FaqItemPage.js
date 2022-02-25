@@ -13,23 +13,10 @@ const useStyles = makeStyles({
     backgroundColor: "#fff",
     borderRadius: "8px",
     boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
-
     position: "relative",
-
-
-
-
-
-    // // content: '',
-    // // position: 'absolute',
-    // // top: '50%',
-    // right: '0px',
-    // // transform: 'translateY(-50%)',
-    // width: '30px',
-    // height: '30px'
   },
   header: {
-    fontSize: "20px",
+    fontSize: 20,
     fontWeight: 500,
   },
   arrow: {

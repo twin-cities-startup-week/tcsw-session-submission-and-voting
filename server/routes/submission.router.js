@@ -5,6 +5,8 @@ const Session = require('../models/session.model.js');
 const {
     rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
+const S3Service = require('../services/S3Service');
+
 
 // GET route for all APPROVED submissions
 router.get('/approved', (req, res) => {
@@ -35,6 +37,30 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
         res.status(201).send(result);
     } catch (e) {
         console.log('error with post to db', e);
+        res.sendStatus(500);
+    }
+});
+
+//POST route for session submission form 
+router.post('/image', rejectUnauthenticated, async (req, res) => {
+    try {
+        const uploadProps = req.query;
+
+        // Upload resume to S3
+        const s3 = S3Service.instance();
+        await s3.upload({
+            resourceId: req.user.id,
+            fileName: uploadProps.name,
+            fileCategory: S3Service.FileCategories.Submissions,
+            data: req.files.courseWork.data,
+        });
+
+        // Send back s3 response
+        // { Location, ETag, Bucket, Key }
+        // res.send(uploadCW);
+        res.send('done');
+    } catch (error) {
+        logError(error);
         res.sendStatus(500);
     }
 });

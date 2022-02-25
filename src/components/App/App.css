@@ -7,7 +7,7 @@ body,
 body {
   font-family: 'Poppins', sans-serif;
   color: #003848;
-  font-size: 17px;
+  font-size: 18px;
   margin: 0px;
 }
 
@@ -17,19 +17,23 @@ img {
 }
 
 h1 {
-  font-weight: 700;
+  font-weight: 400;
+  font-size: 42px;
 }
 
 h2 {
-  font-weight: 700;
+  font-weight: 400;
+  font-size: 34px;
 }
 
 h3 {
   font-weight: 700;
+  font-size: 28px;
 }
 
 h4 {
   font-weight: 700;
+  font-size: 22px;
 }
 
 p {

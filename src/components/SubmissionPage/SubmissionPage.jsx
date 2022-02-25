@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import Radio from '@mui/material/Radio';
+import { Dialog, DialogTitle, DialogContent } from '@mui/material';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
@@ -13,13 +14,11 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import Input from '@mui/material/Input';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@mui/styles';
 import {useHistory} from 'react-router-dom';
-
-
-
 
 function SubmissionPage() {
 
@@ -27,10 +26,39 @@ function SubmissionPage() {
     const history = useHistory();
     const userId = useSelector(store => store.user.id);
 
+    //variables for individual form questions (multiselects are above)
+    const [open, setOpen] = useState(false);
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [host, setHost] = useState('');
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [attendees, setAttendees] = useState('');
+    const [location, setLocation] = useState('Online via the TCSW virtual venue');
+    const [locationDetails, setLocationDetails] = useState('');
+    const [length, setLength] = useState('');
+    const [format, setFormat] = useState('Presentation');
+    const [track, setTrack] = useState('Growth');
+    const [purpose, setPurpose] = useState('To enable: Help teach a skill or set of skills')
+    const [areaOfInterest, setAreaOfInterest] = useState('Celebrating and empowering female leaders');
+    const [diversity, setDiversity] = useState(true);
+    const [speakers, setSpeakers] = useState('');
+    const [covid, setCovid] = useState(true);
+    const [media, setMedia] = useState('');
+    const [image, setImage] = useState(null);
+    const [fileToUpload, setFileToUpload] = useState(null);
+    const [success, setSuccess] = useState('');
+    const [excited, setExcited] = useState('');
+    const [otherHosts, setOtherHosts] = useState('');
+    const [otherInfo, setOtherInfo] = useState('');
+
     const useStyles = makeStyles({
-        title: {
-            color: '#0C495A',
-            fontWeight: 700,
+        root: {
+            width: '100%',
+            maxWidth: '920px',
+            margin: '0 auto',
+            padding: '15px', 
+
         },
         paper: {
             backgroundColor: '#A7A9AC'
@@ -167,10 +195,54 @@ function SubmissionPage() {
 
     const dispatch = useDispatch();
 
+    const onFileChange = async (event) => {
+        const selectedFile = event.target.files[0];
+        const acceptedFileTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+        if (selectedFile && selectedFile.size > 1048576 * 5) {
+            alert('File is too big. File size limit is 5MB.');
+        } else if (selectedFile && acceptedFileTypes.includes(selectedFile.type)) {
+            setFileToUpload(selectedFile);
+        }
+    };
+
+    const onSubmissionComplete = () => {
+        setOpen(false);
+        setEmail('');
+        setPhone('');
+        setHost('');
+        setTitle('');
+        setDescription('');
+        setAttendees('');
+        setLocation('Online via the TCSW virtual venue');
+        setLocationDetails('');
+        setIndividualDate('');
+        setLength('');
+        setIndividualTime('');
+        setFormat('Presentation');
+        setIndividualIndustry('');
+        setTrack('Growth');
+        setPurpose('To Enable: Help teach a skill or set of skills');
+        setAreaOfInterest('Celebrating and empowering female leaders');
+        setDiversity('Yes');
+        setCovid('Yes');
+        setMedia('');
+        setSuccess('');
+        setExcited('');
+        setOtherHosts('');
+        setOtherInfo('');
+        history.push('/panelistView');
+    }
+
+    const onSubmissionFailure = () => {
+        setOpen(false);
+        alert('There was a problem with your submission. Please reach out to hello@beta.mn so that we can help.')
+    }
+
     //posting new submission to db as an object
     const addSubmission = (event) => {
         console.log('adding a new submission');
         event.preventDefault();
+        setOpen(true);
         const newSubmission = {
             user_id: userId,
             email: email,
@@ -181,7 +253,7 @@ function SubmissionPage() {
             attendees: attendees,
             location: location,
             location_details: locationDetails,
-            date: individualDate, 
+            date: individualDate,
             votes: 0,
             length: length,
             time: individualTime, 
@@ -194,81 +266,43 @@ function SubmissionPage() {
             covid: covid,
             media: media,
             purpose: purpose,
-            // image: image, stretch goal: AWS 
+            image: image,
             success: success,
             excited: excited,
             other_hosts: otherHosts,
             other_info: otherInfo,
         }
         console.log('The new submission is', newSubmission);
-        // if( email === '' || phone === '' || host === '' || title === '' || description === '' || attendees === '' || location === '' || locationDetails === '' || length === '' || format === '' || track === '' || areaOfInterest === ''
-        // || diversity === '' || speakers === '' || covid === '' || media === '' || success === '' || excited === '' || otherHosts === '' || otherInfo === '' || individualIndustry === '' || individualTime === '' || indvidualDate === '' ){
-        //     alert('All fields must be completed in order to submit the form!');
-        //     return;
-        // }
-        dispatch({ type: 'POST_SUBMISSION_TO_SERVER', payload: newSubmission });
-        // setEmail('');
-        // setPhone('');
-        // setHost('');
-        // setTitle('');
-        // setDescription('');
-        // setAttendees('');
-        // setLocation('Online via the TCSW virtual venue');
-        // setLocationDetails('');
-        // setIndividualDate('');
-        // setLength('');
-        // setIndividualTime('');
-        // setFormat('Presentation');
-        // setIndividualIndustry('');
-        // setTrack('Growth');
-        // setPurpose('To Enable: Help teach a skill or set of skills');
-        // setAreaOfInterest('Celebrating and empowering female leaders');
-        // setDiversity('Yes');
-        // setCovid('Yes');
-        // setMedia('');
-        // setSuccess('');
-        // setExcited('');
-        // setOtherHosts('');
-        // setOtherInfo('');
-        // history.push('/panelistView');
-    }//end addSubmission
+        if( email === '' || phone === '' || host === '' || title === '' || description === '' || attendees === '' || location === '' || locationDetails === '' || length === '' || format === '' || track === '' || areaOfInterest === ''
+        || diversity === '' || speakers === '' || covid === '' || media === '' || success === '' || excited === '' || otherHosts === '' || otherInfo === '' || individualIndustry === '' || individualTime === '' || indvidualDate === '' ){
+            alert('All fields must be completed in order to submit the form!');
+            return;
+        }
+        dispatch({ type: 'POST_SUBMISSION_TO_SERVER', payload: newSubmission, fileToUpload, onComplete: onSubmissionComplete });
 
-    //variables for individual form questions (multiselects are above)
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [host, setHost] = useState('');
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [attendees, setAttendees] = useState('');
-    const [location, setLocation] = useState('Online via the TCSW virtual venue');
-    const [locationDetails, setLocationDetails] = useState('');
-    const [length, setLength] = useState('');
-    const [format, setFormat] = useState('Presentation');
-    const [track, setTrack] = useState('Growth');
-    const [purpose, setPurpose] = useState('To enable: Help teach a skill or set of skills')
-    const [areaOfInterest, setAreaOfInterest] = useState('Celebrating and empowering female leaders');
-    const [diversity, setDiversity] = useState(true);
-    const [speakers, setSpeakers] = useState('');
-    const [covid, setCovid] = useState(true);
-    const [media, setMedia] = useState('');
-    // const [image, setImage] = useState(''); stretch goal for uploading with AWS S3 bucket
-    const [success, setSuccess] = useState('');
-    const [excited, setExcited] = useState('');
-    const [otherHosts, setOtherHosts] = useState('');
-    const [otherInfo, setOtherInfo] = useState('');
-
-    
+    } //end addSubmission
 
 
     return (
-        <>
-                {/* {JSON.stringify({userId})} */}
-            <Box p={2}>
-                <Typography variant="h2" align="center" className={classes.title}>
+        <div className={classes.root}>
+            <Dialog open={open}>
+                <DialogTitle id="responsive-dialog-title">
+                    Please wait...
+                </DialogTitle>
+                <DialogContent align="center" className={classes.feedbackContainer}>
+                    <span role="img" aria-label="loading">⌛</span>
+                    {/* TODO: Add animation */}
+                </DialogContent>
+                {/* This modal can't be closed. */}
+            </Dialog> 
+            <Box>
+                <Typography variant="h2">
                     TCSW Session Selector Form
                 </Typography>
             </Box>
-            <Box p={3}>
+            <br />
+            <br />
+            <Box>
                 <Container component={Paper} elevation={6}>
                     <form onSubmit={addSubmission}>
                         <FormControl>
@@ -289,6 +323,16 @@ function SubmissionPage() {
                             <Box p={1}>
                                 <Typography variant="body2" className={classes.boldText} gutterBottom>Title of your event: </Typography>
                                 <TextField fullWidth id="outlined-basic" label="Title" variant="outlined" required value={title} onChange={(event) => setTitle(event.target.value)} />
+                            </Box>
+                            <Box p={1}>
+                                <Typography variant="body2" className={classes.boldText} gutterBottom>Image for your event:</Typography>
+                                <Input
+                                    id="courseWorkUpload"
+                                    type="file"
+                                    inputProps={{ accept: 'image/jpg,image/png,image/jpeg' }}
+                                    disableUnderline
+                                    onChange={onFileChange}
+                                />
                             </Box>
                             <Box p={1}>
                                 <Typography variant="body2" className={classes.boldText} gutterBottom>Describe your event in 150 words or less: </Typography>
@@ -524,7 +568,7 @@ function SubmissionPage() {
                     </form>
                 </Container>
             </Box>
-        </>
+        </div>
     )
 }
 

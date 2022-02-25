@@ -42,7 +42,7 @@ const theme = createTheme({
           textTransform: 'none',
           fontWeight: 700,
           borderRadius: 0, // square corners
-          fontSize: '13px',
+          fontSize: 16,
           lineHeight: '1.6em',
           textTransform: 'uppercase',
           letterSpacing: '.5px',
@@ -62,8 +62,38 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: 'Poppins',
-    fontSize: '13px',
+    root: {
+      fontFamily: 'Poppins',
+      color: '#676a6c',
+      fontSize: 18,
+    },
+    h1: {
+      fontSize: 42,
+      fontWeight: 400,
+    },
+    h2: {
+      fontSize: 34,
+      fontWeight: 400,
+    },
+    h3: {
+      fontSize: 28,
+      fontWeight: 700,
+    },
+    h4: {
+      fontSize: 22,
+      fontWeight: 700,
+    },
+    body1: {
+      fontSize: 18,
+      fontWeight: 400,
+    },
+    body2: {
+      fontSize: 18,
+      fontWeight: 700,
+    },
+    caption: {
+      fontSize: 16,
+    }
   },
 })
 

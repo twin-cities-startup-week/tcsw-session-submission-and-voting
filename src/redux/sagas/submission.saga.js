@@ -11,7 +11,18 @@ function* submissionSaga(){
 function* sendSubmissionToServer(action){
     try{
         console.log('sendSubmission to server saga firing', action );
-        const response = yield axios.post('/api/submission', action.payload );
+        const submissionData = Object.assign({}, action.payload);
+        if (action.fileToUpload) {
+            const selectedFile = action.fileToUpload;
+            const fileName = encodeURIComponent(selectedFile.fileName);
+            const fileType = encodeURIComponent(selectedFile.type);
+            const fileSize = encodeURIComponent(selectedFile.size);
+            const formData = new FormData();
+            formData.append('courseWork', selectedFile);
+            const imageResponse = yield axios.post(`/api/submission/image?name=${fileName}&type=${fileType}&size=${fileSize}`, formData);
+            submissionData.image = imageResponse.data.imagePath;
+        }
+        const response = yield axios.post('/api/submission', submissionData );
         console.log('response from db is', response.data );
         yield put({type: 'ADD_SUBMISSION', payload: action.payload });
     } catch (error){

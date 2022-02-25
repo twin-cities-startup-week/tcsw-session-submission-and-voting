@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import FaqItemPage from '../FaqItemPage/FaqItemPage';
+import Typography from '@mui/material/Typography';
 import './Faq.css';
 
 //Material-ui
@@ -107,7 +108,9 @@ function FaqPage (){
     return (
         <div className={classes.root}> 
             <div>
-                <h2>TCSW Session Submission & Voting</h2>
+                <Typography variant="h2">
+                    TCSW Session Submission & Voting
+                </Typography>
                 <h4> 2022 Session Submission Dates</h4>
                 <p> Session Submission Deadline: April 4, 2022 to May 15, 2022</p>
                 <p> Session Voting Deadline: May 23, 2021 to June 5, 2022</p>
