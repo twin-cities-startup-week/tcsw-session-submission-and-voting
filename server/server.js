@@ -7,6 +7,7 @@ const { pool } = require('./modules/pool');
 const sessionMiddleware = require('./modules/session-middleware');
 const passport = require('./strategies/user.strategy');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const fileUpload = require('express-fileupload');
 
 let callbackURL = `https://session-selector.herokuapp.com/auth/google/callback`;
 if (process.env.NODE_ENV !== 'production') {
@@ -84,6 +85,13 @@ const panelistRouter = require('./routes/panelist.router');
 const submissionRouter = require('./routes/submission.router');
 const adminRouter = require('./routes/admin.router');
 const contentRouter = require('./routes/content.router');
+
+const requireHTTPS = require('./modules/require.https.js');
+// Redirect HTTP to HTTPS in production
+app.use(requireHTTPS);
+
+// Accept photo uploads
+app.use(fileUpload());
 
 // Body parser middleware
 app.use(bodyParser.json());

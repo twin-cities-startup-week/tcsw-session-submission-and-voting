@@ -28,6 +28,7 @@ function LandingPage() {
 
   return (
     <div className="container">
+      <br />
       <h2 id="landing-welcome">{heading}</h2>
       
       {/* Landing Page description, static */}

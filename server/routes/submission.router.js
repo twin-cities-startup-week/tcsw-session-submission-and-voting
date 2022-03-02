@@ -23,11 +23,24 @@ router.get('/approved', (req, res) => {
     })
 })
 
+const getIpAddress = (req) => {
+    let result;
+    if (process.env.NODE_ENV === 'development') {
+        result = '127.0.0.1';
+    } else if (req.connection && req.connection.remoteAddress) {
+        result = req.connection.remoteAddress;
+    } else if (req.headers) {
+        result = req.headers['x-forwarded-for'];
+    }
+    return result;
+};
+
 //POST route for session submission form 
 router.post('/', rejectUnauthenticated, async (req, res) => {
     try {
         const newSubmission = req.body;
         newSubmission.user_id = req.user.id;
+        newSubmission.ip_address = getIpAddress(req);
         // TODO: These should be junction tables
         newSubmission.industry = JSON.stringify(newSubmission.industry);
         newSubmission.time = JSON.stringify(newSubmission.time);
@@ -45,22 +58,24 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
 router.post('/image', rejectUnauthenticated, async (req, res) => {
     try {
         const uploadProps = req.query;
+        // Create the parameters for calling listObjects
 
         // Upload resume to S3
         const s3 = S3Service.instance();
         await s3.upload({
-            resourceId: req.user.id,
+            resourceId: Number(req.user.id),
             fileName: uploadProps.name,
             fileCategory: S3Service.FileCategories.Submissions,
-            data: req.files.courseWork.data,
+            data: req.files.fileToUpload.data,
         });
-
-        // Send back s3 response
-        // { Location, ETag, Bucket, Key }
-        // res.send(uploadCW);
-        res.send('done');
+        const url = s3.toUrl({
+            resourceId: Number(req.user.id),
+            fileName: uploadProps.name,
+            fileCategory: S3Service.FileCategories.Submissions,
+        });
+        res.send({ message: 'success', imagePath: url });
     } catch (error) {
-        logError(error);
+        console.log(error);
         res.sendStatus(500);
     }
 });

@@ -20,6 +20,9 @@ import { Paper, makeStyles } from "@material-ui/core";
         boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
         padding: '15px',
         width: '100%',
+    },
+    content: {
+        paddingTop: '33px',
     }
   });
 
@@ -34,16 +37,16 @@ function FaqPage (){
         },
         {
             question: `What is the timeline?`,
-            answer:` April 4th - Session Submissions Open 
-            May 15th - Session Submissions Close 
-            May 16th-20th - TCSW Team finalizes approved sessions 
-            May 23rd - Session Voting Opens 
-            June 5th - Session Voting Closes 
-            June 6th-24th - TCSW Team creates TCSW Schedule 
-            June 27th - TCSW Team notifies approved sessions and requests more event details 
-            July 22nd - TCSW session details due 
-            August 1st - Launch TCSW Schedule & Public Registration 
-            August 1st-September 15th - TCSW Promotion`
+            answer:`- April 4th - Session Submissions Open 
+- May 15th - Session Submissions Close 
+- May 16th-20th - TCSW Team finalizes approved sessions 
+- May 23rd - Session Voting Opens 
+- June 5th - Session Voting Closes 
+- June 6th-24th - TCSW Team creates TCSW Schedule 
+- June 27th - TCSW Team notifies approved sessions and requests more event details 
+- July 22nd - TCSW session details due 
+- August 1st - Launch TCSW Schedule & Public Registration 
+- August 1st-September 15th - TCSW Promotion`
         },
             
         {
@@ -53,7 +56,7 @@ function FaqPage (){
 
         {
             question: 'Can I enter an application after the deadline?',
-            answer: 'Please make all submissions before May 15, 2022. If you think this is an extenuating circumstance, you can email hello@beta.mn with any questions or concerns.'
+            answer: 'Please make all submissions before May 15, 2022. If you think this is an extenuating circumstance, you can email [hello@beta.mn](mailto:hello@beta.mn?subject=TCSW%20Session%20Selector) with any questions or concerns.'
         },
 
         {
@@ -107,7 +110,7 @@ function FaqPage (){
   
     return (
         <div className={classes.root}> 
-            <div>
+            <div className={classes.content}>
                 <Typography variant="h2">
                     TCSW Session Submission & Voting
                 </Typography>

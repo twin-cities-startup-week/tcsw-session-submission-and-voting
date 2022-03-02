@@ -73,7 +73,7 @@ Session.init({
     other_info: STRING,
     awaiting_approval: {
         type: BOOLEAN,
-        defaultValue: false,
+        defaultValue: true,
     },
     approved: {
         type: BOOLEAN,

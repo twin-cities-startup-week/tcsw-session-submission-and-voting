@@ -32,8 +32,12 @@ function Nav() {
     setOpen(!open);
     history.push('/admin/content');
   }
-  const pushToLogout = () => {
+  const pushToMySubmissions = () => {
     setOpen(!open);
+    history.push('/mysubmissions');
+  }
+  const pushToLogout = () => {
+    setOpen(!open);543547
     dispatch({ type: 'LOGOUT' });
     history.push('/login');
   }
@@ -76,13 +80,13 @@ function Nav() {
               Submission Form
             </Link>
 
-            <Link className="navLink" to="/panelistView">
+            {/* <Link className="navLink" to="/panelistView">
               Search
             </Link>
 
             <Link className="navLink" to="/leaderboard">
               Leaderboard
-            </Link>
+            </Link> */}
           </>
         )}
 
@@ -103,8 +107,7 @@ function Nav() {
             {/* This is the button in the upper right hand corner
             that displays the user's first name */}
             <ListItemButton sx={{ textAlign: 'right', bgcolor: "#0c495a",
-                color: "#FBBD19", '&:hover': { background: "#0c495a"}, p: 2, mb: -1,
-                borderRadius: '5%' }} onClick={handleClick}>
+                color: "#FBBD19", '&:hover': { background: "#0c495a"}, p: 2 }} onClick={handleClick}>
 
               <div className="navSignin">
                 Welcome, {user.first_name}!
@@ -121,8 +124,7 @@ function Nav() {
               {user.admin && 
               <ListItemButton 
                 sx={{ textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a", 
-                    '&:hover': { background: "#0c495a"}, borderBottomLeftRadius: '5%', 
-                    borderBottomRightRadius: '5%' }} 
+                    '&:hover': { background: "#0c495a"} }} 
                 onClick={pushToAdmin}>
 
                   <ListItemText primary="Admin" />
@@ -133,8 +135,7 @@ function Nav() {
                   <ListItemButton
                     sx={{
                       textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
-                      '&:hover': { background: "#0c495a" }, borderBottomLeftRadius: '5%',
-                      borderBottomRightRadius: '5%'
+                      '&:hover': { background: "#0c495a" }
                     }}
                     onClick={pushToAdminContent}>
 
@@ -142,6 +143,17 @@ function Nav() {
 
                   </ListItemButton>
                 }
+
+                <ListItemButton
+                  sx={{
+                    textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
+                    '&:hover': { background: "#0c495a" }
+                  }}
+                  onClick={pushToMySubmissions}>
+
+                  <ListItemText primary="My Submissions" />
+
+                </ListItemButton>
 
                 {/* On click of logout button, the user will be moved to the Landing Page
                   and logged out of their account. */}

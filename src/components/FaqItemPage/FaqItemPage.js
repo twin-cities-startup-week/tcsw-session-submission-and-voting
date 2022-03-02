@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import MarkdownView from 'react-showdown';
 
 //Material-ui
 import { Paper, makeStyles } from "@material-ui/core";
@@ -18,6 +19,7 @@ const useStyles = makeStyles({
   header: {
     fontSize: 20,
     fontWeight: 500,
+    cursor: 'pointer',
   },
   arrow: {
     float: 'right',
@@ -30,9 +32,9 @@ function FaqItemPage({ faq, index }) {
   const [openAnswers, setOpenAnswers] = useState(false);
 
   return (
-    <div onClick={() => setOpenAnswers(!openAnswers)} key={index}>
+    <div>
       <div className={classes.questions}>
-        <div className={classes.header}>
+        <div className={classes.header} onClick={() => setOpenAnswers(!openAnswers)} key={index}>
           {faq.question}
           {
             openAnswers ? (
@@ -42,8 +44,16 @@ function FaqItemPage({ faq, index }) {
             )
           }
         </div>
-        
-        {openAnswers && <div >{faq.answer}</div>}
+        {
+          openAnswers
+          && (
+            // https://github.com/showdownjs/showdown#valid-options
+            <MarkdownView
+              markdown={faq.answer}
+              options={{ tables: true, emoji: true, openLinksInNewWindow: true }}
+            />
+          )
+        }
       </div>
 
       

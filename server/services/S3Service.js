@@ -60,7 +60,7 @@ class S3Service {
         fileCategory,
         fileSize = S3Service.FileSize.Original,
         data,
-        acl = 'public-read',
+        acl = 'bucket-owner-full-control',
     }) {
         const s3Key = this._resourceToKey({
             resourceId, fileName, fileCategory, fileSize,
@@ -149,7 +149,10 @@ S3Service.instance = () => {
         secretAccessKey: AWS_SECRET_ACCESS_KEY,
         region: AWS_REGION,
     });
-
+    s3Client.listBuckets(function (err, data) {
+        if (err) console.log(err, err.stack); // an error occurred
+        else console.log('BUCKETS', data);           // successful response
+    });
     instance = new S3Service({
         s3Client,
         s3Bucket: S3_BUCKET_NAME,

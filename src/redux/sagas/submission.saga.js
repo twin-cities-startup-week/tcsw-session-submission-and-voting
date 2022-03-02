@@ -18,15 +18,19 @@ function* sendSubmissionToServer(action){
             const fileType = encodeURIComponent(selectedFile.type);
             const fileSize = encodeURIComponent(selectedFile.size);
             const formData = new FormData();
-            formData.append('courseWork', selectedFile);
+            formData.append('fileToUpload', selectedFile);
             const imageResponse = yield axios.post(`/api/submission/image?name=${fileName}&type=${fileType}&size=${fileSize}`, formData);
+            console.log('sendSubmissionToServer', imageResponse.data);
             submissionData.image = imageResponse.data.imagePath;
         }
+        
         const response = yield axios.post('/api/submission', submissionData );
         console.log('response from db is', response.data );
         yield put({type: 'ADD_SUBMISSION', payload: action.payload });
+        action.onComplete();
     } catch (error){
         console.error('error posting submission to DB', error );
+        action.onFailure();
     }
 }
 

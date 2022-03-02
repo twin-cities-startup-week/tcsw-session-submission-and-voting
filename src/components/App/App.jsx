@@ -29,6 +29,7 @@ import ForgotPassword from '../ForgotPassword/ForgotPassword';
 import ResetPassword from '../ResetPassword/ResetPassword';
 import Leaderboard from '../Leaderboard/Leaderboard';
 import AdminContentPage from '../AdminContentPage/AdminContentPage';
+import SubmissionListPage from '../SubmissionListPage/SubmissionListPage';
 
 import './App.css';
 
@@ -70,29 +71,37 @@ const theme = createTheme({
     h1: {
       fontSize: 42,
       fontWeight: 400,
+      fontFamily: 'Poppins',
     },
     h2: {
       fontSize: 34,
       fontWeight: 400,
+      fontFamily: 'Poppins',
+      letterSpacing: 0,
     },
     h3: {
       fontSize: 28,
       fontWeight: 700,
+      fontFamily: 'Poppins',
     },
     h4: {
       fontSize: 22,
       fontWeight: 700,
+      fontFamily: 'Poppins',
     },
     body1: {
       fontSize: 18,
       fontWeight: 400,
+      fontFamily: 'Poppins',
     },
     body2: {
       fontSize: 18,
       fontWeight: 700,
+      fontFamily: 'Poppins',
     },
     caption: {
       fontSize: 16,
+      fontFamily: 'Poppins',
     }
   },
 })
@@ -163,6 +172,11 @@ function App() {
           <Route
             exact path='/leaderboard'>
               <Leaderboard/>
+          </Route>  
+
+          <Route
+            exact path='/mysubmissions'>
+              <SubmissionListPage />
           </Route>        
 
           {/* For protected routes, the view could show one of several things on the same route.
