@@ -369,7 +369,7 @@ function SubmissionPage() {
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>Image for your event:</Typography>
-                                    <Typography variant="caption" display="block" gutterBottom>Preferred size 800px wide by 400px tall.</Typography>
+                                    <Typography variant="caption" display="block" gutterBottom>Preferred size 920px wide by 400px tall.</Typography>
                                     {
                                         imagePreview
                                         && imagePreview !== ''
@@ -378,6 +378,7 @@ function SubmissionPage() {
                                                 <img
                                                     src={imagePreview}
                                                     alt="Preview image"
+                                                    style={{ width: '552px', height: '240px', objectFit: 'cover' }}
                                                 />
                                             </div>
                                         )
@@ -404,7 +405,7 @@ function SubmissionPage() {
                                         <RadioGroup name="radio-buttons-group">
                                             <FormControlLabel value={'Online via the TCSW virtual venue'} control={<Radio />} label="Online via the TCSW virtual venue" />
                                             <FormControlLabel value={'In-person'} control={<Radio />} label="In-person" />
-                                            <FormControlLabel value={'Other'} control={<Radio />} label="Other" />
+                                            <FormControlLabel value={'To be determined'} control={<Radio />} label="To be determined" />
                                         </RadioGroup>
                                     </FormControl>
                                 </Box>
@@ -533,6 +534,8 @@ function SubmissionPage() {
                                             <FormControlLabel value={'Developer'} control={<Radio />} label="Developer" />
                                             <FormControlLabel value={'People'} control={<Radio />} label="People" />
                                             <FormControlLabel value={'Spotlight'} control={<Radio />} label="Spotlight" />
+                                            <FormControlLabel value={'Investor'} control={<Radio />} label="Investor" />
+                                            <FormControlLabel value={'Corporate'} control={<Radio />} label="Corporate" />
                                             <FormControlLabel value={'Other'} control={<Radio />} label="Other" />
                                         </RadioGroup>
                                     </FormControl>

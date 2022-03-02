@@ -34,7 +34,7 @@ function Nav() {
   }
   const pushToMySubmissions = () => {
     setOpen(!open);
-    history.push('/mysubmissions');
+    history.push('/user/submission');
   }
   const pushToLogout = () => {
     setOpen(!open);543547

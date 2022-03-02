@@ -18,8 +18,17 @@ const approvedSubmissions = ( state = [], action ) => {
     }
 }
 
+const userSubmissions = (state = [], action) => {
+    switch (action.type) {
+        case 'SET_USER_SUBMISSIONS':
+            return action.payload;
+        default:
+            return state;
+    }
+}
 
 export default combineReducers({
     submission,
     approvedSubmissions,
+    userSubmissions,
 });

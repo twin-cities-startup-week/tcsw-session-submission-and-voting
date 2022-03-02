@@ -175,7 +175,7 @@ function App() {
           </Route>  
 
           <Route
-            exact path='/mysubmissions'>
+            exact path='/user/submission'>
               <SubmissionListPage />
           </Route>        
 

@@ -3,9 +3,9 @@ import axios from 'axios';
 
 //root saga for submissions
 function* submissionSaga(){
-    console.log('submission saga is firing');
-    yield takeEvery('POST_SUBMISSION_TO_SERVER', sendSubmissionToServer );
+    yield takeEvery('POST_SUBMISSION_TO_SERVER', sendSubmissionToServer);
     yield takeEvery('GET_APPROVED_SUBMISSIONS', getApprovedSubmissions);
+    yield takeEvery('GET_USER_SUBMISSIONS', getUserSubmissions);
 }
 
 function* sendSubmissionToServer(action){
@@ -36,13 +36,21 @@ function* sendSubmissionToServer(action){
 
 function* getApprovedSubmissions(){
     try {
-        const approvedSubmissions = yield axios.get('/api/submission/approved');
-        yield put({ type: 'SET_APPROVED_SUBMISSIONS', payload: approvedSubmissions.data })
+        const submissions = yield axios.get('/api/submission/approved');
+        yield put({ type: 'SET_APPROVED_SUBMISSIONS', payload: submissions.data })
     } catch (error) {
         console.log('Error posting submission to DB', error );
     }
 }
 
+function* getUserSubmissions() {
+    try {
+        const submissions = yield axios.get('/api/submission/user');
+        yield put({ type: 'SET_USER_SUBMISSIONS', payload: submissions.data })
+    } catch (error) {
+        console.log('Error posting submission to DB', error);
+    }
+}
 
 
 export default submissionSaga;
