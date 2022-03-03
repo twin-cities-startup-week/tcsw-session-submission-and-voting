@@ -15,10 +15,10 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Input from '@mui/material/Input';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@mui/styles';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { readAndCompressImage } from 'browser-image-resizer';
 
 
@@ -43,37 +43,18 @@ const imageConfig = {
 
 
 function SubmissionPage() {
-
-
     const history = useHistory();
-    const userId = useSelector(store => store.user.id);
-
+    const dispatch = useDispatch();
     //variables for individual form questions (multiselects are above)
-    const [open, setOpen] = useState(false);
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [host, setHost] = useState('');
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [attendees, setAttendees] = useState('');
-    const [location, setLocation] = useState('Online via the TCSW virtual venue');
-    const [locationDetails, setLocationDetails] = useState('');
-    const [length, setLength] = useState('');
-    const [format, setFormat] = useState('Presentation');
-    const [track, setTrack] = useState('Growth');
-    const [purpose, setPurpose] = useState('To enable: Help teach a skill or set of skills')
-    const [areaOfInterest, setAreaOfInterest] = useState('Celebrating and empowering female leaders');
-    const [diversity, setDiversity] = useState(true);
-    const [speakers, setSpeakers] = useState('');
-    const [covid, setCovid] = useState(true);
-    const [media, setMedia] = useState('');
-    const [image, setImage] = useState(null);
+    const { editSubmission: submission } = useSelector((store) => store.submission);
     const [fileToUpload, setFileToUpload] = useState(null);
-    const [success, setSuccess] = useState('');
-    const [excited, setExcited] = useState('');
-    const [otherHosts, setOtherHosts] = useState('');
-    const [otherInfo, setOtherInfo] = useState('');
-    const [imagePreview, setImagePreview] = useState('');
+    const [open, setOpen] = useState(false);
+    const { id: submissionId } = useParams();
+    useEffect(() => {
+        if (submissionId && submissionId !== '') {
+            dispatch({ type: "GET_USER_SUBMISSION_DETAIL", payload: submissionId });
+        }
+    }, [submissionId, dispatch]);
 
     const useStyles = makeStyles({
         root: {
@@ -81,7 +62,6 @@ function SubmissionPage() {
             maxWidth: '920px',
             margin: '0 auto',
             padding: '15px', 
-
         },
         paper: {
             backgroundColor: '#A7A9AC'
@@ -95,7 +75,7 @@ function SubmissionPage() {
         content: {
             paddingTop: '33px',
         }
-    })
+    });
 
     const classes = useStyles();
 
@@ -155,19 +135,19 @@ function SubmissionPage() {
     const theme = useTheme();
 
     //DATES MULTISELECT FUNCTIONS
-    function getDateStyles(date, individualDate, theme) {
+    function getDateStyles(date, dates, theme) {
         return {
             fontWeight:
-                individualDate.indexOf(date) === -1
+                getArray(dates).indexOf(date) === -1
                     ? theme.typography.fontWeightRegular
                     : theme.typography.fontWeightMedium,
         };
     }//end getDateStyles
 
-    function getTimeStyles(time, individualTime, theme) {
+    function getTimeStyles(time, times, theme) {
         return {
             fontWeight:
-                individualTime.indexOf(time) === -1
+                getArray(times).indexOf(time) === -1
                     ? theme.typography.fontWeightRegular
                     : theme.typography.fontWeightMedium,
         };
@@ -175,51 +155,14 @@ function SubmissionPage() {
 
 
     //INDUSTRY MULTISELECT FUNCTIONS
-    function getIndustryStyles(industry, individualIndustry, theme) {
+    function getIndustryStyles(industry, industries, theme) {
         return {
             fontWeight:
-                individualIndustry.indexOf(industry) === -1
+                getArray(industries).indexOf(industry) === -1
                     ? theme.typography.fontWeightRegular
                     : theme.typography.fontWeightMedium,
         };
     }//end getIndustryStyles
-
-    const [individualIndustry, setIndividualIndustry] = useState([]);
-    const handleIndustryChange = (event) => {
-        const {
-            target: { value },
-        } = event;
-        setIndividualIndustry(
-            // On autofill we get a the stringified value.
-            typeof value === 'string' ? value.split(',') : value,
-        );
-    };//end handleIndustryChange
-
-    //TIME MULTISELECT FUNCTIONS
-    const [individualTime, setIndividualTime] = useState([]);
-    const handleTimeChange = (event) => {
-        const {
-            target: { value },
-        } = event;
-        setIndividualTime(
-            // On autofill we get a the stringified value.
-            typeof value === 'string' ? value.split(',') : value,
-        );
-    };//end handleTimeChange
-
-
-    const [individualDate, setIndividualDate] = useState([]);
-    const handleDateChange = (event) => {
-        const {
-            target: { value },
-        } = event;
-        setIndividualDate(
-            // On autofill we get a the stringified value.
-            typeof value === 'string' ? value.split(',') : value,
-        );
-    };//end handleDateChange
-
-    const dispatch = useDispatch();
 
     const onFileChange = async (event) => {
         const selectedFile = event.target.files[0];
@@ -230,8 +173,12 @@ function SubmissionPage() {
         } else if (selectedFile && acceptedFileTypes.includes(selectedFile.type)) {
             const copyFile = new Blob([selectedFile], { type: selectedFile.type });
             const resizedFile = await readAndCompressImage(copyFile, imageConfig);
-            setImagePreview(URL.createObjectURL(resizedFile));
-            console.log('resizedFile', resizedFile);
+            dispatch({
+                type: "SET_EDITING_SUBMISSION", payload: {
+                    ...submission,
+                    image: URL.createObjectURL(resizedFile),
+                }
+            });
             setFileToUpload(selectedFile);
         }
     };
@@ -239,31 +186,9 @@ function SubmissionPage() {
     const onSubmissionComplete = () => {
         setOpen(false);
         alert('Thank you for your submission!');
-        setEmail('');
-        setPhone('');
-        setHost('');
-        setTitle('');
-        setDescription('');
-        setAttendees('');
-        setLocation('Online via the TCSW virtual venue');
-        setLocationDetails('');
-        setIndividualDate([]);
-        setLength('');
-        setIndividualTime([]);
-        setFormat('Presentation');
-        setIndividualIndustry([]);
-        setTrack('Growth');
-        setPurpose('To Enable: Help teach a skill or set of skills');
-        setAreaOfInterest('Celebrating and empowering female leaders');
-        setDiversity('Yes');
-        setCovid('Yes');
-        setMedia('');
-        setSuccess('');
-        setExcited('');
-        setOtherHosts('');
-        setOtherInfo('');
+        dispatch({ type: "CLEAR_EDITING_SUBMISSION"});
         setFileToUpload(null);
-        history.push('/mysubmissions');
+        history.push('/user/submission');
     }
 
     const onSubmissionFailure = () => {
@@ -271,43 +196,42 @@ function SubmissionPage() {
         alert('There was a problem with your submission. Please reach out to hello@beta.mn so that we can help.')
     }
 
+    const getArray = (value) => {
+        let result = [];
+        if (typeof value === 'string') {
+            result = JSON.parse(value);
+        } else if (Array.isArray(value)) {
+            result = value;
+        }
+        return result;
+    }
+
     //posting new submission to db as an object
     const addSubmission = (event) => {
-        console.log('adding a new submission');
         event.preventDefault();
         setOpen(true);
-        const newSubmission = {
-            user_id: userId,
-            email: email,
-            phone: phone,
-            host: host,
-            title: title,
-            description: description,
-            attendees: attendees,
-            location: location,
-            location_details: locationDetails,
-            date: individualDate,
-            votes: 0,
-            length: length,
-            time: individualTime, 
-            format: format,
-            industry: individualIndustry, 
-            track: track,
-            area_of_interest: areaOfInterest,
-            diversity: diversity,
-            speakers: speakers,
-            covid: covid,
-            media: media,
-            purpose: purpose,
-            image: image,
-            success: success,
-            excited: excited,
-            other_hosts: otherHosts,
-            other_info: otherInfo,
-        }
+        const newSubmission = Object.assign({}, submission);
         try {
-            if (email === '' || phone === '' || host === '' || title === '' || description === '' || attendees === '' || location === '' || locationDetails === '' || length === '' || format === '' || track === '' || areaOfInterest === ''
-                || diversity === '' || speakers === '' || covid === '' || media === '' || success === '' || excited === '' || otherHosts === '' || otherInfo === '' || individualIndustry === '' || individualTime === '' || individualDate === '') {
+            if (newSubmission.email === ''
+                || newSubmission.phone === ''
+                || newSubmission.host === ''
+                || newSubmission.title === '' 
+                || newSubmission.description === ''
+                || newSubmission.attendees === '' 
+                || newSubmission.location === ''
+                || newSubmission.location_details === ''
+                || newSubmission.length === ''
+                || newSubmission.format === ''
+                || newSubmission.track === ''
+                || newSubmission.area_of_interest === ''
+                || newSubmission.diversity === ''
+                || newSubmission.speakers === ''
+                || newSubmission.covid === ''
+                || newSubmission.success === ''
+                || newSubmission.excited === ''
+                || newSubmission.industry.length === 0
+                || newSubmission.time.length === 0
+                || newSubmission.date.length === 0) {
                 setOpen(false);
                 alert('All fields must be completed in order to submit the form!');
                 return;
@@ -318,12 +242,27 @@ function SubmissionPage() {
             alert('Oh no! Something went wrong. Please reach out to us directly for help: hello@beta.mn');
             return;
         }
+        if (fileToUpload && fileToUpload.name) {
+            fileToUpload.fileName = `${slugify(title)}.${fileToUpload.name.split('.').pop()}`;
+        }
+        if (submissionId && submissionId !== '') {
+            dispatch({ type: 'UPDATE_SUBMISSION_TO_SERVER', payload: newSubmission, fileToUpload, onComplete: onSubmissionComplete, onFailure: onSubmissionFailure });
 
-        fileToUpload.fileName = `${slugify(title)}.${filename.split('.').pop()}`;
-        dispatch({ type: 'POST_SUBMISSION_TO_SERVER', payload: newSubmission, fileToUpload, onComplete: onSubmissionComplete, onFailure: onSubmissionFailure });
+        } else {
+            dispatch({ type: 'POST_SUBMISSION_TO_SERVER', payload: newSubmission, fileToUpload, onComplete: onSubmissionComplete, onFailure: onSubmissionFailure });
+
+        }
 
     } //end addSubmission
 
+    const handleChangeFor = (property) => (event) => {
+        dispatch({
+            type: "SET_EDITING_SUBMISSION", payload: {
+                ...submission,
+                [property]: event.target.value,
+            } 
+        });
+    }
 
     return (
         <div className={classes.root}>
@@ -344,6 +283,7 @@ function SubmissionPage() {
                         TCSW Session Selector Form
                     </Typography>
                 </Box>
+                {/* {JSON.stringify(submission)} */}
                 <br />
                 <Box>
                     <Container component={Paper} elevation={6}>
@@ -352,31 +292,31 @@ function SubmissionPage() {
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom> Email Address:</Typography>
                                     <Typography variant="caption" display="block" gutterBottom>This is the email we will use for all TCSW-related communications.</Typography>
-                                    <TextField fullWidth id="email-input" label="Email" variant="outlined" required value={email} onChange={(event) => setEmail(event.target.value)} />
+                                    <TextField fullWidth id="email-input" label="Email" variant="outlined" required value={submission.email} onChange={handleChangeFor('email')} />
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom> Phone:</Typography>
                                     <Typography variant="caption" display="block" gutterBottom>This is the phone number we will use for all TCSW-related communications.</Typography>
-                                    <TextField fullWidth id="phone-input" label="Phone" variant="outlined" required value={phone} onChange={(event) => setPhone(event.target.value)} />
+                                    <TextField fullWidth id="phone-input" label="Phone" variant="outlined" required value={submission.phone} onChange={handleChangeFor('phone')} />
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>Is this event being hosted by an organization, company or other entity? If so, list here. If not, tell us a little bit about yourself.</Typography>
-                                    <TextField fullWidth id="host-input" label="Host" variant="outlined" required value={host} onChange={(event) => setHost(event.target.value)} />
+                                    <TextField fullWidth id="host-input" label="Host" variant="outlined" required value={submission.host} onChange={handleChangeFor('host')} />
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>Title of your event: </Typography>
-                                    <TextField fullWidth id="title-input" label="Title" variant="outlined" required value={title} onChange={(event) => setTitle(event.target.value)} />
+                                    <TextField fullWidth id="title-input" label="Title" variant="outlined" required value={submission.title} onChange={handleChangeFor('title')} />
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>Image for your event:</Typography>
                                     <Typography variant="caption" display="block" gutterBottom>Preferred size 920px wide by 400px tall.</Typography>
                                     {
-                                        imagePreview
-                                        && imagePreview !== ''
+                                        submission.image
+                                        && submission.image !== ''
                                         && (
                                             <div>
                                                 <img
-                                                    src={imagePreview}
+                                                    src={submission.image}
                                                     alt="Preview image"
                                                     style={{ width: '552px', height: '240px', objectFit: 'cover' }}
                                                 />
@@ -393,16 +333,16 @@ function SubmissionPage() {
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>Describe your event in 150 words or less: </Typography>
-                                    <TextField fullWidth id="description-input" multiline maxRows={5} label="Description" variant="outlined" required value={description} onChange={(event) => setDescription(event.target.value)} />
+                                    <TextField fullWidth id="description-input" multiline maxRows={5} label="Description" variant="outlined" required value={submission.description} onChange={handleChangeFor('description')} />
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>Approximately how many attendees do you expect? </Typography>
-                                    <TextField type="number" fullWidth id="attendees-input" label="Attendees" variant="outlined" required value={attendees} onChange={(event) => setAttendees(event.target.value)} />
+                                    <TextField type="number" fullWidth id="attendees-input" label="Attendees" variant="outlined" required value={submission.attendees} onChange={handleChangeFor('attendees')} />
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>Where will your event be hosted? </Typography>
-                                    <FormControl component="fieldset" value={location} onChange={(event) => setLocation(event.target.value)}>
-                                        <RadioGroup name="radio-buttons-group">
+                                    <FormControl component="fieldset" value={submission.location} onChange={handleChangeFor('location')}>
+                                        <RadioGroup value={submission.location} name="radio-buttons-group">
                                             <FormControlLabel value={'Online via the TCSW virtual venue'} control={<Radio />} label="Online via the TCSW virtual venue" />
                                             <FormControlLabel value={'In-person'} control={<Radio />} label="In-person" />
                                             <FormControlLabel value={'To be determined'} control={<Radio />} label="To be determined" />
@@ -412,7 +352,7 @@ function SubmissionPage() {
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>If your event is being held in-person, please share where you would like it to be hosted. </Typography>
                                     <Typography variant="caption" display="block" gutterBottom> We would love to host community, culture, art, etc. events at our TCSW Community Hub or other cool spaces in the Cities.</Typography>
-                                    <TextField fullWidth id="location-input" label="Location Details" variant="outlined" value={locationDetails} onChange={(event) => setLocationDetails(event.target.value)} />
+                                    <TextField fullWidth id="location-input" label="Location Details" variant="outlined" value={submission.location_details} onChange={handleChangeFor('location_details')} />
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>What day(s) work for you to host your event? </Typography>
@@ -424,8 +364,8 @@ function SubmissionPage() {
                                                 labelId="demo-multiple-name-label"
                                                 id="demo-multiple-name"
                                                 multiple
-                                                value={individualDate}
-                                                onChange={handleDateChange}
+                                                value={getArray(submission.date)}
+                                                onChange={handleChangeFor('date')}
                                                 input={<OutlinedInput label="Date" />}
                                                 MenuProps={MenuProps}
                                                 
@@ -434,7 +374,7 @@ function SubmissionPage() {
                                                     <MenuItem
                                                         key={date}
                                                         value={date}
-                                                        style={getDateStyles(date, individualDate, theme)}
+                                                        style={getDateStyles(date, submission.date, theme)}
                                                     >
                                                         {date}
                                                     </MenuItem>
@@ -446,7 +386,7 @@ function SubmissionPage() {
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom> Approximately how long will your event be?</Typography>
                                     <Typography variant="caption" display="block" gutterBottom>Please keep in mind people need time to travel between events. </Typography>
-                                    <TextField fullWidth id="length-input" label="Length" variant="outlined" required value={length} onChange={(event) => setLength(event.target.value)} />
+                                    <TextField fullWidth id="length-input" label="Length" variant="outlined" required value={submission.length} onChange={handleChangeFor('length')} />
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>Which time do you prefer to host? </Typography>
@@ -458,8 +398,8 @@ function SubmissionPage() {
                                                 labelId="demo-multiple-name-label"
                                                 id="demo-multiple-name"
                                                 multiple
-                                                value={individualTime}
-                                                onChange={handleTimeChange}
+                                                value={getArray(submission.time)}
+                                                onChange={handleChangeFor('time')}
                                                 input={<OutlinedInput label="Time" />}
                                                 MenuProps={MenuProps}
                                             >
@@ -467,7 +407,7 @@ function SubmissionPage() {
                                                     <MenuItem
                                                         key={time}
                                                         value={time}
-                                                        style={getTimeStyles(time, individualTime, theme)}
+                                                        style={getTimeStyles(time, submission.time, theme)}
                                                     >
                                                         {time}
                                                     </MenuItem>
@@ -478,8 +418,8 @@ function SubmissionPage() {
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>What is the event format? </Typography>
-                                    <FormControl component="fieldset" required value={format} onChange={(event) => setFormat(event.target.value)}>
-                                        <RadioGroup name="radio-buttons-group">
+                                    <FormControl component="fieldset" required onChange={handleChangeFor('format')}>
+                                        <RadioGroup value={submission.format} name="radio-buttons-group">
                                             <FormControlLabel value={'Presentation'} control={<Radio />} label="Presentation" />
                                             <FormControlLabel value={'Panel'} control={<Radio />} label="Panel" />
                                             <FormControlLabel value={'Workshop'} control={<Radio />} label="Workshop" />
@@ -504,8 +444,8 @@ function SubmissionPage() {
                                                 labelId="demo-multiple-name-label"
                                                 id="demo-multiple-name"
                                                 multiple
-                                                value={individualIndustry}
-                                                onChange={handleIndustryChange}
+                                                value={getArray(submission.industry)}
+                                                onChange={handleChangeFor('industry')}
                                                 input={<OutlinedInput label="Industry" />}
                                                 MenuProps={MenuProps}
                                             >
@@ -513,7 +453,7 @@ function SubmissionPage() {
                                                     <MenuItem
                                                         key={industry}
                                                         value={industry}
-                                                        style={getIndustryStyles(industry, individualIndustry, theme)}
+                                                        style={getIndustryStyles(industry, submission.industry, theme)}
                                                     >
                                                         {industry}
                                                     </MenuItem>
@@ -524,8 +464,8 @@ function SubmissionPage() {
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>In which track would you like your event featured? </Typography>
-                                    <FormControl component="fieldset" required value={track} onChange={(event) => setTrack(event.target.value)}>
-                                        <RadioGroup name="radio-buttons-group">
+                                    <FormControl component="fieldset" required onChange={handleChangeFor('track')}>
+                                        <RadioGroup value={submission.track} name="radio-buttons-group">
                                             <FormControlLabel value={'Growth'} control={<Radio />} label="Growth" />
                                             <FormControlLabel value={'Founder'} control={<Radio />} label="Founder" />
                                             <FormControlLabel value={'Designer'} control={<Radio />} label="Designer" />
@@ -542,8 +482,8 @@ function SubmissionPage() {
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>What is the purpose of your event? </Typography>
-                                    <FormControl component="fieldset" value={purpose} onChange={(event) => setPurpose(event.target.value)}>
-                                        <RadioGroup name="radio-buttons-group">
+                                    <FormControl component="fieldset" onChange={handleChangeFor('purpose')}>
+                                        <RadioGroup value={submission.purpose} name="radio-buttons-group">
                                             <FormControlLabel value={'To Enable: Help teach a skill or set of skills'} control={<Radio />} label="To Enable: Help teach a skill or set of skills" />
                                             <FormControlLabel value={'To Inspire: Inspire attendees through showcasing'} control={<Radio />} label="To Inspire: Inspire attendeess through showcasing" />
                                             <FormControlLabel value={'To Connect: Help bring like minded people together so they can connect and network'} control={<Radio />} label="To Connect: Help bring like minded people together so they can connect and network" />
@@ -552,8 +492,8 @@ function SubmissionPage() {
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>Does your event cater to one or more of the following? </Typography>
-                                    <FormControl component="fieldset" required value={areaOfInterest} onChange={(event) => setAreaOfInterest(event.target.value)}>
-                                        <RadioGroup name="radio-buttons-group">
+                                    <FormControl component="fieldset" required value={submission.area_of_interest} onChange={handleChangeFor('area_of_interest')}>
+                                        <RadioGroup value={submission.area_of_interest} name="radio-buttons-group">
                                             <FormControlLabel value={'Celebrating and empowering female leaders'} control={<Radio />} label="Celebrating and empowering female leaders" />
                                             <FormControlLabel value={'Supporting diversity and inclusion'} control={<Radio />} label="Supporting diversity and inclusion" />
                                             <FormControlLabel value={'Support student and youth entrepreneurs'} control={<Radio />} label="Supporting student and youth entrepreneurs" />
@@ -567,48 +507,48 @@ function SubmissionPage() {
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>We require all TCSW events with three or more speakers have gender and/or race/ethnicity diversity with regard to its organization, participation, and content. Will your event align with this requirement? </Typography>
-                                    <FormControl component="fieldset" required value={diversity} onChange={(event) => setDiversity(event.target.value)}>
-                                        <RadioGroup name="radio-buttons-group">
-                                            <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
-                                            <FormControlLabel value="No" control={<Radio />} label="No" />
+                                    <FormControl component="fieldset" required value={submission.diversity} onChange={handleChangeFor('diversity')}>
+                                        <RadioGroup value={submission.diversity} name="radio-buttons-group">
+                                            <FormControlLabel value="true" control={<Radio />} label="Yes" />
+                                            <FormControlLabel value="false" control={<Radio />} label="No" />
                                         </RadioGroup>
                                     </FormControl>
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom> Who would you like to speak at your event? </Typography>
                                     <Typography variant="caption" display="block" gutterBottom>Planning to have speakers? Awesome! We'd love to know who you had in mind. Don't worry, this can change down the road. If you need help finding speakers, please list that too! </Typography>
-                                    <TextField fullWidth id="speaker-input" label="Speakers" variant="outlined" required value={speakers} onChange={(event) => setSpeakers(event.target.value)} />
+                                    <TextField fullWidth id="speaker-input" label="Speakers" variant="outlined" required value={submission.speakers} onChange={handleChangeFor('speakers')} />
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>We require all TCSW session hosts to commit to following Covid safety protocols, which will be released by TCSW in August based on CDC and State Guidelines.  Do you commit to following all TCSW Covid Safety protocols? </Typography>
-                                    <FormControl component="fieldset" required value={covid} onChange={(event) => setCovid(event.target.value)}>
-                                        <RadioGroup name="radio-buttons-group">
-                                            <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
-                                            <FormControlLabel value="No" control={<Radio />} label="No" />
+                                    <FormControl component="fieldset" required value={submission.covid} onChange={handleChangeFor('covid')}>
+                                        <RadioGroup value={submission.covid} name="radio-buttons-group">
+                                            <FormControlLabel value="true" control={<Radio />} label="Yes" />
+                                            <FormControlLabel value="false" control={<Radio />} label="No" />
                                         </RadioGroup>
                                     </FormControl>
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>Please share any related media you would like to have included on your TCSW session listing (YouTube links, etc).</Typography>
-                                    <TextField fullWidth id="media-input" label="Media" variant="outlined" value={media} onChange={(event) => setMedia(event.target.value)} />
+                                    <TextField fullWidth id="media-input" label="Media" variant="outlined" value={submission.media} onChange={handleChangeFor('media')} />
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>What does success look like for your event? </Typography>
-                                    <TextField fullWidth id="success-input" label="Success looks like..." variant="outlined" required value={success} onChange={(event) => setSuccess(event.target.value)} />
+                                    <TextField fullWidth id="success-input" label="Success looks like..." variant="outlined" required value={submission.success} onChange={handleChangeFor('success')} />
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>What makes you most excited to host an event during Twin Cities Startup Week? </Typography>
-                                    <TextField fullWidth id="excited-input" label="Most excited to host because..." variant="outlined" required value={excited} onChange={(event) => setExcited(event.target.value)} />
+                                    <TextField fullWidth id="excited-input" label="Most excited to host because..." variant="outlined" required value={submission.excited} onChange={handleChangeFor('excited')} />
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom> Who else should be hosting an event? (referral)</Typography>
                                     <Typography variant="caption" display="block" gutterBottom>We love working with new event hosts and businesses during the week! Do know of any individuals or organizations that have a story to tell, something to teach or incredible content to share? Please list their name, email address and tell us a little bit about why they'd make a great event host - we'll make sure to reach out to them!</Typography>
-                                    <TextField fullWidth id="referral-input" label="Referral" variant="outlined" value={otherHosts} onChange={(event) => setOtherHosts(event.target.value)} />
+                                    <TextField fullWidth id="referral-input" label="Referral" variant="outlined" value={submission.other_hosts} onChange={handleChangeFor('other_hosts')} />
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom> More to share?</Typography>
                                     <Typography variant="caption" display="block" gutterBottom>Did we miss anything? Do you have questions? Is there something else about your event you want to share that didn't fit in the questions above? Let us know!</Typography>
-                                    <TextField fullWidth id="questions-input" label="More to share?" variant="outlined" value={otherInfo} onChange={(event) => setOtherInfo(event.target.value)} />
+                                    <TextField fullWidth id="questions-input" label="More to share?" variant="outlined" value={submission.other_info} onChange={handleChangeFor('other_info')} />
                                 </Box>
                                 <Box p={2}>
                                 <Button fullWidth variant="contained" type="submit" className={classes.buttonText}>Submit</Button>

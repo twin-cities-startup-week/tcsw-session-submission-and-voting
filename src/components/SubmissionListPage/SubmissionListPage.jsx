@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
@@ -36,6 +37,7 @@ const useStyles = makeStyles({
 function SubmissionListPage() {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const history = useHistory();
     const { userSubmissions } = useSelector((store) => store.submission);
     //Get all the session
     useEffect(() => {

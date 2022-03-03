@@ -38,6 +38,24 @@ router.get('/user', rejectUnauthenticated, async (req, res) => {
     }
 })
 
+// GET route for all user submissions
+router.get('/user/:id', rejectUnauthenticated, async (req, res) => {
+    try {
+        const userSession = await Session.findByPk(
+            req.params.id,
+            {
+                where: {
+                    user_id: req.user.id,
+                }
+            }
+        );
+        res.status(200).send(userSession);
+    } catch (e) {
+        console.log('error with post to db', e);
+        res.sendStatus(500);
+    }
+})
+
 const getIpAddress = (req) => {
     let result;
     if (process.env.NODE_ENV === 'development') {
@@ -57,9 +75,15 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
         newSubmission.user_id = req.user.id;
         newSubmission.ip_address = getIpAddress(req);
         // TODO: These should be junction tables
-        newSubmission.industry = JSON.stringify(newSubmission.industry);
-        newSubmission.time = JSON.stringify(newSubmission.time);
-        newSubmission.date = JSON.stringify(newSubmission.date);
+        if (Array.isArray(newSubmission.industry)) {
+            newSubmission.industry = JSON.stringify(newSubmission.industry);
+        }
+        if (Array.isArray(newSubmission.time)) {
+            newSubmission.time = JSON.stringify(newSubmission.time);
+        }
+        if (Array.isArray(newSubmission.date)) {
+            newSubmission.date = JSON.stringify(newSubmission.date);
+        }
         // END TODO
         const result = await Session.update(
             newSubmission,

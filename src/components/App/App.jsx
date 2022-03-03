@@ -207,6 +207,13 @@ function App() {
             <SubmissionPage />
           </ProtectedRoute>
 
+            <ProtectedRoute
+              exact
+              path="/submission/:id/edit"
+            >
+              <SubmissionPage />
+            </ProtectedRoute>
+
           <Route exact path = "/panelistView">
             <Panelists />
             {/* <PanelistViewPage /> */}
