@@ -118,7 +118,7 @@ function Nav() {
             </ListItemButton>
 
             <Collapse in={open} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
+              <List component="div" disablePadding style={{height: '0px'}}>
 
               {/* If the logged in user is an admin, display the admin dropdown option */}
               {user.admin && 

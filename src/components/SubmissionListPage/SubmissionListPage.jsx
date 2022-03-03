@@ -23,12 +23,17 @@ const useStyles = makeStyles({
     content: {
         paddingTop: '33px',
     },
+    item: {
+        paddingTop: '33px',
+        display: 'flex',
+    },
     title: {
         paddingTop: '20px',
+        paddingBottom: '20px',
     },
     previewImage: {
-        height: '400px',
-        width: '920px',
+        height: '300px',
+        width: '300px',
         objectFit: 'cover',
         padding: 0,
     }
@@ -52,28 +57,39 @@ function SubmissionListPage() {
                 </Typography>
                 {
                     userSubmissions
+                    && userSubmissions.length === 0
+                    && (
+                        <Typography variant="body1">
+                            You haven't submit any sessions yet.
+                        </Typography>
+                    )
+                }
+                {
+                    userSubmissions
                     && userSubmissions.map(submission => (
-                        <div>
-                            <div className={classes.content}>
-                                <img src={submission.image} className={classes.previewImage} />
-                                <br />
-                                <Button component={Paper} elevation={8}
-                                    variant="contained"
-                                    type="submit"
-                                    name="submit"
-                                    value="Log In"
-                                    sx={{ float: 'right' }}
-                                    onClick={() => history.push(`/submission/${submission.id}/edit`)}
-                                >
-                                    Edit Submission
-                                </Button>
-                                <Typography className={classes.title} variant="h3">
-                                    {submission.title}
-                                </Typography>
-                                <p>{submission.description}</p>
-                                
+                            <div className={classes.item}>
+                                <div style={{paddingRight: '20px'}}>
+                                    <img src={submission.image} className={classes.previewImage} />
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                    <Button component={Paper} elevation={8}
+                                        variant="contained"
+                                        type="submit"
+                                        name="submit"
+                                        value="Log In"
+                                        sx={{ float: 'right', marginTop: '8px' }}
+                                        onClick={() => history.push(`/submission/${submission.id}/edit`)}
+                                    >
+                                        Edit Submission
+                                    </Button>
+                                    <Typography className={classes.title} variant="h3">
+                                        {submission.title}
+                                    </Typography>
+                                    <Typography variant="body1">
+                                        {submission.description}
+                                    </Typography>
+                                </div>
                             </div>  
-                        </div>
                     ))
                 }
             </div>

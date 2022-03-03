@@ -309,7 +309,7 @@ function SubmissionPage() {
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>Image for your event:</Typography>
-                                    <Typography variant="caption" display="block" gutterBottom>Preferred size 920px wide by 400px tall.</Typography>
+                                    <Typography variant="caption" display="block" gutterBottom>Preferred size 400px wide by 400px tall.</Typography>
                                     {
                                         submission.image
                                         && submission.image !== ''
@@ -318,7 +318,7 @@ function SubmissionPage() {
                                                 <img
                                                     src={submission.image}
                                                     alt="Preview image"
-                                                    style={{ width: '552px', height: '240px', objectFit: 'cover' }}
+                                                    style={{ width: '240px', height: '240px', objectFit: 'cover' }}
                                                 />
                                             </div>
                                         )
