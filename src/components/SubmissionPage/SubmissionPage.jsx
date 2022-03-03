@@ -243,7 +243,7 @@ function SubmissionPage() {
             return;
         }
         if (fileToUpload && fileToUpload.name) {
-            fileToUpload.fileName = `${slugify(title)}.${fileToUpload.name.split('.').pop()}`;
+            fileToUpload.fileName = `${slugify(newSubmission.title)}.${fileToUpload.name.split('.').pop()}`;
         }
         if (submissionId && submissionId !== '') {
             dispatch({ type: 'UPDATE_SUBMISSION_TO_SERVER', payload: newSubmission, fileToUpload, onComplete: onSubmissionComplete, onFailure: onSubmissionFailure });
