@@ -38,15 +38,18 @@ router.get('/user', rejectUnauthenticated, async (req, res) => {
     }
 })
 
-// GET route for all user submissions
+// GET route for submission detail, used for editing
 router.get('/user/:id', rejectUnauthenticated, async (req, res) => {
     try {
+        const whereCondition = {};
+        // Admin users can access all submissions
+        if (req.user.admin !== true) {
+            whereCondition.user_id = req.user.id;
+        }
         const userSession = await Session.findByPk(
             req.params.id,
             {
-                where: {
-                    user_id: req.user.id,
-                }
+                where: whereCondition,
             }
         );
         res.status(200).send(userSession);
@@ -72,7 +75,13 @@ const getIpAddress = (req) => {
 router.put('/', rejectUnauthenticated, async (req, res) => {
     try {
         const newSubmission = req.body;
-        newSubmission.user_id = req.user.id;
+        const whereCondition = {
+            id: newSubmission.id,
+        }
+        if (req.user.admin !== true) {
+            newSubmission.user_id = req.user.id;
+            whereCondition.user_id = req.user.id;
+        }
         newSubmission.ip_address = getIpAddress(req);
         // TODO: These should be junction tables
         if (Array.isArray(newSubmission.industry)) {
@@ -88,10 +97,7 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
         const result = await Session.update(
             newSubmission,
             {
-                where: { 
-                    id: newSubmission.id,
-                    user_id: req.user.id,
-                },
+                where: whereCondition,
                 // Return the updated record
                 plain: true,
                 returning: true,

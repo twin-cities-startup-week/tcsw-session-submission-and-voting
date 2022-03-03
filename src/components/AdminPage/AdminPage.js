@@ -5,18 +5,19 @@ import { useHistory } from "react-router-dom";
 import AdminPageItem from "./AdminPageItem/AdminPageItem";
 //Material-ui
 import {
-  Grid,
-  Card,
+  Typography,
+  Button,
   Container,
   Paper,
-  makeStyles,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-} from "@material-ui/core";
+  Grid,
+} from "@mui/material";
+import { makeStyles } from '@mui/styles';
 
 import "./AdminPage.css";
 
@@ -79,9 +80,6 @@ const useStyli = makeStyles({
 });
 
 function AdminPage() {
-  const classes = useStyles();
-  const classic = useStylish();
-  const classy = useStyle();
   const classics = useStyli();
   const clay = useSty();
 
@@ -123,149 +121,104 @@ function AdminPage() {
           <AdminPageItem key={sessionInfo.id} sessionInfo={sessionInfo} />
         ))}
       </div>
-
-      <div className="threeBlockGrid">
-        <div>
-          <Card
-            className={classes.root}
-            //card 1
-            variant="outlined"
-          >
-            {/* {JSON.stringify(setSessionList)} */}
-            {setSessionList.map((session, index) => (
-              <div key={index}>
-                {" "}
-                <p>Total Number of Sessions Approved:</p>
-                <h3>{session.count}</h3>
-              </div>
-            ))}
-          </Card>
-        </div>
-
-        <div>
-          <Card
-            className={classic.rooty}
-            //card 2
-            variant="outlined"
-          >
-            {/* {JSON.stringify(setHighestVoting)} */}
-            {setHighestVoting.map((session, index) => (
-              <div key={index}>
-                {" "}
-                <p>Highest Ranked Session:</p>
-                <h3>{session.title}</h3>
-              </div>
-            ))}
-          </Card>
-        </div>
-
-        <div>
-          <Card
-            className={classy.roots}
-            //card 3
-            variant="outlined"
-          >
-            {/* {JSON.stringify(setAwaitingApproval)} */}
-            {setAwaitingApproval.map((session, index) => (
-              <div key={index}>
-                {" "}
-                <p>Number of Sessions Awaiting Approval:</p>
-                <h3>{session.count}</h3>
-              </div>
-            ))}
-          </Card>
-        </div>
-      </div>
-
-      <div className="masterTableContainer">
-        <div className="leftTable">
-          <div
-            style={{
-              border: "2px solid black",
-              borderRadius: "4px",
-              backgroundColor: "#0c495a",
-              margin: "10px 14px 13px",
-              color: "#fbbd19"
-            }}
-          >
-            <h3 style={{ textAlign: "center" }}>Awaiting Approval</h3>
-          </div>
+      <Grid container spacing={1} style={{width: '100%', marginTop: '15px'}}>
+        <Grid item md={12} lg={6}>
           <Container>
-            <Grid container spacing={3}>
-              <TableContainer component={Paper}>
-                <Table sx={{ width: "20%" }} aria-label="simple table">
-                  <TableHead className={classics.center}>
-                    <TableRow className="tableRow">
+            <div
+              style={{
+                border: "1px solid black",
+                borderRadius: "0px",
+                backgroundColor: "#0c495a",
+                margin: "0px",
+                color: "#fbbd19"
+              }}
+            >
+              <h3 style={{ textAlign: "center" }}>Awaiting Approval ({setApprovalAwaitingInfo.length})</h3>
+            </div>
+            <TableContainer component={Paper}>
+              <Table aria-label="simple table">
+                <TableHead className={classics.center}>
+                  <TableRow className="tableRow">
+                    <TableCell>
+                      <h4>Title</h4>
+                    </TableCell>
+                    <TableCell colSpan={3}>
+                      <h4>Email</h4>
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {setApprovalAwaitingInfo.map((session, index) => (
+                    <TableRow key={index}>
                       <TableCell>
-                        <h4>Title</h4>
+                        <Typography variant="body1">{session.title}</Typography>
                       </TableCell>
                       <TableCell>
-                        <h4>Email</h4>
+                        <Typography variant="body1">{session.email}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Button onClick={() => history.push(`/submission/${session.id}/edit`)}>Edit</Button>
+                      </TableCell>
+                      <TableCell>
+                        <Button variant="contained" onClick={() => gotoDetails(session)}>Details</Button>
                       </TableCell>
                     </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {setApprovalAwaitingInfo.map((session, index) => (
-                      <TableRow key={index}>
-                        <TableCell>
-                          <p onClick={() => gotoDetails(session)}>
-                            {session.title}
-                          </p>
-                        </TableCell>
-                        <TableCell>{session.email}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Grid>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Container>
-        </div>
+        </Grid>
 
-        <div className="rightTable">
-          <div
-            style={{
-              border: "2px solid black",
-              borderRadius: "4px",
-              backgroundColor: "#0c495a",
-              margin: "10px 14px 13px",
-              color: "#fbbd19"
-            }}
-          >
-            <h3 style={{ textAlign: "center" }}>Approved</h3>
-          </div>
+        <Grid item md={12} lg={6}>
           <Container>
-            <Grid container spacing={3}>
-              <TableContainer component={Paper}>
-                <Table sx={{ width: "20%" }} aria-label="simple table">
-                  <TableHead className={clay.right}>
-                    <TableRow>
+            <div
+              style={{
+                border: "1px solid black",
+                borderRadius: "0px",
+                backgroundColor: "#0c495a",
+                margin: "0px",
+                width: '100%',
+                color: "#fbbd19"
+              }}
+            >
+              <h3 style={{ textAlign: "center" }}>Approved ({setApprovedInfo.length})</h3>
+            </div>
+            <TableContainer component={Paper}>
+              <Table aria-label="simple table">
+                <TableHead className={clay.right}>
+                  <TableRow>
+                    <TableCell>
+                      <h4>Title</h4>
+                    </TableCell>
+                    <TableCell colSpan={3}>
+                      <h4>Email</h4>
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {setApprovedInfo.map((session, index) => (
+                    <TableRow key={index}>
                       <TableCell>
-                        <h4>Title</h4>
+                        <Typography variant="body1">{session.title}</Typography>
                       </TableCell>
                       <TableCell>
-                        <h4>Email</h4>
+                        <Typography variant="body1">{session.email}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Button onClick={() => history.push(`/submission/${session.id}/edit`)}>Edit</Button>
+                      </TableCell>
+                      <TableCell>
+                        <Button variant="contained" onClick={() => gotoDetails(session)}>Details</Button>
                       </TableCell>
                     </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {setApprovedInfo.map((session, index) => (
-                      <TableRow key={index}>
-                        <TableCell>
-                          <p onClick={() => gotoDetails(session)}>
-                            {session.title}
-                          </p>
-                        </TableCell>
-                        <TableCell>{session.email}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Grid>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Container>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </>
   );
 }
