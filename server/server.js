@@ -9,7 +9,7 @@ const passport = require('./strategies/user.strategy');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const fileUpload = require('express-fileupload');
 
-let callbackURL = `https://session-selector.herokuapp.com/auth/google/callback`;
+let callbackURL = `https://sessions.twincitiesstartupweek.com/auth/google/callback`;
 if (process.env.NODE_ENV !== 'production') {
     callbackURL = `http://localhost:5000/auth/google/callback`;
 }
@@ -122,13 +122,13 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
   //   login page.  Otherwise, the primary route function function will be called,
   //   which, in this example, will redirect the user to the home page.
   app.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: 'https://session-selector.herokuapp.com/#/login' }),
+    passport.authenticate('google', { failureRedirect: 'https://sessions.twincitiesstartupweek.com/#/login' }),
     (req, res) => {
       console.log('HERE: /auth/google/callback');
       if (process.env.NODE_ENV !== 'production') {
         res.redirect('http://localhost:3000/#/home');
       } else {
-        res.redirect('https://session-selector.herokuapp.com/#/home'); // TODO: After login page.
+        res.redirect('https://sessions.twincitiesstartupweek.com/#/home'); // TODO: After login page.
       }
     }
   );
