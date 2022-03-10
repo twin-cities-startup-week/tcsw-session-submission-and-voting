@@ -4,9 +4,10 @@ const router = express.Router();
 const Session = require('../models/session.model.js');
 const {
     rejectUnauthenticated,
+    getIpAddress,
 } = require('../modules/authentication-middleware');
 const S3Service = require('../services/S3Service');
-
+const sgMail = require('@sendgrid/mail');
 
 // GET route for all APPROVED submissions
 router.get('/approved', rejectUnauthenticated, (req, res) => {
@@ -57,19 +58,7 @@ router.get('/user/:id', rejectUnauthenticated, async (req, res) => {
         console.log('error with post to db', e);
         res.sendStatus(500);
     }
-})
-
-const getIpAddress = (req) => {
-    let result;
-    if (process.env.NODE_ENV === 'development') {
-        result = '127.0.0.1';
-    } else if (req.connection && req.connection.remoteAddress) {
-        result = req.connection.remoteAddress;
-    } else if (req.headers) {
-        result = req.headers['x-forwarded-for'];
-    }
-    return result;
-};
+});
 
 //POST route for session submission form 
 router.put('/', rejectUnauthenticated, async (req, res) => {
@@ -103,6 +92,36 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
                 returning: true,
             }
         );
+        if (process.env.SENDGRID_API_KEY && process.env.SENDGRID_API_KEY !== '') {
+            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+            const msg = {
+                to: req.user.email,
+                from: process.env.SENDGRID_FROM_ADDRESS,
+                subject: 'TCSW - Thank you for your submission',
+                text: `
+Title: ${newSubmission.title}
+Description: ${newSubmission.description}
+
+View your submission details here: https://sessions.twincitiesstartupweek.com/#/user/submission
+`,
+                html: `
+<strong>Title</strong>
+<br />
+${newSubmission.title}
+<br />
+<br />
+<strong>Description</strong>
+<br />
+${newSubmission.description}
+<br />
+<br />
+<a href="https://sessions.twincitiesstartupweek.com/#/user/submission">Edit Submission</a>
+`,
+            };
+            sgMail.send(msg).catch(e => console.log(e));
+        } else {
+            console.error('Missing SendGrid environment variables.')
+        }
         res.status(201).send(result);
     } catch (e) {
         console.log('error with post to db', e);
@@ -121,7 +140,43 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
         newSubmission.time = JSON.stringify(newSubmission.time);
         newSubmission.date = JSON.stringify(newSubmission.date);
         // END TODO
-        const result = await Session.create(newSubmission);
+        const result = await Session.create(
+            newSubmission,
+            {
+                returning: true,
+                plain: true,
+            }
+        );
+        if (process.env.SENDGRID_API_KEY && process.env.SENDGRID_API_KEY !== '') {
+            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+            const msg = {
+                to: req.user.email,
+                from: process.env.SENDGRID_FROM_ADDRESS,
+                subject: 'TCSW - Thank you for your submission',
+                text: `
+Title: ${newSubmission.title}
+Description: ${newSubmission.description}
+
+View your submission details here: https://sessions.twincitiesstartupweek.com/#/user/submission
+`,
+                html: `
+<strong>Title</strong>
+<br />
+${newSubmission.title}
+<br />
+<br />
+<strong>Description</strong>
+<br />
+${newSubmission.description}
+<br />
+<br />
+<a href="https://sessions.twincitiesstartupweek.com/#/user/submission">Edit Submission</a>
+`,
+            };
+            sgMail.send(msg).catch(e => console.log(e));
+        } else {
+            console.error('Missing SendGrid environment variables.')
+        }
         res.status(201).send(result);
     } catch (e) {
         console.log('error with post to db', e);

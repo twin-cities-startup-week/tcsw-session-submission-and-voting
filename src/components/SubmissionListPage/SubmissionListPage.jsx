@@ -59,9 +59,18 @@ function SubmissionListPage() {
                     userSubmissions
                     && userSubmissions.length === 0
                     && (
-                        <Typography variant="body1">
-                            You haven't submit any sessions yet.
-                        </Typography>
+                        <>
+                            <Typography variant="body1">
+                                You haven't submit any sessions yet.
+                            </Typography>
+                            <br />
+                            <Button
+                                variant="contained"
+                                sx={{ mt: 2, mb: 2 }}
+                                onClick={() => history.push('/submission')}
+                            >Submission Form
+                            </Button>
+                        </>
                     )
                 }
                 {

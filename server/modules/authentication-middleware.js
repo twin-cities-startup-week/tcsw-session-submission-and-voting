@@ -22,4 +22,16 @@ const requireAdmin = (req, res, next) => {
   }
 };
 
-module.exports = { rejectUnauthenticated, requireAdmin };
+const getIpAddress = (req) => {
+  let result;
+  if (process.env.NODE_ENV === 'development') {
+    result = '127.0.0.1';
+  } else if (req.connection && req.connection.remoteAddress) {
+    result = req.connection.remoteAddress;
+  } else if (req.headers) {
+    result = req.headers['x-forwarded-for'];
+  }
+  return result;
+};
+
+module.exports = { rejectUnauthenticated, requireAdmin, getIpAddress };

@@ -35,7 +35,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 router.post('/register', async (req, res, next) => {
   try {
     const password = encryptLib.encryptPassword(req.body.password);
-    const email = req.body.email;
+    const email = req.body.email.toLowerCase();
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
 
@@ -172,7 +172,7 @@ router.put('/password/new', async (req, res) => {
       res.status(500).send('Password must be 8 characters or more.');
       return;
     }
-    let user = await setPasswordWithToken(email, password, token);
+    let user = await setPasswordWithToken(email.toLocaleLowerCase(), password, token);
     if (user && user.email && process.env.SENDGRID_API_KEY) {
       res.status(200).send(user);
     } else {
@@ -203,7 +203,7 @@ router.put('/password/new', async (req, res) => {
 router.put('/password/reset', async (req, res) => {
   try {
     const resetToken = cryptoRandomString({ length: 64, type: 'hex' });
-    let user = await updateResetToken(req.body.email, resetToken);
+    let user = await updateResetToken(req.body.email.toLowerCase(), resetToken);
     const hasEnvVariables = process.env.SENDGRID_API_KEY && process.env.SENDGRID_FROM_ADDRESS;
     if (user && user.email && hasEnvVariables) {
       let resetUrl = `https://${req.hostname}/#/password/reset/${resetToken}`;
