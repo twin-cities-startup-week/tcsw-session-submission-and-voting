@@ -34,18 +34,9 @@ function LandingPage() {
       {/* Landing Page description, static */}
       <div className="">
         <div id="landing-description">
-            Twin Cities Startup Week is back from September 16 - 23, 2022!
-          <br/>
-            Welcome to the Twin Cities Startup Week Session Selector! 
-            Here, you can submit a session application, vote on what you want 
-            to see at TCSW 2022, and add comments for the community to consider. 
-          <br/>
-
-          {/* If the user is NOT signed in, a call to action is underlined in the
-          landing page description. This disappears when the user logs in */}
-          {!user.id &&
-            <b><u>Click Sign In to get started!</u></b>
-          }
+          <MarkdownView
+            markdown={block['home']}
+          />
         </div>
 
         {/* If the user is NOT logged in, show the Learn More Button */}
@@ -57,7 +48,12 @@ function LandingPage() {
               value="Register"
               sx={{mt: 2, mb: 2}}
               onClick={() => history.push('/about')}
-            > Learn More</Button>
+            >Learn More</Button>
+            <Button
+              variant="contained"
+              sx={{ mt: 2, mb: 2, ml: 2 }}
+              onClick={() => history.push('/login')}
+            >Register</Button>
           </Box>
           }
 
@@ -88,34 +84,10 @@ function LandingPage() {
           {/* If the user is NOT logged in, show submission deadlines
               and a overview of how to submit a session */}
           {!user.id && 
-          <div>
             <div>
-          <p className="submission">
-            <b>2022 Session Submission Dates</b>
-            <br/>
-              Submission period starts April 4, 2022 and ends May 15, 2022
-            <br/>
-              Community voting starts May 23, 2022 and ends June 6, 2022</p>
-            <p className="extraText">
-              Once signed in, use the submit your session proposal by May 1st. 
-              Once submitted, we will reach out with any questions that we have. 
-              We will notify you by April 15th whether your sessions was accepted or not. 
-              Every year we receive more sessions that we have time slots on the 
-              schedule so if your session is not accepted, please think about applying 
-              next year!
-            </p>
-            </div>
-
-            <div className="landingList">
-              <ul>
-                <h3>As a user you will have the ability to do the following:</h3>
-                  <li>Submit up to 5 Sessions to Twin Cities Sartup Week.</li>
-                  <li>Vote once for each session that has been approved.</li>
-              </ul>
-            </div>
-
-            {/* If a user IS logged in, 
-            Show steps in an ordered list of session submission process */}
+              <MarkdownView
+                markdown={block['home1']}
+              />
             </div>
             }
             {user.id && 

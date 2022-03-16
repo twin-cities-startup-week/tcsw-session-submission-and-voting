@@ -2,14 +2,42 @@ import './VotePage.css'
 import useReduxStore from '../../hooks/useReduxStore';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import MarkdownView from 'react-showdown';
+import { makeStyles } from '@mui/styles';
 import { Button } from '@mui/material';
+
+// Styling
+const useStyles = makeStyles({
+    root: {
+        width: '100%',
+        maxWidth: '920px',
+        margin: '0 auto',
+        padding: '15px',
+    },
+    content: {
+        paddingTop: '33px',
+    },
+    item: {
+        paddingTop: '33px',
+        display: 'flex',
+    },
+    title: {
+        paddingTop: '20px',
+        paddingBottom: '20px',
+    },
+    previewImage: {
+        height: '300px',
+        width: '300px',
+        objectFit: 'cover',
+        padding: 0,
+    }
+});
 
 function VotePage() {
     const user = useSelector((store) => store.user);
     const store = useReduxStore();
     const dispatch = useDispatch();
-    
+    const classes = useStyles();
     const [vote, setVote ] = useState(0);
 
     const [voteButton, toggleVoteButton ] = useState(false)
@@ -74,14 +102,29 @@ function VotePage() {
 
                 <div className= 'right-bar' key={details.id}>
 
-                    <div className='title'>
-                        <h2>{details.title}</h2>
-                        <p>{details.description}</p>
+                    <div className={classes.item}>
+                        <div style={{ paddingRight: '20px' }}>
+                            <img src={details.image} className={classes.previewImage} />
+                        </div>
+                        <div style={{ flex: 1 }}>
+                            {user.admin &&
+                                <>
+                                    <Button sx={{ float: 'right', marginTop: '8px', marginLeft: '20px' }} className='approve-button' variant="contained" color="success" onClick={() => sessionApprove(details.id)}>Approve</Button>
+                                    <Button sx={{ float: 'right', marginTop: '8px' }} className='deny-button' variant="contained" color="error" onClick={() => sessionDeny(details.id)}>Deny</Button>
+                                </>
+                            }
+                            <h2>{details.title}</h2>
+                            <MarkdownView
+                                markdown={details.description}
+                            />
+                        </div>
                     </div>
 
                     <div className='speaker'>
                         <h3>Speakers</h3>
-                        <p>{details.speakers}</p>
+                        <MarkdownView
+                            markdown={details.speakers}
+                        />
                     </div>
 
                     <div className='organizers'>
@@ -91,17 +134,12 @@ function VotePage() {
 
                     <div className='related-media'>
                         <h3>Related Media</h3>
+                        <p>{details.media}</p>
                     </div>    
 
                     <div className='approval-buttons'>  
 
-                    {user.admin && 
-                        <Button className='deny-button' variant="contained" color="error" onClick={() => sessionDeny( details.id )}>Deny</Button>
-                    }
 
-                    {user.admin && 
-                        <Button className='approve-button' variant="contained" color="success" onClick={() => sessionApprove( details.id )}>Approve</Button>
-                    }
 
                     </div>
 

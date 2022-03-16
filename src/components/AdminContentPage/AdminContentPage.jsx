@@ -42,14 +42,21 @@ function AdminContentPage() {
             <br />
             <br />
             <Typography variant="h2">
-                Home
+                Home Heading
+            </Typography>
+            <br />
+            <AdminContentBlock content="home" />
+            <br />
+            <br />
+            <Typography variant="h2">
+                Home (Not Signed In)
             </Typography>
             <br />
             <AdminContentBlock content="home1" />
             <br />
             <br />
             <Typography variant="h2">
-                Home List
+                Home (Signed In Users)
             </Typography>
             <br />
             <AdminContentBlock content="home2" />

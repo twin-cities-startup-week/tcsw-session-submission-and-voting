@@ -6,11 +6,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import { makeStyles } from '@mui/styles';
-
-// This is one of our simplest components
-// It doesn't have local state,
-// It doesn't dispatch any redux actions or display any part of redux state
-// or even care what the redux state is'
+import MarkdownView from 'react-showdown';
 
 // Styling
 const useStyles = makeStyles({
@@ -94,9 +90,9 @@ function SubmissionListPage() {
                                     <Typography className={classes.title} variant="h3">
                                         {submission.title}
                                     </Typography>
-                                    <Typography variant="body1">
-                                        {submission.description}
-                                    </Typography>
+                                    <MarkdownView
+                                        markdown={submission.description}
+                                    />
                                 </div>
                             </div>  
                     ))

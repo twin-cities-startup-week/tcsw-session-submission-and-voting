@@ -15,12 +15,14 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Input from '@mui/material/Input';
+import ReactMde from 'react-mde';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@mui/styles';
 import { useHistory, useParams } from 'react-router-dom';
 import { readAndCompressImage } from 'browser-image-resizer';
-
+import * as Showdown from "showdown";
+import 'react-mde/lib/styles/css/react-mde-all.css';
 
 function slugify(string) {
     const a = 'àáäâãåăæçèéëêǵḧìíïîḿńǹñòóöôœøṕŕßśșțùúüûǘẃẍÿź·/_,:;';
@@ -41,10 +43,17 @@ const imageConfig = {
     maxHeight: 300,
 };
 
+const converter = new Showdown.Converter({
+    tables: true,
+    simplifiedAutoLink: true,
+    strikethrough: true,
+    tasklists: true
+});
 
 function SubmissionPage() {
     const history = useHistory();
     const dispatch = useDispatch();
+    const [selectedTab, setSelectedTab] = useState('write');
     //variables for individual form questions (multiselects are above)
     const { editSubmission: submission } = useSelector((store) => store.submission);
     const [fileToUpload, setFileToUpload] = useState(null);
@@ -264,6 +273,15 @@ function SubmissionPage() {
         });
     }
 
+    const handleMdeChangeFor = (property) => (value) => {
+        dispatch({
+            type: "SET_EDITING_SUBMISSION", payload: {
+                ...submission,
+                [property]: value,
+            }
+        });
+    }
+
     return (
         <div className={classes.root}>
             
@@ -308,7 +326,7 @@ function SubmissionPage() {
                                     <TextField fullWidth id="title-input" label="Title" variant="outlined" required value={submission.title} onChange={handleChangeFor('title')} />
                                 </Box>
                                 <Box p={1}>
-                                    <Typography variant="body2" className={classes.boldText} gutterBottom>Image for your event:</Typography>
+                                    <Typography variant="body2" className={classes.boldText} gutterBottom>Image for your event (optional):</Typography>
                                     <Typography variant="caption" display="block" gutterBottom>Preferred size 400px wide by 400px tall.</Typography>
                                     {
                                         submission.image
@@ -332,15 +350,26 @@ function SubmissionPage() {
                                     />
                                 </Box>
                                 <Box p={1}>
-                                    <Typography variant="body2" className={classes.boldText} gutterBottom>Describe your event in 150 words or less: </Typography>
-                                    <TextField fullWidth id="description-input" multiline maxRows={5} label="Description" variant="outlined" required value={submission.description} onChange={handleChangeFor('description')} />
+                                    <Typography variant="body2" className={classes.boldText} gutterBottom>Describe your event in 150 words or less: *</Typography>
+                                    {/* <TextField fullWidth id="description-input" multiline maxRows={5} label="Description" variant="outlined" required value={submission.description} onChange={handleChangeFor('description')} /> */}
+                                    <ReactMde
+                                        className={classes.feedback}
+                                        value={submission.description}
+                                        onChange={handleMdeChangeFor('description')}
+                                        selectedTab={selectedTab}
+                                        onTabChange={setSelectedTab}
+                                        minEditorHeight={200}
+                                        generateMarkdownPreview={markdown =>
+                                            Promise.resolve(converter.makeHtml(markdown))
+                                        }
+                                    />
                                 </Box>
                                 <Box p={1}>
-                                    <Typography variant="body2" className={classes.boldText} gutterBottom>Approximately how many attendees do you expect? </Typography>
+                                    <Typography variant="body2" className={classes.boldText} gutterBottom>Approximately how many attendees do you expect?</Typography>
                                     <TextField type="number" fullWidth id="attendees-input" label="Attendees" variant="outlined" required value={submission.attendees} onChange={handleChangeFor('attendees')} />
                                 </Box>
                                 <Box p={1}>
-                                    <Typography variant="body2" className={classes.boldText} gutterBottom>Where will your event be hosted? </Typography>
+                                    <Typography variant="body2" className={classes.boldText} gutterBottom>Where will your event be hosted? *</Typography>
                                     <FormControl component="fieldset" value={submission.location} onChange={handleChangeFor('location')}>
                                         <RadioGroup value={submission.location} name="radio-buttons-group">
                                             <FormControlLabel value={'Online via the TCSW virtual venue'} control={<Radio />} label="Online via the TCSW virtual venue" />
@@ -355,7 +384,7 @@ function SubmissionPage() {
                                     <TextField fullWidth id="location-input" label="Location Details" variant="outlined" value={submission.location_details} onChange={handleChangeFor('location_details')} />
                                 </Box>
                                 <Box p={1}>
-                                    <Typography variant="body2" className={classes.boldText} gutterBottom>What day(s) work for you to host your event? </Typography>
+                                    <Typography variant="body2" className={classes.boldText} gutterBottom>What day(s) work for you to host your event? *</Typography>
                                     <Typography variant="caption" display="block" gutterBottom> Select all that apply. </Typography>
                                     <div>
                                         <FormControl fullWidth>
@@ -417,7 +446,7 @@ function SubmissionPage() {
                                     </div>
                                 </Box>
                                 <Box p={1}>
-                                    <Typography variant="body2" className={classes.boldText} gutterBottom>What is the event format? </Typography>
+                                    <Typography variant="body2" className={classes.boldText} gutterBottom>What is the event format? *</Typography>
                                     <FormControl component="fieldset" required onChange={handleChangeFor('format')}>
                                         <RadioGroup value={submission.format} name="radio-buttons-group">
                                             <FormControlLabel value={'Presentation'} control={<Radio />} label="Presentation" />
@@ -435,7 +464,7 @@ function SubmissionPage() {
                                     </FormControl>
                                 </Box>
                                 <Box p={1}>
-                                    <Typography variant="body2" className={classes.boldText} gutterBottom>What industry are you focusing on? </Typography>
+                                    <Typography variant="body2" className={classes.boldText} gutterBottom>What industry are you focusing on? *</Typography>
                                     <Typography variant="caption" display="block" gutterBottom> Please select all that are applicable. </Typography>
                                     <div>
                                         <FormControl fullWidth>
@@ -463,7 +492,7 @@ function SubmissionPage() {
                                     </div>
                                 </Box>
                                 <Box p={1}>
-                                    <Typography variant="body2" className={classes.boldText} gutterBottom>In which track would you like your event featured? </Typography>
+                                    <Typography variant="body2" className={classes.boldText} gutterBottom>In which track would you like your event featured? *</Typography>
                                     <FormControl component="fieldset" required onChange={handleChangeFor('track')}>
                                         <RadioGroup value={submission.track} name="radio-buttons-group">
                                             <FormControlLabel value={'Growth'} control={<Radio />} label="Growth" />
@@ -474,14 +503,12 @@ function SubmissionPage() {
                                             <FormControlLabel value={'Developer'} control={<Radio />} label="Developer" />
                                             <FormControlLabel value={'People'} control={<Radio />} label="People" />
                                             <FormControlLabel value={'Spotlight'} control={<Radio />} label="Spotlight" />
-                                            <FormControlLabel value={'Investor'} control={<Radio />} label="Investor" />
-                                            <FormControlLabel value={'Corporate'} control={<Radio />} label="Corporate" />
                                             <FormControlLabel value={'Other'} control={<Radio />} label="Other" />
                                         </RadioGroup>
                                     </FormControl>
                                 </Box>
                                 <Box p={1}>
-                                    <Typography variant="body2" className={classes.boldText} gutterBottom>What is the purpose of your event? </Typography>
+                                    <Typography variant="body2" className={classes.boldText} gutterBottom>What is the purpose of your event? *</Typography>
                                     <FormControl component="fieldset" onChange={handleChangeFor('purpose')}>
                                         <RadioGroup value={submission.purpose} name="radio-buttons-group">
                                             <FormControlLabel value={'To Enable: Help teach a skill or set of skills'} control={<Radio />} label="To Enable: Help teach a skill or set of skills" />
@@ -491,7 +518,7 @@ function SubmissionPage() {
                                     </FormControl>
                                 </Box>
                                 <Box p={1}>
-                                    <Typography variant="body2" className={classes.boldText} gutterBottom>Does your event cater to one or more of the following? </Typography>
+                                    <Typography variant="body2" className={classes.boldText} gutterBottom>Does your event cater to one or more of the following? *</Typography>
                                     <FormControl component="fieldset" required value={submission.area_of_interest} onChange={handleChangeFor('area_of_interest')}>
                                         <RadioGroup value={submission.area_of_interest} name="radio-buttons-group">
                                             <FormControlLabel value={'Celebrating and empowering female leaders'} control={<Radio />} label="Celebrating and empowering female leaders" />
@@ -517,7 +544,18 @@ function SubmissionPage() {
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom> Who would you like to speak at your event? </Typography>
                                     <Typography variant="caption" display="block" gutterBottom>Planning to have speakers? Awesome! We'd love to know who you had in mind. Don't worry, this can change down the road. If you need help finding speakers, please list that too! </Typography>
-                                    <TextField fullWidth id="speaker-input" label="Speakers" variant="outlined" required value={submission.speakers} onChange={handleChangeFor('speakers')} />
+                                    {/* <TextField fullWidth id="speaker-input" label="Speakers" variant="outlined" required value={submission.speakers} onChange={handleChangeFor('speakers')} /> */}
+                                    <ReactMde
+                                        className={classes.feedback}
+                                        value={submission.speakers}
+                                        onChange={handleMdeChangeFor('speakers')}
+                                        selectedTab={selectedTab}
+                                        onTabChange={setSelectedTab}
+                                        minEditorHeight={200}
+                                        generateMarkdownPreview={markdown =>
+                                            Promise.resolve(converter.makeHtml(markdown))
+                                        }
+                                    />
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>We require all TCSW session hosts to commit to following Covid safety protocols, which will be released by TCSW in August based on CDC and State Guidelines.  Do you commit to following all TCSW Covid Safety protocols? </Typography>
@@ -533,20 +571,20 @@ function SubmissionPage() {
                                     <TextField fullWidth id="media-input" label="Media" variant="outlined" value={submission.media} onChange={handleChangeFor('media')} />
                                 </Box>
                                 <Box p={1}>
-                                    <Typography variant="body2" className={classes.boldText} gutterBottom>What does success look like for your event? </Typography>
+                                    <Typography variant="body2" className={classes.boldText} gutterBottom>What does success look like for your event?</Typography>
                                     <TextField fullWidth id="success-input" label="Success looks like..." variant="outlined" required value={submission.success} onChange={handleChangeFor('success')} />
                                 </Box>
                                 <Box p={1}>
-                                    <Typography variant="body2" className={classes.boldText} gutterBottom>What makes you most excited to host an event during Twin Cities Startup Week? </Typography>
+                                    <Typography variant="body2" className={classes.boldText} gutterBottom>What makes you most excited to host an event during Twin Cities Startup Week?</Typography>
                                     <TextField fullWidth id="excited-input" label="Most excited to host because..." variant="outlined" required value={submission.excited} onChange={handleChangeFor('excited')} />
                                 </Box>
                                 <Box p={1}>
-                                    <Typography variant="body2" className={classes.boldText} gutterBottom> Who else should be hosting an event? (referral)</Typography>
+                                    <Typography variant="body2" className={classes.boldText} gutterBottom> Who else should be hosting an event? (optional)</Typography>
                                     <Typography variant="caption" display="block" gutterBottom>We love working with new event hosts and businesses during the week! Do know of any individuals or organizations that have a story to tell, something to teach or incredible content to share? Please list their name, email address and tell us a little bit about why they'd make a great event host - we'll make sure to reach out to them!</Typography>
                                     <TextField fullWidth id="referral-input" label="Referral" variant="outlined" value={submission.other_hosts} onChange={handleChangeFor('other_hosts')} />
                                 </Box>
                                 <Box p={1}>
-                                    <Typography variant="body2" className={classes.boldText} gutterBottom> More to share?</Typography>
+                                    <Typography variant="body2" className={classes.boldText} gutterBottom> More to share? (optional)</Typography>
                                     <Typography variant="caption" display="block" gutterBottom>Did we miss anything? Do you have questions? Is there something else about your event you want to share that didn't fit in the questions above? Let us know!</Typography>
                                     <TextField fullWidth id="questions-input" label="More to share?" variant="outlined" value={submission.other_info} onChange={handleChangeFor('other_info')} />
                                 </Box>
