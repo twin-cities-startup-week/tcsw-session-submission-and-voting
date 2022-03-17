@@ -58,6 +58,12 @@
     border-bottom: solid black;
 }
 
+.edit-button{
+    height: 50px;
+    width: 100px;
+    float: right;
+}
+
 .approve-button{
     height: 50px;
     width: 100px;

@@ -20,7 +20,9 @@ const useStyles = makeStyles({
     },
     item: {
         paddingTop: '33px',
-        display: 'flex',
+        ['@media (min-width:780px)']: { // eslint-disable-line no-useless-computed-key
+            display: 'flex',
+        },
     },
     title: {
         paddingTop: '20px',
@@ -71,7 +73,7 @@ function VotePage() {
 
     return(
         <div className='vote-page-view'>
-            <Grid container spacing={0} style={{ width: '100%' }}>
+            <Grid container spacing={0} style={{ backgroundColor: '#FBBD19', width: '100%' }}>
                 <Grid item md={12} lg={2} order={{ xs: 2, sm: 2, md: 2, lg: 1 }} style={{ backgroundColor: '#FBBD19', padding: '20px' }}>
                     <h2 className='left-header'>TCSW 2022</h2>
                     {/* <hr /> */}
@@ -103,10 +105,15 @@ function VotePage() {
                         </div>
                         <div style={{ flex: 1 }}>
                             {user.admin &&
-                                <>
-                                    <Button sx={{ float: 'right', marginTop: '8px', marginLeft: '20px' }} className='approve-button' variant="contained" color="success" onClick={() => sessionApprove(details.id)}>Approve</Button>
-                                    <Button sx={{ float: 'right', marginTop: '8px' }} className='deny-button' variant="contained" color="error" onClick={() => sessionDeny(details.id)}>Deny</Button>
-                                </>
+                                (
+                                    <>
+                                        <Button sx={{ float: 'right', marginTop: '8px', marginLeft: '20px' }} className='approve-button' variant="contained" color="success" onClick={() => sessionApprove(details.id)}>
+                                            Approve
+                                        </Button>
+                                        <Button sx={{ float: 'right', marginTop: '8px', marginLeft: '20px' }} className='deny-button' variant="contained" color="error" onClick={() => sessionDeny(details.id)}>Deny</Button>
+                                        <Button sx={{ float: 'right', marginTop: '8px' }} className='edit-button' onClick={() => history.push(`/votepage/${details.id}`)}>Edit</Button>
+                                    </>
+                                )
                             }
                             <h2>{details.title}</h2>
                             <MarkdownView

@@ -234,15 +234,17 @@ function SubmissionPage() {
                 || newSubmission.track === ''
                 || newSubmission.area_of_interest === ''
                 || newSubmission.diversity === ''
+                || newSubmission.diversity === false
                 || newSubmission.speakers === ''
                 || newSubmission.covid === ''
+                || newSubmission.covid === false
                 || newSubmission.success === ''
                 || newSubmission.excited === ''
                 || newSubmission.industry.length === 0
                 || newSubmission.time.length === 0
                 || newSubmission.date.length === 0) {
                 setOpen(false);
-                alert('All fields must be completed in order to submit the form!');
+                alert('All required fields must be completed in order to submit the form!');
                 return;
             }
         } catch (e) {
@@ -283,6 +285,15 @@ function SubmissionPage() {
     }
 
     const handleCheckboxChangeFor = (property) => (event) => {
+        dispatch({
+            type: "SET_EDITING_SUBMISSION", payload: {
+                ...submission,
+                [property]: event.target.checked,
+            }
+        });
+    }
+
+    const handleMultiCheckboxChangeFor = (property) => (event) => {
         let listOfItems = [...submission[property]];
         if (event.target.checked && listOfItems.indexOf(event.target.name) < 0) {
             listOfItems = [...submission[property], event.target.name];
@@ -295,7 +306,6 @@ function SubmissionPage() {
                 [property]: listOfItems,
             }
         });
-        console.log(event.target.name, event.target.checked);
     }
 
     return (
@@ -408,7 +418,7 @@ function SubmissionPage() {
                                                 {dates.map((date) => (
                                                     <FormControlLabel
                                                         control={
-                                                            <Checkbox checked={submission.date.indexOf(date) >= 0} onChange={handleCheckboxChangeFor('date')} name={date} />
+                                                            <Checkbox checked={submission.date.indexOf(date) >= 0} onChange={handleMultiCheckboxChangeFor('date')} name={date} />
                                                         }
                                                         label={date}
                                                     />
@@ -431,7 +441,7 @@ function SubmissionPage() {
                                                 {times.map((time) => (
                                                     <FormControlLabel
                                                         control={
-                                                            <Checkbox checked={submission.time.indexOf(time) >= 0} onChange={handleCheckboxChangeFor('time')} name={time} />
+                                                            <Checkbox checked={submission.time.indexOf(time) >= 0} onChange={handleMultiCheckboxChangeFor('time')} name={time} />
                                                         }
                                                         label={time}
                                                     />
@@ -467,7 +477,7 @@ function SubmissionPage() {
                                                 {industries.map((industry) => (
                                                     <FormControlLabel
                                                         control={
-                                                            <Checkbox checked={submission.industry.indexOf(industry) >= 0} onChange={handleCheckboxChangeFor('industry')} name={industry} />
+                                                            <Checkbox checked={submission.industry.indexOf(industry) >= 0} onChange={handleMultiCheckboxChangeFor('industry')} name={industry} />
                                                         }
                                                         label={industry}
                                                     />
@@ -519,11 +529,15 @@ function SubmissionPage() {
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>We require all TCSW events with three or more speakers have gender and/or race/ethnicity diversity with regard to its organization, participation, and content. Will your event align with this requirement? </Typography>
-                                    <FormControl component="fieldset" required value={submission.diversity} onChange={handleChangeFor('diversity')}>
-                                        <RadioGroup value={submission.diversity} name="radio-buttons-group">
-                                            <FormControlLabel value="true" control={<Radio />} label="Yes" />
-                                            <FormControlLabel value="false" control={<Radio />} label="No" />
-                                        </RadioGroup>
+                                    <FormControl fullWidth>
+                                        <FormGroup>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox required checked={submission.diversity} onChange={handleCheckboxChangeFor('diversity')} name={'diversity'} />
+                                                }
+                                                label="I Agree"
+                                            />
+                                        </FormGroup>
                                     </FormControl>
                                 </Box>
                                 <Box p={1}>
@@ -543,12 +557,16 @@ function SubmissionPage() {
                                     />
                                 </Box>
                                 <Box p={1}>
-                                    <Typography variant="body2" className={classes.boldText} gutterBottom>We require all TCSW session hosts to commit to following Covid safety protocols, which will be released by TCSW in August based on CDC and State Guidelines.  Do you commit to following all TCSW Covid Safety protocols? </Typography>
-                                    <FormControl component="fieldset" required value={submission.covid} onChange={handleChangeFor('covid')}>
-                                        <RadioGroup value={submission.covid} name="radio-buttons-group">
-                                            <FormControlLabel value="true" control={<Radio />} label="Yes" />
-                                            <FormControlLabel value="false" control={<Radio />} label="No" />
-                                        </RadioGroup>
+                                    <Typography variant="body2" className={classes.boldText} gutterBottom>We require all TCSW session hosts to commit to following COVID-19 safety protocols, which will be released by TCSW in August based on CDC and State Guidelines.  Do you agree to following all TCSW COVID-19 Safety protocols? </Typography>
+                                    <FormControl fullWidth>
+                                        <FormGroup>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox required checked={submission.covid} onChange={handleCheckboxChangeFor('covid')} name={'covid'} />
+                                                }
+                                                label="I Agree"
+                                            />
+                                        </FormGroup>
                                     </FormControl>
                                 </Box>
                                 <Box p={1}>
