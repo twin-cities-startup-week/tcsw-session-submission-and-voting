@@ -31,7 +31,7 @@ function PanelViewPage() {
     const goToPanelDetails = ( session ) => {
         dispatch({ type: 'FETCH_PANEL_DETAILS', payload: session})
 
-        history.push('/votepage')
+        history.push(`/votepage/${session.id}`);
     }
 
     // allow the drop downs to show what has been selected.

@@ -67,11 +67,11 @@ function LandingPage() {
                 onClick={() => history.push('/submission')}
               > Submission Form</Button>
 
-              <Button 
+              {/* <Button 
                 variant="contained"
                 sx={{ mt: 2, mb: 2, ml: 2 }}
                 onClick={() => history.push('/panelistView')}
-              > Search Sessions</Button>
+              > Search Sessions</Button> */}
           </Box>
           }
 

@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import Radio from '@mui/material/Radio';
-import { Dialog, DialogTitle, DialogContent } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, Checkbox, FormGroup } from '@mui/material';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
@@ -282,6 +282,22 @@ function SubmissionPage() {
         });
     }
 
+    const handleCheckboxChangeFor = (property) => (event) => {
+        let listOfItems = [...submission[property]];
+        if (event.target.checked && listOfItems.indexOf(event.target.name) < 0) {
+            listOfItems = [...submission[property], event.target.name];
+        } else if (!event.target.checked) {
+            listOfItems = listOfItems.filter(item => item !== event.target.name);
+        }
+        dispatch({
+            type: "SET_EDITING_SUBMISSION", payload: {
+                ...submission,
+                [property]: listOfItems,
+            }
+        });
+        console.log(event.target.name, event.target.checked);
+    }
+
     return (
         <div className={classes.root}>
             
@@ -388,27 +404,16 @@ function SubmissionPage() {
                                     <Typography variant="caption" display="block" gutterBottom> Select all that apply. </Typography>
                                     <div>
                                         <FormControl fullWidth>
-                                            <InputLabel id="demo-multiple-name-label">Date</InputLabel>
-                                            <Select
-                                                labelId="demo-multiple-name-label"
-                                                id="demo-multiple-name"
-                                                multiple
-                                                value={getArray(submission.date)}
-                                                onChange={handleChangeFor('date')}
-                                                input={<OutlinedInput label="Date" />}
-                                                MenuProps={MenuProps}
-                                                
-                                            >
+                                            <FormGroup>
                                                 {dates.map((date) => (
-                                                    <MenuItem
-                                                        key={date}
-                                                        value={date}
-                                                        style={getDateStyles(date, submission.date, theme)}
-                                                    >
-                                                        {date}
-                                                    </MenuItem>
+                                                    <FormControlLabel
+                                                        control={
+                                                            <Checkbox checked={submission.date.indexOf(date) >= 0} onChange={handleCheckboxChangeFor('date')} name={date} />
+                                                        }
+                                                        label={date}
+                                                    />
                                                 ))}
-                                            </Select>
+                                            </FormGroup>
                                         </FormControl>
                                     </div>
                                 </Box>
@@ -422,26 +427,16 @@ function SubmissionPage() {
                                     <Typography variant="caption" display="block" gutterBottom> TCSW is packed with events! As we piece together our calendar, we will work with you to find a great slot for your event. Please select all that apply. </Typography>
                                     <div>
                                         <FormControl fullWidth>
-                                            <InputLabel id="demo-multiple-name-label">Time</InputLabel>
-                                            <Select
-                                                labelId="demo-multiple-name-label"
-                                                id="demo-multiple-name"
-                                                multiple
-                                                value={getArray(submission.time)}
-                                                onChange={handleChangeFor('time')}
-                                                input={<OutlinedInput label="Time" />}
-                                                MenuProps={MenuProps}
-                                            >
+                                            <FormGroup>
                                                 {times.map((time) => (
-                                                    <MenuItem
-                                                        key={time}
-                                                        value={time}
-                                                        style={getTimeStyles(time, submission.time, theme)}
-                                                    >
-                                                        {time}
-                                                    </MenuItem>
+                                                    <FormControlLabel
+                                                        control={
+                                                            <Checkbox checked={submission.time.indexOf(time) >= 0} onChange={handleCheckboxChangeFor('time')} name={time} />
+                                                        }
+                                                        label={time}
+                                                    />
                                                 ))}
-                                            </Select>
+                                            </FormGroup>
                                         </FormControl>
                                     </div>
                                 </Box>
@@ -468,26 +463,16 @@ function SubmissionPage() {
                                     <Typography variant="caption" display="block" gutterBottom> Please select all that are applicable. </Typography>
                                     <div>
                                         <FormControl fullWidth>
-                                            <InputLabel id="demo-multiple-name-label">Industry</InputLabel>
-                                            <Select
-                                                labelId="demo-multiple-name-label"
-                                                id="demo-multiple-name"
-                                                multiple
-                                                value={getArray(submission.industry)}
-                                                onChange={handleChangeFor('industry')}
-                                                input={<OutlinedInput label="Industry" />}
-                                                MenuProps={MenuProps}
-                                            >
+                                            <FormGroup>
                                                 {industries.map((industry) => (
-                                                    <MenuItem
-                                                        key={industry}
-                                                        value={industry}
-                                                        style={getIndustryStyles(industry, submission.industry, theme)}
-                                                    >
-                                                        {industry}
-                                                    </MenuItem>
+                                                    <FormControlLabel
+                                                        control={
+                                                            <Checkbox checked={submission.industry.indexOf(industry) >= 0} onChange={handleCheckboxChangeFor('industry')} name={industry} />
+                                                        }
+                                                        label={industry}
+                                                    />
                                                 ))}
-                                            </Select>
+                                            </FormGroup>
                                         </FormControl>
                                     </div>
                                 </Box>

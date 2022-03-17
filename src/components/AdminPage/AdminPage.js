@@ -108,9 +108,7 @@ function AdminPage() {
   }, [dispatch]);
 
   const gotoDetails = (session) => {
-    dispatch({ type: "FETCH_PANEL_DETAILS", payload: session });
-
-    history.push("/votepage");
+    history.push(`/votepage/${session.id}`);
   };
 
   return (
@@ -122,7 +120,7 @@ function AdminPage() {
         ))}
       </div>
       <Grid container spacing={1} style={{width: '100%', marginTop: '15px'}}>
-        <Grid item md={12} lg={6}>
+        <Grid item lg={12} xl={6}>
           <Container>
             <div
               style={{
@@ -170,7 +168,7 @@ function AdminPage() {
           </Container>
         </Grid>
 
-        <Grid item md={12} lg={6}>
+        <Grid item lg={12} xl={6}>
           <Container>
             <div
               style={{

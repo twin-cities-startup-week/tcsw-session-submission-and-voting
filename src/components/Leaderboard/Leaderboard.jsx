@@ -20,7 +20,7 @@ function Leaderboard() {
     const pushToDetailPage = (params) => {
         console.log('Details of clicked row - ', params.row)
         dispatch({ type: 'FETCH_PANEL_DETAILS', payload: params.row })
-        history.push(`/votepage`)
+        history.push(`/votepage/${params.row.id}`);
     }
 
         /* Takes in the index provided and adds st, nd, or rd 

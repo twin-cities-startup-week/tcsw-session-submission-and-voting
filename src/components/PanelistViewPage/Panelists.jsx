@@ -30,7 +30,7 @@ function Panelists() {
     const goToPanelDetails = ( session ) => {
         dispatch({ type: 'FETCH_PANEL_DETAILS', payload: session})
 
-        history.push('/votepage')
+        history.push(`/votepage/${session.id}`)
     }
 
     const restFilters = () => {

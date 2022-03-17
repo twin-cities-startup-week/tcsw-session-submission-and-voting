@@ -220,7 +220,7 @@ function App() {
               {/* <PanelistViewPage /> */}
             </Route>
 
-            <Route exact path = "/votepage">
+            <Route exact path = "/votepage/:id">
               {/* <Panelists /> */}
               <VotePage />
             </Route>

@@ -30,10 +30,27 @@ const blankSubmission = {
     other_info: '',
 }
 
+const getArray = (value) => {
+    let result = [];
+    if (typeof value === 'string') {
+        result = JSON.parse(value);
+    } else if (Array.isArray(value)) {
+        result = value;
+    }
+    return result;
+}
+
 const editSubmission = (state = blankSubmission, action ) => {
+    let result;
     switch (action.type) {
         case 'SET_EDITING_SUBMISSION':
-            return action.payload;
+            result = {
+                ...action.payload,
+                industry: getArray(action.payload.industry),
+                time: getArray(action.payload.time),
+                date: getArray(action.payload.date),
+            }
+            return result;
         case 'CLEAR_EDITING_SUBMISSION':
             return blankSubmission;
         default:

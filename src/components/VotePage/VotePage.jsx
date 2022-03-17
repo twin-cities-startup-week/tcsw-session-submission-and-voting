@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MarkdownView from 'react-showdown';
 import { makeStyles } from '@mui/styles';
-import { Button } from '@mui/material';
+import { Button, Grid, Container } from '@mui/material';
+import { useHistory, useParams } from 'react-router-dom';
 
 // Styling
 const useStyles = makeStyles({
@@ -35,7 +36,9 @@ const useStyles = makeStyles({
 
 function VotePage() {
     const user = useSelector((store) => store.user);
-    const store = useReduxStore();
+    const details = useSelector((store) => store.panelistDetailsReducer);
+    const { id: submissionId } = useParams();
+    // const store = useReduxStore();
     const dispatch = useDispatch();
     const classes = useStyles();
     const [vote, setVote ] = useState(0);
@@ -43,13 +46,10 @@ function VotePage() {
     const [voteButton, toggleVoteButton ] = useState(false)
 
    useEffect(() => {
-        fetchPanelistDetails
-   }, [])
-
-    // Fetches dispatches to server for session information   
-   const fetchPanelistDetails = ( session ) => {
-        dispatch({ type: 'FETCH_PANEL_DETAILS', payload: session})
-   } 
+       if (submissionId && submissionId !== '') {
+           dispatch({ type: 'FETCH_PANEL_DETAILS', payload: { id: submissionId } })
+       }
+   }, [submissionId, dispatch])
 
     // function to add a Vote to the session vote count.   
    const addVote = ( sessionId ) => {
@@ -71,37 +71,32 @@ function VotePage() {
 
     return(
         <div className='vote-page-view'>
-
-            {store.panelistDetailsReducer.map(( details, index ) => (
-
-                <div className='left-bar'>
-
-                    <div className='vote-section'>
-                        <h2 className='left-header'>TCSW 2022</h2>
-                        <p className='vote-suggestion'>Like this Speaker?! Click Vote!</p>
-                        {/* <button onClick={() => setVote( vote + 1 )}>VOTE! <span>{vote}</span></button>  */}
-
-                        { voteButton === false && <Button className="vote-button" variant="contained" size="large" onClick={() => addVote( details.id )}>Vote</Button> }
-                        
-                    </div>
-
-                    <div className='extra-details-section'>
-                        <h5>Track: {details.track}</h5>
-                        <h5>Industry: {details.industry}</h5>
-                        <h5>Format: {details.format}</h5>
-                        <h5>Time: {details.time}</h5>
-                        <h5>Date: {details.date}</h5>
-                    </div>
-
-                </div>
-
-            ))}
-
-            
-            {store.panelistDetailsReducer.map(( details ) => (
-
-                <div className= 'right-bar' key={details.id}>
-
+            <Grid container spacing={0} style={{ width: '100%' }}>
+                <Grid item md={12} lg={2} order={{ xs: 2, sm: 2, md: 2, lg: 1 }} style={{ backgroundColor: '#FBBD19', padding: '20px' }}>
+                    <h2 className='left-header'>TCSW 2022</h2>
+                    {/* <hr /> */}
+                    <h5>Track:</h5>
+                    <ul>
+                        <li>{details.track}</li>
+                    </ul>
+                    <h5>Industry:</h5>
+                    <ul>
+                        {details.industry && details.industry.map(industry => <li>{industry}</li>)}
+                    </ul>
+                    <h5>Format:</h5>
+                    <ul>
+                        <li>{details.format}</li>
+                    </ul>
+                    <h5>Time:</h5>
+                    <ul>
+                        {details.time && details.time.map(time => <li>{time}</li>)}
+                    </ul>
+                    <h5>Date:</h5>
+                    <ul>
+                        {details.date && details.date.map(date => <li>{date}</li>)}
+                    </ul>
+                </Grid>
+                <Grid item md={12} lg={10} order={{ xs: 1, sm: 1, md: 1, lg: 2 }} style={{ backgroundColor: '#FFF', padding: '20px'  }}>
                     <div className={classes.item}>
                         <div style={{ paddingRight: '20px' }}>
                             <img src={details.image} className={classes.previewImage} />
@@ -135,18 +130,15 @@ function VotePage() {
                     <div className='related-media'>
                         <h3>Related Media</h3>
                         <p>{details.media}</p>
-                    </div>    
+                    </div>
 
-                    <div className='approval-buttons'>  
+                    <div className='approval-buttons'>
 
 
 
                     </div>
-
-                </div>
-
-            ))}
-
+                </Grid>
+            </Grid>
         </div>
     )
 }
