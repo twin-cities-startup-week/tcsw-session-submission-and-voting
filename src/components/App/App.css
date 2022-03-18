@@ -260,9 +260,10 @@ Landing Page Logged out
 }
 
 #landing-description {
-  margin: 10px;
   text-align: center;
-  width: 900px;
+  padding-left: 10px;
+  padding-right: 10px;
+  max-width: 900px;
   margin: auto;
 }
 
