@@ -31,7 +31,14 @@ function ForgotPassword () {
         } else {
           /* If password input and confirm password input do not match
               display the error message, passwords do not match. */
-          alert('Please enter an email address.');
+          dispatch({
+            type: 'SET_GLOBAL_MODAL',
+            payload: {
+              modalOpen: true,
+              title: 'Missing Fields',
+              body: 'Please enter an email address.',
+            },
+          });
         }
       }; // end login
 

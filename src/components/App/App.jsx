@@ -30,6 +30,7 @@ import ResetPassword from '../ResetPassword/ResetPassword';
 import Leaderboard from '../Leaderboard/Leaderboard';
 import AdminContentPage from '../AdminContentPage/AdminContentPage';
 import SubmissionListPage from '../SubmissionListPage/SubmissionListPage';
+import GlobalAlertModal from '../GlobalAlertModal/GlobalAlertModal';
 
 import './App.css';
 
@@ -117,165 +118,168 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-    <Router>
-      <div style={{position: 'relative', minHeight: '100%'}}>
-        <div style={{paddingBottom: '150px'}}>
-          <Nav />
-          <Switch>
-            {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-            <Redirect exact from="/" to="/home" />
+      <GlobalAlertModal
+        closeActionType="SET_GLOBAL_MODAL"
+      />
+      <Router>
+        <div style={{position: 'relative', minHeight: '100%'}}>
+          <div style={{paddingBottom: '150px'}}>
+            <Nav />
+            <Switch>
+              {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
+              <Redirect exact from="/" to="/home" />
 
-            {/* Visiting localhost:3000/about will show the about page. */}
-            <Route
-              // shows AboutPage at all times (logged in or not)
-              exact
-              path="/about"
-            >
-              <AboutPage />
-            </Route>
+              {/* Visiting localhost:3000/about will show the about page. */}
+              <Route
+                // shows AboutPage at all times (logged in or not)
+                exact
+                path="/about"
+              >
+                <AboutPage />
+              </Route>
 
-            <Route
-              exact path="/forgotPassword">
-                <ForgotPassword/>
-            </Route>
-            <Route
-              exact path="/password/reset/:token">
-                <ResetPassword />
-            </Route>
-            <Route
-              exact path="/home">
-                <LandingPage/>
-            </Route>
-            <Route
-              // shows FaqPage at all times (logged in or not)
-              exact
-              path="/faq"
-            >
-              <FaqPage />
-            </Route>
+              <Route
+                exact path="/forgotPassword">
+                  <ForgotPassword/>
+              </Route>
+              <Route
+                exact path="/password/reset/:token">
+                  <ResetPassword />
+              </Route>
+              <Route
+                exact path="/home">
+                  <LandingPage/>
+              </Route>
+              <Route
+                // shows FaqPage at all times (logged in or not)
+                exact
+                path="/faq"
+              >
+                <FaqPage />
+              </Route>
 
-            <Route
-              // shows adminPage at all times (logged in or not)
-              exact
-              path="/admin"
-            >
-              <AdminPage />
-            </Route>
+              <Route
+                // shows adminPage at all times (logged in or not)
+                exact
+                path="/admin"
+              >
+                <AdminPage />
+              </Route>
 
-            <Route
-              // shows adminPage at all times (logged in or not)
-              exact
-              path="/admin/content"
-            >
-              <AdminContentPage />
-            </Route>
+              <Route
+                // shows adminPage at all times (logged in or not)
+                exact
+                path="/admin/content"
+              >
+                <AdminContentPage />
+              </Route>
 
-            <Route
-              exact path='/leaderboard'>
-                <Leaderboard/>
-            </Route>  
+              <Route
+                exact path='/leaderboard'>
+                  <Leaderboard/>
+              </Route>  
 
-            <Route
-              exact path='/user/submission'>
-                <SubmissionListPage />
-            </Route>        
+              <Route
+                exact path='/user/submission'>
+                  <SubmissionListPage />
+              </Route>        
 
-            {/* For protected routes, the view could show one of several things on the same route.
-              Visiting localhost:3000/user will show the UserPage if the user is logged in.
-              If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
-              Even though it seems like they are different pages, the user is always on localhost:3000/user */}
-            
-            {/* <ProtectedRoute
-              // logged in shows UserPage else shows LoginPage
-              exact
-              path="/user"
-            >
-              <UserPage />
-            </ProtectedRoute> */}
-  {/* 
-            <ProtectedRoute
-              // logged in shows InfoPage else shows LoginPage
-              exact
-              path="/info"
-            >
-              <InfoPage />
-            </ProtectedRoute> */}
-
-            <ProtectedRoute
-              exact
-              path="/submission"
-            >
-              <SubmissionPage />
-            </ProtectedRoute>
+              {/* For protected routes, the view could show one of several things on the same route.
+                Visiting localhost:3000/user will show the UserPage if the user is logged in.
+                If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
+                Even though it seems like they are different pages, the user is always on localhost:3000/user */}
+              
+              {/* <ProtectedRoute
+                // logged in shows UserPage else shows LoginPage
+                exact
+                path="/user"
+              >
+                <UserPage />
+              </ProtectedRoute> */}
+    {/* 
+              <ProtectedRoute
+                // logged in shows InfoPage else shows LoginPage
+                exact
+                path="/info"
+              >
+                <InfoPage />
+              </ProtectedRoute> */}
 
               <ProtectedRoute
                 exact
-                path="/submission/:id/edit"
+                path="/submission"
               >
                 <SubmissionPage />
               </ProtectedRoute>
 
-            <Route exact path = "/panelistView">
-              <Panelists />
-              {/* <PanelistViewPage /> */}
-            </Route>
+                <ProtectedRoute
+                  exact
+                  path="/submission/:id/edit"
+                >
+                  <SubmissionPage />
+                </ProtectedRoute>
 
-            <Route exact path = "/votepage/:id">
-              {/* <Panelists /> */}
-              <VotePage />
-            </Route>
+              <Route exact path = "/panelistView">
+                <Panelists />
+                {/* <PanelistViewPage /> */}
+              </Route>
 
-            <Route
-              exact
-              path="/login"
-            >
-              {user.id ?
-                // If the user is already logged in, 
-                // redirect to the /user page
-                <Redirect to="/home" />
-                :
-                // Otherwise, show the login page
-                <LoginPage />
-              }
-            </Route>
+              <Route exact path = "/votepage/:id">
+                {/* <Panelists /> */}
+                <VotePage />
+              </Route>
 
-            <Route
-              exact
-              path="/registration"
-            >
-              {user.id ?
-                // If the user is already logged in, 
-                // redirect them to the /home page
-                <Redirect to="/home" />
-                :
-                // Otherwise, show the registration page
-                <RegisterPage />
-              }
-            </Route>
+              <Route
+                exact
+                path="/login"
+              >
+                {user.id ?
+                  // If the user is already logged in, 
+                  // redirect to the /user page
+                  <Redirect to="/home" />
+                  :
+                  // Otherwise, show the login page
+                  <LoginPage />
+                }
+              </Route>
 
-            <Route
-              exact
-              path="/home"
-            >
-              {user.id ?
-                // If the user is already logged in, 
-                // redirect them to the /home page
-                <Redirect to="/home" />
-                :
-                // Otherwise, show the Landing page
-                <LandingPage />
-              }
-            </Route>
+              <Route
+                exact
+                path="/registration"
+              >
+                {user.id ?
+                  // If the user is already logged in, 
+                  // redirect them to the /home page
+                  <Redirect to="/home" />
+                  :
+                  // Otherwise, show the registration page
+                  <RegisterPage />
+                }
+              </Route>
 
-            {/* If none of the other routes matched, we will show a 404. */}
-            <Route>
-              <h1>404</h1>
-            </Route>
-          </Switch>
+              <Route
+                exact
+                path="/home"
+              >
+                {user.id ?
+                  // If the user is already logged in, 
+                  // redirect them to the /home page
+                  <Redirect to="/home" />
+                  :
+                  // Otherwise, show the Landing page
+                  <LandingPage />
+                }
+              </Route>
+
+              {/* If none of the other routes matched, we will show a 404. */}
+              <Route>
+                <h1>404</h1>
+              </Route>
+            </Switch>
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
-    </Router>
+      </Router>
     </ThemeProvider>
   );
 }

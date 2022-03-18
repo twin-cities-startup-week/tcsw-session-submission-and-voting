@@ -52,7 +52,7 @@ function LandingPage() {
             <Button
               variant="contained"
               sx={{ mt: 2, mb: 2, ml: 2 }}
-              onClick={() => history.push('/login')}
+              onClick={() => history.push('/registration')}
             >Register</Button>
           </Box>
           }

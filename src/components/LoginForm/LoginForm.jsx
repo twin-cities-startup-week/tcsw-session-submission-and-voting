@@ -7,6 +7,8 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/Button';
+import GoogleButton from './GoogleLoginButton';
 
 function LoginForm() {
   const [username, setUsername] = useState('');
@@ -46,8 +48,8 @@ function LoginForm() {
   }
 
   return (
-    <Container component={Paper} elevation={8} 
-      sx={{ width: 1/2, m: 'auto', p: 1, pl: 4, pb: 3, bgcolor: '#A7A9AC' }}>
+    <Container style={{maxWidth: 500}}
+      sx={{ mt: 4, bgcolor: '#fff' }}>
 
       <h2 className="registerHeader">Sign In</h2>
 
@@ -55,14 +57,16 @@ function LoginForm() {
           code related to google Oauth is in server.js 
           This uses the user's gmail as the username, and displays their
           first name provided through gmail in the upper right hand corner */}
-      <Box sx={{ textAlign: 'center', mb: 2 }}>
-        <Button 
-          value=""
-          variant="contained"
+      <Box sx={{ textAlign: 'center', mb: 2, mt: 2 }}>
+        <Button
+          contained
           type="submit"
+          sx={{ border: 1, pr: 3 }}
           onClick={handleGoogleLogin}
-          sx={{ mt: 2, mb: 2 }}
-            > Sign in with Google </Button>
+        >
+          <GoogleButton/>
+          Sign in with Google
+        </Button>
       </Box>
 
       <form onSubmit={login}>
@@ -77,9 +81,9 @@ function LoginForm() {
 
         {/* Login form, username input */}
         <Box sx={{ textAlign: 'center' }}>
-          <Box sx={{ m: 1 }}>
+          <Box sx={{ m: 0 }}>
             <label htmlFor="username">
-              <TextField sx={{ width: 500, bgcolor: '#FFFFFF', borderRadius: 1, mb: 2 }}
+              <TextField sx={{ maxWidth: '500px', width: '100%', bgcolor: '#FFFFFF', borderRadius: 1, mb: 2 }}
                 type="text" name="username" label="Username" variant="filled"
                 value={username}
                 required
@@ -89,9 +93,9 @@ function LoginForm() {
           </Box>
 
           {/* Login form, password input */}
-          <Box sx={{ m: 1 }}>
+          <Box sx={{ mb: 2 }}>
             <label htmlFor="password">
-              <TextField sx={{ width: 500, bgcolor: '#FFFFFF', borderRadius: 1, mb: 1 }}
+              <TextField sx={{ maxWidth: '500px', width: '100%', bgcolor: '#FFFFFF', borderRadius: 1, mb: 1 }}
                 type="password" name="password" label="Password" variant="filled"
                 value={password}
                 required
@@ -99,37 +103,37 @@ function LoginForm() {
               />
             </label>
           </Box>
-
-          {/* Forgot your password link */}
-          <center>
-            <button type="button" className="btn btn_asLink"
+          <div style={{maxWidth: 500, width: '100%', height: 100, margin: '0 auto'}}>
+            {/* Forgot your password link */}
+            <button type="button" style={{ float: 'left', margin: 0}} className="btn btn_asLink"
               onClick={() => {
                 history.push('/forgotPassword');
               }}>
-                Forgot your password?
+              Forgot your password?
             </button>
-          </center>
 
-          {/* Sign in button  */}
-          <Button variant="contained" type="submit" name="submit" value="Log In"
-          sx={{ mt: 2, mb: 2 }}
+            {/* Sign in button  */}
+            <Button variant="contained" type="submit" name="submit" value="Log In"
+              sx={{ float: 'right', mr: 0 }}
             > Sign In</Button>
+          </div>
+
         </Box>
       </form>
       
       {/* Yellow container for "Need to sign up?" */}
       <Box component={Paper} elevation={6} 
-        sx={{ bgcolor: '#FBBD19', borderRadius: 1, width: 500, height: 55, m: 'auto' }}>
+        sx={{ bgcolor: '#FBBD19', borderRadius: 1, maxWidth: '500px', width: '100%', height: 65, m: 'auto' }}>
         
         {/* Need to sign up text inside yellow container */}
         <Typography 
-          sx={{ display: 'inline-block', textAlign: 'center', mt: 2, ml: 10 }}
+          sx={{ display: 'inline-block', mt: 2.5, ml: 2.5 }}
           >Need to Sign up?</Typography>
 
         {/* Create Account Button */}
         <Button component={Paper} elevation={8} 
           variant="contained" type="submit" name="submit" value="Log In"
-          sx={{ mt: 1, p: 2, width: 200, height: 40, bgcolor: '#0C495A', 
+          sx={{ mt: 1, p: 2, width: 200, height: 50, bgcolor: '#0C495A', 
           color: '#FBBD19', m: 1, float: 'right' }}
           onClick={() => history.push('/registration')}
           > Create Account</Button>

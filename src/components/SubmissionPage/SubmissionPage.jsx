@@ -143,42 +143,19 @@ function SubmissionPage() {
 
     const theme = useTheme();
 
-    //DATES MULTISELECT FUNCTIONS
-    function getDateStyles(date, dates, theme) {
-        return {
-            fontWeight:
-                getArray(dates).indexOf(date) === -1
-                    ? theme.typography.fontWeightRegular
-                    : theme.typography.fontWeightMedium,
-        };
-    }//end getDateStyles
-
-    function getTimeStyles(time, times, theme) {
-        return {
-            fontWeight:
-                getArray(times).indexOf(time) === -1
-                    ? theme.typography.fontWeightRegular
-                    : theme.typography.fontWeightMedium,
-        };
-    }//end getTimeStyles
-
-
-    //INDUSTRY MULTISELECT FUNCTIONS
-    function getIndustryStyles(industry, industries, theme) {
-        return {
-            fontWeight:
-                getArray(industries).indexOf(industry) === -1
-                    ? theme.typography.fontWeightRegular
-                    : theme.typography.fontWeightMedium,
-        };
-    }//end getIndustryStyles
-
     const onFileChange = async (event) => {
         const selectedFile = event.target.files[0];
         console.log('onFileChange');
         const acceptedFileTypes = ['image/jpeg', 'image/png', 'image/jpg'];
         if (selectedFile && selectedFile.size > 1048576 * 5) {
-            alert('File is too big. File size limit is 5MB.');
+            dispatch({
+                type: 'SET_GLOBAL_MODAL',
+                payload: {
+                    modalOpen: true,
+                    title: 'File size limit exceeded',
+                    body: 'Please upload an image smaller than 5MB.',
+                },
+            });
         } else if (selectedFile && acceptedFileTypes.includes(selectedFile.type)) {
             const copyFile = new Blob([selectedFile], { type: selectedFile.type });
             const resizedFile = await readAndCompressImage(copyFile, imageConfig);
@@ -194,7 +171,14 @@ function SubmissionPage() {
 
     const onSubmissionComplete = () => {
         setOpen(false);
-        alert('Thank you for your submission!');
+        dispatch({
+            type: 'SET_GLOBAL_MODAL',
+            payload: {
+                modalOpen: true,
+                title: 'Your submission was received!',
+                body: 'Watch for a confirmation email with your submission details and next steps. Thank you!',
+            },
+        });
         dispatch({ type: "CLEAR_EDITING_SUBMISSION"});
         setFileToUpload(null);
         history.push('/user/submission');
@@ -202,7 +186,14 @@ function SubmissionPage() {
 
     const onSubmissionFailure = () => {
         setOpen(false);
-        alert('There was a problem with your submission. Please reach out to hello@beta.mn so that we can help.')
+        dispatch({
+            type: 'SET_GLOBAL_MODAL',
+            payload: {
+                modalOpen: true,
+                title: 'Oh no! Something went wrong.',
+                body: 'Please reach out to hello@beta.mn so that we can help.',
+            },
+        });
     }
 
     const getArray = (value) => {
@@ -244,13 +235,27 @@ function SubmissionPage() {
                 || newSubmission.time.length === 0
                 || newSubmission.date.length === 0) {
                 setOpen(false);
-                alert('All required fields must be completed in order to submit the form!');
+                dispatch({
+                    type: 'SET_GLOBAL_MODAL',
+                    payload: {
+                        modalOpen: true,
+                        title: 'Missing Fields',
+                        body: 'Please complete all required fields before continuing.',
+                    },
+                });
                 return;
             }
         } catch (e) {
             console.log(e);
             setOpen(false);
-            alert('Oh no! Something went wrong. Please reach out to us directly for help: hello@beta.mn');
+            dispatch({
+                type: 'SET_GLOBAL_MODAL',
+                payload: {
+                    modalOpen: true,
+                    title: 'Oh no! Something went wrong.',
+                    body: 'Please reach out to hello@beta.mn so that we can help.',
+                },
+            });
             return;
         }
         if (fileToUpload && fileToUpload.name) {
@@ -415,8 +420,9 @@ function SubmissionPage() {
                                     <div>
                                         <FormControl fullWidth>
                                             <FormGroup>
-                                                {dates.map((date) => (
+                                                {dates.map((date, i) => (
                                                     <FormControlLabel
+                                                        key={i}
                                                         control={
                                                             <Checkbox checked={submission.date.indexOf(date) >= 0} onChange={handleMultiCheckboxChangeFor('date')} name={date} />
                                                         }
@@ -438,8 +444,9 @@ function SubmissionPage() {
                                     <div>
                                         <FormControl fullWidth>
                                             <FormGroup>
-                                                {times.map((time) => (
+                                                {times.map((time, i) => (
                                                     <FormControlLabel
+                                                        key={i}
                                                         control={
                                                             <Checkbox checked={submission.time.indexOf(time) >= 0} onChange={handleMultiCheckboxChangeFor('time')} name={time} />
                                                         }
@@ -474,8 +481,9 @@ function SubmissionPage() {
                                     <div>
                                         <FormControl fullWidth>
                                             <FormGroup>
-                                                {industries.map((industry) => (
+                                                {industries.map((industry, i) => (
                                                     <FormControlLabel
+                                                        key={i}
                                                         control={
                                                             <Checkbox checked={submission.industry.indexOf(industry) >= 0} onChange={handleMultiCheckboxChangeFor('industry')} name={industry} />
                                                         }
