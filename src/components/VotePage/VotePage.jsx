@@ -56,7 +56,6 @@ function VotePage() {
     // function to add a Vote to the session vote count.   
    const addVote = ( sessionId ) => {
        dispatch({ type: 'ADD_VOTE_COUNT', payload: sessionId })
-       console.log(' addVote payload', sessionId);
         toggleVoteButton(true);
         alert('Awesome! You Have VOTED!')
    }

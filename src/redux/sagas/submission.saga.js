@@ -12,7 +12,6 @@ function* submissionSaga(){
 
 function* sendSubmissionToServer(action){
     try{
-        console.log('sendSubmission to server saga firing', action );
         const submissionData = Object.assign({}, action.payload);
         if (action.fileToUpload) {
             const selectedFile = action.fileToUpload;
@@ -26,7 +25,6 @@ function* sendSubmissionToServer(action){
         }
         
         const response = yield axios.post('/api/submission', submissionData );
-        console.log('response from db is', response.data );
         yield put({type: 'ADD_SUBMISSION', payload: action.payload });
         action.onComplete();
     } catch (error){
@@ -37,7 +35,6 @@ function* sendSubmissionToServer(action){
 
 function* sendUpdatedSubmissionToServer(action) {
     try {
-        console.log('sendUpdatedSubmission to server saga firing', action);
         const submissionData = Object.assign({}, action.payload);
         if (action.fileToUpload) {
             const selectedFile = action.fileToUpload;
@@ -51,7 +48,6 @@ function* sendUpdatedSubmissionToServer(action) {
         }
 
         const response = yield axios.put('/api/submission', submissionData);
-        console.log('response from db is', response.data);
         yield put({ type: 'ADD_SUBMISSION', payload: action.payload });
         action.onComplete();
     } catch (error) {

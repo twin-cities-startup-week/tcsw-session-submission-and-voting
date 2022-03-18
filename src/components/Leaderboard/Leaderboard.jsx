@@ -18,7 +18,6 @@ function Leaderboard() {
     /* MUI params here provides all details for all rows(sessions)
        To get the clicked row, use params.row */
     const pushToDetailPage = (params) => {
-        console.log('Details of clicked row - ', params.row)
         dispatch({ type: 'FETCH_PANEL_DETAILS', payload: params.row })
         history.push(`/votepage/${params.row.id}`);
     }

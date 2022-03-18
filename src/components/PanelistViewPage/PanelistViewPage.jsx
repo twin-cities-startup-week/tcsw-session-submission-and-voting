@@ -10,9 +10,6 @@ function PanelViewPage() {
     const dispatch = useDispatch();
     const history = useHistory();
     const store = useReduxStore();
-
-    console.log('these are the current panelists', store.panelistReducer);
-
     const [track, setTrack] = useState('');
     const [format, setFormat] = useState('');
     const [ searchTerm, setSearchTerm ] = useState('');

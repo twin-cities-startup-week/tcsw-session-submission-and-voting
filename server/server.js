@@ -13,7 +13,6 @@ let callbackURL = `https://sessions.twincitiesstartupweek.com/auth/google/callba
 if (process.env.NODE_ENV !== 'production') {
     callbackURL = `http://localhost:5000/auth/google/callback`;
 }
-console.log('callbackURL', callbackURL);
 
 if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
   //   Use the GoogleStrategy within Passport.
@@ -25,7 +24,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL,
     }, async (accessToken, refreshToken, profile, done) => {
-      console.log('Google login complete!', profile);
+      // console.log('Google login complete!', profile);
       // profile.id will need to be stored in the user record
       // 1. Query to see the user exists
       let user = null;
@@ -36,7 +35,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
             const result = await pool.query('SELECT * FROM "user" WHERE email = $1', [firstEmail.value]);
             const user = result && result.rows && result.rows[0];
             if (user) {
-              console.log('Existing user found!', user);
+              // console.log('Existing user found!', user);
               return done(null, user);
             } else {
               const password = null; // TODO: Make sure this is OK
@@ -51,7 +50,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
               const result = await pool.query('SELECT * FROM "user" WHERE email = $1', [email]);
               const user = result && result.rows && result.rows[0];
               if (user) {
-                console.log('New user created!', user);
+                // console.log('New user created!', user);
                 return done(null, user);
               } else {
                 // Something went wrong when creating the user...
@@ -124,7 +123,6 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
   app.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: 'https://sessions.twincitiesstartupweek.com/#/login' }),
     (req, res) => {
-      console.log('HERE: /auth/google/callback');
       if (process.env.NODE_ENV !== 'production') {
         res.redirect('http://localhost:3000/#/home');
       } else {
