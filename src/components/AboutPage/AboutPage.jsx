@@ -31,6 +31,7 @@ function AboutPage() {
   return (
       <div className={classes.root}>
         <MarkdownView
+          style={{width: '95%'}}
           markdown={block['about']}
         />
       </div>

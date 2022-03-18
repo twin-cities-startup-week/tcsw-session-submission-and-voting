@@ -53,6 +53,10 @@ Container
 Button
 -------------------------------------------------------------------------------- */
 
+.grecaptcha-badge {
+  z-index: 999;
+}
+
 .btn {
   display: inline-block;
   padding: 10px 20px;

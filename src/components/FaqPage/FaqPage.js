@@ -11,18 +11,20 @@ import { Paper, makeStyles } from "@material-ui/core";
         width: '100%',
         maxWidth: '920px',
         margin: '0 auto',
-        padding: '15px', 
 
     },
     shadow: {
         backgroundColor: '#fff',
         borderRadius: '8px',
         boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
-        padding: '15px',
+        paddingTop: '10px',
+        paddingBottom: '10px',
         width: '100%',
     },
     content: {
         paddingTop: '33px',
+        paddingLeft: '10px',
+        paddingRight: '10px',
     }
   });
 

@@ -27,7 +27,7 @@ function LandingPage() {
   };
 
   return (
-    <div className="container">
+    <div className="container" style={{maxWidth: 1200}}>
       <br />
       <h2 id="landing-welcome">{heading}</h2>
       
@@ -35,6 +35,7 @@ function LandingPage() {
       <div className="">
         <div id="landing-description">
           <MarkdownView
+            style={{ width: '95%' }}
             markdown={block['home']}
           />
         </div>
@@ -86,6 +87,7 @@ function LandingPage() {
           {!user.id && 
             <div>
               <MarkdownView
+                style={{ width: '95%', padding: 10 }}
                 markdown={block['home1']}
               />
             </div>
@@ -93,6 +95,7 @@ function LandingPage() {
             {user.id && 
             <div className="submissionDetailsText">
               <MarkdownView
+                style={{ width: '95%', padding: 10 }}
                 markdown={block['home2']}
               />
             </div>

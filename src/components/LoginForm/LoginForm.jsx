@@ -128,15 +128,15 @@ function LoginForm() {
         {/* Need to sign up text inside yellow container */}
         <Typography 
           sx={{ display: 'inline-block', mt: 2.5, ml: 2.5 }}
-          >Need to Sign up?</Typography>
+          >Need to sign up?</Typography>
 
         {/* Create Account Button */}
         <Button component={Paper} elevation={8} 
           variant="contained" type="submit" name="submit" value="Log In"
-          sx={{ mt: 1, p: 2, width: 200, height: 50, bgcolor: '#0C495A', 
+          sx={{ mt: 1, p: 2, height: 50, bgcolor: '#0C495A', 
           color: '#FBBD19', m: 1, float: 'right' }}
           onClick={() => history.push('/registration')}
-          > Create Account</Button>
+          >Register</Button>
 
       </Box>
     </Container>

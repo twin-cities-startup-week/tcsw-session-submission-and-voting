@@ -39,8 +39,8 @@ function ForgotPassword() {
     }; // end login
 
     return (
-        <Container component={Paper} elevation={8}
-            sx={{ width: 1 / 2, m: 'auto', p: 1, pl: 4, pb: 3, bgcolor: '#A7A9AC' }}>
+        <Container
+            sx={{ maxWidth: 600, m: 'auto', p: 1, bgcolor: '#fff' }}>
 
             <h2 className="forgot-password-header">Reset Password</h2>
 
@@ -56,7 +56,7 @@ function ForgotPassword() {
                     {/* Email input */}
                     <Box sx={{ m: 1 }}>
                         <label htmlFor="username">
-                            <TextField sx={{ width: 500, bgcolor: '#FFFFFF', borderRadius: 1, mb: 2 }}
+                            <TextField sx={{ maxWidth: 500, width: '100%', bgcolor: '#FFFFFF', borderRadius: 1, mb: 2 }}
                                 type="text" name="email" label="Email Address" variant="filled"
                                 value={username}
                                 required
@@ -67,7 +67,7 @@ function ForgotPassword() {
                     {/* Password input */}
                     <Box sx={{ m: 1 }}>
                         <label htmlFor="password">
-                            <TextField sx={{ width: 500, bgcolor: '#FFFFFF', borderRadius: 1, mb: 2 }}
+                            <TextField sx={{ maxWidth: 500, width: '100%', bgcolor: '#FFFFFF', borderRadius: 1, mb: 2 }}
                                 type="password" name="password" label="Password" variant="filled"
                                 value={password}
                                 required
@@ -79,7 +79,7 @@ function ForgotPassword() {
                     {/* Confirm password input */}
                     <Box sx={{ m: 1 }}>
                         <label htmlFor="retypePassword">
-                            <TextField sx={{ width: 500, bgcolor: '#FFFFFF', borderRadius: 1, mb: 1 }}
+                            <TextField sx={{ maxWidth: 500, width: '100%', bgcolor: '#FFFFFF', borderRadius: 1, mb: 1 }}
                                 type="password" name="retypePassword" label="Confirm Password" variant="filled"
                                 value={retypePassword}
                                 required
@@ -96,32 +96,6 @@ function ForgotPassword() {
                     </Button>
                 </Box>
             </form>
-
-            {/* Yellow container for "Need to sign up?" */}
-            <Box component={Paper} elevation={6}
-                sx={{ bgcolor: '#FBBD19', borderRadius: 1, width: 500, height: 55, m: 'auto' }}>
-
-                {/* Need to sign up text */}
-                <Typography
-                    sx={{ display: 'inline-block', textAlign: 'center', mt: 2, ml: 10 }}
-                >Need to Sign up?
-                </Typography>
-
-                {/* Create Account button */}
-                <Button component={Paper} elevation={8}
-                    variant="contained"
-                    type="submit"
-                    name="submit"
-                    value="Log In"
-                    sx={{
-                        mt: 1, p: 2, width: 200, height: 40, bgcolor: '#0C495A',
-                        color: '#FBBD19', m: 1, float: 'right'
-                    }}
-                    onClick={() => history.push('/registration')}
-                >Create Account
-                </Button>
-
-            </Box>
         </Container>
     )
 }
