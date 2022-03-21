@@ -12,7 +12,6 @@ import { Paper,Button, makeStyles } from "@material-ui/core";
  // Styling
 const useStyles = makeStyles({
   root: {
-      width: '100%',
       maxWidth: '920px',
       margin: '0 auto',
       padding: '15px',
