@@ -29,6 +29,7 @@ import ForgotPassword from '../ForgotPassword/ForgotPassword';
 import ResetPassword from '../ResetPassword/ResetPassword';
 import Leaderboard from '../Leaderboard/Leaderboard';
 import AdminContentPage from '../AdminContentPage/AdminContentPage';
+import AdminFAQPage from '../AdminFAQPage/AdminFAQPage';
 import SubmissionListPage from '../SubmissionListPage/SubmissionListPage';
 import GlobalAlertModal from '../GlobalAlertModal/GlobalAlertModal';
 
@@ -172,6 +173,14 @@ function App() {
                 path="/admin/content"
               >
                 <AdminContentPage />
+              </Route>
+
+              <Route
+                // shows adminPage at all times (logged in or not)
+                exact
+                path="/admin/faq"
+              >
+                <AdminFAQPage />
               </Route>
 
               <Route

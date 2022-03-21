@@ -2,6 +2,8 @@ const express = require('express');
 const { pool } = require('../modules/pool');
 const router = express.Router();
 const ContentBlock = require('../models/content_block.model.js');
+const FAQ = require('../models/faq.model.js');
+
 const {
     requireAdmin,
 } = require('../modules/authentication-middleware');
@@ -16,6 +18,20 @@ router.get('/block', async (req, res) => {
         const contentResults = await ContentBlock.findAll();
         
         res.send(contentResults);
+    } catch (e) {
+        res.sendStatus(500);
+    }
+});
+
+/**
+ * GET route block
+ */
+ router.get('/faq', async (req, res) => {
+    try {
+        console.log('get')
+        const faqResults = await FAQ.findAll();
+        
+        res.send(faqResults);
     } catch (e) {
         res.sendStatus(500);
     }
@@ -42,6 +58,33 @@ router.post('/block', requireAdmin, async (req, res) => {
             },
         );
         res.send(updatedContent);
+    } catch (e) {
+        res.sendStatus(500);
+    }
+});
+
+/**
+ * POST route FAQ
+ */
+ router.post('/faq', requireAdmin, async (req, res) => {
+    // POST route code here
+    try {
+        const {id, question, answer } = req.body;
+        const updatedFAQ = await FAQ.update(
+            {
+                question,
+                answer,
+            },
+            {
+                where: {
+                    id,
+                },
+                // Return the updated record
+                returning: true,
+                plain: true,
+            },
+        );
+        res.send(updatedFAQ);
     } catch (e) {
         res.sendStatus(500);
     }
