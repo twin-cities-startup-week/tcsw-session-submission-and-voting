@@ -386,6 +386,11 @@ function SubmissionPage() {
                                         className={classes.feedback}
                                         value={submission.description}
                                         onChange={handleMdeChangeFor('description')}
+                                        toolbarCommands={[
+                                            ["header", "bold", "italic", "strikethrough"],
+                                            ["link", "quote"],
+                                            ["unordered-list", "ordered-list", "checked-list"]
+                                        ]}
                                         selectedTab={selectedTab}
                                         onTabChange={setSelectedTab}
                                         minEditorHeight={200}
@@ -555,6 +560,11 @@ function SubmissionPage() {
                                         className={classes.feedback}
                                         value={submission.speakers}
                                         onChange={handleMdeChangeFor('speakers')}
+                                        toolbarCommands={[
+                                            ["header", "bold", "italic", "strikethrough"],
+                                            ["link", "quote"],
+                                            ["unordered-list", "ordered-list", "checked-list"]
+                                        ]}
                                         selectedTab={selectedTab}
                                         onTabChange={setSelectedTab}
                                         minEditorHeight={200}
