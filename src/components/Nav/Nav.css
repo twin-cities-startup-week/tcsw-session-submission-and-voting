@@ -48,11 +48,18 @@
 
 .navSignin {
   margin-left: auto;
-  margin-right: 20px;
+  margin-right: 10px;
+  position: absolute;
+  right: 0;
+  top: 0;
   z-index: 999;
 }
 
 img {
   padding: 1px 1px 1px 10px;
   height: auto;
+}
+
+.drop-down-menu {
+  filter: drop-shadow(0rem 0.6rem 0.3rem rgba(0, 0, 0, 0.5));
 }

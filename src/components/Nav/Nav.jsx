@@ -22,7 +22,7 @@ function Nav() {
   const user = useSelector((store) => store.user);
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
-  const mobileScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const mobileScreen = useMediaQuery(theme.breakpoints.down('lg'));
 
   const handleClick = () => {
     setOpen(!open);
@@ -59,117 +59,135 @@ function Nav() {
     history.push('/login');
   }
 
+  const pushToSignIn = () => {
+    setOpen(!open);
+    history.push('/login');
+  }
+
   return (
     <div className="nav">
 
       {/* Twin Cities Startup Week logo, on click will redirect the user to
         the Twin Cities Startup Week website */}
       <a href="https://www.twincitiesstartupweek.com/" target="_blank"> 
-        <img src="images/TCSW_Logo_Navy.png" alt="TCSW logo" width="110" height="50"></img>
+        <img src="images/TCSW_Logo_Navy.png" alt="TCSW logo" style={{ width: '110px', maxWidth: '110px', height: 'auto', marginTop: '5px'}} />
       </a>
       
       {/* Title, on click will navigate to the landing page page */}
       <Link to="/home">
-        <h2 className="nav-title">Session Selector and Voting</h2>
+        <h2 className="nav-title" style={mobileScreen ? {paddingRight: '80px'} : {paddingRight: '20px'}}>Session Selector and Voting</h2>
       </Link>
 
-        {/* If no user is logged in, show these links */}
-        {!mobileScreen && 
-      (<>
-        {user.id === null &&
-          // If there's no user, show login/registration links
-          <Link className="navLink" to="/login">
-            Login / Register
-          </Link>
-        }
-
-        {/* About and FAQ pages are visable at all times. */}
-        <Link className="navLink" to="/about">
-          About
-        </Link>
-
-        <Link className="navLink" to="/faq">
-          FAQ
-        </Link>
-
-        {/* If a user is logged in, show these links */}
-        {user.id && (
+      {/* If no user is logged in, show these links */}
+      {!mobileScreen && 
+        (
           <>
-            <Link className="navLink" to="/submission">
-              Submission Form
+            {/* About and FAQ pages are visable at all times. */}
+            <Link className="navLink" to="/about">
+              About
             </Link>
 
-            {/* <Link className="navLink" to="/panelistView">
-              Search
+            <Link className="navLink" to="/faq">
+              FAQ
             </Link>
 
-            <Link className="navLink" to="/leaderboard">
-              Leaderboard
-            </Link> */}
+            {/* If a user is logged in, show these links */}
+            {user.id && (
+              <>
+                <Link className="navLink" to="/submission">
+                  Submission Form
+                </Link>
+
+                {/* <Link className="navLink" to="/panelistView">
+                  Search
+                </Link>
+
+                <Link className="navLink" to="/leaderboard">
+                  Leaderboard
+                </Link> */}
+              </>
+            )}
+          {!user.id && !mobileScreen &&
+            <Button className="navSignin" onClick={pushToSignIn}
+              sx={{
+                ml: 'auto', mr: '20px', bgcolor: "#0c495a",
+                color: "#FBBD19", '&:hover': { background: "#0c495a" }, p: 2,
+                borderRadius: '5%'
+              }}>
+              Sign In
+            </Button>
+          }
+            
           </>
-        )}
-
-        {!user.id &&
-          <Button className="navSignin" onClick={() => history.push('/login')}
-          sx={{ ml: 'auto', mr: '20px', bgcolor: "#0c495a",
-             color: "#FBBD19", '&:hover': { background: "#0c495a"}, p: 2, mb: -1,
-            borderRadius: '5%' }}>
-            Sign In
-          </Button>
-        }
-        </>)}
-        {/* If a user is logged in, show the username div dropdown */}
-        {user.id && 
-        <div className="navSignin">
-          <List sx={{ ml: 'auto' }}>
-
-            {/* This is the button in the upper right hand corner
-            that displays the user's first name */}
+        )
+      }
+      {/* If a user is logged in, show the username div dropdown */}
+      <div className="navSignin">
+        <List sx={{ ml: 'auto' }}>
+          
+          {mobileScreen && (
+            <ListItemButton sx={{
+              textAlign: 'right', bgcolor: "#0c495a",
+              color: "#FBBD19", '&:hover': { background: "#0c495a" }, p: 2,
+            }} onClick={handleClick}>
+              
+                <>
+                  {open ? <CloseIcon sx={{ ml: 'auto' }} /> : <MenuIcon />}
+                </>
+              
+            </ListItemButton>
+          )}
+          
+          {/* This is the button in the upper right hand corner
+          that displays the user's first name */}
+          {user.id && !mobileScreen &&
             <ListItemButton sx={{ textAlign: 'right', bgcolor: "#0c495a",
                 color: "#FBBD19", '&:hover': { background: "#0c495a"}, p: 2 }} onClick={handleClick}>
-                  {!mobileScreen && (
-                  <>
-                  <div className="navSignin">
-                  Welcome, {user.first_name}!
-                </div>
+                  <div>
+                    Welcome, {user.first_name}!
+                  </div>
                 {/* If Open state is true, expand the div with the user's first name */}
               {open ? <ExpandLess /> : <ExpandMore />}
-                </>)
-                  }
-                  {mobileScreen && (
-                    <>
-                    {open ? <CloseIcon sx={{ ml: 'auto' }} /> : <MenuIcon />}
-                    </>
-                  )}
             </ListItemButton>
-
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding style={{height: '0px'}}>
+          }
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <List component="div" className="drop-down-menu" disablePadding style={{height: '0px', minWidth: '200px'}}>
 
               {/* If the logged in user is an admin, display the admin dropdown option */}
               {user.admin && 
-              <ListItemButton 
-                sx={{ textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a", 
-                    '&:hover': { background: "#0c495a"} }} 
-                onClick={pushToAdmin}>
+                <ListItemButton 
+                  sx={{ textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a", 
+                      '&:hover': { background: "#0c495a"} }} 
+                  onClick={pushToAdmin}>
 
-                  <ListItemText primary="Admin" />
+                    <ListItemText primary="Admin" />
 
-              </ListItemButton>
+                </ListItemButton>
               }
-                {user.admin &&
-                  <ListItemButton
-                    sx={{
-                      textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
-                      '&:hover': { background: "#0c495a" }
-                    }}
-                    onClick={pushToAdminContent}>
+              {user.admin &&
+                <ListItemButton
+                  sx={{
+                    textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
+                    '&:hover': { background: "#0c495a" }
+                  }}
+                  onClick={pushToAdminContent}>
 
-                    <ListItemText primary="Edit Content" />
+                  <ListItemText primary="Edit Content" />
 
-                  </ListItemButton>
-                }
+                </ListItemButton>
+              }
+              { mobileScreen && user.id &&
+                <ListItemButton
+                sx={{
+                  textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
+                  '&:hover': { background: "#0c495a" }
+                }}
+                onClick={pushToSubmission}>
 
+                  <ListItemText primary="Submission Form" />
+                </ListItemButton>
+              }
+              {user.id &&
                 <ListItemButton
                   sx={{
                     textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
@@ -180,43 +198,46 @@ function Nav() {
                   <ListItemText primary="My Submissions" />
 
                 </ListItemButton>
+              }
+              { mobileScreen && !user.id &&
+                <ListItemButton
+                  sx={{
+                    textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
+                    '&:hover': { background: "#0c495a" }
+                  }}
+                  onClick={pushToSignIn}>
 
-                {mobileScreen &&
+                  <ListItemText primary="Sign In" />
+
+                </ListItemButton>
+              }
+              { mobileScreen &&
                 <>
-                <ListItemButton
-                sx={{
-                  textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
-                  '&:hover': { background: "#0c495a" }
-                }}
-                onClick={pushToSubmission}>
+                  <ListItemButton
+                  sx={{
+                    textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
+                    '&:hover': { background: "#0c495a" }
+                  }}
+                  onClick={pushToAbout}>
 
-                <ListItemText primary="Submission Form" />
+                    <ListItemText primary="About" />
 
-              </ListItemButton>
-                <ListItemButton
-                sx={{
-                  textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
-                  '&:hover': { background: "#0c495a" }
-                }}
-                onClick={pushToAbout}>
+                  </ListItemButton>
+                  <ListItemButton
+                  sx={{
+                    textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
+                    '&:hover': { background: "#0c495a" }
+                  }}
+                  onClick={pushToFAQ}>
 
-                <ListItemText primary="About" />
+                  <ListItemText primary="FAQ" />
 
-              </ListItemButton>
-              <ListItemButton
-              sx={{
-                textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
-                '&:hover': { background: "#0c495a" }
-              }}
-              onClick={pushToFAQ}>
-
-              <ListItemText primary="FAQ" />
-
-            </ListItemButton>
-            </>}
-
-                {/* On click of logout button, the user will be moved to the Landing Page
-                  and logged out of their account. */}
+                </ListItemButton>
+                </>
+              }
+            {user.id && 
+                // On click of logout button, the user will be moved to the Landing Page
+                // and logged out of their account.
                 <ListItemButton 
                   sx={{ textAlign: 'right', mb: -20, mt: -1, bgcolor: "#0c495a", 
                       color: "#FBBD19", '&:hover': { background: "#0c495a"},
@@ -226,12 +247,11 @@ function Nav() {
                   <ListItemText primary="Logout" />
 
                 </ListItemButton>
-
-              </List>
-            </Collapse>
-          </List>
-        </div>
-        }
+              }
+            </List>
+          </Collapse>
+        </List>
+      </div>
     </div>
   )
 }
