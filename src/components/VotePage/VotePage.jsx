@@ -41,6 +41,7 @@ function VotePage() {
     const { id: submissionId } = useParams();
     // const store = useReduxStore();
     const dispatch = useDispatch();
+    const history = useHistory();
     const classes = useStyles();
     const [vote, setVote ] = useState(0);
 
@@ -109,7 +110,7 @@ function VotePage() {
                                             Approve
                                         </Button>
                                         <Button sx={{ float: 'right', marginTop: '8px', marginLeft: '20px' }} className='deny-button' variant="contained" color="error" onClick={() => sessionDeny(details.id)}>Deny</Button>
-                                        <Button sx={{ float: 'right', marginTop: '8px' }} className='edit-button' onClick={() => history.push(`/votepage/${details.id}`)}>Edit</Button>
+                                        <Button sx={{ float: 'right', marginTop: '8px' }} className='edit-button' onClick={() => history.push(`/submission/${details.id}/edit`)}>Edit</Button>
                                     </>
                                 )
                             }

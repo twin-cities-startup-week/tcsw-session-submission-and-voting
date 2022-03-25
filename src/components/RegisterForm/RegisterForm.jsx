@@ -9,6 +9,8 @@ import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
+import GoogleButton from '../LoginForm/GoogleLoginButton';
+
 
 function RegisterForm() {
   const [email, setEmail] = useState('');
@@ -93,10 +95,32 @@ function RegisterForm() {
     }
   }; // end registerUser
 
+  const handleGoogleLogin = () => {
+    // dispatch({ type: 'GOOGLE_LOGIN' })
+    const time = new Date().getTime();
+    if (process.env.NODE_ENV === 'production') {
+      window.location.href = `https://sessions.twincitiesstartupweek.com/auth/google?t=${time}`;
+    } else {
+      window.location.href = `http://localhost:5000/auth/google?t=${time}`;
+    }
+
+  }
+
   return (
     <Container style={{ maxWidth: 500 }}
           sx={{ mt: 4, bgcolor: '#fff' }}>
       <h2 className="registerHeader">Registration</h2>
+      <Box sx={{ textAlign: 'center', mb: 2, mt: 2 }}>
+        <Button
+          contained
+          type="submit"
+          sx={{ border: 1, pr: 3 }}
+          onClick={handleGoogleLogin}
+        >
+          <GoogleButton />
+          Sign in with Google
+        </Button>
+      </Box>
     <form onSubmit={registerUser} style={{margin: 0, padding: 0}}>
 
       

@@ -60,7 +60,7 @@ router.get('/user/:id', rejectUnauthenticated, async (req, res) => {
     }
 });
 
-//POST route for session submission form 
+//PUT route for session submission form 
 router.put('/', rejectUnauthenticated, async (req, res) => {
     try {
         const newSubmission = req.body;
@@ -92,36 +92,59 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
                 returning: true,
             }
         );
-        if (process.env.SENDGRID_API_KEY && process.env.SENDGRID_API_KEY !== '') {
-            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-            const msg = {
-                to: req.user.email,
-                from: process.env.SENDGRID_FROM_ADDRESS,
-                subject: 'TCSW - Thank you for your submission',
-                text: `
-Title: ${newSubmission.title}
-Description: ${newSubmission.description}
+        // Used for testing to avoid needing to create a whole new submission for getting an email
+//         if (process.env.SENDGRID_API_KEY && process.env.SENDGRID_API_KEY !== '' && req.user.admin !== true) {
+//             sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+//             const msg = {
+//                 to: req.user.email,
+//                 from: process.env.SENDGRID_FROM_ADDRESS,
+//                 subject: 'TCSW Session Submission Confirmation',
+//                 text: `
+// Hello ${req.user.first_name},
 
-View your submission details here: https://sessions.twincitiesstartupweek.com/#/user/submission
-`,
-                html: `
-<strong>Title</strong>
-<br />
-${newSubmission.title}
-<br />
-<br />
-<strong>Description</strong>
-<br />
-${newSubmission.description}
-<br />
-<br />
-<a href="https://sessions.twincitiesstartupweek.com/#/user/submission">Edit Submission</a>
-`,
-            };
-            sgMail.send(msg).catch(e => console.log(e));
-        } else {
-            console.error('Missing SendGrid environment variables.')
-        }
+// Thank you for submitting a session for Twin Cities Startup Week 2022! After reviewing your submission, the TCSW team will be in contact to let you know whether or not it has been accepted into the TCSW Session Selector for public voting.  
+
+// You can edit your session submission until submissions close on May 15, 2022. The TCSW team will review each change and accept or reject the edited submission for public voting.
+
+// https://sessions.twincitiesstartupweek.com/#/user/submission
+
+// Title: ${newSubmission.title}
+// Description: ${newSubmission.description}
+
+// Thank you! 
+
+// TCSW Team
+// `,
+//                 html: `
+// Hello ${req.user.first_name},
+// <br />
+// <br />
+// Thank you for submitting a session for Twin Cities Startup Week 2022! After reviewing your submission, the TCSW team will be in contact to let you know whether or not it has been accepted into the TCSW Session Selector for public voting.  
+// <br />
+// <br />
+// You can <a href="https://sessions.twincitiesstartupweek.com/#/user/submission">edit your session submission</a> until submissions close on May 15, 2022. The TCSW team will review each change and accept or reject the edited submission for public voting.
+// <br />
+// <br />
+// <strong>Title</strong>
+// <br />
+// ${newSubmission.title}
+// <br />
+// <br />
+// <strong>Description</strong>
+// <br />
+// ${newSubmission.description}
+// <br />
+// <br />
+// Thank you! 
+// <br />
+// <br />
+// TCSW Team
+// `,
+//             };
+//             sgMail.send(msg).catch(e => console.log(e));
+//         } else {
+//             console.error('Missing SendGrid environment variables.')
+//         }
         res.status(201).send(result);
     } catch (e) {
         console.log('error with post to db', e);
@@ -152,14 +175,33 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
             const msg = {
                 to: req.user.email,
                 from: process.env.SENDGRID_FROM_ADDRESS,
-                subject: 'TCSW - Thank you for your submission',
+                subject: 'TCSW Session Submission Confirmation',
                 text: `
+Hello ${req.user.first_name},
+
+Thank you for submitting a session for Twin Cities Startup Week 2022! After reviewing your submission, the TCSW team will be in contact to let you know whether or not it has been accepted into the TCSW Session Selector for public voting.  
+
+You can edit your session submission until submissions close on May 15, 2022. The TCSW team will review each change and accept or reject the edited submission for public voting.
+
+https://sessions.twincitiesstartupweek.com/#/user/submission
+
 Title: ${newSubmission.title}
 Description: ${newSubmission.description}
 
-View your submission details here: https://sessions.twincitiesstartupweek.com/#/user/submission
+Thank you! 
+
+TCSW Team
 `,
                 html: `
+Hello ${req.user.first_name},
+<br />
+<br />
+Thank you for submitting a session for Twin Cities Startup Week 2022! After reviewing your submission, the TCSW team will be in contact to let you know whether or not it has been accepted into the TCSW Session Selector for public voting.  
+<br />
+<br />
+You can <a href="https://sessions.twincitiesstartupweek.com/#/user/submission">edit your session submission</a> until submissions close on May 15, 2022. The TCSW team will review each change and accept or reject the edited submission for public voting.
+<br />
+<br />
 <strong>Title</strong>
 <br />
 ${newSubmission.title}
@@ -170,7 +212,10 @@ ${newSubmission.title}
 ${newSubmission.description}
 <br />
 <br />
-<a href="https://sessions.twincitiesstartupweek.com/#/user/submission">Edit Submission</a>
+Thank you! 
+<br />
+<br />
+TCSW Team
 `,
             };
             sgMail.send(msg).catch(e => console.log(e));
