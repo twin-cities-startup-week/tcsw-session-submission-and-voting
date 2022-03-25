@@ -23,7 +23,6 @@ function ForgotPassword() {
 
     const reset = (event) => {
         event.preventDefault();
-        console.log('PARAMS', params);
         const userToken = params.token;
         /* If both password input and confirm password input match
             reset password */

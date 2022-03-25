@@ -10,7 +10,6 @@ import { useHistory, useParams } from 'react-router-dom';
 // Styling
 const useStyles = makeStyles({
     root: {
-        width: '100%',
         maxWidth: '920px',
         margin: '0 auto',
         padding: '15px',
@@ -56,7 +55,6 @@ function VotePage() {
     // function to add a Vote to the session vote count.   
    const addVote = ( sessionId ) => {
        dispatch({ type: 'ADD_VOTE_COUNT', payload: sessionId })
-       console.log(' addVote payload', sessionId);
         toggleVoteButton(true);
         alert('Awesome! You Have VOTED!')
    }

@@ -11,8 +11,6 @@ function Panelists() {
     const history = useHistory();
 
     const store = useReduxStore();
-    console.log('this is the information from the panelistReducer', store.panelistReducer);
-
     const [ searchTerm, setSearchTerm ] = useState('');
     const [ trackState, setTrackState ] = useState('');
     const [ formatState, setFormatState ] = useState('');
@@ -60,8 +58,6 @@ function Panelists() {
 
                         <h5 className='track-filter-header'>Track</h5>
                         <select className='track-selector' onChange={ event => setTrackState( event.target.value )}>
-                            {console.log('this is the setTrackState',setTrackState)}
-                            {console.log('this is the trackState', trackState)}
                             <option value=''> </option>
                             <option value="Developer">Developer</option>
                             <option value="Founder">Founder</option>

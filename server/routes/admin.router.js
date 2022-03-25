@@ -27,11 +27,9 @@ const {
 //  */
 router.get('/sessionsApproved', requireAdmin, (req, res) => {
     // GET route code here
-    console.log('This is the sessions you wanted')
     pool.query(`SELECT count(session.title) from "session" 
     WHERE approved = true`)
     .then((results) => {
-        console.log(results.rows)
         res.send(results.rows)
     })
      .catch((error) => {
@@ -47,8 +45,6 @@ router.get('/sessionsApproved', requireAdmin, (req, res) => {
 //  */
 router.get('/sessionsVotes', requireAdmin, (req, res) => {
     // GET route code here
-   console.log('This is the sessionsVotes you wanted') 
-    //console.log('This is the sessionsVotes you wanted', req.params.sessionsVotes)
     pool.query(`SELECT title, votes FROM session
     ORDER BY "votes" DESC LIMIT 1;
     `)
@@ -68,8 +64,6 @@ router.get('/sessionsVotes', requireAdmin, (req, res) => {
 // //  */
 router.get('/awaitingApproval', requireAdmin, (req, res) => {
     // GET route code here
-    console.log('This is the awaitingApproval you wanted', req.params);
-    //console.log(req.params)
     pool.query(`SELECT count(session.id) from "session"
     WHERE session.awaiting_approval = true;
     `)

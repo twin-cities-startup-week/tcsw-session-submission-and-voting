@@ -91,6 +91,11 @@ function AdminContentBlock({ content }) {
                             className={classic.feedback}
                             value={block[content]}
                             onChange={handleMdeChange}
+                            toolbarCommands={[
+                                ["header", "bold", "italic", "strikethrough"],
+                                ["link", "quote"],
+                                ["unordered-list", "ordered-list", "checked-list"]
+                            ]}
                             selectedTab={selectedTab}
                             onTabChange={setSelectedTab}
                             minEditorHeight={800}
