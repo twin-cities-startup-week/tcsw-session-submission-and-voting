@@ -27,18 +27,24 @@ const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
 // Handles Ajax request for user information if user is authenticated
-router.get('/', rejectUnauthenticated, (req, res) => {
-  const ipAddress = getIpAddress(req);
-  await User.update({
-    current_sign_in_ip: ipAddress,
-    current_sign_in_at: Sequelize.literal('CURRENT_TIMESTAMP'),
-  }, {
-    where: {
-      id: req.user.id,
-    },
-  });
-  // Send back user object from the session (previously queried from the database)
-  res.send(req.user);
+router.get('/', rejectUnauthenticated, async (req, res) => {
+  try {
+    const ipAddress = getIpAddress(req);
+    await User.update({
+      current_sign_in_ip: ipAddress,
+      current_sign_in_at: Sequelize.literal('CURRENT_TIMESTAMP'),
+    }, {
+      where: {
+        id: req.user.id,
+      },
+    });
+    // Send back user object from the session (previously queried from the database)
+    res.send(req.user);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send('Unable to get user.');
+  }
+
 });
 
 // Handles POST request with new user data
