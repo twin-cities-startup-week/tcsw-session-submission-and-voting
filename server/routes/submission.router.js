@@ -7,22 +7,69 @@ const {
     getIpAddress,
 } = require('../modules/authentication-middleware');
 const S3Service = require('../services/S3Service');
-const sgMail = require('@sendgrid/mail');
+const {
+    sendSessionSubmissionEmail,
+} = require('../modules/email');
 
 // GET route for all APPROVED submissions
-router.get('/approved', rejectUnauthenticated, (req, res) => {
-    const queryText = `
-        SELECT * FROM "session"
-        WHERE "approved" = TRUE
-        ORDER BY "votes" DESC;`;
+router.get('/approved', rejectUnauthenticated, async (req, res) => {
+    try {
+        const userSessions = await Session.findAll({
+            where: {
+                status: 'approved',
+            }
+        });
+        res.status(200).send(userSessions);
+    } catch (e) {
+        console.log('error with post to db', e);
+        res.sendStatus(500);
+    }
+});
+
+router.get('/details/:id', async (req, res) => {
+    try {
+        let whereCondition = {
+            // non-admins are only able to see approved sessions
+            status: 'approved',
+        };
+        if (req.user && req.user.admin === true) {
+            // Admins are able to see all sessions
+            whereCondition = {};
+        }
         
-    pool.query (queryText)
-    .then(result => {
-        res.send(result.rows)
-    }).catch(error => {
-        console.log('Error in GET approved submissions, ', error)
-    })
-})
+        // Limit columns for public viewing
+        const userSession = await Session.findByPk(
+            req.params.id,
+            {
+                attributes: [
+                    'id',
+                    'title',
+                    'industry',
+                    'track',
+                    'speakers',
+                    'purpose',
+                    'location',
+                    'location_details',
+                    'time',
+                    'date',
+                    'host',
+                    'description',
+                    'attendees',
+                    'length',
+                    'area_of_interest',
+                    'media',
+                    'image',
+                    'format',
+                ],
+                where: whereCondition,
+            }
+        );
+        res.status(200).send(userSession);
+    } catch (error) {
+        console.log('error in router get panel details', error);
+        res.sendStatus(500);
+    }
+});
 
 // GET route for all user submissions
 router.get('/user', rejectUnauthenticated, async (req, res) => {
@@ -34,7 +81,7 @@ router.get('/user', rejectUnauthenticated, async (req, res) => {
         });
         res.status(200).send(userSessions);
     } catch (e) {
-        console.log('error with post to db', e);
+        console.log('error with getting user submissions', e);
         res.sendStatus(500);
     }
 })
@@ -92,59 +139,6 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
                 returning: true,
             }
         );
-        // Used for testing to avoid needing to create a whole new submission for getting an email
-//         if (process.env.SENDGRID_API_KEY && process.env.SENDGRID_API_KEY !== '' && req.user.admin !== true) {
-//             sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-//             const msg = {
-//                 to: req.user.email,
-//                 from: process.env.SENDGRID_FROM_ADDRESS,
-//                 subject: 'TCSW Session Submission Confirmation',
-//                 text: `
-// Hello ${req.user.first_name},
-
-// Thank you for submitting a session for Twin Cities Startup Week 2022! After reviewing your submission, the TCSW team will be in contact to let you know whether or not it has been accepted into the TCSW Session Selector for public voting.  
-
-// You can edit your session submission until submissions close on May 15, 2022. The TCSW team will review each change and accept or reject the edited submission for public voting.
-
-// https://sessions.twincitiesstartupweek.com/#/user/submission
-
-// Title: ${newSubmission.title}
-// Description: ${newSubmission.description}
-
-// Thank you! 
-
-// TCSW Team
-// `,
-//                 html: `
-// Hello ${req.user.first_name},
-// <br />
-// <br />
-// Thank you for submitting a session for Twin Cities Startup Week 2022! After reviewing your submission, the TCSW team will be in contact to let you know whether or not it has been accepted into the TCSW Session Selector for public voting.  
-// <br />
-// <br />
-// You can <a href="https://sessions.twincitiesstartupweek.com/#/user/submission">edit your session submission</a> until submissions close on May 15, 2022. The TCSW team will review each change and accept or reject the edited submission for public voting.
-// <br />
-// <br />
-// <strong>Title</strong>
-// <br />
-// ${newSubmission.title}
-// <br />
-// <br />
-// <strong>Description</strong>
-// <br />
-// ${newSubmission.description}
-// <br />
-// <br />
-// Thank you! 
-// <br />
-// <br />
-// TCSW Team
-// `,
-//             };
-//             sgMail.send(msg).catch(e => console.log(e));
-//         } else {
-//             console.error('Missing SendGrid environment variables.')
-//         }
         res.status(201).send(result);
     } catch (e) {
         console.log('error with post to db', e);
@@ -170,58 +164,7 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
                 plain: true,
             }
         );
-        if (process.env.SENDGRID_API_KEY && process.env.SENDGRID_API_KEY !== '') {
-            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-            const msg = {
-                to: req.user.email,
-                from: process.env.SENDGRID_FROM_ADDRESS,
-                subject: 'TCSW Session Submission Confirmation',
-                text: `
-Hello ${req.user.first_name},
-
-Thank you for submitting a session for Twin Cities Startup Week 2022! After reviewing your submission, the TCSW team will be in contact to let you know whether or not it has been accepted into the TCSW Session Selector for public voting.  
-
-You can edit your session submission until submissions close on May 15, 2022. The TCSW team will review each change and accept or reject the edited submission for public voting.
-
-https://sessions.twincitiesstartupweek.com/#/user/submission
-
-Title: ${newSubmission.title}
-Description: ${newSubmission.description}
-
-Thank you! 
-
-TCSW Team
-`,
-                html: `
-Hello ${req.user.first_name},
-<br />
-<br />
-Thank you for submitting a session for Twin Cities Startup Week 2022! After reviewing your submission, the TCSW team will be in contact to let you know whether or not it has been accepted into the TCSW Session Selector for public voting.  
-<br />
-<br />
-You can <a href="https://sessions.twincitiesstartupweek.com/#/user/submission">edit your session submission</a> until submissions close on May 15, 2022. The TCSW team will review each change and accept or reject the edited submission for public voting.
-<br />
-<br />
-<strong>Title</strong>
-<br />
-${newSubmission.title}
-<br />
-<br />
-<strong>Description</strong>
-<br />
-${newSubmission.description}
-<br />
-<br />
-Thank you! 
-<br />
-<br />
-TCSW Team
-`,
-            };
-            sgMail.send(msg).catch(e => console.log(e));
-        } else {
-            console.error('Missing SendGrid environment variables.')
-        }
+        sendSessionSubmissionEmail(req.user, newSubmission);
         res.status(201).send(result);
     } catch (e) {
         console.log('error with post to db', e);

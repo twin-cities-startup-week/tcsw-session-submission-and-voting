@@ -101,7 +101,6 @@ function AdminPage() {
   useEffect(() => {
     dispatch({ type: "FETCH_SESSION" });
     dispatch({ type: "FETCH_TOTAL_SESSION" });
-    dispatch({ type: "FETCH_HIGHEST_VOTING" });
     dispatch({ type: "FETCH_AWAITING_APPROVAL" });
     dispatch({ type: "FETCH_APPROVAL_AWAITING_INFO" });
     dispatch({ type: "FETCH_APPROVED_INFO" });
@@ -140,7 +139,7 @@ function AdminPage() {
                     <TableCell>
                       <h4>Title</h4>
                     </TableCell>
-                    <TableCell colSpan={3}>
+                    <TableCell colSpan={2}>
                       <h4>Email</h4>
                     </TableCell>
                   </TableRow>
@@ -153,9 +152,6 @@ function AdminPage() {
                       </TableCell>
                       <TableCell>
                         <Typography variant="body1">{session.email}</Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Button onClick={() => history.push(`/submission/${session.id}/edit`)}>Edit</Button>
                       </TableCell>
                       <TableCell>
                         <Button variant="contained" onClick={() => gotoDetails(session)}>Details</Button>
@@ -189,7 +185,7 @@ function AdminPage() {
                     <TableCell>
                       <h4>Title</h4>
                     </TableCell>
-                    <TableCell colSpan={3}>
+                    <TableCell colSpan={2}>
                       <h4>Email</h4>
                     </TableCell>
                   </TableRow>
@@ -202,9 +198,6 @@ function AdminPage() {
                       </TableCell>
                       <TableCell>
                         <Typography variant="body1">{session.email}</Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Button onClick={() => history.push(`/submission/${session.id}/edit`)}>Edit</Button>
                       </TableCell>
                       <TableCell>
                         <Button variant="contained" onClick={() => gotoDetails(session)}>Details</Button>

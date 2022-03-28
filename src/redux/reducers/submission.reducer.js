@@ -85,9 +85,26 @@ const userSubmissions = (state = [], action) => {
     }
 }
 
+const submissionDetails = (state = {}, action) => {
+    let result;
+    switch (action.type) {
+        case 'SET_SUBMISSION_DETAIL':
+            result = {
+                ...action.payload,
+                industry: getArray(action.payload.industry),
+                time: getArray(action.payload.time),
+                date: getArray(action.payload.date),
+            }
+            return result;
+        default:
+            return state;
+    }
+}
+
 export default combineReducers({
     submission,
     approvedSubmissions,
     userSubmissions,
     editSubmission,
+    submissionDetails,
 });

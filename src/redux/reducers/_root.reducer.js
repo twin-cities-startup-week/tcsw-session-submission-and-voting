@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux';
 import errors from './errors.reducer';
 import user from './user.reducer';
-import panelistReducer from './panelist.reducer';
-import panelistDetailsReducer from './panelistDetails.reducer';
 import addVoteReducer from './addVote.reducer';
 import submission from './submission.reducer';
 import setSessionList from './admin.reducer';
@@ -24,8 +22,6 @@ import modal from './modal.reducer';
 const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
   user, // will have an id and username if someone is logged in
-  panelistReducer,
-  panelistDetailsReducer,
   submission,
   setSessionList,
   setAwaitingApproval,
