@@ -53,6 +53,10 @@ function Nav() {
     setOpen(!open);
     history.push('/faq');
   }
+  const pushToSearch = () => {
+    setOpen(!open);
+    history.push('/search');
+  }
   const pushToLogout = () => {
     setOpen(!open);543547
     dispatch({ type: 'LOGOUT' });
@@ -82,7 +86,11 @@ function Nav() {
       {!mobileScreen && 
         (
           <>
-            {/* About and FAQ pages are visable at all times. */}
+            {/* Search, About and FAQ pages are visable at all times. */}
+            <Link className="navLink" to="/search">
+              Search
+            </Link>
+
             <Link className="navLink" to="/about">
               About
             </Link>
@@ -214,25 +222,38 @@ function Nav() {
               { mobileScreen &&
                 <>
                   <ListItemButton
-                  sx={{
-                    textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
-                    '&:hover': { background: "#0c495a" }
-                  }}
-                  onClick={pushToAbout}>
+                    sx={{
+                      textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
+                      '&:hover': { background: "#0c495a" }
+                    }}
+                    onClick={pushToSearch}
+                  >
+
+                    <ListItemText primary="Search" />
+
+                  </ListItemButton>
+                  <ListItemButton
+                    sx={{
+                      textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
+                      '&:hover': { background: "#0c495a" }
+                    }}
+                    onClick={pushToAbout}
+                  >
 
                     <ListItemText primary="About" />
 
                   </ListItemButton>
                   <ListItemButton
-                  sx={{
-                    textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
-                    '&:hover': { background: "#0c495a" }
-                  }}
-                  onClick={pushToFAQ}>
+                    sx={{
+                      textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
+                      '&:hover': { background: "#0c495a" }
+                    }}
+                    onClick={pushToFAQ}
+                  >
 
-                  <ListItemText primary="FAQ" />
+                    <ListItemText primary="FAQ" />
 
-                </ListItemButton>
+                  </ListItemButton>
                 </>
               }
             {user.id && 

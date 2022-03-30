@@ -37,7 +37,6 @@ const useStylish = makeStyles({
         // paddingTop: "30px",
         // paddingRight: '80px',
         border: "2px solid",
-        textAlign: "center",
     },
     feedback: {
         backgroundColor: '#fff',
@@ -48,7 +47,7 @@ const useStylish = makeStyles({
     }
 });
 
-function AdminContentBlock({ content }) {
+function AdminContentBlock({ content, center = false }) {
     const classic = useStylish();
     //set selector
     const { block } = useSelector((store) => store.content);
@@ -76,6 +75,14 @@ function AdminContentBlock({ content }) {
     const handleSave = () => {
         setChanges(false);
         dispatch({ type: 'SEND_CONTENT_BLOCK', payload: { name: content, content: block[content] } });
+        dispatch({
+            type: 'SET_GLOBAL_MODAL',
+            payload: {
+                modalOpen: true,
+                title: `Changes Saved`,
+                body: `Changes saved for ${content} page`,
+            },
+        });
     }
 
     return (
@@ -104,7 +111,7 @@ function AdminContentBlock({ content }) {
                             }
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6} className={classic.preview}>
+                    <Grid item xs={12} sm={6} className={classic.preview} style={center ? { textAlign: 'center' } : { textAlign: 'left' }}>
                         <MarkdownView
                             markdown={block[content]}
                             
