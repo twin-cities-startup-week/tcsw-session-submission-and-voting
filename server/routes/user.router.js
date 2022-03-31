@@ -41,7 +41,7 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
     // Send back user object from the session (previously queried from the database)
     res.send(req.user);
   } catch (e) {
-    console.log(e);
+    logError(e);
     res.status(500).send('Unable to get user.');
   }
 
@@ -101,7 +101,7 @@ router.post('/register', async (req, res, next) => {
           res.sendStatus(201)
         })
         .catch((err) => {
-          console.log('User registration failed: ', err);
+          logError(err);
           res.sendStatus(500);
         });
 
@@ -109,7 +109,7 @@ router.post('/register', async (req, res, next) => {
       res.status(500).send('Unable to validate recaptcha.');
     }
   } catch (e) {
-    console.log(e);
+    logError(e);
     res.status(500).send('Unable to create account.');
   }
 });

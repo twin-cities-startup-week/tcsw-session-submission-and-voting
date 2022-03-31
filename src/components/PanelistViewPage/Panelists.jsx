@@ -59,15 +59,11 @@ function Panelists() {
                         <h5 className='track-filter-header'>Track</h5>
                         <select className='track-selector' onChange={ event => setTrackState( event.target.value )}>
                             <option value=''> </option>
-                            <option value="Developer">Developer</option>
-                            <option value="Founder">Founder</option>
-                            <option value="Designer">Designer</option>
-                            <option value="Maker">Maker</option>
-                            <option value="Product">Product</option>
                             <option value="Growth">Growth</option>
-                            <option value="People">People</option>
+                            <option value="Culture">Culture</option>
+                            <option value="Funding">Funding</option>
+                            <option value="Product">Product</option>
                             <option value="Spotlight">Spotlight</option>
-                            <option value="Other">Other</option>
                         </select>
                     
                         <h5 className='format-filter-header'>Format</h5>

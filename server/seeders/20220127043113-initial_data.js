@@ -139,25 +139,13 @@ module.exports = {
         {
           name: 'Growth',
         }, {
-          name: 'Founder',
+          name: 'Culture',
         }, {
-          name: 'Designer',
-        }, {
-          name: 'Maker',
+          name: 'Funding',
         }, {
           name: 'Product',
         }, {
-          name: 'Developer',
-        }, {
-          name: 'People',
-        }, {
           name: 'Spotlight',
-        }, {
-          name: 'Corporate',
-        }, {
-          name: 'Investor',
-        }, {
-          name: 'Other',
         },
       ], {
         transaction,

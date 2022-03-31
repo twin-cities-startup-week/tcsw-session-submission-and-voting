@@ -11,6 +11,8 @@ const {
     sendSessionSubmissionEmail,
 } = require('../modules/email');
 
+const { logError } = require('./../modules/logger');
+
 // GET route for all APPROVED submissions
 router.get('/approved', rejectUnauthenticated, async (req, res) => {
     try {
@@ -21,7 +23,7 @@ router.get('/approved', rejectUnauthenticated, async (req, res) => {
         });
         res.status(200).send(userSessions);
     } catch (e) {
-        console.log('error with post to db', e);
+        logError(e);
         res.sendStatus(500);
     }
 });
@@ -66,7 +68,7 @@ router.get('/details/:id', async (req, res) => {
         );
         res.status(200).send(userSession);
     } catch (error) {
-        console.log('error in router get panel details', error);
+        logError(error);
         res.sendStatus(500);
     }
 });
@@ -81,7 +83,7 @@ router.get('/user', rejectUnauthenticated, async (req, res) => {
         });
         res.status(200).send(userSessions);
     } catch (e) {
-        console.log('error with getting user submissions', e);
+        logError(e);
         res.sendStatus(500);
     }
 })
@@ -102,7 +104,7 @@ router.get('/user/:id', rejectUnauthenticated, async (req, res) => {
         );
         res.status(200).send(userSession);
     } catch (e) {
-        console.log('error with post to db', e);
+        logError(e);
         res.sendStatus(500);
     }
 });
@@ -141,7 +143,7 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
         );
         res.status(201).send(result);
     } catch (e) {
-        console.log('error with post to db', e);
+        logError(e);
         res.sendStatus(500);
     }
 });
@@ -167,7 +169,7 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
         sendSessionSubmissionEmail(req.user, newSubmission);
         res.status(201).send(result);
     } catch (e) {
-        console.log('error with post to db', e);
+        logError(e);
         res.sendStatus(500);
     }
 });
@@ -193,7 +195,7 @@ router.post('/image', rejectUnauthenticated, async (req, res) => {
         });
         res.send({ message: 'success', imagePath: url });
     } catch (error) {
-        console.log(error);
+        logError(error);
         res.sendStatus(500);
     }
 });

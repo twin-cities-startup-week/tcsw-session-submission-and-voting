@@ -6,7 +6,7 @@ const {
     requireAdmin,
 } = require('../modules/authentication-middleware');
 
-
+const { logError } = require('./../modules/logger');
 
 /**
  * GET route block
@@ -17,6 +17,7 @@ router.get('/block', async (req, res) => {
         
         res.send(contentResults);
     } catch (e) {
+        logError(e);
         res.sendStatus(500);
     }
 });
@@ -43,6 +44,7 @@ router.post('/block', requireAdmin, async (req, res) => {
         );
         res.send(updatedContent);
     } catch (e) {
+        logError(e);
         res.sendStatus(500);
     }
 });

@@ -101,14 +101,10 @@ function PanelViewPage() {
                                 onChange={handleTrackChange}
                             >
                                 <MenuItem value='{Growth}'>Growth</MenuItem>
-                                <MenuItem value='{Founder}'>Founder</MenuItem>
-                                <MenuItem value='{Designer}'>Designer</MenuItem>
-                                <MenuItem value='{Maker}'>Maker</MenuItem>
+                                <MenuItem value='{Culture}'>Culture</MenuItem>
+                                <MenuItem value='{Funding}'>Funding</MenuItem>
                                 <MenuItem value='{Product}'>Product</MenuItem>
-                                <MenuItem value='{Developer}'>Developer</MenuItem>
-                                <MenuItem value='{People}'>People</MenuItem>
-                                <MenuItem value='{Spolight}'>Spolight</MenuItem>
-                                <MenuItem value='{Other}'>Other</MenuItem>
+                                <MenuItem value='{Spotlight}'>Spotlight</MenuItem>
                             </Select>
                     
                         <InputLabel id='format-filter'>Format</InputLabel>

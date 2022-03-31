@@ -1,4 +1,5 @@
 const sgMail = require('@sendgrid/mail');
+const { logError } = require('./logger');
 
 const sendSessionSubmissionEmail = (user, newSubmission) => {
     if (process.env.SENDGRID_API_KEY && process.env.SENDGRID_API_KEY !== '') {
@@ -49,7 +50,7 @@ Thank you!
 TCSW Team
 `,
         };
-        sgMail.send(msg).catch(e => console.log(e));
+        sgMail.send(msg).catch(e => logError(e));
     } else {
         console.error('Missing SendGrid environment variables.')
     }

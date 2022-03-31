@@ -23,7 +23,6 @@ Before you get started, make sure you have the following software installed on y
 
 ```
 SERVER_SESSION_SECRET=some_secret
-SENDGRID_API_KEY_PROD=
 SENDGRID_API_KEY=
 SENDGRID_FROM_ADDRESS=
 GOOGLE_CLIENT_ID=
@@ -31,6 +30,11 @@ GOOGLE_CLIENT_SECRET=
 REACT_APP_RECAPTCHA_SITE_KEY=6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
 RECAPTCHA_SECRET_KEY=6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
 DATABASE_NAME=session_submission
+AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+S3_BUCKET_NAME=session-selector
+HONEYBADGER_API_KEY=
 ```
 
 > NOTE: The recaptcha keys above are provided by Google for development use. Replace with real keys in production.

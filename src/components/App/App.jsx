@@ -235,6 +235,11 @@ function App() {
                 <VotePage />
               </Route>
 
+              <Route exact path="/votepage">
+                {/* <Panelists /> */}
+                <TemporarySearchPage />
+              </Route>
+
               <Route
                 exact
                 path="/login"

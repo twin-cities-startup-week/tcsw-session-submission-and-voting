@@ -502,15 +502,11 @@ function SubmissionPage() {
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>In which track would you like your event featured? *</Typography>
                                     <FormControl component="fieldset" required onChange={handleChangeFor('track')}>
                                         <RadioGroup value={submission.track} name="radio-buttons-group">
-                                            <FormControlLabel value={'Growth'} control={<Radio />} label="Growth" />
-                                            <FormControlLabel value={'Founder'} control={<Radio />} label="Founder" />
-                                            <FormControlLabel value={'Designer'} control={<Radio />} label="Designer" />
-                                            <FormControlLabel value={'Maker'} control={<Radio />} label="Maker" />
-                                            <FormControlLabel value={'Product'} control={<Radio />} label="Product" />
-                                            <FormControlLabel value={'Developer'} control={<Radio />} label="Developer" />
-                                            <FormControlLabel value={'People'} control={<Radio />} label="People" />
-                                            <FormControlLabel value={'Spotlight'} control={<Radio />} label="Spotlight" />
-                                            <FormControlLabel value={'Other'} control={<Radio />} label="Other" />
+                                            <FormControlLabel value={'Growth'} control={<Radio />} label="Growth (sales, marketing, automation, scale)" />
+                                            <FormControlLabel value={'Culture'} control={<Radio />} label="Culture (people, DEI, future of work, social impact)" />
+                                            <FormControlLabel value={'Funding'} control={<Radio />} label="Funding (raising capital, bootstrapping, crowdfunding, financial modeling)" />
+                                            <FormControlLabel value={'Product'} control={<Radio />} label="Product (design, UI/UX, software development)" />
+                                            <FormControlLabel value={'Spotlight'} control={<Radio />} label="Spotlight (all / general topics, special features)" />
                                         </RadioGroup>
                                     </FormControl>
                                 </Box>

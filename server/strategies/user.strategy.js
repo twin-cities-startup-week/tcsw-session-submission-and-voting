@@ -2,6 +2,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const encryptLib = require('../modules/encryption');
 const { pool } = require('../modules/pool');
+const { logError } = require('../modules/logger');
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -27,7 +28,7 @@ passport.deserializeUser((id, done) => {
       }
     })
     .catch((error) => {
-      console.log('Error with query during deserializing user ', error);
+      logError(error);
       // done takes an error (we have one) and a user (null in this case)
       // this will result in the server returning a 500 status code
       done(error, null);
@@ -54,7 +55,7 @@ passport.use(
         }
       })
       .catch((error) => {
-        console.log('Error with query for user ', error);
+        logError(error);
         // done takes an error (we have one) and a user (null in this case)
         // this will result in the server returning a 500 status code
         done(error, null);

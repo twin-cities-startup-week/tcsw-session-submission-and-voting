@@ -6,7 +6,7 @@ const {
     requireAdmin,
 } = require('../modules/authentication-middleware');
 
-
+const { logError } = require('./../modules/logger');
 
 /**
  * GET route admin
@@ -17,7 +17,7 @@ const {
     .then((results) =>
      res.send(results.rows))
      .catch((error) => {
-         console.log('Error making GET request:', error);
+         logError(error);
          res.sendStatus(500);
      });
 });
@@ -33,7 +33,7 @@ router.get('/sessionsApproved', requireAdmin, (req, res) => {
         res.send(results.rows)
     })
      .catch((error) => {
-         console.log('Error making GET request:', error);
+         logError(error);
          res.sendStatus(500);
      });
 });
@@ -49,11 +49,11 @@ router.get('/sessionsVotes', requireAdmin, (req, res) => {
     ORDER BY "votes" DESC LIMIT 1;
     `)
     .then((results) =>
-     res.send(results.rows))
-     .catch((error) => {
-         console.log('Error making GET request:', error);
-         res.sendStatus(500);
-     });
+        res.send(results.rows))
+    .catch((error) => {
+        logError(error);
+        res.sendStatus(500);
+    });
 });
 
 // /**
@@ -67,7 +67,7 @@ router.get('/awaitingApproval', requireAdmin, (req, res) => {
     .then((results) =>
      res.send(results.rows))
      .catch((error) => {
-         console.log('Error making GET request:', error);
+         logError(error);
          res.sendStatus(500);
      });
 });
@@ -82,7 +82,7 @@ router.get('/awaitingApproval', requireAdmin, (req, res) => {
     .then((results) =>
      res.send(results.rows))
      .catch((error) => {
-         console.log('Error making GET request:', error);
+         logError(error);
          res.sendStatus(500);
      });
 });
@@ -92,14 +92,13 @@ router.get('/awaitingApproval', requireAdmin, (req, res) => {
  */
  router.get('/approvedList', requireAdmin, (req, res) => {
     // GET route code here
-    pool.query(`SELECT * from "session" 
-    WHERE "session"."status" = 'approved'`)
+    pool.query(`SELECT * from "session" WHERE "session"."status" = 'approved';`)
     .then((results) =>
-     res.send(results.rows))
-     .catch((error) => {
-         console.log('Error making GET request:', error);
-         res.sendStatus(500);
-     });
+        res.send(results.rows))
+    .catch((error) => {
+        logError(error);
+        res.sendStatus(500);
+    });
 });
 
 router.put('/approve/:id', requireAdmin, (req, res) => {
@@ -113,6 +112,7 @@ router.put('/approve/:id', requireAdmin, (req, res) => {
         .then(result => {
             res.send(200)
         }).catch(error => {
+            logError(error);
             res.send(500)
         })
 });
@@ -128,6 +128,7 @@ router.put('/deny/:id', requireAdmin, (req, res) => {
         .then(result => {
             res.send(200)
         }).catch(error => {
+            logError(error);
             res.send(500)
         })
 });
@@ -143,6 +144,7 @@ router.delete('/delete/:id', requireAdmin, (req, res) => {
         .then(result => {
             res.send(200)
         }).catch(error => {
+            logError(error);
             res.send(500)
         })
 });

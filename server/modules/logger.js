@@ -1,4 +1,4 @@
-// let Honeybadger = require('honeybadger');
+const Honeybadger = require('@honeybadger-io/js')
 
 let { log } = console;
 
@@ -17,11 +17,16 @@ const logDebug = (message, ...params) => {
 // Log error messages
 const logError = (error, options) => {
     if (process.env.NODE_ENV === 'production') {
-        if (options) {
-            // Honeybadger.notify(error, options);
+        if (process.env.HONEYBADGER_API_KEY) {
+            if (options) {
+                Honeybadger.notify(error, options);
+            } else {
+                Honeybadger.notify(error);
+            }
         } else {
-            // Honeybadger.notify(error);
+            log(error);
         }
+
     } else if (process.env.NODE_ENV === 'development') {
         // Log errors in red text
         log('\x1b[31m%s\x1b[0m', error);
@@ -38,7 +43,7 @@ const setLogFn = (logFn) => {
 
 // Used for unit testing
 const setErrorLogFn = (logFn) => {
-    // Honeybadger = logFn;
+    Honeybadger = logFn;
 };
 
 module.exports = {

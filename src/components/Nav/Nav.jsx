@@ -55,7 +55,7 @@ function Nav() {
   }
   const pushToSearch = () => {
     setOpen(!open);
-    history.push('/search');
+    history.push('/votepage');
   }
   const pushToLogout = () => {
     setOpen(!open);543547
@@ -87,8 +87,8 @@ function Nav() {
         (
           <>
             {/* Search, About and FAQ pages are visable at all times. */}
-            <Link className="navLink" to="/search">
-              Search
+            <Link className="navLink" to="/votepage">
+              Vote
             </Link>
 
             <Link className="navLink" to="/about">
@@ -229,7 +229,7 @@ function Nav() {
                     onClick={pushToSearch}
                   >
 
-                    <ListItemText primary="Search" />
+                    <ListItemText primary="Vote" />
 
                   </ListItemButton>
                   <ListItemButton
