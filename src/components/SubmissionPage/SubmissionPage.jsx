@@ -443,7 +443,7 @@ function SubmissionPage() {
                                     <TextField fullWidth id="length-input" label="Length" variant="outlined" required value={submission.length} onChange={handleChangeFor('length')} />
                                 </Box>
                                 <Box p={1}>
-                                    <Typography variant="body2" className={classes.boldText} gutterBottom>Which time do you prefer to host? </Typography>
+                                    <Typography variant="body2" className={classes.boldText} gutterBottom>Which time do you prefer to host? *</Typography>
                                     <Typography variant="caption" display="block" gutterBottom> TCSW is packed with events! As we piece together our calendar, we will work with you to find a great slot for your event. Please select all that apply. </Typography>
                                     <div>
                                         <FormControl fullWidth>
@@ -584,7 +584,7 @@ function SubmissionPage() {
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>Please share any related media you would like to have included on your TCSW session listing (YouTube links, etc).</Typography>
-                                    <TextField fullWidth id="media-input" label="Media" variant="outlined" value={submission.media} onChange={handleChangeFor('media')} />
+                                    <TextField fullWidth id="media-input" label="Media (optional)" variant="outlined" value={submission.media} onChange={handleChangeFor('media')} />
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>What does success look like for your event?</Typography>
