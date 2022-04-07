@@ -80,7 +80,7 @@ router.post('/register', async (req, res, next) => {
       });
     }
     if (captcha && captcha.data && captcha.data.success === true) {
-      const queryText = `INSERT INTO "user" (password, email, first_name, last_name, ip_address)
+      const queryText = `INSERT INTO "user" (password, email, first_name, last_name, current_sign_in_ip)
       VALUES ($1, $2, $3, $4, $5) RETURNING id`;
       pool
         .query(queryText, [password, email, firstName, lastName, ipAddress])
