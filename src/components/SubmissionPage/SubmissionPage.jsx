@@ -120,7 +120,7 @@ function SubmissionPage() {
 
     //options for multiselect drop down industries menu
     const industries = [
-        'General Entrepreneuership',
+        'General Entrepreneurship',
         'Technology',
         'Healthcare',
         'Retail',
@@ -400,12 +400,12 @@ function SubmissionPage() {
                                     />
                                 </Box>
                                 <Box p={1}>
-                                    <Typography variant="body2" className={classes.boldText} gutterBottom>Approximately how many attendees do you expect?</Typography>
+                                    <Typography variant="body2" className={classes.boldText} gutterBottom>Approximately how many attendees do you expect? *</Typography>
                                     <TextField type="number" fullWidth id="attendees-input" label="Attendees" variant="outlined" required value={submission.attendees} onChange={handleChangeFor('attendees')} />
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>Where will your event be hosted? *</Typography>
-                                    <FormControl component="fieldset" value={submission.location} onChange={handleChangeFor('location')}>
+                                    <FormControl component="fieldset" required value={submission.location} onChange={handleChangeFor('location')}>
                                         <RadioGroup value={submission.location} name="radio-buttons-group">
                                             <FormControlLabel value={'Online via the TCSW virtual venue'} control={<Radio />} label="Online via the TCSW virtual venue" />
                                             <FormControlLabel value={'In-person'} control={<Radio />} label="In-person" />
@@ -438,7 +438,7 @@ function SubmissionPage() {
                                     </div>
                                 </Box>
                                 <Box p={1}>
-                                    <Typography variant="body2" className={classes.boldText} gutterBottom> Approximately how long will your event be?</Typography>
+                                    <Typography variant="body2" className={classes.boldText} gutterBottom> Approximately how long will your event be? *</Typography>
                                     <Typography variant="caption" display="block" gutterBottom>Please keep in mind people need time to travel between events. </Typography>
                                     <TextField fullWidth id="length-input" label="Length" variant="outlined" required value={submission.length} onChange={handleChangeFor('length')} />
                                 </Box>
@@ -512,7 +512,7 @@ function SubmissionPage() {
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>What is the purpose of your event? *</Typography>
-                                    <FormControl component="fieldset" onChange={handleChangeFor('purpose')}>
+                                    <FormControl component="fieldset" required onChange={handleChangeFor('purpose')}>
                                         <RadioGroup value={submission.purpose} name="radio-buttons-group">
                                             <FormControlLabel value={'To Enable: Help teach a skill or set of skills'} control={<Radio />} label="To Enable: Help teach a skill or set of skills" />
                                             <FormControlLabel value={'To Inspire: Inspire attendees through showcasing'} control={<Radio />} label="To Inspire: Inspire attendees through showcasing" />
