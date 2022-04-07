@@ -32,6 +32,7 @@ import AdminContentPage from '../AdminContentPage/AdminContentPage';
 import SubmissionListPage from '../SubmissionListPage/SubmissionListPage';
 import GlobalAlertModal from '../GlobalAlertModal/GlobalAlertModal';
 import TemporarySearchPage from '../TemporarySearchPage/TemporarySearchPage';
+import AdminUserList from '../AdminUserList/AdminUserList';
 import './App.css';
 
 import {createTheme, ThemeProvider} from '@mui/material/styles';
@@ -210,7 +211,12 @@ function App() {
               >
                 <InfoPage />
               </ProtectedRoute> */}
-
+              <ProtectedRoute
+                exact
+                path="/admin/user/list"
+              >
+                <AdminUserList />
+              </ProtectedRoute>
               <ProtectedRoute
                 exact
                 path="/submission"

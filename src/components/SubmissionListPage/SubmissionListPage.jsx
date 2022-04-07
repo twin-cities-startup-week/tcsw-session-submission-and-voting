@@ -73,7 +73,7 @@ function SubmissionListPage() {
                     && userSubmissions.map(submission => (
                             <div className={classes.item}>
                                 <div style={{paddingRight: '20px'}}>
-                                    <img src={submission.image} className={classes.previewImage} />
+                                    <img src={submission.image || 'images/TCSW_session_selector_lightblue.png'} className={classes.previewImage} />
                                 </div>
                                 <div style={{ flex: 1 }}>
                                     <Button component={Paper} elevation={8}

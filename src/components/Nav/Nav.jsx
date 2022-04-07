@@ -68,6 +68,11 @@ function Nav() {
     history.push('/login');
   }
 
+  const pushToUserList = () => {
+    setOpen(!open);
+    history.push('/admin/user/list');
+  }
+
   return (
     <div className="nav">
 
@@ -181,6 +186,18 @@ function Nav() {
                   onClick={pushToAdminContent}>
 
                   <ListItemText primary="Edit Content" />
+
+                </ListItemButton>
+              }
+              {user.admin &&
+                <ListItemButton
+                  sx={{
+                    textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
+                    '&:hover': { background: "#0c495a" }
+                  }}
+                  onClick={pushToUserList}>
+
+                  <ListItemText primary="View User List" />
 
                 </ListItemButton>
               }

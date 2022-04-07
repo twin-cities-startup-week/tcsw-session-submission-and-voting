@@ -319,7 +319,7 @@ function SubmissionPage() {
                 <DialogTitle id="responsive-dialog-title">
                     Please wait...
                 </DialogTitle>
-                <DialogContent align="center" className={classes.feedbackContainer}>
+                <DialogContent align="center">
                     <span role="img" aria-label="loading">⌛</span>
                     {/* TODO: Add animation */}
                 </DialogContent>

@@ -10,11 +10,16 @@ function* registerUser(action) {
     // passes the username and password from the payload to the server
     yield axios.post('/api/user/register', action.payload);
 
+    if (action.onSuccess) {
+      action.onSuccess();
+    }
     // automatically log a user in after registration
     yield put({ type: 'LOGIN', payload: action.payload });
   } catch (error) {
-    console.log('Error with user registration:', error);
     yield put({ type: 'REGISTRATION_FAILED' });
+    if (action.onFailure) {
+      action.onFailure( error.response.data || 'Please reach out to hello@beta.mn so that we can help.');
+    }
   }
 }
 

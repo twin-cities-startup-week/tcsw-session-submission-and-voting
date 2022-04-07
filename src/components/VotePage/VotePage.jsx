@@ -111,7 +111,7 @@ function VotePage() {
                 <Grid item md={12} lg={10} order={{ xs: 1, sm: 1, md: 1, lg: 2 }} style={{ backgroundColor: '#FFF', padding: '20px'  }}>
                     <div className={classes.item}>
                         <div style={{ paddingRight: '20px' }}>
-                            <img src={details.image} className={classes.previewImage} />
+                            <img src={details.image || 'images/TCSW_session_selector_lightblue.png'} className={classes.previewImage} />
                         </div>
                         <div style={{ flex: 1 }}>
                             {user.admin &&

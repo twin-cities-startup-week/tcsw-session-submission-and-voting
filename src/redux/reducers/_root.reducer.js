@@ -11,6 +11,7 @@ import setApprovalAwaitingInfo from './approvalAwaitingInfo.reducer';
 import setApprovedInfo from './approvedInfo.reducer';
 import content from './content.reducer';
 import modal from './modal.reducer';
+import userList from './userList.reducer';
 
 
 // rootReducer is the primary reducer for our entire project
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   addVoteReducer,
   content,
   modal,
+  userList,
 });
 
 export default rootReducer;

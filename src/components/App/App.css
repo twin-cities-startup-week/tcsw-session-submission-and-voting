@@ -115,11 +115,11 @@ Alert
   box-sizing: border-box;
   padding: 15px 10px;
   margin: 15px 0;
-  border: 2px solid #e01616;
-  background-color: #A7A9AC;
+  border: 2px solid darkred;
+  background-color: #fff;
   border-radius: 3px;
-  color: #e01616;
-  font-size: 0.8rem;
+  color: darkred;
+  font-size: 1rem;
 }
 
 /* --------------------------------------------------------------------------------

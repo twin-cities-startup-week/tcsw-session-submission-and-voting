@@ -70,6 +70,15 @@ function* fetchApprovedSessions() {
     }
 }
 
+function* fetchUserList() {
+    try {
+        const response = yield axios.get(`/api/admin/user/list`);
+        yield put({ type: 'SET_USER_LIST', payload: response.data });
+    } catch (error) {
+        console.log('Session get request failed', error);
+    }
+}
+
 function* sessionSaga (){
     yield takeLatest('FETCH_TOTAL_SESSION', fetchTotalSession);
     yield takeLatest('FETCH_CONTENT_BLOCKS', fetchAllContent);
@@ -78,6 +87,7 @@ function* sessionSaga (){
     yield takeLatest('DENY_SESSION', denySession);
     yield takeLatest('DELETE_SESSION', deleteSession);
     yield takeLatest('FETCH_APPROVED_INFO', fetchApprovedSessions);
+    yield takeLatest('FETCH_USER_LIST', fetchUserList);
 }
 
 

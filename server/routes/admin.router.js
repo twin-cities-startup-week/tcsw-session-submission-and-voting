@@ -1,6 +1,7 @@
 const express = require('express');
 const { pool } = require('../modules/pool');
 const router = express.Router();
+const User = require('../models/user.model.js');
 
 const {
     requireAdmin,
@@ -147,6 +148,31 @@ router.delete('/delete/:id', requireAdmin, (req, res) => {
             logError(error);
             res.send(500)
         })
+});
+
+/**
+ * GET route admin
+ */
+router.get('/user/list', requireAdmin, async (req, res) => {
+    try {
+        let userList = await User.findAll({
+            attributes: [
+                'id',
+                'first_name',
+                'last_name',
+                'email',
+                'admin',
+            ],
+            raw: true,
+            order: [
+                ['first_name', 'ASC'],
+            ],
+        });
+        res.send(userList);
+    } catch (error) {
+        logError(error);
+        res.send(500);
+    }
 });
 
 module.exports = router;

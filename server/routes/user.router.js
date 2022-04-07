@@ -98,19 +98,20 @@ router.post('/register', async (req, res, next) => {
           // } else {
           //   console.error('Missing SendGrid environment variables.')
           // }
-          res.sendStatus(201)
+          res.status(201).send('Success');
         })
         .catch((err) => {
           logError(err);
-          res.sendStatus(500);
+          res.status(500).send('Unable to create account. Please reach out to hello@beta.mn so that we can help.');
         });
 
     } else {
-      res.status(500).send('Unable to validate recaptcha.');
+      logError('Unable to validate recaptcha.');
+      res.status(500).send('Unable to validate recaptcha. Please try again. If the problem persists, please reach out to hello@beta.mn so that we can help.');
     }
   } catch (e) {
     logError(e);
-    res.status(500).send('Unable to create account.');
+    res.status(500).send('Unable to create account. Please reach out to hello@beta.mn so that we can help.');
   }
 });
 

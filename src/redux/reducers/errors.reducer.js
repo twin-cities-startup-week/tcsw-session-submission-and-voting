@@ -28,7 +28,7 @@ const registrationMessage = (state = '', action) => {
     case 'REGISTRATION_INPUT_ERROR':
       return 'Choose a username and password!';
     case 'REGISTRATION_FAILED':
-      return "Oops! That didn't work. The username might already be taken. Try again!";
+      return "Oh no! Something went wrong. If the problem persists, please reach out to hello@beta.mn so that we can help.";
     default:
       return state;
   }
