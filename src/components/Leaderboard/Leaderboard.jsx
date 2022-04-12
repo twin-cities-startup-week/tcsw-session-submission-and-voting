@@ -8,17 +8,16 @@ import { DataGrid, GridRowParams } from '@mui/x-data-grid';
 function Leaderboard() {
     const dispatch = useDispatch();
     const history = useHistory();
-    const approvedSubmissions = useSelector(store => store.submission.approvedSubmissions);
+    const approvedSessions = useSelector(store => store.session.approvedSessions);
 
     /* Grabs approved submissions ordered from highest to lowest votes on page load */
     useEffect(() => {
-        dispatch({ type: 'GET_APPROVED_SUBMISSIONS' })
+        dispatch({ type: 'FETCH_APPROVED_SUBMISSIONS' })
     }, [])
 
     /* MUI params here provides all details for all rows(sessions)
        To get the clicked row, use params.row */
     const pushToDetailPage = (params) => {
-        dispatch({ type: 'FETCH_SUBMISSION_DETAILS', payload: params.row })
         history.push(`/votepage/${params.row.id}`);
     }
 
@@ -44,7 +43,7 @@ function Leaderboard() {
         in the DataGrid for each row. If properties shown need to be added 
         or changed, you can change them here. */
     let rows = [];
-    rows = approvedSubmissions.map((submission, index) => {
+    rows = approvedSessions.map((submission, index) => {
         return (
             rows = {
             placement: placement(index + 1),

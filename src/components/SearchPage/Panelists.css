@@ -24,21 +24,20 @@
 }
 
 .search-bar{
-    padding-right: 20%;
-    width: 80%;
+    width: 100%;
     height: 30px;
-    margin-left: 10px;
+    margin: 0;
 }
 
 .track-selector{
     font-size: medium;
-    width: 80%;
+    width: 100%;
     height: 30px;
 }
 
 .format-selector{
     font-size: medium;
-    width: 80%;
+    width: 100%;
     height: 30px;
 }
 

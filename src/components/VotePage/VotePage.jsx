@@ -82,7 +82,7 @@ function VotePage() {
     }
 
     return(
-        <div className='vote-page-view'>
+        <div>
             <Grid container spacing={0} style={{ backgroundColor: '#FBBD19', width: '100%' }}>
                 <Grid item md={12} lg={2} order={{ xs: 2, sm: 2, md: 2, lg: 1 }} style={{ backgroundColor: '#FBBD19', padding: '20px' }}>
                     <h2 className='left-header'>TCSW 2022</h2>

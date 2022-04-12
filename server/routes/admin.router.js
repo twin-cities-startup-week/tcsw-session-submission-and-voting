@@ -44,7 +44,7 @@ router.get('/pending/sessions', requireAdmin, async (req, res) => {
 router.put('/approve/:id', requireAdmin, async (req, res) => {
     try {
         const sessionId = req.params.id;
-        await Session.update(
+        const session = await Session.update(
             {
                 approved: true,
                 awaiting_approval: false,
@@ -59,7 +59,7 @@ router.put('/approve/:id', requireAdmin, async (req, res) => {
                 returning: true,
             }
         );
-        res.send(200);
+        res.status(200).send(session);
     } catch (e) {
         logError(e);
         res.sendStatus(500); 

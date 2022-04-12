@@ -15,15 +15,13 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
-import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import FaqPage from '../FaqPage/FaqPage';
 import AdminPage from '../AdminPage/AdminPage';
 import SubmissionPage from '../SubmissionPage/SubmissionPage';
-import PanelistViewPage from '../PanelistViewPage/PanelistViewPage';
-import Panelists from '../PanelistViewPage/Panelists'
+import Panelists from '../SearchPage/Panelists'
 import VotePage from '../VotePage/VotePage'; 
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
 import ResetPassword from '../ResetPassword/ResetPassword';
@@ -123,9 +121,9 @@ function App() {
         closeActionType="SET_GLOBAL_MODAL"
       />
       <Router>
-        <div style={{position: 'relative', minHeight: '100%'}}>
-          <div style={{paddingBottom: '150px'}}>
-            <Nav />
+        <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%'}}>
+          <Nav />
+          <div style={{ flexGrow: 1 }}>
             <Switch>
               {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
               <Redirect exact from="/" to="/home" />
@@ -224,17 +222,12 @@ function App() {
                 <SubmissionPage />
               </ProtectedRoute>
 
-                <ProtectedRoute
-                  exact
-                  path="/submission/:id/edit"
-                >
-                  <SubmissionPage />
-                </ProtectedRoute>
-
-              <Route exact path = "/panelistView">
-                <Panelists />
-                {/* <PanelistViewPage /> */}
-              </Route>
+              <ProtectedRoute
+                exact
+                path="/submission/:id/edit"
+              >
+                <SubmissionPage />
+              </ProtectedRoute>
 
               <Route exact path = "/votepage/:id">
                 {/* <Panelists /> */}
@@ -244,6 +237,10 @@ function App() {
               <Route exact path="/votepage">
                 {/* <Panelists /> */}
                 <TemporarySearchPage />
+              </Route>
+
+              <Route exact path="/preview/votepage">
+                <Panelists />
               </Route>
 
               <Route

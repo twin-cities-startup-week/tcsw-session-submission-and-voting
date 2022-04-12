@@ -31,7 +31,7 @@ function* fetchApprovedSessions() {
 function* sessionSaga (){
     yield takeLatest('FETCH_SESSIONS_AWAITING_APPROVAL', fetchAwaitingApproval);
     yield takeLatest('FETCH_ADMIN_APPROVED_SESSIONS', fetchAdminApprovedSessions);
-    yield takeLatest('FETCH_APPROVED_SUBMISSIONS', fetchApprovedSessions);
+    yield takeLatest('FETCH_APPROVED_SESSIONS', fetchApprovedSessions);
 }
 
 export default sessionSaga;
