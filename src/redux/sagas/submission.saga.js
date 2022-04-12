@@ -1,13 +1,12 @@
-import { takeEvery, takeLatest, put } from "@redux-saga/core/effects";
+import { takeLatest, put } from "@redux-saga/core/effects";
 import axios from 'axios';
 
 //root saga for submissions
 function* submissionSaga(){
-    yield takeEvery('POST_SUBMISSION_TO_SERVER', sendSubmissionToServer);
-    yield takeEvery('UPDATE_SUBMISSION_TO_SERVER', sendUpdatedSubmissionToServer);
-    yield takeEvery('GET_APPROVED_SUBMISSIONS', getApprovedSubmissions);
-    yield takeEvery('GET_USER_SUBMISSIONS', getUserSubmissions);
-    yield takeEvery('GET_USER_SUBMISSION_DETAIL', getUserSubmissionDetail);
+    yield takeLatest('POST_SUBMISSION_TO_SERVER', sendSubmissionToServer);
+    yield takeLatest('UPDATE_SUBMISSION_TO_SERVER', sendUpdatedSubmissionToServer);
+    yield takeLatest('GET_USER_SUBMISSIONS', getUserSubmissions);
+    yield takeLatest('GET_USER_SUBMISSION_DETAIL', getUserSubmissionDetail);
     yield takeLatest('FETCH_SUBMISSION_DETAILS', fetchSubmissionDetails);
 }
 
@@ -48,21 +47,12 @@ function* sendUpdatedSubmissionToServer(action) {
             submissionData.image = imageResponse.data.imagePath;
         }
 
-        const response = yield axios.put('/api/submission', submissionData);
+        yield axios.put('/api/submission', submissionData);
         yield put({ type: 'ADD_SUBMISSION', payload: action.payload });
         action.onComplete();
     } catch (error) {
         console.error('error posting submission to DB', error);
         action.onFailure();
-    }
-}
-
-function* getApprovedSubmissions(){
-    try {
-        const submissions = yield axios.get('/api/submission/approved');
-        yield put({ type: 'SET_APPROVED_SUBMISSIONS', payload: submissions.data })
-    } catch (error) {
-        console.log('Error posting submission to DB', error );
     }
 }
 

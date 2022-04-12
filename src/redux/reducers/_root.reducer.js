@@ -1,14 +1,8 @@
 import { combineReducers } from 'redux';
 import errors from './errors.reducer';
 import user from './user.reducer';
-import addVoteReducer from './addVote.reducer';
 import submission from './submission.reducer';
-import setSessionList from './admin.reducer';
-import setAwaitingApproval from './approvedAwaiting.reducer';
-import setHighestVoting from './highestVoting.reducer';
-import setAllSession from './fetchAllSession.reducer';
-import setApprovalAwaitingInfo from './approvalAwaitingInfo.reducer';
-import setApprovedInfo from './approvedInfo.reducer';
+import session from './session.reducer';
 import content from './content.reducer';
 import modal from './modal.reducer';
 import userList from './userList.reducer';
@@ -24,13 +18,7 @@ const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
   user, // will have an id and username if someone is logged in
   submission,
-  setSessionList,
-  setAwaitingApproval,
-  setHighestVoting,
-  setAllSession,
-  setApprovalAwaitingInfo,
-  setApprovedInfo,
-  addVoteReducer,
+  session,
   content,
   modal,
   userList,

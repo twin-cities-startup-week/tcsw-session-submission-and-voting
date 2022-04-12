@@ -1,7 +1,8 @@
+// Router for admin specific functions
 const express = require('express');
-const { pool } = require('../modules/pool');
 const router = express.Router();
 const User = require('../models/user.model.js');
+const Session = require('../models/session.model.js');
 
 const {
     requireAdmin,
@@ -9,145 +10,109 @@ const {
 
 const { logError } = require('./../modules/logger');
 
-/**
- * GET route admin
- */
- router.get('/', requireAdmin, (req, res) => {
-    // GET route code here
-    pool.query(`SELECT * from "session"`)
-    .then((results) =>
-     res.send(results.rows))
-     .catch((error) => {
-         logError(error);
-         res.sendStatus(500);
-     });
-});
-
-/**
- * GET route admin
-//  */
-router.get('/sessionsApproved', requireAdmin, (req, res) => {
-    // GET route code here
-    pool.query(`SELECT count(session.title) from "session" 
-    WHERE "session"."status" = 'approved';`)
-    .then((results) => {
-        res.send(results.rows)
-    })
-     .catch((error) => {
-         logError(error);
-         res.sendStatus(500);
-     });
-});
-
-
-
-/**
- * GET route admin
-//  */
-router.get('/sessionsVotes', requireAdmin, (req, res) => {
-    // GET route code here
-    pool.query(`SELECT title, votes FROM session
-    ORDER BY "votes" DESC LIMIT 1;
-    `)
-    .then((results) =>
-        res.send(results.rows))
-    .catch((error) => {
-        logError(error);
+// GET route for all APPROVED submissions
+router.get('/approved/sessions', requireAdmin, async (req, res) => {
+    try {
+        const userSessions = await Session.findAll({
+            where: {
+                status: 'approved',
+            }
+        });
+        res.status(200).send(userSessions);
+    } catch (e) {
+        logError(e);
         res.sendStatus(500);
-    });
+    }
 });
 
-// /**
-//  * GET route admin
-// //  */
-router.get('/awaitingApproval', requireAdmin, (req, res) => {
-    // GET route code here
-    pool.query(`SELECT count(session.id) from "session"
-    WHERE "session"."status" = 'pending';
-    `)
-    .then((results) =>
-     res.send(results.rows))
-     .catch((error) => {
-         logError(error);
-         res.sendStatus(500);
-     });
-});
-
-/**
- * GET route admin
- */
- router.get('/awaitingApprovalList', requireAdmin, (req, res) => {
-    // GET route code here
-    pool.query(`SELECT * from "session" 
-    WHERE "session"."status" = 'pending';`)
-    .then((results) =>
-     res.send(results.rows))
-     .catch((error) => {
-         logError(error);
-         res.sendStatus(500);
-     });
-});
-
-/**
- * GET route admin
- */
- router.get('/approvedList', requireAdmin, (req, res) => {
-    // GET route code here
-    pool.query(`SELECT * from "session" WHERE "session"."status" = 'approved';`)
-    .then((results) =>
-        res.send(results.rows))
-    .catch((error) => {
-        logError(error);
+// GET route for all PENDING submissions
+router.get('/pending/sessions', requireAdmin, async (req, res) => {
+    try {
+        const userSessions = await Session.findAll({
+            where: {
+                status: 'pending',
+            }
+        });
+        res.status(200).send(userSessions);
+    } catch (e) {
+        logError(e);
         res.sendStatus(500);
-    });
+    }
 });
 
-router.put('/approve/:id', requireAdmin, (req, res) => {
-    const sessionId = req.params.id;
-
-    const queryText = `UPDATE "session"
-                        SET "approved" = true, "awaiting_approval" = false, "status" = 'approved'
-                        WHERE "id" = $1;`
-
-    pool.query(queryText, [sessionId])
-        .then(result => {
-            res.send(200)
-        }).catch(error => {
-            logError(error);
-            res.send(500)
-        })
+// PUT route to approve a session
+router.put('/approve/:id', requireAdmin, async (req, res) => {
+    try {
+        const sessionId = req.params.id;
+        await Session.update(
+            {
+                approved: true,
+                awaiting_approval: false,
+                status: 'approved',
+            },
+            {
+                where: {
+                    id: sessionId,
+                },
+                // Return the updated record
+                plain: true,
+                returning: true,
+            }
+        );
+        res.send(200);
+    } catch (e) {
+        logError(e);
+        res.sendStatus(500); 
+    }
 });
 
-router.put('/deny/:id', requireAdmin, (req, res) => {
-    const sessionId = req.params.id;
-
-    const queryText = `UPDATE "session"
-                        SET "awaiting_approval" = false, "status" = 'rejected'
-                        WHERE "id" = $1;`
-
-    pool.query(queryText, [sessionId])
-        .then(result => {
-            res.send(200)
-        }).catch(error => {
-            logError(error);
-            res.send(500)
-        })
+// PUT route to deny a session
+router.put('/deny/:id', requireAdmin, async (req, res) => {
+    try {
+        const sessionId = req.params.id;
+        await Session.update(
+            {
+                awaiting_approval: false,
+                status: 'rejected',
+            },
+            {
+                where: {
+                    id: sessionId,
+                },
+                // Return the updated record
+                plain: true,
+                returning: true,
+            }
+        );
+        res.send(200);
+    } catch (e) {
+        logError(e);
+        res.sendStatus(500);
+    }
 });
 
-router.delete('/delete/:id', requireAdmin, (req, res) => {
-    const sessionId = req.params.id;
-
-    const queryText = `UPDATE "session"
-                        SET "awaiting_approval" = false, "status" = 'deleted'
-                        WHERE "id" = $1;`
-
-    pool.query(queryText, [sessionId])
-        .then(result => {
-            res.send(200)
-        }).catch(error => {
-            logError(error);
-            res.send(500)
-        })
+router.delete('/delete/:id', requireAdmin, async (req, res) => {
+    try {
+        const sessionId = req.params.id;
+        await Session.update(
+            {
+                awaiting_approval: false,
+                status: 'deleted',
+            },
+            {
+                where: {
+                    id: sessionId,
+                },
+                // Return the updated record
+                plain: true,
+                returning: true,
+            }
+        );
+        res.send(200);
+    } catch (e) {
+        logError(e);
+        res.sendStatus(500);
+    }
 });
 
 /**

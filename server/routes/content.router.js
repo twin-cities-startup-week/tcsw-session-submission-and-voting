@@ -1,5 +1,5 @@
+// Router for light weight CMS. Content is stored as Markdown in the database.
 const express = require('express');
-const { pool } = require('../modules/pool');
 const router = express.Router();
 const ContentBlock = require('../models/content_block.model.js');
 const {

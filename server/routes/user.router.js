@@ -26,7 +26,30 @@ const {
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
-// Handles Ajax request for user information if user is authenticated
+/**
+ * @api {get} /users User Detail
+ * @apiName GetUserDetail
+ * @apiGroup User
+ * @apiDescription This route returns details about the currently logged in user.
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "id": 41,
+ *          "email": "tester@primeacademy.io",
+ *          "reset_password_token": null,
+ *          "reset_password_sent_at": null,
+ *          "remember_created_at": null,
+ *          "current_sign_in_at": "2019-04-08T16:57:14.005Z",
+ *          "current_sign_in_ip": "127.0.0.1",
+ *          "created_at": "2019-04-08T11:57:00.278Z",
+ *          "updated_at": "2019-04-08T16:57:14.019Z",
+ *          "first_name": "Chris",
+ *          "last_name": "Test",
+ *          "google_id": "",
+ *          "admin": false
+ *      }
+ */
 router.get('/', rejectUnauthenticated, async (req, res) => {
   try {
     const ipAddress = getIpAddress(req);
@@ -85,19 +108,6 @@ router.post('/register', async (req, res, next) => {
       pool
         .query(queryText, [password, email, firstName, lastName, ipAddress])
         .then(() => {
-          // if (process.env.SENDGRID_API_KEY && process.env.SENDGRID_API_KEY !== '') {
-          //   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-          //   const msg = {
-          //     to: email,
-          //     from: process.env.SENDGRID_FROM_ADDRESS,
-          //     subject: 'Welcome!',
-          //     text: `Welcome to the TCSW session selector!`,
-          //     html: `Welcome to the TCSW session selector!`,
-          //   };
-          //   sgMail.send(msg).catch(e => console.log(e));
-          // } else {
-          //   console.error('Missing SendGrid environment variables.')
-          // }
           res.status(201).send('Success');
         })
         .catch((err) => {
@@ -115,15 +125,31 @@ router.post('/register', async (req, res, next) => {
   }
 });
 
-// Handles login form authenticate/login POST
-// userStrategy.authenticate('local') is middleware that we run on this route
-// this middleware will run our POST if successful
-// this middleware will send a 404 if not successful
+/**
+ * @api {post} /users/login User Login
+ * @apiName UserLogin
+ * @apiGroup User
+ * @apiDescription Create a cookie session for an user.
+ *
+ * @apiParam {String} username          Mandatory user email.
+ * @apiParam {String} password          Mandatory user password.
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ */
 router.post('/login', userStrategy.authenticate('local'), (req, res) => {
   res.sendStatus(200);
 });
 
-// clear all server session information about this user
+/**
+ * @api {post} /users/logout User Logout
+ * @apiName UserLogout
+ * @apiGroup User
+ * @apiDescription Clear all server session information about this user
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ */
 router.post('/logout', async (req, res) => {
   try {
       // Use passport's built-in method to log out the user

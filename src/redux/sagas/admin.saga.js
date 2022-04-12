@@ -1,15 +1,6 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
-function* fetchTotalSession(){
-    try{
-        const response = yield axios.get(`/api/admin/sessionsApproved`)
-        yield put({type: 'SET_SESSION', payload: response.data})
-    }catch(error){
-        console.log('Session get request failed', error )
-    }
-}
-
 function* fetchAllContent() {
     try {
         const response = yield axios.get(`/api/content/block`);
@@ -21,8 +12,7 @@ function* fetchAllContent() {
 
 function* sendContent(action) {
     try {
-        const response = yield axios.post('/api/content/block', action.payload);
-        // yield put({ type: 'SET_CONTENT_BLOCK', payload: response.data });
+        yield axios.post('/api/content/block', action.payload);
     } catch (error) {
         console.log('Session get request failed', error);
     }
@@ -61,15 +51,6 @@ function* deleteSession(action) {
     }
 }
 
-function* fetchApprovedSessions() {
-    try {
-        const response = yield axios.get(`/api/admin/approvedList`)
-        yield put({ type: 'SET_APPROVED_INFO', payload: response.data })
-    } catch (error) {
-        console.log('Session get request failed', error);
-    }
-}
-
 function* fetchUserList() {
     try {
         const response = yield axios.get(`/api/admin/user/list`);
@@ -80,13 +61,11 @@ function* fetchUserList() {
 }
 
 function* sessionSaga (){
-    yield takeLatest('FETCH_TOTAL_SESSION', fetchTotalSession);
     yield takeLatest('FETCH_CONTENT_BLOCKS', fetchAllContent);
     yield takeLatest('SEND_CONTENT_BLOCK', sendContent);
     yield takeLatest('APPROVE_SESSION', approveSession);
     yield takeLatest('DENY_SESSION', denySession);
     yield takeLatest('DELETE_SESSION', deleteSession);
-    yield takeLatest('FETCH_APPROVED_INFO', fetchApprovedSessions);
     yield takeLatest('FETCH_USER_LIST', fetchUserList);
 }
 

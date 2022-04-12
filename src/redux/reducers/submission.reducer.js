@@ -67,15 +67,6 @@ const submission = ( state = [], action ) => {
     }
 }
 
-const approvedSubmissions = ( state = [], action ) => {
-    switch( action.type ) {
-        case 'SET_APPROVED_SUBMISSIONS':
-            return action.payload;
-        default:
-            return state;
-    }
-}
-
 const userSubmissions = (state = [], action) => {
     switch (action.type) {
         case 'SET_USER_SUBMISSIONS':
@@ -103,7 +94,6 @@ const submissionDetails = (state = {}, action) => {
 
 export default combineReducers({
     submission,
-    approvedSubmissions,
     userSubmissions,
     editSubmission,
     submissionDetails,
