@@ -33,12 +33,10 @@ const useStyles = makeStyles({
 function AdminUserList() {
     const classes = useStyles();
     //set selector
-    const reduxStore = useSelector((store) => store);
+    const userList = useSelector((store) => store.userList);
+    const user = useSelector((store) => store.user);
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
-
-    //set selector
-    const { userList } = reduxStore;
 
     const history = useHistory();
 
@@ -104,16 +102,23 @@ function AdminUserList() {
                                     </Typography>
                                     
                                 </TableCell>
-                                <TableCell style={{width: '200px'}}>
+                                <TableCell style={{width: '250px'}}>
                                     {
                                         person.admin ? (
-                                            <Button
-                                                style={{ float: 'right', marginLeft: '20px', marginTop: '-4px' }}
-                                                color="error"
-                                                onClick={removeAdmin(person.id)}
-                                            >
-                                                Remove
-                                            </Button>
+                                            <>
+                                                {
+                                                    // Users should not see a button for their user record
+                                                    user.id !== person.id && (
+                                                        <Button
+                                                            style={{ float: 'right', marginLeft: '20px', marginTop: '-4px' }}
+                                                            color="error"
+                                                            onClick={removeAdmin(person.id)}
+                                                        >
+                                                            Remove
+                                                        </Button>
+                                                    )
+                                                }
+                                            </>
                                         ) : (
                                             <Button
                                                 style={{ float: 'right', marginLeft: '20px' }}

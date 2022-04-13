@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
 function* fetchAwaitingApproval(action){
     try{
         const response = yield axios.get(`/api/admin/pending/sessions`)
@@ -22,6 +24,7 @@ function* fetchAdminApprovedSessions(){
 function* fetchApprovedSessions(action) {
     try {
         const submissions = yield axios.get('/api/submission/approved', { params: action.payload });
+        yield delay(300);
         yield put({ type: 'SET_APPROVED_SESSIONS', payload: submissions.data });
         if (action.onComplete) {
             action.onComplete();

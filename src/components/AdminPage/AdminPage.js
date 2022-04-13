@@ -50,7 +50,7 @@ function AdminPage() {
   return (
     <>
       
-      <Grid container spacing={1} style={{width: '100%', marginTop: '15px'}}>
+      <Grid container spacing={1} style={{width: '100%', margin: '20px 0'}}>
         <Grid item lg={12} xl={12} style={{padding: '5px 30px'}}>
           <Button onClick={downloadSessionsCSV}>Download CSV</Button>
         </Grid>

@@ -21,7 +21,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import FaqPage from '../FaqPage/FaqPage';
 import AdminPage from '../AdminPage/AdminPage';
 import SubmissionPage from '../SubmissionPage/SubmissionPage';
-import Panelists from '../SearchPage/Panelists'
+import SearchPage from '../SearchPage/SearchPage'
 import VotePage from '../VotePage/VotePage'; 
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
 import ResetPassword from '../ResetPassword/ResetPassword';
@@ -230,17 +230,15 @@ function App() {
               </ProtectedRoute>
 
               <Route exact path = "/votepage/:id">
-                {/* <Panelists /> */}
                 <VotePage />
               </Route>
 
               <Route exact path="/votepage">
-                {/* <Panelists /> */}
-                <TemporarySearchPage />
+                <SearchPage />
               </Route>
 
               <Route exact path="/preview/votepage">
-                <Panelists />
+                <SearchPage />
               </Route>
 
               <Route
