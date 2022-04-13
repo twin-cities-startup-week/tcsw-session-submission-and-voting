@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const Sequelize = require('sequelize');
 const Session = require('../models/session.model.js');
 const {
     rejectUnauthenticated,
@@ -9,16 +10,55 @@ const S3Service = require('../services/S3Service');
 const {
     sendSessionSubmissionEmail,
 } = require('../modules/email');
-
+const { Op } = Sequelize;
 const { logError } = require('./../modules/logger');
 
 // GET route for all APPROVED submissions
 router.get('/approved', rejectUnauthenticated, async (req, res) => {
+    console.log('Params', req.query);
+    const whereCondition = {
+        status: 'approved',
+    }
+    const andConditions = [];
+    if (req.query.searchTerm && req.query.searchTerm !== '') {
+        andConditions.push({
+            [Op.or]: [
+                {
+                    description: {
+                        [Op.iLike]: `%${req.query.searchTerm.trim()}%`,
+                    },
+                }, {
+                    title: {
+                        [Op.iLike]: `%${req.query.searchTerm.trim()}%`,
+                    },
+                },
+            ],
+        });
+    }
+    if (req.query.format && req.query.format !== '') {
+        const orConditions = [];
+        const formats = decodeURIComponent(req.query.format).split(',');
+        andConditions.push({
+            format: {
+                [Op.in]: formats,
+            },
+        })
+    }
+    if (req.query.track && req.query.track !== '') {
+        andConditions.push({
+            track: {
+                [Op.iLike]: req.query.track,
+            }
+        });
+    }
+    console.log('WHERE', andConditions);
+    if (andConditions.length > 0) {
+        whereCondition[Op.and] = andConditions;
+    }
     try {
         const userSessions = await Session.findAll({
-            where: {
-                status: 'approved',
-            }
+            where: whereCondition,
+            limit: 50,
         });
         res.status(200).send(userSessions);
     } catch (e) {

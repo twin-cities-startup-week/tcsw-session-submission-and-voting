@@ -19,10 +19,13 @@ function* fetchAdminApprovedSessions(){
     }
 }
 
-function* fetchApprovedSessions() {
+function* fetchApprovedSessions(action) {
     try {
-        const submissions = yield axios.get('/api/submission/approved');
-        yield put({ type: 'SET_APPROVED_SESSIONS', payload: submissions.data })
+        const submissions = yield axios.get('/api/submission/approved', { params: action.payload });
+        yield put({ type: 'SET_APPROVED_SESSIONS', payload: submissions.data });
+        if (action.onComplete) {
+            action.onComplete();
+        }
     } catch (error) {
         console.log('Error posting submission to DB', error);
     }

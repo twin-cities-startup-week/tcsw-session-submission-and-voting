@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { makeStyles } from '@mui/styles';
-import { Button, Grid, Paper, Typography } from '@mui/material';
+import { Button, Grid, Paper, Typography, FormControl, RadioGroup, FormControlLabel, Radio, Checkbox } from '@mui/material';
 import MarkdownView from 'react-showdown';
 
 // Styling
@@ -33,80 +33,132 @@ const useStyles = makeStyles({
         padding: 0,
     }
 });
-
+let searchTimeout = null;
 function Panelists() {
     const dispatch = useDispatch();
     const history = useHistory();
-
     const { approvedSessions } = useSelector((store) => store.session);
     const [ searchTerm, setSearchTerm ] = useState('');
-    const [ trackState, setTrackState ] = useState('');
-    const [ formatState, setFormatState ] = useState('');
+    const [ typeIndicator, setTypeIndicator ] = useState('');
+    const [ track, setTrack ] = useState([]);
+    const [ format, setFormat ] = useState([]);
     const classes = useStyles();
 
     //Get all the session
     useEffect(() => {
-        dispatch({ type: "FETCH_APPROVED_SESSIONS" });
-    }, [dispatch]);
-
-    const goToPanelDetails = ( session ) => {
-        history.push(`/votepage/${session.id}`)
-    }
+        delaySearch();
+    }, [format, track, searchTerm]);
 
     const resetFilters = () => {
         setSearchTerm('');
-        setTrackState('');
-        setFormatState('');
+        setTrack([]);
+        setFormat([]);
+        runSearch();
+    }
+
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value);
+
+    }
+
+    const delaySearch = () => {
+        if (searchTimeout) {
+            console.log('clearing timeout');
+            clearTimeout(searchTimeout);
+        }
+        setTypeIndicator('Searching.');
+        // Delay the search so that it runs after the user is done typing
+        searchTimeout = setTimeout(() => runSearch(), 250);
+    }
+
+    const runSearch = () => {
+        setTypeIndicator('Searching...');
+        dispatch({ type: 'FETCH_APPROVED_SESSIONS', payload: {
+            searchTerm,
+            track,
+            format: encodeURIComponent(String(format)),
+        }, onComplete: searchComplete});
+        searchTimeout = null;
+    }
+
+    const searchComplete = () => {
+        setTypeIndicator('Search complete');
     }
 
     const goToLeaderBoard = () => {
-        history.push('/leaderboard')
+        history.push('/leaderboard');
+    }
+
+    const handleChangeForFormat = (value) => (event) => {
+        let listOfItems = [...format];
+        console.log(value);
+        if (event.target.checked && listOfItems.indexOf(value) < 0) {
+            listOfItems = [...format, value];
+        } else if (!event.target.checked) {
+            listOfItems = listOfItems.filter(item => item !== value);
+        }
+        setFormat(listOfItems);
     }
     
     return(
         <div style={{ backgroundColor: '#FBBD19', width: '100%', height: '100%' }}>
             <Grid container spacing={0} style={{ backgroundColor: '#FBBD19', width: '100%', height: '100%' }}>
-                <Grid item md={12} lg={2} order={{ xs: 2, sm: 2, md: 2, lg: 1 }} style={{ backgroundColor: '#FBBD19', padding: '20px', height: '100%' }}>
-                    <h2 className='filter-heading'>SEARCH</h2>
-                    
-                    <div className='filter-dropdown-selectors'>
-                        <h5>Keyword</h5>
-                        <input 
-                            className='search-bar'
-                            type='text'
-                            value={searchTerm}
-                            placeholder='Keyword'
-                            onChange={ event => { setSearchTerm( event.target.value )}}
-                        />
-                    </div>
+                <Grid item md={12} lg={2} order={{ xs: 2, sm: 2, md: 2, lg: 1 }} style={{ backgroundColor: '#FBBD19', padding: '20px' }}>
+                    <Typography variant="h2" style={{ paddingTop: '20px', paddingBottom: '5px' }}>SEARCH</Typography>
 
-                    <div className='filter-dropdown-selectors'>
-                        <h5>Track</h5>
-                        <select className='track-selector' onChange={ event => setTrackState( event.target.value )}>
-                            <option value=''> </option>
-                            <option value="Growth">Growth</option>
-                            <option value="Culture">Culture</option>
-                            <option value="Funding">Funding</option>
-                            <option value="Product">Product</option>
-                            <option value="Spotlight">Spotlight</option>
-                        </select>
-                    
-                        <h5 className='format-filter-header'>Format</h5>
-                        <select className='format-selector' onChange={ event => setFormatState( event.target.value )}>
-                            <option value=''> </option>
-                            <option value="Presentation">Presentation</option>
-                            <option value="Panel">Panel</option>
-                            <option value="Workshop">Workshop</option>
-                            <option value="Keynote">Keynote</option>
-                            <option value="Roundtable">Roundtable</option>
-                            <option value="Fireside Chat">Fireside Chat</option>
-                            <option value="Showcase">Showcase</option>
-                            <option value="Demo">Demo</option>
-                            <option value="Meetup">Meetup</option>
-                            <option value="Pitch">Pitch</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div> 
+                    <Typography variant="h6" style={{ paddingTop: '20px', paddingBottom: '5px' }}>Keyword</Typography>
+                    <input 
+                        className='search-bar'
+                        type='text'
+                        value={searchTerm}
+                        placeholder='Keyword'
+                        onChange={handleSearchChange}
+                    />
+                    <Typography variant="h6" style={{ paddingTop: '20px', paddingBottom: '5px' }}>Track</Typography>
+                    <select className='track-selector' value={track} onChange={ event => setTrack( event.target.value )}>
+                        <option value=''> </option>
+                        <option value="Growth">Growth</option>
+                        <option value="Culture">Culture</option>
+                        <option value="Funding">Funding</option>
+                        <option value="Product">Product</option>
+                        <option value="Spotlight">Spotlight</option>
+                    </select>
+                    <Typography variant="h6" style={{ paddingTop: '20px', paddingBottom: '5px' }}>Format</Typography>
+                    <RadioGroup value={format} name="radio-buttons-group">
+                        <FormControlLabel control={
+                            <Checkbox checked={format.indexOf('Presentation') >= 0} onChange={handleChangeForFormat('Presentation')} />
+                        } label="Presentation" />
+                        <FormControlLabel control={
+                            <Checkbox checked={format.indexOf('Panel') >= 0} onChange={handleChangeForFormat('Panel')} />
+                        } label="Panel" />
+                        <FormControlLabel control={
+                            <Checkbox checked={format.indexOf('Workshop') >= 0} onChange={handleChangeForFormat('Workshop')} />
+                        } label="Workshop" />
+                        <FormControlLabel control={
+                            <Checkbox checked={format.indexOf('Keynote') >= 0} onChange={handleChangeForFormat('Keynote')} />
+                        } label="Keynote" />
+                        <FormControlLabel control={
+                            <Checkbox checked={format.indexOf('Roundtable') >= 0} onChange={handleChangeForFormat('Roundtable')} />
+                        } label="Roundtable" />
+                        <FormControlLabel control={
+                            <Checkbox checked={format.indexOf('Fireside Chat') >= 0} onChange={handleChangeForFormat('Fireside Chat')} />
+                        } label="Fireside Chat" />
+                        <FormControlLabel control={
+                            <Checkbox checked={format.indexOf('Showcase') >= 0} onChange={handleChangeForFormat('Showcase')} />
+                        } label="Showcase" />
+                        <FormControlLabel control={
+                            <Checkbox checked={format.indexOf('Demo') >= 0} onChange={handleChangeForFormat('Demo')} />
+                        } label="Demo" />
+                        <FormControlLabel control={
+                            <Checkbox checked={format.indexOf('Meetup') >= 0} onChange={handleChangeForFormat('Meetup')} />
+                        } label="Meetup" />
+                        <FormControlLabel control={
+                            <Checkbox checked={format.indexOf('Pitch') >= 0} onChange={handleChangeForFormat('Pitch')} />
+                        } label="Pitch" />
+                        <FormControlLabel control={
+                            <Checkbox checked={format.indexOf('Other') >= 0} onChange={handleChangeForFormat('Other')} />
+                        } label="Other" />
+                    </RadioGroup>
 
                     <br/>
 
@@ -116,10 +168,11 @@ function Panelists() {
                     
                     <div className='leader-board-button-div'>
                         <p>Want to see who is leading the Vote race?</p>
-                        <Button variant="contained" onClick={goToLeaderBoard}>Leader Board</Button>
+                        <Button variant="contained" onClick={goToLeaderBoard}>Leaderboard</Button>
                     </div>
                 </Grid>
                 <Grid item md={12} lg={10} order={{ xs: 1, sm: 1, md: 1, lg: 2 }} style={{ backgroundColor: '#FFF', padding: '20px'  }}>
+                    <div>Status: {typeIndicator}</div>
                     {
                         approvedSessions
                         && approvedSessions.map(session => (
