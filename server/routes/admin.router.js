@@ -43,6 +43,55 @@ router.get('/pending/sessions', requireAdmin, async (req, res) => {
     }
 });
 
+
+// PUT route to add an admin
+router.put('/user/promote/:id', requireAdmin, async (req, res) => {
+    try {
+        const userId = req.params.id;
+        await User.update(
+            {
+                admin: true,
+            },
+            {
+                where: {
+                    id: userId,
+                },
+                // Return the updated record
+                plain: true,
+                returning: true,
+            }
+        );
+        res.send(200);
+    } catch (e) {
+        logError(e);
+        res.sendStatus(500);
+    }
+});
+
+// PUT route to remove an admin.
+router.put('/user/demote/:id', requireAdmin, async (req, res) => {
+    try {
+        const userId = req.params.id;
+        await User.update(
+            {
+                admin: false,
+            },
+            {
+                where: {
+                    id: userId,
+                },
+                // Return the updated record
+                plain: true,
+                returning: true,
+            }
+        );
+        res.send(200);
+    } catch (e) {
+        logError(e);
+        res.sendStatus(500);
+    }
+});
+
 // PUT route to approve a session
 router.put('/approve/:id', requireAdmin, async (req, res) => {
     try {

@@ -60,6 +60,36 @@ function* fetchUserList() {
     }
 }
 
+function* promoteUserToAdmin(action) {
+    try {
+        const response = yield axios.put(`/api/admin/user/promote/${action.payload}`);
+        yield put({ type: 'FETCH_USER_LIST', payload: response.data });
+        if (action.onComplete) {
+            action.onComplete();
+        }
+    } catch (error) {
+        console.log('promoteUserToAdmin request failed', error);
+        if (action.onComplete) {
+            action.onComplete();
+        }
+    }
+}
+
+function* demoteAdminUser(action) {
+    try {
+        const response = yield axios.put(`/api/admin/user/demote/${action.payload}`);
+        yield put({ type: 'FETCH_USER_LIST', payload: response.data });
+        if (action.onComplete) {
+            action.onComplete();
+        }
+    } catch (error) {
+        console.log('demoteAdminUser request failed', error);
+        if (action.onComplete) {
+            action.onComplete();
+        }
+    }
+}
+
 function* sessionSaga (){
     yield takeLatest('FETCH_CONTENT_BLOCKS', fetchAllContent);
     yield takeLatest('SEND_CONTENT_BLOCK', sendContent);
@@ -67,6 +97,8 @@ function* sessionSaga (){
     yield takeLatest('DENY_SESSION', denySession);
     yield takeLatest('DELETE_SESSION', deleteSession);
     yield takeLatest('FETCH_USER_LIST', fetchUserList);
+    yield takeLatest('PROMOTE_USER_TO_ADMIN', promoteUserToAdmin);
+    yield takeLatest('DEMOTE_ADMIN_USER', demoteAdminUser);
 }
 
 

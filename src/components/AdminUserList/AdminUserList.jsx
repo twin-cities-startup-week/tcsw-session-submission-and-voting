@@ -15,6 +15,9 @@ import {
     TableHead,
     TableRow,
     Grid,
+    Dialog,
+    DialogTitle,
+    DialogContent,
 } from "@mui/material";
 import { makeStyles } from '@mui/styles';
 
@@ -32,6 +35,7 @@ function AdminUserList() {
     //set selector
     const reduxStore = useSelector((store) => store);
     const dispatch = useDispatch();
+    const [open, setOpen] = useState(false);
 
     //set selector
     const { userList } = reduxStore;
@@ -43,8 +47,32 @@ function AdminUserList() {
         dispatch({ type: "FETCH_USER_LIST" });
     }, [dispatch]);
 
+    const onComplete = () => {
+        setOpen(false);
+    }
+
+    const addAdmin = (userId) => () => {
+        setOpen(true);
+        dispatch({ type: "PROMOTE_USER_TO_ADMIN", payload: userId, onComplete });
+    }
+
+    const removeAdmin = (userId) => () => {
+        setOpen(true);
+        dispatch({ type: "DEMOTE_ADMIN_USER", payload: userId, onComplete });
+    }
+
     return (
         <div className={classes.root}>
+            <Dialog open={open}>
+                <DialogTitle id="responsive-dialog-title">
+                    Please wait...
+                </DialogTitle>
+                <DialogContent align="center">
+                    <span role="img" aria-label="loading">⌛</span>
+                    {/* TODO: Add animation */}
+                </DialogContent>
+                {/* This modal can't be closed. */}
+            </Dialog>
             <TableContainer component={Paper}>
                 <Table aria-label="simple table">
                     <TableHead>
@@ -55,7 +83,7 @@ function AdminUserList() {
                             <TableCell >
                                 <h4>Email</h4>
                             </TableCell>
-                            <TableCell >
+                            <TableCell colSpan={2}>
                                 <h4>Admin</h4>
                             </TableCell>
                         </TableRow>
@@ -70,7 +98,32 @@ function AdminUserList() {
                                     <Typography variant="body1">{person.email}</Typography>
                                 </TableCell>
                                 <TableCell>
-                                    <Typography variant="body1">{person.admin ? 'Yes' : 'No'}</Typography>
+                                    <Typography variant="body1">
+                                        {person.admin ? 'Yes' : 'No'}
+                                        
+                                    </Typography>
+                                    
+                                </TableCell>
+                                <TableCell style={{width: '200px'}}>
+                                    {
+                                        person.admin ? (
+                                            <Button
+                                                style={{ float: 'right', marginLeft: '20px', marginTop: '-4px' }}
+                                                color="error"
+                                                onClick={removeAdmin(person.id)}
+                                            >
+                                                Remove
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                style={{ float: 'right', marginLeft: '20px' }}
+                                                color="success"
+                                                onClick={addAdmin(person.id)}
+                                            >
+                                                Make Admin
+                                            </Button>
+                                        )
+                                    }
                                 </TableCell>
                             </TableRow>
                         ))}
