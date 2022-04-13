@@ -1,8 +1,11 @@
 // Router for admin specific functions
 const express = require('express');
 const router = express.Router();
+const Sequelize = require('sequelize');
+const json2csv = require('json2csv').parse;
 const User = require('../models/user.model.js');
 const Session = require('../models/session.model.js');
+const { Op } = Sequelize;
 
 const {
     requireAdmin,
@@ -137,6 +140,30 @@ router.get('/user/list', requireAdmin, async (req, res) => {
     } catch (error) {
         logError(error);
         res.send(500);
+    }
+});
+
+/**
+ * GET route admin
+ */
+router.get('/sessions/csv', requireAdmin, async (req, res) => {
+    try {
+        const userSessions = await Session.findAll({
+            raw: true, // raw results required for json2csv
+            where: {
+                status: {
+                    [Op.not]: 'deleted',
+                },
+            }
+        });
+        const csvString = json2csv(userSessions);
+        res.setHeader('Content-disposition', 'attachment; filename=sessions.csv');
+        res.set('Content-Type', 'text/csv');
+        res.status(200).send(csvString);
+    } catch (e) {
+        console.log(e);
+        logError(e);
+        res.sendStatus(500);
     }
 });
 

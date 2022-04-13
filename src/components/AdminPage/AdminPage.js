@@ -36,9 +36,24 @@ function AdminPage() {
     history.push(`/votepage/${session.id}`);
   };
 
+  const downloadSessionsCSV = () => {
+    // dispatch({ type: 'GOOGLE_LOGIN' })
+    const time = new Date().getTime();
+    if (process.env.NODE_ENV === 'production') {
+      window.open(`https://sessions.twincitiesstartupweek.com/api/admin/sessions/csv?t=${time}`);
+    } else {
+      window.open(`http://localhost:5000/api/admin/sessions/csv?t=${time}`);
+    }
+
+  }
+
   return (
     <>
+      
       <Grid container spacing={1} style={{width: '100%', marginTop: '15px'}}>
+        <Grid item lg={12} xl={12} style={{padding: '5px 30px'}}>
+          <Button onClick={downloadSessionsCSV}>Download CSV</Button>
+        </Grid>
         <Grid item lg={12} xl={6}>
           <Container>
             <div
