@@ -61,6 +61,14 @@ function SubmissionPage() {
         }
     }, [submissionId, dispatch]);
 
+    useEffect(() => {
+        return history.listen((location) => {
+            if (submissionId && submissionId !== '' && submissionId !== submission.id) {
+                dispatch({ type: "GET_USER_SUBMISSION_DETAIL", payload: submissionId });
+            }
+        })
+    }, [history])
+
     const useStyles = makeStyles({
         root: {
             maxWidth: '920px',
