@@ -6,6 +6,10 @@ const json2csv = require('json2csv').parse;
 const User = require('../models/user.model.js');
 const Session = require('../models/session.model.js');
 const { Op } = Sequelize;
+const {
+    sendSessionApprovalEmail,
+    sendSessionRejectionEmail,
+} = require('../modules/email');
 
 const {
     requireAdmin,
@@ -61,7 +65,7 @@ router.put('/user/promote/:id', requireAdmin, async (req, res) => {
                 returning: true,
             }
         );
-        res.send(200);
+        res.sendStatus(200);
     } catch (e) {
         logError(e);
         res.sendStatus(500);
@@ -85,7 +89,7 @@ router.put('/user/demote/:id', requireAdmin, async (req, res) => {
                 returning: true,
             }
         );
-        res.send(200);
+        res.sendStatus(200);
     } catch (e) {
         logError(e);
         res.sendStatus(500);
@@ -96,22 +100,52 @@ router.put('/user/demote/:id', requireAdmin, async (req, res) => {
 router.put('/approve/:id', requireAdmin, async (req, res) => {
     try {
         const sessionId = req.params.id;
-        const session = await Session.update(
+        const session = await Session.findByPk(
+            sessionId,
             {
-                approved: true,
-                awaiting_approval: false,
-                status: 'approved',
-            },
-            {
-                where: {
-                    id: sessionId,
-                },
-                // Return the updated record
-                plain: true,
-                returning: true,
+                raw: true, // Required to access values right away
+                attributes: [
+                    'id',
+                    'user_id',
+                    'email',
+                    'status',
+                ],
             }
         );
-        res.status(200).send(session);
+        if (session.status === 'approved') {
+            // Session already approved. Don't do anything.
+            res.status(200).send({message: 'Already approved.'})
+        } else {
+            await Session.update(
+                {
+                    approved: true,
+                    awaiting_approval: false,
+                    status: 'approved',
+                },
+                {
+                    where: {
+                        id: sessionId,
+                    },
+                    // Return the updated record
+                    plain: true,
+                    returning: true,
+                }
+            );
+            const submissionUser = await User.findByPk(
+                session.user_id,
+                {
+                    raw: true, // Required to access values right away
+                    attributes: [
+                        'id',
+                        'first_name',
+                        'email',
+                    ],
+                }
+            )
+            sendSessionApprovalEmail(session.email, submissionUser.first_name);
+            res.status(200).send(session);
+        }
+
     } catch (e) {
         logError(e);
         res.sendStatus(500); 
@@ -122,21 +156,49 @@ router.put('/approve/:id', requireAdmin, async (req, res) => {
 router.put('/deny/:id', requireAdmin, async (req, res) => {
     try {
         const sessionId = req.params.id;
-        await Session.update(
+        const session = await Session.findByPk(
+            sessionId,
             {
-                awaiting_approval: false,
-                status: 'rejected',
-            },
-            {
-                where: {
-                    id: sessionId,
-                },
-                // Return the updated record
-                plain: true,
-                returning: true,
+                raw: true, // Required to access values right away
+                attributes: [
+                    'id',
+                    'user_id',
+                    'email',
+                    'status',
+                ],
             }
         );
-        res.send(200);
+        if (session.status === 'rejected') {
+            // Session already approved. Don't do anything.
+            res.status(200).send({ message: 'Already rejected.' })
+        } else {
+            await Session.update(
+                {
+                    awaiting_approval: false,
+                    status: 'rejected',
+                },
+                {
+                    where: {
+                        id: sessionId,
+                    },
+                    // Return the updated record
+                    plain: true,
+                    returning: true,
+                }
+            );
+            const submissionUser = await User.findByPk(
+                session.user_id,
+                {
+                    attributes: [
+                        'id',
+                        'first_name',
+                        'email',
+                    ],
+                }
+            )
+            sendSessionRejectionEmail(session.email, submissionUser.first_name);
+            res.sendStatus(200);
+        }
     } catch (e) {
         logError(e);
         res.sendStatus(500);
@@ -160,7 +222,7 @@ router.delete('/delete/:id', requireAdmin, async (req, res) => {
                 returning: true,
             }
         );
-        res.send(200);
+        res.sendStatus(200);
     } catch (e) {
         logError(e);
         res.sendStatus(500);
@@ -183,12 +245,14 @@ router.get('/user/list', requireAdmin, async (req, res) => {
             raw: true,
             order: [
                 ['first_name', 'ASC'],
+                ['last_name', 'ASC'],
+                ['id', 'ASC'],
             ],
         });
         res.send(userList);
     } catch (error) {
         logError(error);
-        res.send(500);
+        res.sendStatus(500);
     }
 });
 

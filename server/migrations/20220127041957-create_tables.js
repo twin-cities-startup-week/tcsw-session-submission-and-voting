@@ -184,7 +184,7 @@ module.exports = {
             autoIncrement: true,
           },
           title: {
-            type: STRING,
+            type: STRING(1024),
             allowNull: false,
           },
           email: STRING,
@@ -199,14 +199,14 @@ module.exports = {
             onDelete: 'cascade',
             allowNull: false,
           },
-          industry: STRING,
+          industry: STRING(1024),
           track: STRING,
           covid: BOOLEAN,
           speakers: STRING, /* Who would you like to speak at your event? */
           diversity: BOOLEAN,
-          purpose: STRING,
+          purpose: STRING(2048),
           location: STRING,
-          location_details: STRING,
+          location_details: STRING(2048),
           time: STRING,
           date: STRING,
           votes: INTEGER,
@@ -218,10 +218,10 @@ module.exports = {
           area_of_interest: STRING, /* Does your event cater to one or more of the following? */
           media: STRING(2048), /* links to youtube? */
           image: TEXT, /* STRETCH, AWS S3 bucket. */
-          success: STRING,
-          excited: STRING,
-          other_hosts: STRING,
-          other_info: STRING,
+          success: STRING(2048),
+          excited: STRING(2048),
+          other_hosts: STRING(2048),
+          other_info: STRING(2048),
           awaiting_approval: {
             type: BOOLEAN,
             defaultValue: true,
