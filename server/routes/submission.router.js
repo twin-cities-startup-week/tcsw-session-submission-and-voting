@@ -76,7 +76,9 @@ router.get('/details/:id', async (req, res) => {
         };
         if (req.user && req.user.admin === true) {
             // Admins are able to see all sessions
-            whereCondition = {};
+            whereCondition = {
+                id: req.params.id,
+            };
         }
         
         // Limit columns for public viewing
