@@ -72,6 +72,7 @@ router.get('/details/:id', async (req, res) => {
         let whereCondition = {
             // non-admins are only able to see approved sessions
             status: 'approved',
+            id: req.params.id,
         };
         if (req.user && req.user.admin === true) {
             // Admins are able to see all sessions
@@ -79,8 +80,7 @@ router.get('/details/:id', async (req, res) => {
         }
         
         // Limit columns for public viewing
-        const userSession = await Session.findByPk(
-            req.params.id,
+        const userSession = await Session.findOne(
             {
                 attributes: [
                     'id',
@@ -137,18 +137,23 @@ router.get('/user/:id', rejectUnauthenticated, async (req, res) => {
             status: {
                 [Op.not]: 'deleted',
             },
+            id: req.params.id,
         };
         // Admin users can access all submissions
         if (req.user.admin !== true) {
             whereCondition.user_id = req.user.id;
         }
-        const userSession = await Session.findByPk(
-            req.params.id,
+        
+        const userSession = await Session.findOne(
             {
                 where: whereCondition,
             }
         );
-        res.status(200).send(userSession);
+        if(userSession === null) {
+            res.sendStatus(404);
+        } else {
+            res.status(200).send(userSession);
+        }
     } catch (e) {
         logError(e);
         res.sendStatus(500);
