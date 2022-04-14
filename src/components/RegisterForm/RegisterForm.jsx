@@ -136,7 +136,7 @@ function RegisterForm() {
         <h2 className="registerHeader">Registration</h2>
         <Box sx={{ textAlign: 'center', mb: 2, mt: 2 }}>
           <Button
-            contained
+            variant="contained"
             type="submit"
             sx={{ border: 1, pr: 3 }}
             onClick={handleGoogleLogin}
