@@ -500,7 +500,7 @@ function SubmissionPage() {
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>In which track would you like your event featured? *</Typography>
-                                    <FormControl component="fieldset" required onChange={handleChangeFor('track')}>
+                                    <FormControl component="fieldset" onChange={handleChangeFor('track')}>
                                         <RadioGroup value={submission.track} name="radio-buttons-group">
                                             <FormControlLabel value={'Growth'} control={<Radio name="track-radio" required />} label="Growth (sales, marketing, automation, scale)" />
                                             <FormControlLabel value={'Culture'} control={<Radio name="track-radio" required />} label="Culture (people, DEI, future of work, social impact)" />
@@ -512,8 +512,8 @@ function SubmissionPage() {
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>What is the purpose of your event? *</Typography>
-                                    <FormControl component="fieldset" required onChange={handleChangeFor('purpose')}>
-                                        <RadioGroup value={submission.purpose} required name="radio-buttons-group">
+                                    <FormControl component="fieldset" onChange={handleChangeFor('purpose')}>
+                                        <RadioGroup value={submission.purpose} name="radio-buttons-group">
                                             <FormControlLabel value={'To Enable: Help teach a skill or set of skills'} control={<Radio name="purpose-radio" required />} label="To Enable: Help teach a skill or set of skills" />
                                             <FormControlLabel value={'To Inspire: Inspire attendees through showcasing'} control={<Radio name="purpose-radio" required />} label="To Inspire: Inspire attendees through showcasing" />
                                             <FormControlLabel value={'To Connect: Help bring like minded people together so they can connect and network'} control={<Radio name="purpose-radio" required />} label="To Connect: Help bring like minded people together so they can connect and network" />

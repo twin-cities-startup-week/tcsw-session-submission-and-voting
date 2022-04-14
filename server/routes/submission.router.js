@@ -118,6 +118,9 @@ router.get('/user', rejectUnauthenticated, async (req, res) => {
         const userSessions = await Session.findAll({
             where: {
                 user_id: req.user.id,
+                status: {
+                    [Op.not]: 'deleted',
+                },
             }
         });
         res.status(200).send(userSessions);
@@ -160,7 +163,6 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
             id: newSubmission.id,
         }
         if (req.user.admin !== true) {
-            newSubmission.user_id = req.user.id;
             whereCondition.user_id = req.user.id;
             // If a user edits their session, it goes back to pending
             newSubmission.status = 'pending';
