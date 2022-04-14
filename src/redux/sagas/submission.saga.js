@@ -61,7 +61,14 @@ function* getUserSubmissions() {
         const submissions = yield axios.get('/api/submission/user');
         yield put({ type: 'SET_USER_SUBMISSIONS', payload: submissions.data })
     } catch (error) {
-        console.log('Error posting submission to DB', error);
+        yield put({
+            type: 'SET_GLOBAL_MODAL',
+            payload: {
+                modalOpen: true,
+                title: 'Oh no! Something went wrong.',
+                body: 'If the problem persists, please reach out to hello@beta.mn so that we can help.',
+            },
+        });
     }
 }
 
@@ -70,7 +77,15 @@ function* getUserSubmissionDetail(action) {
         const submissions = yield axios.get(`/api/submission/user/${action.payload}`);
         yield put({ type: 'SET_EDITING_SUBMISSION', payload: submissions.data })
     } catch (error) {
-        console.log('Error posting submission to DB', error);
+        yield put({ type: 'CLEAR_EDITING_SUBMISSION' })
+        yield put({
+            type: 'SET_GLOBAL_MODAL',
+            payload: {
+                modalOpen: true,
+                title: 'Oh no! Something went wrong.',
+                body: 'If the problem persists, please reach out to hello@beta.mn so that we can help.',
+            },
+        });
     }
 }
 
@@ -80,7 +95,14 @@ function* fetchSubmissionDetails(action) {
         const submissions = yield axios.get(`/api/submission/details/${detail.id}`);
         yield put({ type: 'SET_SUBMISSION_DETAIL', payload: submissions.data })
     } catch (error) {
-        console.log('Error posting submission to DB', error);
+        yield put({
+            type: 'SET_GLOBAL_MODAL',
+            payload: {
+                modalOpen: true,
+                title: 'Oh no! Something went wrong.',
+                body: 'If the problem persists, please reach out to hello@beta.mn so that we can help.',
+            },
+        });
     }
 }
 

@@ -8,7 +8,14 @@ function* fetchAwaitingApproval(action){
         const response = yield axios.get(`/api/admin/pending/sessions`)
         yield put({ type: 'SET_SESSIONS_AWAITING_APPROVAL', payload: response.data })
     }catch(error){
-        console.log('Session get request failed', error );
+        yield put({
+            type: 'SET_GLOBAL_MODAL',
+            payload: {
+                modalOpen: true,
+                title: 'Oh no! Something went wrong.',
+                body: 'If the problem persists, please reach out to hello@beta.mn so that we can help.',
+            },
+        });
     }
 }
 
@@ -17,7 +24,14 @@ function* fetchAdminApprovedSessions(){
         const response = yield axios.get('/api/admin/approved/sessions')
         yield put({type: 'SET_ADMIN_APPROVED_SESSIONS', payload: response.data})
     }catch(error){
-        console.log('Session get request failed', error )
+        yield put({
+            type: 'SET_GLOBAL_MODAL',
+            payload: {
+                modalOpen: true,
+                title: 'Oh no! Something went wrong.',
+                body: 'If the problem persists, please reach out to hello@beta.mn so that we can help.',
+            },
+        });
     }
 }
 
@@ -30,7 +44,14 @@ function* fetchApprovedSessions(action) {
             action.onComplete();
         }
     } catch (error) {
-        console.log('Error posting submission to DB', error);
+        yield put({
+            type: 'SET_GLOBAL_MODAL',
+            payload: {
+                modalOpen: true,
+                title: 'Oh no! Something went wrong.',
+                body: 'If the problem persists, please reach out to hello@beta.mn so that we can help.',
+            },
+        });
     }
 }
 
