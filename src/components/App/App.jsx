@@ -237,10 +237,6 @@ function App() {
                 <SearchPage />
               </Route>
 
-              <Route exact path="/preview/votepage">
-                <SearchPage />
-              </Route>
-
               <Route
                 exact
                 path="/login"

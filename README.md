@@ -22,6 +22,7 @@ Before you get started, make sure you have the following software installed on y
 ## Environment variables
 
 ```
+NODE_ENV=development
 SERVER_SESSION_SECRET=some_secret
 SENDGRID_API_KEY=
 SENDGRID_FROM_ADDRESS=

@@ -130,7 +130,11 @@ router.get('/user', rejectUnauthenticated, async (req, res) => {
 // GET route for submission detail, used for editing
 router.get('/user/:id', rejectUnauthenticated, async (req, res) => {
     try {
-        const whereCondition = {};
+        const whereCondition = {
+            status: {
+                [Op.not]: 'deleted',
+            },
+        };
         // Admin users can access all submissions
         if (req.user.admin !== true) {
             whereCondition.user_id = req.user.id;
@@ -158,6 +162,8 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
         if (req.user.admin !== true) {
             newSubmission.user_id = req.user.id;
             whereCondition.user_id = req.user.id;
+            // If a user edits their session, it goes back to pending
+            newSubmission.status = 'pending';
         }
         newSubmission.ip_address = getIpAddress(req);
         // TODO: These should be junction tables
@@ -205,7 +211,7 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
                 plain: true,
             }
         );
-        sendSessionSubmissionEmail(req.user, newSubmission);
+        sendSessionSubmissionEmail(newSubmission.email, req.user.first_name, newSubmission);
         res.status(201).send(result);
     } catch (e) {
         logError(e);

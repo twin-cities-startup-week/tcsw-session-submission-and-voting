@@ -149,12 +149,6 @@ function VotePage() {
                         <h3>Related Media</h3>
                         <p>{details.media}</p>
                     </div>
-
-                    <div className='approval-buttons'>
-
-
-
-                    </div>
                 </Grid>
             </Grid>
         </div>
