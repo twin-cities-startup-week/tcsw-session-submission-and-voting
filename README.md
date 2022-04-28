@@ -45,6 +45,16 @@ HONEYBADGER_API_KEY=
 
 Pushing the `master` branch to Heroku will run all database migrations and push all code to the live site. Production errors are logged to https://app.honeybadger.io/
 
+### During an Event
+
+- Monitor HoneyBadger.io for issues
+- Backup the database regularily
+- Monitor Heroku performance metrics
+- Ensure SendGrid limits are not being reached
+- Monitor for spam or duplicate sessions / votes
+
+> NOTE: There is not currently a staging or qa site. At some point in the future it would be nice to have a site that can be used for testing. Currently, all testing is done localhost.
+
 ## Localhost Installation
 
 1. Create a `.env` file (see above)
@@ -54,6 +64,8 @@ Pushing the `master` branch to Heroku will run all database migrations and push 
 1. Open your code editor of choice and run `npm install` to install all dependencies.
 1. Run `npm run server` and `npm run client` 
 1. Navigate to `localhost:3000` and voila!
+
+> NOTE: Seed data for the database is not currently being used. At some point in the future it would be nice to populate the form select fields from data in the database.
 
 ### Setting up Google Auth
 
