@@ -59,6 +59,17 @@ function AdminUserList() {
         dispatch({ type: "DEMOTE_ADMIN_USER", payload: userId, onComplete });
     }
 
+    const downloadUserListCSV = () => {
+        // dispatch({ type: 'GOOGLE_LOGIN' })
+        const time = new Date().getTime();
+        if (process.env.NODE_ENV === 'production') {
+            window.open(`https://sessions.twincitiesstartupweek.com/api/admin/users/csv?t=${time}`);
+        } else {
+            window.open(`http://localhost:5000/api/admin/users/csv?t=${time}`);
+        }
+
+    }
+
     return (
         <div className={classes.root}>
             <Dialog open={open}>
@@ -71,7 +82,11 @@ function AdminUserList() {
                 </DialogContent>
                 {/* This modal can't be closed. */}
             </Dialog>
+            <Grid item lg={12} xl={12} style={{ padding: '5px 30px' }}>
+                <Button onClick={downloadUserListCSV}>Download CSV</Button>
+            </Grid>
             <TableContainer component={Paper}>
+
                 <Table aria-label="simple table">
                     <TableHead>
                         <TableRow className="tableRow">

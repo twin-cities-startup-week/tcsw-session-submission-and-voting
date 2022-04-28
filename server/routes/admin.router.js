@@ -280,4 +280,38 @@ router.get('/sessions/csv', requireAdmin, async (req, res) => {
     }
 });
 
+/**
+ * GET route admin
+ */
+router.get('/users/csv', requireAdmin, async (req, res) => {
+    try {
+        const userList = await User.findAll({
+            attributes: [
+                'id',
+                'first_name',
+                'last_name',
+                'email',
+                'admin',
+                'created_at',
+                'current_sign_in_ip',
+                'current_sign_in_at'
+            ],
+            raw: true,
+            order: [
+                ['first_name', 'ASC'],
+                ['last_name', 'ASC'],
+                ['id', 'ASC'],
+            ],
+        });
+        const csvString = json2csv(userList);
+        res.setHeader('Content-disposition', 'attachment; filename=users.csv');
+        res.set('Content-Type', 'text/csv');
+        res.status(200).send(csvString);
+    } catch (e) {
+        console.log(e);
+        logError(e);
+        res.sendStatus(500);
+    }
+});
+
 module.exports = router;
