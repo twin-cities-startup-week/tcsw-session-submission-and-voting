@@ -71,29 +71,32 @@ function SubmissionListPage() {
                 {
                     userSubmissions
                     && userSubmissions.map(submission => (
-                            <div className={classes.item}>
-                                <div style={{paddingRight: '20px'}}>
-                                    <img src={submission.image || 'images/TCSW_session_selector_lightblue.png'} className={classes.previewImage} />
-                                </div>
-                                <div style={{ flex: 1 }}>
-                                    <Button component={Paper} elevation={8}
-                                        variant="contained"
-                                        type="submit"
-                                        name="submit"
-                                        value="Log In"
-                                        sx={{ float: 'right', marginTop: '8px' }}
-                                        onClick={() => history.push(`/submission/${submission.id}/edit`)}
-                                    >
-                                        Edit Submission
-                                    </Button>
-                                    <Typography className={classes.title} variant="h3">
-                                        {submission.title}
-                                    </Typography>
-                                    <MarkdownView
-                                        markdown={submission.description}
-                                    />
-                                </div>
-                            </div>  
+                        <div className={classes.item}>
+                            <div style={{paddingRight: '20px'}}>
+                                <img src={submission.image || 'images/TCSW_session_selector_lightblue.png'} className={classes.previewImage} />
+                            </div>
+                            <div style={{ flex: 1 }}>
+                                <Button component={Paper} elevation={8}
+                                    variant="contained"
+                                    type="submit"
+                                    name="submit"
+                                    value="Log In"
+                                    sx={{ float: 'right', marginTop: '8px' }}
+                                    onClick={() => history.push(`/submission/${submission.id}/edit`)}
+                                >
+                                    Edit Submission
+                                </Button>
+                                <Typography className={classes.title} variant="h3">
+                                    {submission.title}
+                                </Typography>
+                                <Typography variant="body">
+                                    Number of votes: {submission.vote_count}
+                                </Typography>
+                                <MarkdownView
+                                    markdown={submission.description}
+                                />
+                            </div>
+                        </div>  
                     ))
                 }
             </div>

@@ -43,9 +43,6 @@ function VotePage() {
     const dispatch = useDispatch();
     const history = useHistory();
     const classes = useStyles();
-    const [vote, setVote ] = useState(0);
-
-    const [voteButton, toggleVoteButton ] = useState(false)
 
     useEffect(() => {
         if (submissionId && submissionId !== '') {
@@ -54,10 +51,8 @@ function VotePage() {
     }, [submissionId, dispatch])
 
     // function to add a Vote to the session vote count.   
-    const addVote = ( sessionId ) => {
-        dispatch({ type: 'ADD_VOTE_COUNT', payload: sessionId });
-        toggleVoteButton(true);
-        alert('Awesome! You Have VOTED!');
+    const voteForSession = ( sessionId ) => {
+        dispatch({ type: 'VOTE_FOR_SESSION', payload: sessionId });        
     }
 
     const sessionApprove = ( sessionId ) => {
@@ -85,8 +80,10 @@ function VotePage() {
         <div>
             <Grid container spacing={0} style={{ backgroundColor: '#FBBD19', width: '100%' }}>
                 <Grid item md={12} lg={2} order={{ xs: 2, sm: 2, md: 2, lg: 1 }} style={{ backgroundColor: '#FBBD19', padding: '20px' }}>
-                    <h2 className='left-header'>TCSW 2022</h2>
+                    <h2>TCSW 2022</h2>
+                    <Button sx={{ width: '100%' }} variant="contained" onClick={() => voteForSession(details.id)}>Vote</Button>
                     {/* <hr /> */}
+                    <br /><br />
                     <h5>Track:</h5>
                     <ul>
                         <li>{details.track}</li>

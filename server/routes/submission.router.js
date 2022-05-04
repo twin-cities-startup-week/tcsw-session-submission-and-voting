@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Sequelize = require('sequelize');
 const Session = require('../models/session.model.js');
+const UserVote = require('../models/user_vote.model.js');
 const {
     rejectUnauthenticated,
     getIpAddress,
@@ -67,6 +68,7 @@ router.get('/approved', rejectUnauthenticated, async (req, res) => {
     }
 });
 
+// GET route for public facing session details
 router.get('/details/:id', async (req, res) => {
     try {
         let whereCondition = {
@@ -79,6 +81,23 @@ router.get('/details/:id', async (req, res) => {
             whereCondition = {
                 id: req.params.id,
             };
+        }
+        const include = [];
+        // If we have a logged in user, include vote information for the session
+        if (req.user && req.user.id) {
+            include.push(
+                {
+                    model: UserVote,
+                    required: false,
+                    attributes: [
+                        ['created_at', 'voted_at'],
+                        ['id', 'vote_id'],
+                    ],
+                    where: {
+                        user_id: req.user.id,
+                    },
+                },
+            );
         }
         
         // Limit columns for public viewing
@@ -104,10 +123,16 @@ router.get('/details/:id', async (req, res) => {
                     'image',
                     'format',
                 ],
+                include,
                 where: whereCondition,
             }
         );
-        res.status(200).send(userSession);
+        if (userSession) {
+            res.status(200).send(userSession);
+        } else {
+            res.sendStatus(404);
+        }
+        
     } catch (error) {
         logError(error);
         res.sendStatus(500);
@@ -118,6 +143,14 @@ router.get('/details/:id', async (req, res) => {
 router.get('/user', rejectUnauthenticated, async (req, res) => {
     try {
         const userSessions = await Session.findAll({
+            attributes: {
+                include: [[Sequelize.fn('COUNT', Sequelize.col('user_votes.id')), 'vote_count']]
+            },
+            include: [{
+                model: UserVote,
+                attributes: [],
+            }],
+            group: ['session.id'],
             where: {
                 user_id: req.user.id,
                 status: {
@@ -132,7 +165,7 @@ router.get('/user', rejectUnauthenticated, async (req, res) => {
     }
 })
 
-// GET route for submission detail, used for editing
+// GET route for ALL submission details, used for editing
 router.get('/user/:id', rejectUnauthenticated, async (req, res) => {
     try {
         const whereCondition = {
@@ -145,7 +178,7 @@ router.get('/user/:id', rejectUnauthenticated, async (req, res) => {
         if (req.user.admin !== true) {
             whereCondition.user_id = req.user.id;
         }
-        
+        // Returns ALL submission details
         const userSession = await Session.findOne(
             {
                 where: whereCondition,
@@ -196,6 +229,42 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
             }
         );
         res.status(201).send(result);
+    } catch (e) {
+        logError(e);
+        res.sendStatus(500);
+    }
+});
+
+//PUT route for session voting 
+router.put('/vote/:id', rejectUnauthenticated, async (req, res) => {
+    try {
+        // Use the logged in user id
+        const userId = req.user.id;
+        // Session id passed as a request param
+        const sessionId = req.params.id;
+        // Check for an existing vote, only one vote per session per user is allowed
+        const userVote = await UserVote.findOne(
+            {
+                where: {
+                    user_id: userId,
+                    session_id: sessionId,
+                },
+            }
+        );
+        if (userVote) {
+            // QUESTION: Should we allow users to 'undo' a vote?
+            res.status(409).send({message: `You've already voted for this session.`});
+        } else {
+            const result = UserVote.create({
+                user_id: userId,
+                session_id: sessionId,
+            },
+            {
+                returning: true,
+                plain: true,
+            })
+            res.status(201).send(result);
+        }
     } catch (e) {
         logError(e);
         res.sendStatus(500);
