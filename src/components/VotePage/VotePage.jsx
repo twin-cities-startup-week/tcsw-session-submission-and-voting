@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MarkdownView from 'react-showdown';
 import { makeStyles } from '@mui/styles';
-import { Button, Grid, Container } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import { useHistory, useParams } from 'react-router-dom';
 
 // Styling
@@ -96,14 +96,29 @@ function VotePage() {
                     <ul>
                         <li>{details.format}</li>
                     </ul>
-                    <h5>Time:</h5>
+                    <h5>Location:</h5>
+                    <ul>
+                        <li>{details.location}</li>
+                        
+                    </ul>
+                    {
+                        details.location_details && (
+                            <>
+                                <h5>Location Details:</h5>
+                                <ul>
+                                    <li>{details.location_details}</li>
+                                </ul>
+                            </>
+                        )
+                    }
+                    {/* <h5>Time:</h5>
                     <ul>
                         {details.time && details.time.map(time => <li>{time}</li>)}
                     </ul>
                     <h5>Date:</h5>
                     <ul>
                         {details.date && details.date.map(date => <li>{date}</li>)}
-                    </ul>
+                    </ul> */}
                 </Grid>
                 <Grid item md={12} lg={10} order={{ xs: 1, sm: 1, md: 1, lg: 2 }} style={{ backgroundColor: '#FFF', padding: '20px'  }}>
                     <div className={classes.item}>
@@ -123,7 +138,8 @@ function VotePage() {
                                     </>
                                 )
                             }
-                            <h2>{details.title}</h2>
+                            <Typography variant="h2">{details.title}</Typography>
+                            <Typography variant="body"><strong>Track:</strong> {details.track} | <strong>Format:</strong> {details.format} | <strong>Industry:</strong> {details.industry.join(', ')}</Typography>
                             <MarkdownView
                                 markdown={details.description}
                             />
@@ -139,7 +155,7 @@ function VotePage() {
 
                     <div className='organizers'>
                         <h3>Organizers</h3>
-                        <p>{details.first_name} {details.last_name}</p>
+                        <p>{details.host}</p>
                     </div>
 
                     <div className='related-media'>

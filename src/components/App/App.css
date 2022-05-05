@@ -7,7 +7,7 @@ body,
 body {
   font-family: 'Poppins', sans-serif;
   color: #003848;
-  font-size: 18px;
+  
   margin: 0px;
 }
 
@@ -36,8 +36,15 @@ h4 {
   font-size: 22px;
 }
 
+h5 {
+  font-weight: 700;
+  font-size: 18px;
+  margin: 5px;
+}
+
 p {
   line-height: 1.4em;
+  font-size: 16px;
 }
 
 /* --------------------------------------------------------------------------------

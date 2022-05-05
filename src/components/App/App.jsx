@@ -89,6 +89,11 @@ const theme = createTheme({
       fontWeight: 700,
       fontFamily: 'Poppins',
     },
+    h5: {
+      fontSize: 18,
+      fontWeight: 700,
+      fontFamily: 'Poppins',
+    },
     body1: {
       fontSize: 18,
       fontWeight: 400,

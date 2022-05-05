@@ -46,9 +46,10 @@ router.get('/approved', rejectUnauthenticated, async (req, res) => {
         })
     }
     if (req.query.track && req.query.track !== '') {
+        const tracks = decodeURIComponent(req.query.track).split(',');
         andConditions.push({
             track: {
-                [Op.iLike]: req.query.track,
+                [Op.in]: tracks,
             }
         });
     }
@@ -109,7 +110,6 @@ router.get('/details/:id', async (req, res) => {
                     'industry',
                     'track',
                     'speakers',
-                    'purpose',
                     'location',
                     'location_details',
                     'time',
