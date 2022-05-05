@@ -134,8 +134,8 @@ Common Session Pitfalls
                     TCSW Session Submission & Voting
                 </Typography>
                 <h4> 2022 Session Submission Dates</h4>
-                <p> Session Submission Deadline: April 4, 2022 to May 15, 2022</p>
-                <p> Session Voting Deadline: May 23, 2021 to June 5, 2022</p>
+                <p> Session Submission Deadline: April 6, 2022 to May 18, 2022</p>
+                <p> Session Voting Deadline: May 25, 2021 to June 8, 2022</p>
                 <br />
             </div>  
             <div className={classes.shadow}>
