@@ -13,7 +13,7 @@ function* fetchAwaitingApproval(action){
             payload: {
                 modalOpen: true,
                 title: 'Oh no! Something went wrong.',
-                body: 'If the problem persists, please reach out to hello@beta.mn so that we can help.',
+                body: 'If the problem persists, please reach out to tcsw@beta.mn so that we can help.',
             },
         });
     }
@@ -29,7 +29,7 @@ function* fetchAdminApprovedSessions(){
             payload: {
                 modalOpen: true,
                 title: 'Oh no! Something went wrong.',
-                body: 'If the problem persists, please reach out to hello@beta.mn so that we can help.',
+                body: 'If the problem persists, please reach out to tcsw@beta.mn so that we can help.',
             },
         });
     }
@@ -49,7 +49,7 @@ function* fetchApprovedSessions(action) {
             payload: {
                 modalOpen: true,
                 title: 'Oh no! Something went wrong.',
-                body: 'If the problem persists, please reach out to hello@beta.mn so that we can help.',
+                body: 'If the problem persists, please reach out to tcsw@beta.mn so that we can help.',
             },
         });
     }
@@ -85,7 +85,7 @@ function* voteForSession(action) {
                 payload: {
                     modalOpen: true,
                     title: 'Oh no! Something went wrong.',
-                    body: 'If the problem persists, please reach out to hello@beta.mn so that we can help.',
+                    body: 'If the problem persists, please reach out to tcsw@beta.mn so that we can help.',
                 },
             });
         }

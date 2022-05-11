@@ -66,7 +66,7 @@ function* getUserSubmissions() {
             payload: {
                 modalOpen: true,
                 title: 'Oh no! Something went wrong.',
-                body: 'If the problem persists, please reach out to hello@beta.mn so that we can help.',
+                body: 'If the problem persists, please reach out to tcsw@beta.mn so that we can help.',
             },
         });
     }
@@ -83,7 +83,7 @@ function* getUserSubmissionDetail(action) {
             payload: {
                 modalOpen: true,
                 title: 'Oh no! Something went wrong.',
-                body: 'If the problem persists, please reach out to hello@beta.mn so that we can help.',
+                body: 'If the problem persists, please reach out to tcsw@beta.mn so that we can help.',
             },
         });
     }
@@ -100,7 +100,7 @@ function* fetchSubmissionDetails(action) {
             payload: {
                 modalOpen: true,
                 title: 'Oh no! Something went wrong.',
-                body: 'If the problem persists, please reach out to hello@beta.mn so that we can help.',
+                body: 'If the problem persists, please reach out to tcsw@beta.mn so that we can help.',
             },
         });
     }

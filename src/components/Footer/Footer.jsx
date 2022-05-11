@@ -27,7 +27,7 @@ function Footer() {
           alignItems="center">
           <a href="https://www.instagram.com/tcstartupweek/?hl=en" className="icon" target="_blank"><InstagramIcon fontSize="large" /> </a>
           <a href="https://twitter.com/tcstartupweek?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" className="icon" target="_blank"><TwitterIcon fontSize="large" /></a>
-          <a href="mailto:hello@beta.mn" className="icon" target="_blank"> <EmailIcon fontSize="large" /></a>
+          <a href="mailto:tcsw@beta.mnn" className="icon" target="_blank"> <EmailIcon fontSize="large" /></a>
         </Box>
       </div>
 
