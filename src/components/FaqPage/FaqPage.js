@@ -37,15 +37,15 @@ function FaqPage (){
         {
             question: `What is the timeline?`,
             answer:`- April 6th - Session Submissions Open
-- May 18th - Session Submissions Close 
-- May 19th-24th - TCSW Team finalizes approved sessions
-- May 25th - Session Voting Opens 
-- June 8th - Session Voting Closes
-- June 8th-28th - TCSW Team creates TCSW Schedule 
-- June 29th - TCSW Team notifies approved sessions and requests more event details 
+- June 12th - Session Submissions Close 
+- June 13th-15th - TCSW Team finalizes approved sessions
+- June 16th - Session Voting Opens 
+- June 29th - Session Voting Closes
+- June 30th - July 5th - TCSW Team creates TCSW Schedule 
+- July 6th - TCSW Team notifies approved sessions and requests more event details 
 - July 27th - TCSW session details due 
 - August 3rd - Launch TCSW Schedule & Public Registration 
-- August 3rd-September 23rd - TCSW Promotion`
+- August 3rd - September 23rd - TCSW Promotion`
         },
             
         {
@@ -58,7 +58,7 @@ function FaqPage (){
 
         {
             question: 'Can I enter an application after the deadline?',
-            answer: 'Please make all submissions before May 18, 2022. If you think this is an extenuating circumstance, you can email [hello@beta.mn](mailto:hello@beta.mn?subject=TCSW%20Session%20Selector) with any questions or concerns.'
+            answer: 'Please make all submissions before June 12, 2022. If you think this is an extenuating circumstance, you can email [hello@beta.mn](mailto:hello@beta.mn?subject=TCSW%20Session%20Selector) with any questions or concerns.'
         },
 
         {
@@ -113,7 +113,7 @@ Common Session Pitfalls
 
         {
             question: 'Can I edit my session application?',
-            answer: 'Yes. If you are logged into your Session Selector account, you can view and edit your session application(s) until submissions close on May 18, 2022. Our team will review the edited submission and reevaluate its acceptance into the TCSW Session Selector for public voting.'
+            answer: 'Yes. If you are logged into your Session Selector account, you can view and edit your session application(s) until submissions close on June 12, 2022. Our team will review the edited submission and reevaluate its acceptance into the TCSW Session Selector for public voting.'
         },
 
         {
@@ -123,7 +123,7 @@ Common Session Pitfalls
 
         {
             question: 'If I\'m selected, what happens next?',
-            answer: 'The TCSW team will notify you in late June 2022 via email if your session has been selected. We will ask for more information and share next steps in this messaging (see timeline above).'
+            answer: 'The TCSW team will notify you in early July 2022 via email if your session has been selected. We will ask for more information and share next steps in this messaging (see timeline above).'
         }
     ])
   
@@ -134,8 +134,8 @@ Common Session Pitfalls
                     TCSW Session Submission & Voting
                 </Typography>
                 <h4> 2022 Session Submission Dates</h4>
-                <p> Session Submission Deadline: April 6, 2022 to May 18, 2022</p>
-                <p> Session Voting Deadline: May 25, 2021 to June 8, 2022</p>
+                <p> Session Submission Deadline: April 6, 2022 to June 12, 2022</p>
+                <p> Session Voting Deadline: June 16, 2021 to June 29, 2022</p>
                 <br />
             </div>  
             <div className={classes.shadow}>
