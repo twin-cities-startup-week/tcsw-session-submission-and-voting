@@ -79,46 +79,23 @@ function VotePage() {
     return(
         <div>
             <Grid container spacing={0} style={{ backgroundColor: '#FBBD19', width: '100%' }}>
-                <Grid item md={12} lg={2} order={{ xs: 2, sm: 2, md: 2, lg: 1 }} style={{ backgroundColor: '#FBBD19', padding: '20px' }}>
+                <Grid item xs={12} lg={2} style={{ backgroundColor: '#FBBD19', padding: '20px' }}>
                     <h2>TCSW 2022</h2>
                     <Button sx={{ width: '100%' }} variant="contained" onClick={() => voteForSession(details.id)}>Vote</Button>
-                    {/* <hr /> */}
-                    <br /><br />
-                    <h5>Track:</h5>
-                    <ul>
-                        <li>{details.track}</li>
-                    </ul>
-                    <h5>Industry:</h5>
-                    <ul>
-                        {details.industry && details.industry.map(industry => <li>{industry}</li>)}
-                    </ul>
-                    <h5>Format:</h5>
-                    <ul>
-                        <li>{details.format}</li>
-                    </ul>
-                    <h5>Location:</h5>
-                    <ul>
-                        <li>{details.location}</li>
-                        
-                    </ul>
-                    {
-                        details.location_details && (
+                    {user.admin &&
+                        (
                             <>
-                                <h5>Location Details:</h5>
+                                <h5>Time:</h5>
                                 <ul>
-                                    <li>{details.location_details}</li>
+                                    {details.time && details.time.map(time => <li>{time}</li>)}
+                                </ul>
+                                <h5>Date:</h5>
+                                <ul>
+                                    {details.date && details.date.map(date => <li>{date}</li>)}
                                 </ul>
                             </>
                         )
                     }
-                    {/* <h5>Time:</h5>
-                    <ul>
-                        {details.time && details.time.map(time => <li>{time}</li>)}
-                    </ul>
-                    <h5>Date:</h5>
-                    <ul>
-                        {details.date && details.date.map(date => <li>{date}</li>)}
-                    </ul> */}
                 </Grid>
                 <Grid item md={12} lg={10} order={{ xs: 1, sm: 1, md: 1, lg: 2 }} style={{ backgroundColor: '#FFF', padding: '20px'  }}>
                     <div className={classes.item}>
@@ -139,7 +116,7 @@ function VotePage() {
                                 )
                             }
                             <Typography variant="h2">{details.title}</Typography>
-                            <Typography variant="body"><strong>Track:</strong> {details.track} | <strong>Format:</strong> {details.format} | <strong>Industry:</strong> {details.industry.join(', ')}</Typography>
+                            <Typography variant="body"><strong>Track:</strong> {details.track} | <strong>Format:</strong> {details.format} | <strong>Industry:</strong> {details.industry && details.industry.join(', ')}</Typography>
                             <MarkdownView
                                 markdown={details.description}
                             />
@@ -161,6 +138,20 @@ function VotePage() {
                     <div className='related-media'>
                         <h3>Related Media</h3>
                         <p>{details.media}</p>
+                    </div>
+
+                    <div>
+                        <h3>Location</h3>
+                        <p>{details.location}</p>
+                        {
+                            details.location_details && (
+                                <>
+                                    <p><strong>Location Details:</strong></p>
+                                    
+                                    {details.location_details}
+                                </>
+                            )
+                        }
                     </div>
                 </Grid>
             </Grid>

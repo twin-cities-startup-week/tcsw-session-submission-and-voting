@@ -16,7 +16,7 @@ const { logError } = require('./../modules/logger');
 
 // GET route for all APPROVED submissions
 router.get('/approved', rejectUnauthenticated, async (req, res) => {
-    console.log('Params', req.query);
+    // console.log('Params', req.query);
     const whereCondition = {
         status: 'approved',
     }
@@ -53,7 +53,7 @@ router.get('/approved', rejectUnauthenticated, async (req, res) => {
             }
         });
     }
-    console.log('WHERE', andConditions);
+    // console.log('WHERE', andConditions);
     if (andConditions.length > 0) {
         whereCondition[Op.and] = andConditions;
     }

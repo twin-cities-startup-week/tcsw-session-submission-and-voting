@@ -76,7 +76,7 @@ const userSubmissions = (state = [], action) => {
     }
 }
 
-const submissionDetails = (state = {}, action) => {
+const submissionDetails = (state = blankSubmission, action) => {
     let result;
     switch (action.type) {
         case 'SET_SUBMISSION_DETAIL':
