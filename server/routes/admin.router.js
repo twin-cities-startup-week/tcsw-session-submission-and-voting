@@ -5,6 +5,7 @@ const Sequelize = require('sequelize');
 const json2csv = require('json2csv').parse;
 const User = require('../models/user.model.js');
 const Session = require('../models/session.model.js');
+const UserVote = require('../models/user_vote.model.js');
 const { Op } = Sequelize;
 const {
     sendSessionApprovalEmail,
@@ -263,6 +264,15 @@ router.get('/sessions/csv', requireAdmin, async (req, res) => {
     try {
         const userSessions = await Session.findAll({
             raw: true, // raw results required for json2csv
+            attributes: {
+                include: [[Sequelize.fn('COUNT', Sequelize.col('user_votes.id')), 'vote_count']],
+                exclude: ['votes', 'awaiting_approval', 'approved'],
+            },
+            include: [{
+                model: UserVote,
+                attributes: [],
+            }],
+            group: ['session.id'],
             where: {
                 status: {
                     [Op.not]: 'deleted',
@@ -271,6 +281,40 @@ router.get('/sessions/csv', requireAdmin, async (req, res) => {
         });
         const csvString = json2csv(userSessions);
         res.setHeader('Content-disposition', 'attachment; filename=sessions.csv');
+        res.set('Content-Type', 'text/csv');
+        res.status(200).send(csvString);
+    } catch (e) {
+        console.log(e);
+        logError(e);
+        res.sendStatus(500);
+    }
+});
+
+/**
+ * GET route admin
+ */
+router.get('/users/csv', requireAdmin, async (req, res) => {
+    try {
+        const userList = await User.findAll({
+            attributes: [
+                'id',
+                'first_name',
+                'last_name',
+                'email',
+                'admin',
+                'created_at',
+                'current_sign_in_ip',
+                'current_sign_in_at'
+            ],
+            raw: true,
+            order: [
+                ['first_name', 'ASC'],
+                ['last_name', 'ASC'],
+                ['id', 'ASC'],
+            ],
+        });
+        const csvString = json2csv(userList);
+        res.setHeader('Content-disposition', 'attachment; filename=users.csv');
         res.set('Content-Type', 'text/csv');
         res.status(200).send(csvString);
     } catch (e) {

@@ -58,7 +58,7 @@ function FaqPage (){
 
         {
             question: 'Can I enter an application after the deadline?',
-            answer: 'Please make all submissions before June 12, 2022. If you think this is an extenuating circumstance, you can email [hello@beta.mn](mailto:hello@beta.mn?subject=TCSW%20Session%20Selector) with any questions or concerns.'
+            answer: 'Please make all submissions before June 12, 2022. If you think this is an extenuating circumstance, you can email [tcsw@beta.mn](mailto:tcsw@beta.mn?subject=TCSW%20Session%20Selector) with any questions or concerns.'
         },
 
         {

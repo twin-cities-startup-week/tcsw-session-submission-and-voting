@@ -112,16 +112,16 @@ router.post('/register', async (req, res, next) => {
         })
         .catch((err) => {
           logError(err);
-          res.status(500).send('Unable to create account. Please reach out to hello@beta.mn so that we can help.');
+          res.status(500).send('Unable to create account. Please reach out to tcsw@beta.mn so that we can help.');
         });
 
     } else {
       logError('Unable to validate recaptcha.');
-      res.status(500).send('Unable to validate recaptcha. Please try again. If the problem persists, please reach out to hello@beta.mn so that we can help.');
+      res.status(500).send('Unable to validate recaptcha. Please try again. If the problem persists, please reach out to tcsw@beta.mn so that we can help.');
     }
   } catch (e) {
     logError(e);
-    res.status(500).send('Unable to create account. Please reach out to hello@beta.mn so that we can help.');
+    res.status(500).send('Unable to create account. Please reach out to tcsw@beta.mn so that we can help.');
   }
 });
 

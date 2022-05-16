@@ -191,7 +191,7 @@ function SubmissionPage() {
             payload: {
                 modalOpen: true,
                 title: 'Oh no! Something went wrong.',
-                body: 'Please reach out to hello@beta.mn so that we can help.',
+                body: 'Please reach out to tcsw@beta.mn so that we can help.',
             },
         });
     }
@@ -250,7 +250,7 @@ function SubmissionPage() {
                 payload: {
                     modalOpen: true,
                     title: 'Oh no! Something went wrong.',
-                    body: 'Please reach out to hello@beta.mn so that we can help.',
+                    body: 'Please reach out to tcsw@beta.mn so that we can help.',
                 },
             });
             return;
