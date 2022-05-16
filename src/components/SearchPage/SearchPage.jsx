@@ -33,6 +33,15 @@ const useStyles = makeStyles({
         padding: 0,
     }
 });
+const getArray = (value) => {
+    let result = [];
+    if (typeof value === 'string') {
+        result = JSON.parse(value);
+    } else if (Array.isArray(value)) {
+        result = value;
+    }
+    return result;
+}
 let searchTimeout = null;
 function Panelists() {
     const dispatch = useDispatch();
@@ -85,7 +94,7 @@ function Panelists() {
         setTypeIndicator('Searching...');
         dispatch({ type: 'FETCH_APPROVED_SESSIONS', payload: {
             searchTerm,
-            track,
+            track: encodeURIComponent(String(track)),
             format: encodeURIComponent(String(format)),
         }, onComplete: searchComplete});
         searchTimeout = null;
@@ -97,6 +106,17 @@ function Panelists() {
 
     const goToLeaderBoard = () => {
         history.push('/leaderboard');
+    }
+
+    const handleChangeForTrack = (value) => (event) => {
+        let listOfItems = [...track];
+        console.log(value);
+        if (event.target.checked && listOfItems.indexOf(value) < 0) {
+            listOfItems = [...track, value];
+        } else if (!event.target.checked) {
+            listOfItems = listOfItems.filter(item => item !== value);
+        }
+        setTrack(listOfItems);
     }
 
     const handleChangeForFormat = (value) => (event) => {
@@ -113,14 +133,23 @@ function Panelists() {
     const trackAndFormat = () => (
         <>
             <Typography variant="h6" style={{ paddingTop: '20px', paddingBottom: '5px' }}>Track</Typography>
-            <select className='track-selector' value={track} onChange={event => setTrack(event.target.value)}>
-                <option value=''> </option>
-                <option value="Growth">Growth</option>
-                <option value="Culture">Culture</option>
-                <option value="Funding">Funding</option>
-                <option value="Product">Product</option>
-                <option value="Spotlight">Spotlight</option>
-            </select>
+            <RadioGroup value={track} name="radio-buttons-group">
+                <FormControlLabel control={
+                    <Checkbox checked={track.indexOf('Growth') >= 0} onChange={handleChangeForTrack('Growth')} />
+                } label="Growth" />
+                <FormControlLabel control={
+                    <Checkbox checked={track.indexOf('Culture') >= 0} onChange={handleChangeForTrack('Culture')} />
+                } label="Culture" />
+                <FormControlLabel control={
+                    <Checkbox checked={track.indexOf('Funding') >= 0} onChange={handleChangeForTrack('Funding')} />
+                } label="Funding" />
+                <FormControlLabel control={
+                    <Checkbox checked={track.indexOf('Product') >= 0} onChange={handleChangeForTrack('Product')} />
+                } label="Product" />
+                <FormControlLabel control={
+                    <Checkbox checked={track.indexOf('Spotlight') >= 0} onChange={handleChangeForTrack('Spotlight')} />
+                } label="Spotlight" />
+            </RadioGroup>
             <Typography variant="h6" style={{ paddingTop: '20px', paddingBottom: '5px' }}>Format</Typography>
             <RadioGroup value={format} name="radio-buttons-group">
                 <FormControlLabel control={
@@ -237,29 +266,35 @@ function Panelists() {
                                     typeIndicator === ''
                                     && approvedSessions
                                     && approvedSessions.map(session => (
-                                        <div className={classes.item}>
-                                            <div style={{ paddingRight: '20px' }}>
-                                                <img src={session.image || 'images/TCSW_session_selector_lightblue.png'} className={classes.previewImage} />
+                                        <>
+                                            <div className={classes.item}>
+                                                <div style={{ paddingRight: '20px' }}>
+                                                    <img src={session.image || 'images/TCSW_session_selector_lightblue.png'} className={classes.previewImage} />
+                                                </div>
+                                                <div style={{ flex: 1 }}>
+                                                    <Button component={Paper} elevation={8}
+                                                        variant="contained"
+                                                        type="submit"
+                                                        name="submit"
+                                                        value="Log In"
+                                                        sx={{ float: 'right', marginTop: '8px' }}
+                                                        onClick={() => history.push(`/votepage/${session.id}`)}
+                                                    >
+                                                        View Details
+                                                    </Button>
+                                                    <Typography className={classes.title} variant="h3">
+                                                        {session.title}
+                                                    </Typography>
+                                                    <Typography variant="body"><strong>Track:</strong> {session.track} | <strong>Format:</strong> {session.format} | <strong>Industry:</strong> {getArray(session.industry).join(', ')}</Typography>
+                                                    <MarkdownView
+                                                        markdown={session.description}
+                                                    />
+                                                    
+                                                </div>
+                                                
                                             </div>
-                                            <div style={{ flex: 1 }}>
-                                                <Button component={Paper} elevation={8}
-                                                    variant="contained"
-                                                    type="submit"
-                                                    name="submit"
-                                                    value="Log In"
-                                                    sx={{ float: 'right', marginTop: '8px' }}
-                                                    onClick={() => history.push(`/votepage/${session.id}`)}
-                                                >
-                                                    View Details
-                                                </Button>
-                                                <Typography className={classes.title} variant="h3">
-                                                    {session.title}
-                                                </Typography>
-                                                <MarkdownView
-                                                    markdown={session.description}
-                                                />
-                                            </div>
-                                        </div>
+                                            <hr />
+                                        </>
                                     ))
                                 }
                             </Grid>

@@ -18,7 +18,7 @@ function* registerUser(action) {
   } catch (error) {
     yield put({ type: 'REGISTRATION_FAILED' });
     if (action.onFailure) {
-      action.onFailure( error.response.data || 'Please reach out to hello@beta.mn so that we can help.');
+      action.onFailure(error.response.data || 'Please reach out to tcsw@beta.mn so that we can help.');
     }
   }
 }

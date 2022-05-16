@@ -5,6 +5,7 @@ const Sequelize = require('sequelize');
 const json2csv = require('json2csv').parse;
 const User = require('../models/user.model.js');
 const Session = require('../models/session.model.js');
+const UserVote = require('../models/user_vote.model.js');
 const { Op } = Sequelize;
 const {
     sendSessionApprovalEmail,
@@ -263,6 +264,15 @@ router.get('/sessions/csv', requireAdmin, async (req, res) => {
     try {
         const userSessions = await Session.findAll({
             raw: true, // raw results required for json2csv
+            attributes: {
+                include: [[Sequelize.fn('COUNT', Sequelize.col('user_votes.id')), 'vote_count']],
+                exclude: ['votes', 'awaiting_approval', 'approved'],
+            },
+            include: [{
+                model: UserVote,
+                attributes: [],
+            }],
+            group: ['session.id'],
             where: {
                 status: {
                     [Op.not]: 'deleted',
