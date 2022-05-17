@@ -101,7 +101,8 @@ function AdminFAQItem({ faqItem, index }) {
                             }
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6} className={classic.preview}>
+                    <Grid item xs={12} sm={6} className={classic.preview} style={{textAlign: 'left'}}
+>
                         <MarkdownView
                             markdown={faq[index].answer}
                             
