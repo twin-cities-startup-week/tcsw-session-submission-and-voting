@@ -34,6 +34,7 @@ function AdminContentPage() {
 
     return (
         <div className={classes.rooty}>
+            <br />
             <Typography variant="h2">
                 About Us
             </Typography>
@@ -45,14 +46,14 @@ function AdminContentPage() {
                 Home Heading
             </Typography>
             <br />
-            <AdminContentBlock content="home" />
+            <AdminContentBlock content="home" center />
             <br />
             <br />
             <Typography variant="h2">
                 Home (Not Signed In)
             </Typography>
             <br />
-            <AdminContentBlock content="home1" />
+            <AdminContentBlock content="home1" center />
             <br />
             <br />
             <Typography variant="h2">
@@ -60,6 +61,13 @@ function AdminContentPage() {
             </Typography>
             <br />
             <AdminContentBlock content="home2" />
+            <br />
+            <br />
+            <Typography variant="h2">
+                Search Page
+            </Typography>
+            <br />
+            <AdminContentBlock content="search" />
         </div>
     );
 }

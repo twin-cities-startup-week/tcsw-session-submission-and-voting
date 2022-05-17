@@ -519,7 +519,7 @@ function SubmissionPage() {
                                     <FormControl component="fieldset" onChange={handleChangeFor('purpose')}>
                                         <RadioGroup value={submission.purpose} name="radio-buttons-group">
                                             <FormControlLabel value={'To Enable: Help teach a skill or set of skills'} control={<Radio />} label="To Enable: Help teach a skill or set of skills" />
-                                            <FormControlLabel value={'To Inspire: Inspire attendees through showcasing'} control={<Radio />} label="To Inspire: Inspire attendeess through showcasing" />
+                                            <FormControlLabel value={'To Inspire: Inspire attendees through showcasing'} control={<Radio />} label="To Inspire: Inspire attendees through showcasing" />
                                             <FormControlLabel value={'To Connect: Help bring like minded people together so they can connect and network'} control={<Radio />} label="To Connect: Help bring like minded people together so they can connect and network" />
                                         </RadioGroup>
                                     </FormControl>

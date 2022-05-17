@@ -37,37 +37,49 @@ const useStyles = makeStyles({
 
 function VotePage() {
     const user = useSelector((store) => store.user);
-    const details = useSelector((store) => store.panelistDetailsReducer);
+    const details = useSelector((store) => store.submission.submissionDetails);
     const { id: submissionId } = useParams();
     // const store = useReduxStore();
     const dispatch = useDispatch();
+    const history = useHistory();
     const classes = useStyles();
     const [vote, setVote ] = useState(0);
 
     const [voteButton, toggleVoteButton ] = useState(false)
 
-   useEffect(() => {
-       if (submissionId && submissionId !== '') {
-           dispatch({ type: 'FETCH_PANEL_DETAILS', payload: { id: submissionId } })
-       }
-   }, [submissionId, dispatch])
+    useEffect(() => {
+        if (submissionId && submissionId !== '') {
+            dispatch({ type: 'FETCH_SUBMISSION_DETAILS', payload: { id: submissionId } })
+        }
+    }, [submissionId, dispatch])
 
     // function to add a Vote to the session vote count.   
-   const addVote = ( sessionId ) => {
-       dispatch({ type: 'ADD_VOTE_COUNT', payload: sessionId })
+    const addVote = ( sessionId ) => {
+        dispatch({ type: 'ADD_VOTE_COUNT', payload: sessionId });
         toggleVoteButton(true);
-        alert('Awesome! You Have VOTED!')
-   }
+        alert('Awesome! You Have VOTED!');
+    }
 
-   const sessionApprove = ( sessionId ) => {
-       dispatch({ type: 'APPROVE_SESSION', payload: sessionId })
-       alert('You have APPROVED this session!')
-   }
+    const sessionApprove = ( sessionId ) => {
+        dispatch({ type: 'APPROVE_SESSION', payload: sessionId });
+        alert('You have approved this session!');
+        history.push(`/admin`);
+    }
 
-   const sessionDeny = ( sessionId ) => {
-       dispatch({ type: 'DENY_SESSION', payload: sessionId })
-       alert('You have DENIED this session!')
-   }
+    const sessionDeny = ( sessionId ) => {
+        dispatch({ type: 'DENY_SESSION', payload: sessionId });
+        alert('You have rejected this session!');
+        history.push(`/admin`);
+    }
+
+    const confirmDelete = (sessionId) => {
+        const result = confirm('Are you sure you want to delete this session?');
+        if (result) {
+            dispatch({ type: 'DELETE_SESSION', payload: sessionId });
+            alert('You have deleted this session!');
+            history.push(`/admin`);
+        }
+    }
 
     return(
         <div className='vote-page-view'>
@@ -109,7 +121,8 @@ function VotePage() {
                                             Approve
                                         </Button>
                                         <Button sx={{ float: 'right', marginTop: '8px', marginLeft: '20px' }} className='deny-button' variant="contained" color="error" onClick={() => sessionDeny(details.id)}>Deny</Button>
-                                        <Button sx={{ float: 'right', marginTop: '8px' }} className='edit-button' onClick={() => history.push(`/votepage/${details.id}`)}>Edit</Button>
+                                        <Button sx={{ float: 'right', marginTop: '8px' }} className='edit-button' onClick={() => history.push(`/submission/${details.id}/edit`)}>Edit</Button>
+                                        <Button sx={{ float: 'right', marginTop: '8px' }} className='edit-button' color="error" onClick={() => confirmDelete(details.id)}>Delete</Button>
                                     </>
                                 )
                             }

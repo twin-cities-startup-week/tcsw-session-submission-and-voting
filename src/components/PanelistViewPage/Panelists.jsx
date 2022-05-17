@@ -15,18 +15,18 @@ function Panelists() {
     const [ trackState, setTrackState ] = useState('');
     const [ formatState, setFormatState ] = useState('');
 
-    useEffect(() => {
-            fetchPanelist();
-        }, []);
+    // useEffect(() => {
+    //         fetchPanelist();
+    //     }, []);
 
-    const fetchPanelist = ( session ) => {
-        dispatch({
-            type: 'FETCH_PANELIST', payload: session
-        })
-    }
+    // const fetchPanelist = ( session ) => {
+    //     dispatch({
+    //         type: 'FETCH_PANELIST', payload: session
+    //     })
+    // }
 
     const goToPanelDetails = ( session ) => {
-        dispatch({ type: 'FETCH_PANEL_DETAILS', payload: session})
+        dispatch({ type: 'FETCH_SUBMISSION_DETAILS', payload: session})
 
         history.push(`/votepage/${session.id}`)
     }

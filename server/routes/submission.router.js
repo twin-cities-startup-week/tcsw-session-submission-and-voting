@@ -7,22 +7,69 @@ const {
     getIpAddress,
 } = require('../modules/authentication-middleware');
 const S3Service = require('../services/S3Service');
-const sgMail = require('@sendgrid/mail');
+const {
+    sendSessionSubmissionEmail,
+} = require('../modules/email');
 
 // GET route for all APPROVED submissions
-router.get('/approved', rejectUnauthenticated, (req, res) => {
-    const queryText = `
-        SELECT * FROM "session"
-        WHERE "approved" = TRUE
-        ORDER BY "votes" DESC;`;
+router.get('/approved', rejectUnauthenticated, async (req, res) => {
+    try {
+        const userSessions = await Session.findAll({
+            where: {
+                status: 'approved',
+            }
+        });
+        res.status(200).send(userSessions);
+    } catch (e) {
+        console.log('error with post to db', e);
+        res.sendStatus(500);
+    }
+});
+
+router.get('/details/:id', async (req, res) => {
+    try {
+        let whereCondition = {
+            // non-admins are only able to see approved sessions
+            status: 'approved',
+        };
+        if (req.user && req.user.admin === true) {
+            // Admins are able to see all sessions
+            whereCondition = {};
+        }
         
-    pool.query (queryText)
-    .then(result => {
-        res.send(result.rows)
-    }).catch(error => {
-        console.log('Error in GET approved submissions, ', error)
-    })
-})
+        // Limit columns for public viewing
+        const userSession = await Session.findByPk(
+            req.params.id,
+            {
+                attributes: [
+                    'id',
+                    'title',
+                    'industry',
+                    'track',
+                    'speakers',
+                    'purpose',
+                    'location',
+                    'location_details',
+                    'time',
+                    'date',
+                    'host',
+                    'description',
+                    'attendees',
+                    'length',
+                    'area_of_interest',
+                    'media',
+                    'image',
+                    'format',
+                ],
+                where: whereCondition,
+            }
+        );
+        res.status(200).send(userSession);
+    } catch (error) {
+        console.log('error in router get panel details', error);
+        res.sendStatus(500);
+    }
+});
 
 // GET route for all user submissions
 router.get('/user', rejectUnauthenticated, async (req, res) => {
@@ -34,7 +81,7 @@ router.get('/user', rejectUnauthenticated, async (req, res) => {
         });
         res.status(200).send(userSessions);
     } catch (e) {
-        console.log('error with post to db', e);
+        console.log('error with getting user submissions', e);
         res.sendStatus(500);
     }
 })
@@ -60,7 +107,7 @@ router.get('/user/:id', rejectUnauthenticated, async (req, res) => {
     }
 });
 
-//POST route for session submission form 
+//PUT route for session submission form 
 router.put('/', rejectUnauthenticated, async (req, res) => {
     try {
         const newSubmission = req.body;
@@ -92,36 +139,6 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
                 returning: true,
             }
         );
-        if (process.env.SENDGRID_API_KEY && process.env.SENDGRID_API_KEY !== '') {
-            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-            const msg = {
-                to: req.user.email,
-                from: process.env.SENDGRID_FROM_ADDRESS,
-                subject: 'TCSW - Thank you for your submission',
-                text: `
-Title: ${newSubmission.title}
-Description: ${newSubmission.description}
-
-View your submission details here: https://sessions.twincitiesstartupweek.com/#/user/submission
-`,
-                html: `
-<strong>Title</strong>
-<br />
-${newSubmission.title}
-<br />
-<br />
-<strong>Description</strong>
-<br />
-${newSubmission.description}
-<br />
-<br />
-<a href="https://sessions.twincitiesstartupweek.com/#/user/submission">Edit Submission</a>
-`,
-            };
-            sgMail.send(msg).catch(e => console.log(e));
-        } else {
-            console.error('Missing SendGrid environment variables.')
-        }
         res.status(201).send(result);
     } catch (e) {
         console.log('error with post to db', e);
@@ -147,36 +164,7 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
                 plain: true,
             }
         );
-        if (process.env.SENDGRID_API_KEY && process.env.SENDGRID_API_KEY !== '') {
-            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-            const msg = {
-                to: req.user.email,
-                from: process.env.SENDGRID_FROM_ADDRESS,
-                subject: 'TCSW - Thank you for your submission',
-                text: `
-Title: ${newSubmission.title}
-Description: ${newSubmission.description}
-
-View your submission details here: https://sessions.twincitiesstartupweek.com/#/user/submission
-`,
-                html: `
-<strong>Title</strong>
-<br />
-${newSubmission.title}
-<br />
-<br />
-<strong>Description</strong>
-<br />
-${newSubmission.description}
-<br />
-<br />
-<a href="https://sessions.twincitiesstartupweek.com/#/user/submission">Edit Submission</a>
-`,
-            };
-            sgMail.send(msg).catch(e => console.log(e));
-        } else {
-            console.error('Missing SendGrid environment variables.')
-        }
+        sendSessionSubmissionEmail(req.user, newSubmission);
         res.status(201).send(result);
     } catch (e) {
         console.log('error with post to db', e);

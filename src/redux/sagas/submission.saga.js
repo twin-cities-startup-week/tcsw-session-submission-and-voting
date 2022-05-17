@@ -1,4 +1,4 @@
-import { takeEvery, put } from "@redux-saga/core/effects";
+import { takeEvery, takeLatest, put } from "@redux-saga/core/effects";
 import axios from 'axios';
 
 //root saga for submissions
@@ -8,6 +8,7 @@ function* submissionSaga(){
     yield takeEvery('GET_APPROVED_SUBMISSIONS', getApprovedSubmissions);
     yield takeEvery('GET_USER_SUBMISSIONS', getUserSubmissions);
     yield takeEvery('GET_USER_SUBMISSION_DETAIL', getUserSubmissionDetail);
+    yield takeLatest('FETCH_SUBMISSION_DETAILS', fetchSubmissionDetails);
 }
 
 function* sendSubmissionToServer(action){
@@ -78,6 +79,16 @@ function* getUserSubmissionDetail(action) {
     try {
         const submissions = yield axios.get(`/api/submission/user/${action.payload}`);
         yield put({ type: 'SET_EDITING_SUBMISSION', payload: submissions.data })
+    } catch (error) {
+        console.log('Error posting submission to DB', error);
+    }
+}
+
+function* fetchSubmissionDetails(action) {
+    try {
+        const detail = action.payload;
+        const submissions = yield axios.get(`/api/submission/details/${detail.id}`);
+        yield put({ type: 'SET_SUBMISSION_DETAIL', payload: submissions.data })
     } catch (error) {
         console.log('Error posting submission to DB', error);
     }

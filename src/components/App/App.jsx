@@ -32,7 +32,7 @@ import AdminContentPage from '../AdminContentPage/AdminContentPage';
 import AdminFAQPage from '../AdminFAQPage/AdminFAQPage';
 import SubmissionListPage from '../SubmissionListPage/SubmissionListPage';
 import GlobalAlertModal from '../GlobalAlertModal/GlobalAlertModal';
-
+import TemporarySearchPage from '../TemporarySearchPage/TemporarySearchPage';
 import './App.css';
 
 import {createTheme, ThemeProvider} from '@mui/material/styles';
@@ -158,7 +158,13 @@ function App() {
               >
                 <FaqPage />
               </Route>
-
+              <Route
+                // shows TemporarySearchPage at all times (logged in or not)
+                exact
+                path="/search"
+              >
+                <TemporarySearchPage />
+              </Route>
               <Route
                 // shows adminPage at all times (logged in or not)
                 exact

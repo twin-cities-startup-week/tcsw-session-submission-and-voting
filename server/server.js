@@ -80,7 +80,6 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
 
 // Route includes
 const userRouter = require('./routes/user.router');
-const panelistRouter = require('./routes/panelist.router');
 const submissionRouter = require('./routes/submission.router');
 const adminRouter = require('./routes/admin.router');
 const contentRouter = require('./routes/content.router');
@@ -134,9 +133,8 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
 
 /* Routes */
 app.use('/api/user', userRouter);
-app.use('/api/panelists', panelistRouter);
 app.use('/api/submission', submissionRouter );
-app.use('/api/session', adminRouter);
+app.use('/api/admin', adminRouter);
 app.use('/api/content', contentRouter);
 
 // Serve static files

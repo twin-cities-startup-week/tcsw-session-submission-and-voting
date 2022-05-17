@@ -28,7 +28,7 @@ const {
 router.get('/sessionsApproved', requireAdmin, (req, res) => {
     // GET route code here
     pool.query(`SELECT count(session.title) from "session" 
-    WHERE approved = true`)
+    WHERE "session"."status" = 'approved';`)
     .then((results) => {
         res.send(results.rows)
     })
@@ -56,16 +56,13 @@ router.get('/sessionsVotes', requireAdmin, (req, res) => {
      });
 });
 
-
-
-
 // /**
 //  * GET route admin
 // //  */
 router.get('/awaitingApproval', requireAdmin, (req, res) => {
     // GET route code here
     pool.query(`SELECT count(session.id) from "session"
-    WHERE session.awaiting_approval = true;
+    WHERE "session"."status" = 'pending';
     `)
     .then((results) =>
      res.send(results.rows))
@@ -75,14 +72,13 @@ router.get('/awaitingApproval', requireAdmin, (req, res) => {
      });
 });
 
-
 /**
  * GET route admin
  */
  router.get('/awaitingApprovalList', requireAdmin, (req, res) => {
     // GET route code here
     pool.query(`SELECT * from "session" 
-    WHERE awaiting_approval = true`)
+    WHERE "session"."status" = 'pending';`)
     .then((results) =>
      res.send(results.rows))
      .catch((error) => {
@@ -91,21 +87,64 @@ router.get('/awaitingApproval', requireAdmin, (req, res) => {
      });
 });
 
-
-
 /**
  * GET route admin
  */
  router.get('/approvedList', requireAdmin, (req, res) => {
     // GET route code here
     pool.query(`SELECT * from "session" 
-    WHERE approved = true`)
+    WHERE "session"."status" = 'approved'`)
     .then((results) =>
      res.send(results.rows))
      .catch((error) => {
          console.log('Error making GET request:', error);
          res.sendStatus(500);
      });
+});
+
+router.put('/approve/:id', requireAdmin, (req, res) => {
+    const sessionId = req.params.id;
+
+    const queryText = `UPDATE "session"
+                        SET "approved" = true, "awaiting_approval" = false, "status" = 'approved'
+                        WHERE "id" = $1;`
+
+    pool.query(queryText, [sessionId])
+        .then(result => {
+            res.send(200)
+        }).catch(error => {
+            res.send(500)
+        })
+});
+
+router.put('/deny/:id', requireAdmin, (req, res) => {
+    const sessionId = req.params.id;
+
+    const queryText = `UPDATE "session"
+                        SET "awaiting_approval" = false, "status" = 'rejected'
+                        WHERE "id" = $1;`
+
+    pool.query(queryText, [sessionId])
+        .then(result => {
+            res.send(200)
+        }).catch(error => {
+            res.send(500)
+        })
+});
+
+router.delete('/delete/:id', requireAdmin, (req, res) => {
+    const sessionId = req.params.id;
+
+    const queryText = `UPDATE "session"
+                        SET "awaiting_approval" = false, "status" = 'deleted'
+                        WHERE "id" = $1;`
+
+    pool.query(queryText, [sessionId])
+        .then(result => {
+            res.send(200)
+        }).catch(error => {
+            res.send(500)
+        })
 });
 
 module.exports = router;

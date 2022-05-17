@@ -1,3 +1,4 @@
+const Sequelize = require('sequelize');
 const express = require('express');
 const axios = require('axios');
 // using Twilio SendGrid's v3 Node.js Library
@@ -6,11 +7,13 @@ const sgMail = require('@sendgrid/mail');
 const cryptoRandomString = require('crypto-random-string');
 const {
   rejectUnauthenticated,
+  getIpAddress,
 } = require('../modules/authentication-middleware');
 const { logError } = require('../modules/logger');
 const encryptLib = require('../modules/encryption');
 const { pool } = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
+const User = require('../models/user.model.js');
 
 const router = express.Router();
 
@@ -24,9 +27,24 @@ const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
 // Handles Ajax request for user information if user is authenticated
-router.get('/', rejectUnauthenticated, (req, res) => {
-  // Send back user object from the session (previously queried from the database)
-  res.send(req.user);
+router.get('/', rejectUnauthenticated, async (req, res) => {
+  try {
+    const ipAddress = getIpAddress(req);
+    await User.update({
+      current_sign_in_ip: ipAddress,
+      current_sign_in_at: Sequelize.literal('CURRENT_TIMESTAMP'),
+    }, {
+      where: {
+        id: req.user.id,
+      },
+    });
+    // Send back user object from the session (previously queried from the database)
+    res.send(req.user);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send('Unable to get user.');
+  }
+
 });
 
 // Handles POST request with new user data
@@ -62,25 +80,24 @@ router.post('/register', async (req, res, next) => {
       });
     }
     if (captcha && captcha.data && captcha.data.success === true) {
-      const queryText = `INSERT INTO "user" (password, email, first_name, last_name)
-      VALUES ($1, $2, $3, $4) RETURNING id`;
+      const queryText = `INSERT INTO "user" (password, email, first_name, last_name, ip_address)
+      VALUES ($1, $2, $3, $4, $5) RETURNING id`;
       pool
-        .query(queryText, [password, email, firstName, lastName])
+        .query(queryText, [password, email, firstName, lastName, ipAddress])
         .then(() => {
-          if (process.env.SENDGRID_API_KEY && process.env.SENDGRID_API_KEY !== '') {
-            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-            const msg = {
-              to: email,
-              from: process.env.SENDGRID_FROM_ADDRESS,
-              subject: 'Welcome!',
-              text: `Welcome to the TCSW session selector!`,
-              html: `Welcome to the TCSW session selector!`,
-            };
-            sgMail.send(msg).catch(e => console.log(e));
-          } else {
-            console.error('Missing SendGrid environment variables.')
-          }
-
+          // if (process.env.SENDGRID_API_KEY && process.env.SENDGRID_API_KEY !== '') {
+          //   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+          //   const msg = {
+          //     to: email,
+          //     from: process.env.SENDGRID_FROM_ADDRESS,
+          //     subject: 'Welcome!',
+          //     text: `Welcome to the TCSW session selector!`,
+          //     html: `Welcome to the TCSW session selector!`,
+          //   };
+          //   sgMail.send(msg).catch(e => console.log(e));
+          // } else {
+          //   console.error('Missing SendGrid environment variables.')
+          // }
           res.sendStatus(201)
         })
         .catch((err) => {
