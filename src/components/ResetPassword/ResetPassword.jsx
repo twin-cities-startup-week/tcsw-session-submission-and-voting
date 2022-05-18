@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import {
     useParams
 } from "react-router-dom";
+import ReactGA from 'react-ga';
 
 function ForgotPassword() {
     const params = useParams();
@@ -20,6 +21,12 @@ function ForgotPassword() {
     const errors = useSelector(store => store.errors);
     const dispatch = useDispatch();
     const history = useHistory();
+
+    useEffect(() => {
+        if (process.env.REACT_APP_GA_CODE) {
+            ReactGA.pageview('/forgotPassword');
+        }
+    }, []);
 
     const reset = (event) => {
         event.preventDefault();

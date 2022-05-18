@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import FaqItemPage from '../FaqItemPage/FaqItemPage';
 import Typography from '@mui/material/Typography';
 import './Faq.css';
+import ReactGA from 'react-ga';
 
 //Material-ui
 import { Paper, makeStyles } from "@material-ui/core";  
@@ -27,7 +28,11 @@ import { Paper, makeStyles } from "@material-ui/core";
 
 function FaqPage (){
     const classes = useStyles();
-
+    useEffect(() => {
+        if (process.env.REACT_APP_GA_CODE) {
+            ReactGA.pageview('/faq');
+        }
+    }, []);
 
     const [faqs, setFaqs] = useState([
         {
