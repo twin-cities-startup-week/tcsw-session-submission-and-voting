@@ -184,10 +184,10 @@ function App() {
                 <AdminContentPage />
               </Route>
 
-              <Route
+              {/* <Route
                 exact path='/leaderboard'>
                   <Leaderboard/>
-              </Route>  
+              </Route>   */}
 
               <Route
                 exact path='/user/submission'>
