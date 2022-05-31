@@ -6,6 +6,7 @@ import MarkdownView from 'react-showdown';
 import { makeStyles } from '@mui/styles';
 import { Button, Grid, Typography } from '@mui/material';
 import { useHistory, useParams } from 'react-router-dom';
+import ReactGA from 'react-ga';
 
 // Styling
 const useStyles = makeStyles({
@@ -46,7 +47,10 @@ function VotePage() {
 
     useEffect(() => {
         if (submissionId && submissionId !== '') {
-            dispatch({ type: 'FETCH_SUBMISSION_DETAILS', payload: { id: submissionId } })
+            dispatch({ type: 'FETCH_SUBMISSION_DETAILS', payload: { id: submissionId } });
+            if (process.env.REACT_APP_GA_CODE) {
+                ReactGA.pageview(`/votepage/${submissionId}`);
+            }
         }
     }, [submissionId, dispatch])
 

@@ -19,6 +19,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { readAndCompressImage } from 'browser-image-resizer';
 import * as Showdown from "showdown";
 import 'react-mde/lib/styles/css/react-mde-all.css';
+import ReactGA from 'react-ga';
 
 function slugify(string) {
     const a = 'àáäâãåăæçèéëêǵḧìíïîḿńǹñòóöôœøṕŕßśșțùúüûǘẃẍÿź·/_,:;';
@@ -68,6 +69,12 @@ function SubmissionPage() {
             }
         })
     }, [history])
+
+    useEffect(() => {
+        if (process.env.REACT_APP_GA_CODE) {
+            ReactGA.pageview('/submission');
+        }
+    }, []);
 
     const useStyles = makeStyles({
         root: {
