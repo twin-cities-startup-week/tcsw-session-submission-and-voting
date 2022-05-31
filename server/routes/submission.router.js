@@ -93,7 +93,7 @@ router.get('/approved', async (req, res) => {
 });
 
 // GET route for leaderboard returns top 10 sessions with the most votes
-router.get('/leaderboard', async (req, res) => {
+router.get('/leaderboard', requireAdmin, async (req, res) => {
     try {
         const userSessions = await Session.findAll({
             raw: true,

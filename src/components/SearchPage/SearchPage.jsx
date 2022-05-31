@@ -239,15 +239,14 @@ function Panelists() {
                                 </Hidden>
                                 <Button variant="contained" style={{ marginTop: '20px' }} onClick={resetFilters}>Reset</Button>
 
-                                {/* On larger screens, always show track and format filters */}
-                                <Hidden smDown>
+                                {/* <Hidden smDown>
                                     <br />
                                     <br />
                                     <div className='leader-board-button-div'>
                                         <p>Want to see who is leading the Vote race?</p>
                                         <Button variant="contained" onClick={goToLeaderBoard}>Leaderboard</Button>
                                     </div>
-                                </Hidden>
+                                </Hidden> */}
 
 
                             </Grid>
