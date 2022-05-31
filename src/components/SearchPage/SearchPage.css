@@ -24,21 +24,20 @@
 }
 
 .search-bar{
-    padding-right: 20%;
-    width: 80%;
+    width: 100%;
     height: 30px;
-    margin-left: 10px;
+    margin: 0;
 }
 
 .track-selector{
     font-size: medium;
-    width: 80%;
+    width: 100%;
     height: 30px;
 }
 
 .format-selector{
     font-size: medium;
-    width: 80%;
+    width: 100%;
     height: 30px;
 }
 
@@ -51,14 +50,7 @@
     width: 100px;
 }
 
-.reset-location{
-    margin-left: 10px;
-    padding-bottom: 30px;
-}
-
 .leader-board-button-div{
-    padding-left: 10px;
-    padding-top: 10px;
     border-top: solid #0c495a;
     border-top-width: medium;
 }

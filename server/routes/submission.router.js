@@ -1,45 +1,179 @@
 const express = require('express');
-const { pool } = require('../modules/pool');
 const router = express.Router();
+const Sequelize = require('sequelize');
 const Session = require('../models/session.model.js');
+const UserVote = require('../models/user_vote.model.js');
 const {
     rejectUnauthenticated,
+    requireAdmin,
     getIpAddress,
 } = require('../modules/authentication-middleware');
 const S3Service = require('../services/S3Service');
 const {
     sendSessionSubmissionEmail,
 } = require('../modules/email');
+const { Op } = Sequelize;
+const { logError } = require('./../modules/logger');
 
 // GET route for all APPROVED submissions
-router.get('/approved', rejectUnauthenticated, async (req, res) => {
+router.get('/approved', async (req, res) => {
+    // console.log('Params', req.query);
+    const whereCondition = {
+        status: 'approved',
+    }
+    const andConditions = [];
+    if (req.query.searchTerm && req.query.searchTerm !== '') {
+        andConditions.push({
+            [Op.or]: [
+                {
+                    description: {
+                        [Op.iLike]: `%${req.query.searchTerm.trim()}%`,
+                    },
+                }, {
+                    title: {
+                        [Op.iLike]: `%${req.query.searchTerm.trim()}%`,
+                    },
+                },
+            ],
+        });
+    }
+    if (req.query.format && req.query.format !== '') {
+        const orConditions = [];
+        const formats = decodeURIComponent(req.query.format).split(',');
+        andConditions.push({
+            format: {
+                [Op.in]: formats,
+            },
+        })
+    }
+    if (req.query.track && req.query.track !== '') {
+        const tracks = decodeURIComponent(req.query.track).split(',');
+        andConditions.push({
+            track: {
+                [Op.in]: tracks,
+            }
+        });
+    }
+    // console.log('WHERE', andConditions);
+    if (andConditions.length > 0) {
+        whereCondition[Op.and] = andConditions;
+    }
     try {
         const userSessions = await Session.findAll({
-            where: {
-                status: 'approved',
-            }
+            attributes: [
+                'id',
+                'title',
+                'industry',
+                'track',
+                'speakers',
+                'location',
+                'location_details',
+                'time',
+                'date',
+                'host',
+                'description',
+                'attendees',
+                'length',
+                'area_of_interest',
+                'media',
+                'image',
+                'format',
+            ],
+            where: whereCondition,
+            limit: 100,
+            order: [
+                ['title', 'ASC'],
+            ],
         });
         res.status(200).send(userSessions);
     } catch (e) {
-        console.log('error with post to db', e);
+        logError(e);
         res.sendStatus(500);
     }
 });
 
+// GET route for leaderboard returns top 10 sessions with the most votes
+router.get('/leaderboard', async (req, res) => {
+    try {
+        const userSessions = await Session.findAll({
+            raw: true,
+            attributes: [
+                'id',
+                'title',
+                'industry',
+                'track',
+                'speakers',
+                'location',
+                'location_details',
+                'time',
+                'date',
+                'host',
+                'description',
+                'attendees',
+                'length',
+                'area_of_interest',
+                'media',
+                'image',
+                'format',
+                // [Sequelize.fn('COUNT', Sequelize.col('user_votes.id')), 'vote_count'],
+            ],
+            include: [{
+                model: UserVote,
+                duplicating: false,
+                attributes: [],
+            }],
+            group: ['session.id'],
+            where: {
+                status: 'approved',
+            },
+            order: [
+                [Sequelize.fn('COUNT', Sequelize.col('user_votes.id')), 'DESC'],
+                ['title', 'ASC'],
+            ],
+            limit: 10,
+
+        });
+        res.status(200).send(userSessions);
+    } catch (e) {
+        logError(e);
+        res.sendStatus(500);
+    }
+});
+
+// GET route for public facing session details
 router.get('/details/:id', async (req, res) => {
     try {
         let whereCondition = {
             // non-admins are only able to see approved sessions
             status: 'approved',
+            id: req.params.id,
         };
         if (req.user && req.user.admin === true) {
             // Admins are able to see all sessions
-            whereCondition = {};
+            whereCondition = {
+                id: req.params.id,
+            };
+        }
+        const include = [];
+        // If we have a logged in user, include vote information for the session
+        if (req.user && req.user.id) {
+            include.push(
+                {
+                    model: UserVote,
+                    required: false,
+                    attributes: [
+                        ['created_at', 'voted_at'],
+                        ['id', 'vote_id'],
+                    ],
+                    where: {
+                        user_id: req.user.id,
+                    },
+                },
+            );
         }
         
         // Limit columns for public viewing
-        const userSession = await Session.findByPk(
-            req.params.id,
+        const userSession = await Session.findOne(
             {
                 attributes: [
                     'id',
@@ -47,7 +181,6 @@ router.get('/details/:id', async (req, res) => {
                     'industry',
                     'track',
                     'speakers',
-                    'purpose',
                     'location',
                     'location_details',
                     'time',
@@ -61,12 +194,18 @@ router.get('/details/:id', async (req, res) => {
                     'image',
                     'format',
                 ],
+                include,
                 where: whereCondition,
             }
         );
-        res.status(200).send(userSession);
+        if (userSession) {
+            res.status(200).send(userSession);
+        } else {
+            res.sendStatus(404);
+        }
+        
     } catch (error) {
-        console.log('error in router get panel details', error);
+        logError(error);
         res.sendStatus(500);
     }
 });
@@ -75,34 +214,54 @@ router.get('/details/:id', async (req, res) => {
 router.get('/user', rejectUnauthenticated, async (req, res) => {
     try {
         const userSessions = await Session.findAll({
+            attributes: {
+                include: [[Sequelize.fn('COUNT', Sequelize.col('user_votes.id')), 'vote_count']]
+            },
+            include: [{
+                model: UserVote,
+                attributes: [],
+            }],
+            group: ['session.id'],
             where: {
                 user_id: req.user.id,
+                status: {
+                    [Op.not]: 'deleted',
+                },
             }
         });
         res.status(200).send(userSessions);
     } catch (e) {
-        console.log('error with getting user submissions', e);
+        logError(e);
         res.sendStatus(500);
     }
 })
 
-// GET route for submission detail, used for editing
+// GET route for ALL submission details, used for editing
 router.get('/user/:id', rejectUnauthenticated, async (req, res) => {
     try {
-        const whereCondition = {};
+        const whereCondition = {
+            status: {
+                [Op.not]: 'deleted',
+            },
+            id: req.params.id,
+        };
         // Admin users can access all submissions
         if (req.user.admin !== true) {
             whereCondition.user_id = req.user.id;
         }
-        const userSession = await Session.findByPk(
-            req.params.id,
+        // Returns ALL submission details
+        const userSession = await Session.findOne(
             {
                 where: whereCondition,
             }
         );
-        res.status(200).send(userSession);
+        if(userSession === null) {
+            res.sendStatus(404);
+        } else {
+            res.status(200).send(userSession);
+        }
     } catch (e) {
-        console.log('error with post to db', e);
+        logError(e);
         res.sendStatus(500);
     }
 });
@@ -115,8 +274,9 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
             id: newSubmission.id,
         }
         if (req.user.admin !== true) {
-            newSubmission.user_id = req.user.id;
             whereCondition.user_id = req.user.id;
+            // If a user edits their session, it goes back to pending
+            newSubmission.status = 'pending';
         }
         newSubmission.ip_address = getIpAddress(req);
         // TODO: These should be junction tables
@@ -141,7 +301,43 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
         );
         res.status(201).send(result);
     } catch (e) {
-        console.log('error with post to db', e);
+        logError(e);
+        res.sendStatus(500);
+    }
+});
+
+//PUT route for session voting 
+router.put('/vote/:id', rejectUnauthenticated, async (req, res) => {
+    try {
+        // Use the logged in user id
+        const userId = req.user.id;
+        // Session id passed as a request param
+        const sessionId = req.params.id;
+        // Check for an existing vote, only one vote per session per user is allowed
+        const userVote = await UserVote.findOne(
+            {
+                where: {
+                    user_id: userId,
+                    session_id: sessionId,
+                },
+            }
+        );
+        if (userVote) {
+            // QUESTION: Should we allow users to 'undo' a vote?
+            res.status(409).send({message: `You've already voted for this session.`});
+        } else {
+            const result = UserVote.create({
+                user_id: userId,
+                session_id: sessionId,
+            },
+            {
+                returning: true,
+                plain: true,
+            })
+            res.status(201).send(result);
+        }
+    } catch (e) {
+        logError(e);
         res.sendStatus(500);
     }
 });
@@ -164,10 +360,10 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
                 plain: true,
             }
         );
-        sendSessionSubmissionEmail(req.user, newSubmission);
+        sendSessionSubmissionEmail(newSubmission.email, req.user.first_name, newSubmission);
         res.status(201).send(result);
     } catch (e) {
-        console.log('error with post to db', e);
+        logError(e);
         res.sendStatus(500);
     }
 });
@@ -193,7 +389,7 @@ router.post('/image', rejectUnauthenticated, async (req, res) => {
         });
         res.send({ message: 'success', imagePath: url });
     } catch (error) {
-        console.log(error);
+        logError(error);
         res.sendStatus(500);
     }
 });

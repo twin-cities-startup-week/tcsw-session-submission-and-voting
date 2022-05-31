@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     root: {
         maxWidth: '920px',
         margin: '0 auto',
-        padding: '15px',
+        padding: '5px 20px 50px 20px', 
     }
 });
 

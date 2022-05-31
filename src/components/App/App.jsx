@@ -15,15 +15,13 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
-import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import FaqPage from '../FaqPage/FaqPage';
 import AdminPage from '../AdminPage/AdminPage';
 import SubmissionPage from '../SubmissionPage/SubmissionPage';
-import PanelistViewPage from '../PanelistViewPage/PanelistViewPage';
-import Panelists from '../PanelistViewPage/Panelists'
+import SearchPage from '../SearchPage/SearchPage'
 import VotePage from '../VotePage/VotePage'; 
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
 import ResetPassword from '../ResetPassword/ResetPassword';
@@ -33,9 +31,18 @@ import AdminFAQPage from '../AdminFAQPage/AdminFAQPage';
 import SubmissionListPage from '../SubmissionListPage/SubmissionListPage';
 import GlobalAlertModal from '../GlobalAlertModal/GlobalAlertModal';
 import TemporarySearchPage from '../TemporarySearchPage/TemporarySearchPage';
+import AdminUserList from '../AdminUserList/AdminUserList';
 import './App.css';
 
 import {createTheme, ThemeProvider} from '@mui/material/styles';
+import ReactGA from 'react-ga';
+if (process.env.REACT_APP_GA_CODE) {
+  ReactGA.initialize(process.env.REACT_APP_GA_CODE);
+  console.log('GA initialized!');
+} else {
+  console.log('NO GA CODE!');
+}
+
 
 const theme = createTheme({
   components: {
@@ -91,6 +98,11 @@ const theme = createTheme({
       fontWeight: 700,
       fontFamily: 'Poppins',
     },
+    h5: {
+      fontSize: 18,
+      fontWeight: 700,
+      fontFamily: 'Poppins',
+    },
     body1: {
       fontSize: 18,
       fontWeight: 400,
@@ -123,9 +135,9 @@ function App() {
         closeActionType="SET_GLOBAL_MODAL"
       />
       <Router>
-        <div style={{position: 'relative', minHeight: '100%'}}>
-          <div style={{paddingBottom: '150px'}}>
-            <Nav />
+        <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%'}}>
+          <Nav />
+          <div style={{ flexGrow: 1 }}>
             <Switch>
               {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
               <Redirect exact from="/" to="/home" />
@@ -189,10 +201,10 @@ function App() {
                 <AdminFAQPage />
               </Route>
 
-              <Route
+              {/* <Route
                 exact path='/leaderboard'>
                   <Leaderboard/>
-              </Route>  
+              </Route>   */}
 
               <Route
                 exact path='/user/submission'>
@@ -219,7 +231,12 @@ function App() {
               >
                 <InfoPage />
               </ProtectedRoute> */}
-
+              <ProtectedRoute
+                exact
+                path="/admin/user/list"
+              >
+                <AdminUserList />
+              </ProtectedRoute>
               <ProtectedRoute
                 exact
                 path="/submission"
@@ -227,21 +244,19 @@ function App() {
                 <SubmissionPage />
               </ProtectedRoute>
 
-                <ProtectedRoute
-                  exact
-                  path="/submission/:id/edit"
-                >
-                  <SubmissionPage />
-                </ProtectedRoute>
-
-              <Route exact path = "/panelistView">
-                <Panelists />
-                {/* <PanelistViewPage /> */}
-              </Route>
+              <ProtectedRoute
+                exact
+                path="/submission/:id/edit"
+              >
+                <SubmissionPage />
+              </ProtectedRoute>
 
               <Route exact path = "/votepage/:id">
-                {/* <Panelists /> */}
                 <VotePage />
+              </Route>
+
+              <Route exact path="/votepage">
+                <SearchPage />
               </Route>
 
               <Route

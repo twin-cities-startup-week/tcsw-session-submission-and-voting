@@ -26,7 +26,30 @@ const {
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
-// Handles Ajax request for user information if user is authenticated
+/**
+ * @api {get} /users User Detail
+ * @apiName GetUserDetail
+ * @apiGroup User
+ * @apiDescription This route returns details about the currently logged in user.
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "id": 41,
+ *          "email": "tester@primeacademy.io",
+ *          "reset_password_token": null,
+ *          "reset_password_sent_at": null,
+ *          "remember_created_at": null,
+ *          "current_sign_in_at": "2019-04-08T16:57:14.005Z",
+ *          "current_sign_in_ip": "127.0.0.1",
+ *          "created_at": "2019-04-08T11:57:00.278Z",
+ *          "updated_at": "2019-04-08T16:57:14.019Z",
+ *          "first_name": "Chris",
+ *          "last_name": "Test",
+ *          "google_id": "",
+ *          "admin": false
+ *      }
+ */
 router.get('/', rejectUnauthenticated, async (req, res) => {
   try {
     const ipAddress = getIpAddress(req);
@@ -41,7 +64,7 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
     // Send back user object from the session (previously queried from the database)
     res.send(req.user);
   } catch (e) {
-    console.log(e);
+    logError(e);
     res.status(500).send('Unable to get user.');
   }
 
@@ -80,49 +103,53 @@ router.post('/register', async (req, res, next) => {
       });
     }
     if (captcha && captcha.data && captcha.data.success === true) {
-      const queryText = `INSERT INTO "user" (password, email, first_name, last_name, ip_address)
+      const queryText = `INSERT INTO "user" (password, email, first_name, last_name, current_sign_in_ip)
       VALUES ($1, $2, $3, $4, $5) RETURNING id`;
       pool
         .query(queryText, [password, email, firstName, lastName, ipAddress])
         .then(() => {
-          // if (process.env.SENDGRID_API_KEY && process.env.SENDGRID_API_KEY !== '') {
-          //   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-          //   const msg = {
-          //     to: email,
-          //     from: process.env.SENDGRID_FROM_ADDRESS,
-          //     subject: 'Welcome!',
-          //     text: `Welcome to the TCSW session selector!`,
-          //     html: `Welcome to the TCSW session selector!`,
-          //   };
-          //   sgMail.send(msg).catch(e => console.log(e));
-          // } else {
-          //   console.error('Missing SendGrid environment variables.')
-          // }
-          res.sendStatus(201)
+          res.status(201).send('Success');
         })
         .catch((err) => {
-          console.log('User registration failed: ', err);
-          res.sendStatus(500);
+          logError(err);
+          res.status(500).send('Unable to create account. Please reach out to tcsw@beta.mn so that we can help.');
         });
 
     } else {
-      res.status(500).send('Unable to validate recaptcha.');
+      logError('Unable to validate recaptcha.');
+      res.status(500).send('Unable to validate recaptcha. Please try again. If the problem persists, please reach out to tcsw@beta.mn so that we can help.');
     }
   } catch (e) {
-    console.log(e);
-    res.status(500).send('Unable to create account.');
+    logError(e);
+    res.status(500).send('Unable to create account. Please reach out to tcsw@beta.mn so that we can help.');
   }
 });
 
-// Handles login form authenticate/login POST
-// userStrategy.authenticate('local') is middleware that we run on this route
-// this middleware will run our POST if successful
-// this middleware will send a 404 if not successful
+/**
+ * @api {post} /users/login User Login
+ * @apiName UserLogin
+ * @apiGroup User
+ * @apiDescription Create a cookie session for an user.
+ *
+ * @apiParam {String} username          Mandatory user email.
+ * @apiParam {String} password          Mandatory user password.
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ */
 router.post('/login', userStrategy.authenticate('local'), (req, res) => {
   res.sendStatus(200);
 });
 
-// clear all server session information about this user
+/**
+ * @api {post} /users/logout User Logout
+ * @apiName UserLogout
+ * @apiGroup User
+ * @apiDescription Clear all server session information about this user
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ */
 router.post('/logout', async (req, res) => {
   try {
       // Use passport's built-in method to log out the user

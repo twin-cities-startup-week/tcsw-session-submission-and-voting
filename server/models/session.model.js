@@ -72,6 +72,7 @@ Session.init({
     other_hosts: STRING,
     other_info: STRING,
     ip_address: STRING,
+    status: STRING,
     awaiting_approval: {
         type: BOOLEAN,
         defaultValue: true,

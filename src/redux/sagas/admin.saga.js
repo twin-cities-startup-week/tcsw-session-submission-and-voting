@@ -1,15 +1,6 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
-function* fetchTotalSession(){
-    try{
-        const response = yield axios.get(`/api/admin/sessionsApproved`)
-        yield put({type: 'SET_SESSION', payload: response.data})
-    }catch(error){
-        console.log('Session get request failed', error )
-    }
-}
-
 function* fetchAllContent() {
     try {
         const response = yield axios.get(`/api/content/block`);
@@ -30,8 +21,7 @@ function* fetchAllFAQ() {
 
 function* sendContent(action) {
     try {
-        const response = yield axios.post('/api/content/block', action.payload);
-        // yield put({ type: 'SET_CONTENT_BLOCK', payload: response.data });
+        yield axios.post('/api/content/block', action.payload);
     } catch (error) {
         console.log('Session get request failed', error);
     }
@@ -79,17 +69,46 @@ function* deleteSession(action) {
     }
 }
 
-function* fetchApprovedSessions() {
+function* fetchUserList() {
     try {
-        const response = yield axios.get(`/api/admin/approvedList`)
-        yield put({ type: 'SET_APPROVED_INFO', payload: response.data })
+        const response = yield axios.get(`/api/admin/user/list`);
+        yield put({ type: 'SET_USER_LIST', payload: response.data });
     } catch (error) {
         console.log('Session get request failed', error);
     }
 }
 
+function* promoteUserToAdmin(action) {
+    try {
+        const response = yield axios.put(`/api/admin/user/promote/${action.payload}`);
+        yield put({ type: 'FETCH_USER_LIST', payload: response.data });
+        if (action.onComplete) {
+            action.onComplete();
+        }
+    } catch (error) {
+        console.log('promoteUserToAdmin request failed', error);
+        if (action.onComplete) {
+            action.onComplete();
+        }
+    }
+}
+
+function* demoteAdminUser(action) {
+    try {
+        const response = yield axios.put(`/api/admin/user/demote/${action.payload}`);
+        yield put({ type: 'FETCH_USER_LIST', payload: response.data });
+        if (action.onComplete) {
+            action.onComplete();
+        }
+    } catch (error) {
+        console.log('demoteAdminUser request failed', error);
+        if (action.onComplete) {
+            action.onComplete();
+        }
+    }
+}
+
 function* sessionSaga (){
-    yield takeLatest('FETCH_TOTAL_SESSION', fetchTotalSession);
     yield takeLatest('FETCH_CONTENT_BLOCKS', fetchAllContent);
     yield takeLatest('FETCH_FAQ', fetchAllFAQ);
     yield takeLatest('SEND_CONTENT_BLOCK', sendContent);
@@ -97,7 +116,9 @@ function* sessionSaga (){
     yield takeLatest('APPROVE_SESSION', approveSession);
     yield takeLatest('DENY_SESSION', denySession);
     yield takeLatest('DELETE_SESSION', deleteSession);
-    yield takeLatest('FETCH_APPROVED_INFO', fetchApprovedSessions);
+    yield takeLatest('FETCH_USER_LIST', fetchUserList);
+    yield takeLatest('PROMOTE_USER_TO_ADMIN', promoteUserToAdmin);
+    yield takeLatest('DEMOTE_ADMIN_USER', demoteAdminUser);
 }
 
 

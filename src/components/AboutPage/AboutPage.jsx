@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MarkdownView from 'react-showdown';
 import { Paper,Button, makeStyles } from "@material-ui/core";
+import ReactGA from 'react-ga';
 
 // This is one of our simplest components
 // It doesn't have local state,
@@ -12,9 +13,9 @@ import { Paper,Button, makeStyles } from "@material-ui/core";
  // Styling
 const useStyles = makeStyles({
   root: {
-      maxWidth: '920px',
-      margin: '0 auto',
-      padding: '15px',
+    maxWidth: '920px',
+    margin: '0 auto',
+    padding: '5px 20px 50px 20px', 
   }
 });
 
@@ -26,6 +27,12 @@ function AboutPage() {
   useEffect(() => {
     dispatch({ type: "FETCH_CONTENT_BLOCKS"});
   }, [dispatch]);
+
+  useEffect(() => {
+    if (process.env.REACT_APP_GA_CODE) {
+      ReactGA.pageview('/about');
+    }
+  }, []);
 
   return (
       <div className={classes.root}>

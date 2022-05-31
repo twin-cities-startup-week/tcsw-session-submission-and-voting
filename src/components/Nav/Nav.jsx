@@ -59,7 +59,7 @@ function Nav() {
   }
   const pushToSearch = () => {
     setOpen(!open);
-    history.push('/search');
+    history.push('/votepage');
   }
   const pushToLogout = () => {
     setOpen(!open);543547
@@ -70,6 +70,11 @@ function Nav() {
   const pushToSignIn = () => {
     setOpen(!open);
     history.push('/login');
+  }
+
+  const pushToUserList = () => {
+    setOpen(!open);
+    history.push('/admin/user/list');
   }
 
   return (
@@ -91,8 +96,8 @@ function Nav() {
         (
           <>
             {/* Search, About and FAQ pages are visable at all times. */}
-            <Link className="navLink" to="/search">
-              Search
+            <Link className="navLink" to="/votepage">
+              Vote
             </Link>
 
             <Link className="navLink" to="/about">
@@ -200,6 +205,18 @@ function Nav() {
 
                 </ListItemButton>
               }
+              {user.admin &&
+                <ListItemButton
+                  sx={{
+                    textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
+                    '&:hover': { background: "#0c495a" }
+                  }}
+                  onClick={pushToUserList}>
+
+                  <ListItemText primary="View User List" />
+
+                </ListItemButton>
+              }
               { mobileScreen && user.id &&
                 <ListItemButton
                 sx={{
@@ -245,7 +262,7 @@ function Nav() {
                     onClick={pushToSearch}
                   >
 
-                    <ListItemText primary="Search" />
+                    <ListItemText primary="Vote" />
 
                   </ListItemButton>
                   <ListItemButton

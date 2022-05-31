@@ -7,7 +7,7 @@ body,
 body {
   font-family: 'Poppins', sans-serif;
   color: #003848;
-  font-size: 18px;
+  
   margin: 0px;
 }
 
@@ -36,8 +36,15 @@ h4 {
   font-size: 22px;
 }
 
+h5 {
+  font-weight: 700;
+  font-size: 18px;
+  margin: 5px;
+}
+
 p {
   line-height: 1.4em;
+  font-size: 16px;
 }
 
 /* --------------------------------------------------------------------------------
@@ -115,11 +122,11 @@ Alert
   box-sizing: border-box;
   padding: 15px 10px;
   margin: 15px 0;
-  border: 2px solid #e01616;
-  background-color: #A7A9AC;
+  border: 2px solid darkred;
+  background-color: #fff;
   border-radius: 3px;
-  color: #e01616;
-  font-size: 0.8rem;
+  color: darkred;
+  font-size: 1rem;
 }
 
 /* --------------------------------------------------------------------------------

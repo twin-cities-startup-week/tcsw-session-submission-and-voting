@@ -1,6 +1,6 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-require('dotenv').config();
 
 const app = express();
 const { pool } = require('./modules/pool');
@@ -8,6 +8,15 @@ const sessionMiddleware = require('./modules/session-middleware');
 const passport = require('./strategies/user.strategy');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const fileUpload = require('express-fileupload');
+const Honeybadger = require('@honeybadger-io/js');
+const { logError } = require('./modules/logger');
+
+if (process.env.NODE_ENV === 'production' && process.env.HONEYBADGER_API_KEY) {
+  Honeybadger.configure({
+    apiKey: process.env.HONEYBADGER_API_KEY,
+  });
+  app.use(Honeybadger.requestHandler); // Use *before* all other app middleware.
+}
 
 let callbackURL = `https://sessions.twincitiesstartupweek.com/auth/google/callback`;
 if (process.env.NODE_ENV !== 'production') {
@@ -67,7 +76,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
         }
         
       } catch (error) {
-          console.log('Error with query for user ', error);
+          logError(error);
           // done takes an error (we have one) and a user (null in this case)
           // this will result in the server returning a 500 status code
           return done(error, null);
@@ -140,10 +149,18 @@ app.use('/api/content', contentRouter);
 // Serve static files
 app.use(express.static('build'));
 
+if (process.env.NODE_ENV === 'production' && process.env.HONEYBADGER_API_KEY) {
+  app.use(Honeybadger.errorHandler);  // Use *after* all other app middleware.
+}
+
+if (!process.env.NODE_ENV) {
+  console.log('\x1b[31m%s\x1b[0m', 'NODE_ENV not defined. This environment variable is required.');
+}
+
 // App Set //
 const PORT = process.env.PORT || 5000;
 
 /** Listen * */
 app.listen(PORT, () => {
-  console.log(`Listening on port: ${PORT}`);
+  console.log(`Listening on port: ${PORT}, ${process.env.NODE_ENV}`);
 });

@@ -1,15 +1,9 @@
 
 # Twin Cities Startup Week Session Selector and Voting Portal
 
-The TCSW Session Selector and Voting App will be used in conjunction with TCSW's primary website and September 2022 conference. When the portal is open for submissions from the public (April 4, 2022 - May 15, 2022), a user will login and be able to submit their proposed "session" (e.g. panel, roundtable, etc. ) after filling out a form with a list of questions. An admin (separate login) will be able to login and "approve" or "reject" sessions from a queue from the general public. Once submissions have closed (May 15,2022), users will be invited to up vote or down vote on the panels that have been approved. There will be one up vote/down vote per person per submitted session and sessions with the most up votes will have some influence on the schedule for TCSW 2022, but other factors will also be taken into consideration (voting will be open from May 23, 2022 - June 5, 2022). Users will also be able to search for a specific panel and sort by certain panel parameters as well as generate a link to share voting info on social media. Finally, there will be a leaderboard page to show logged in users where their panels stand in the voting ranks.
+The TCSW Session Selector and Voting App will be used in conjunction with TCSW's primary website and September 2022 conference. When the portal is open for submissions from the public, a user will login and be able to submit their proposed "session" (e.g. panel, roundtable, etc. ) after filling out a form with a list of questions. An admin (separate login) will be able to login and "approve" or "reject" sessions from a queue from the general public. Once submissions have closed, users will be invited to up vote or down vote on the panels that have been approved. There will be one up vote/down vote per person per submitted session and sessions with the most up votes will have some influence on the schedule for TCSW 2022, but other factors will also be taken into consideration. Users will also be able to search for a specific panel and sort by certain panel parameters as well as generate a link to share voting info on social media. Finally, there will be a leaderboard page to show logged in users where their panels stand in the voting ranks.
 
-Stretch Goals:
-Google Analytics
-Download DB as a .csv file
-
-
-A deployed version of the app can be found here: https://arcane-hamlet-54349.herokuapp.com/#/home
-
+A deployed version of the app can be found here: https://sessions.twincitiesstartupweek.com/
 
 ## Prerequisites
 
@@ -19,11 +13,18 @@ Before you get started, make sure you have the following software installed on y
 * [PostrgeSQL](https://www.postgresql.org/)
 * [Nodemon](https://nodemon.io/)
 
-## Environment variables
+### Account Registration
+
+- SendGrid, for sending emails https://sendgrid.com/
+- AWS S3 Bucket, for image upload https://aws.amazon.com/
+- Recaptcha (use the keys below for development) https://www.google.com/recaptcha/about/
+- Honeybadger, for logging errors https://app.honeybadger.io/
+
+### Environment variables
 
 ```
+NODE_ENV=development
 SERVER_SESSION_SECRET=some_secret
-SENDGRID_API_KEY_PROD=
 SENDGRID_API_KEY=
 SENDGRID_FROM_ADDRESS=
 GOOGLE_CLIENT_ID=
@@ -31,11 +32,30 @@ GOOGLE_CLIENT_SECRET=
 REACT_APP_RECAPTCHA_SITE_KEY=6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
 RECAPTCHA_SECRET_KEY=6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
 DATABASE_NAME=session_submission
+AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+S3_BUCKET_NAME=session-selector
+HONEYBADGER_API_KEY=
 ```
 
 > NOTE: The recaptcha keys above are provided by Google for development use. Replace with real keys in production.
 
-## Installation
+## Production Deployment
+
+Pushing the `master` branch to Heroku will run all database migrations and push all code to the live site. Production errors are logged to https://app.honeybadger.io/
+
+### During an Event
+
+- Monitor HoneyBadger.io for issues
+- Backup the database regularily
+- Monitor Heroku performance metrics
+- Ensure SendGrid limits are not being reached
+- Monitor for spam or duplicate sessions / votes
+
+> NOTE: There is not currently a staging or qa site. At some point in the future it would be nice to have a site that can be used for testing. Currently, all testing is done localhost.
+
+## Localhost Installation
 
 1. Create a `.env` file (see above)
 1. Run `npx sequelize-cli db:create`
@@ -45,7 +65,9 @@ DATABASE_NAME=session_submission
 1. Run `npm run server` and `npm run client` 
 1. Navigate to `localhost:3000` and voila!
 
-## Setting up Google Auth
+> NOTE: Seed data for the database is not currently being used. At some point in the future it would be nice to populate the form select fields from data in the database.
+
+### Setting up Google Auth
 
 In order to use Google Auth, a `GOOGLE CLIENT ID` and `GOOGLE CLIENT SECRET` must be added to your .env file.
 

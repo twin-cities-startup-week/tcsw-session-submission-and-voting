@@ -1,5 +1,5 @@
+// Router for light weight CMS. Content is stored as Markdown in the database.
 const express = require('express');
-const { pool } = require('../modules/pool');
 const router = express.Router();
 const ContentBlock = require('../models/content_block.model.js');
 const FAQ = require('../models/faq.model.js');
@@ -8,7 +8,7 @@ const {
     requireAdmin,
 } = require('../modules/authentication-middleware');
 
-
+const { logError } = require('./../modules/logger');
 
 /**
  * GET route block
@@ -19,6 +19,7 @@ router.get('/block', async (req, res) => {
         
         res.send(contentResults);
     } catch (e) {
+        logError(e);
         res.sendStatus(500);
     }
 });
@@ -29,7 +30,13 @@ router.get('/block', async (req, res) => {
  router.get('/faq', async (req, res) => {
     try {
         console.log('get')
-        const faqResults = await FAQ.findAll();
+        const faqResults = await FAQ.findAll(
+            {
+                order: [
+                    ['order', 'ASC'],
+                ], 
+            },
+        );
         
         res.send(faqResults);
     } catch (e) {
@@ -59,6 +66,7 @@ router.post('/block', requireAdmin, async (req, res) => {
         );
         res.send(updatedContent);
     } catch (e) {
+        logError(e);
         res.sendStatus(500);
     }
 });

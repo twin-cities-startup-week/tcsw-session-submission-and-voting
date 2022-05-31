@@ -4,8 +4,9 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MarkdownView from 'react-showdown';
 import { makeStyles } from '@mui/styles';
-import { Button, Grid, Container } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import { useHistory, useParams } from 'react-router-dom';
+import ReactGA from 'react-ga';
 
 // Styling
 const useStyles = makeStyles({
@@ -43,21 +44,19 @@ function VotePage() {
     const dispatch = useDispatch();
     const history = useHistory();
     const classes = useStyles();
-    const [vote, setVote ] = useState(0);
-
-    const [voteButton, toggleVoteButton ] = useState(false)
 
     useEffect(() => {
         if (submissionId && submissionId !== '') {
-            dispatch({ type: 'FETCH_SUBMISSION_DETAILS', payload: { id: submissionId } })
+            dispatch({ type: 'FETCH_SUBMISSION_DETAILS', payload: { id: submissionId } });
+            if (process.env.REACT_APP_GA_CODE) {
+                ReactGA.pageview(`/votepage/${submissionId}`);
+            }
         }
     }, [submissionId, dispatch])
 
     // function to add a Vote to the session vote count.   
-    const addVote = ( sessionId ) => {
-        dispatch({ type: 'ADD_VOTE_COUNT', payload: sessionId });
-        toggleVoteButton(true);
-        alert('Awesome! You Have VOTED!');
+    const voteForSession = ( sessionId ) => {
+        dispatch({ type: 'VOTE_FOR_SESSION', payload: sessionId });        
     }
 
     const sessionApprove = ( sessionId ) => {
@@ -82,36 +81,30 @@ function VotePage() {
     }
 
     return(
-        <div className='vote-page-view'>
+        <div>
             <Grid container spacing={0} style={{ backgroundColor: '#FBBD19', width: '100%' }}>
-                <Grid item md={12} lg={2} order={{ xs: 2, sm: 2, md: 2, lg: 1 }} style={{ backgroundColor: '#FBBD19', padding: '20px' }}>
-                    <h2 className='left-header'>TCSW 2022</h2>
-                    {/* <hr /> */}
-                    <h5>Track:</h5>
-                    <ul>
-                        <li>{details.track}</li>
-                    </ul>
-                    <h5>Industry:</h5>
-                    <ul>
-                        {details.industry && details.industry.map(industry => <li>{industry}</li>)}
-                    </ul>
-                    <h5>Format:</h5>
-                    <ul>
-                        <li>{details.format}</li>
-                    </ul>
-                    <h5>Time:</h5>
-                    <ul>
-                        {details.time && details.time.map(time => <li>{time}</li>)}
-                    </ul>
-                    <h5>Date:</h5>
-                    <ul>
-                        {details.date && details.date.map(date => <li>{date}</li>)}
-                    </ul>
+                <Grid item xs={12} lg={2} style={{ backgroundColor: '#FBBD19', padding: '20px' }}>
+                    <h2>TCSW 2022</h2>
+                    <Button sx={{ width: '100%' }} variant="contained" onClick={() => voteForSession(details.id)}>Vote</Button>
+                    {user.admin &&
+                        (
+                            <>
+                                <h5>Time:</h5>
+                                <ul>
+                                    {details.time && details.time.map(time => <li>{time}</li>)}
+                                </ul>
+                                <h5>Date:</h5>
+                                <ul>
+                                    {details.date && details.date.map(date => <li>{date}</li>)}
+                                </ul>
+                            </>
+                        )
+                    }
                 </Grid>
                 <Grid item md={12} lg={10} order={{ xs: 1, sm: 1, md: 1, lg: 2 }} style={{ backgroundColor: '#FFF', padding: '20px'  }}>
                     <div className={classes.item}>
                         <div style={{ paddingRight: '20px' }}>
-                            <img src={details.image} className={classes.previewImage} />
+                            <img src={details.image || 'images/TCSW_session_selector_lightblue.png'} className={classes.previewImage} />
                         </div>
                         <div style={{ flex: 1 }}>
                             {user.admin &&
@@ -126,7 +119,8 @@ function VotePage() {
                                     </>
                                 )
                             }
-                            <h2>{details.title}</h2>
+                            <Typography variant="h2">{details.title}</Typography>
+                            <Typography variant="body"><strong>Track:</strong> {details.track} | <strong>Format:</strong> {details.format} | <strong>Industry:</strong> {details.industry && details.industry.join(', ')}</Typography>
                             <MarkdownView
                                 markdown={details.description}
                             />
@@ -142,7 +136,7 @@ function VotePage() {
 
                     <div className='organizers'>
                         <h3>Organizers</h3>
-                        <p>{details.first_name} {details.last_name}</p>
+                        <p>{details.host}</p>
                     </div>
 
                     <div className='related-media'>
@@ -150,10 +144,18 @@ function VotePage() {
                         <p>{details.media}</p>
                     </div>
 
-                    <div className='approval-buttons'>
-
-
-
+                    <div>
+                        <h3>Location</h3>
+                        <p>{details.location}</p>
+                        {
+                            details.location_details && (
+                                <>
+                                    <p><strong>Location Details:</strong></p>
+                                    
+                                    {details.location_details}
+                                </>
+                            )
+                        }
                     </div>
                 </Grid>
             </Grid>

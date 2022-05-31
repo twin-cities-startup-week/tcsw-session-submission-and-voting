@@ -36,7 +36,7 @@ function AdminFAQPage() {
     return (
         <div className={classes.rooty}>
             <Typography variant="h2">
-                About Us
+                FAQ
             </Typography>
             <br />
             {
