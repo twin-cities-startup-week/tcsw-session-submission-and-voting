@@ -77,6 +77,13 @@ function Nav() {
     history.push('/admin/user/list');
   }
 
+  let pageTitle = 'Session Selector and Voting';
+  if (window.location.hostname && window.location.hostname.indexOf('-qa.') >= 0) {
+    pageTitle = 'QA - Session Selector and Voting';
+  } else if (window.location.hostname && window.location.hostname.indexOf('localhost') >= 0) {
+    pageTitle = 'DEV - Session Selector and Voting';
+  }
+
   return (
     <div className="nav">
 
@@ -85,10 +92,9 @@ function Nav() {
       <a href="https://www.twincitiesstartupweek.com/" target="_blank"> 
         <img src="images/TCSW_Logo_Navy.png" alt="TCSW logo" style={{ width: '110px', maxWidth: '110px', height: 'auto', marginTop: '5px'}} />
       </a>
-      
       {/* Title, on click will navigate to the landing page page */}
       <Link to="/home">
-        <h2 className="nav-title" style={mobileScreen ? {paddingRight: '80px'} : {paddingRight: '20px'}}>Session Selector and Voting</h2>
+        <h2 className = "nav-title" style = { mobileScreen? { paddingRight: '80px' } : { paddingRight: '20px' }}>{pageTitle}</h2>
       </Link>
 
       {/* If no user is logged in, show these links */}
