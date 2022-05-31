@@ -65,11 +65,7 @@ function Panelists() {
 
     //Get all the session
     useEffect(() => {
-        if (user.admin) {
-            delaySearch();
-        } else {
-            dispatch({ type: "FETCH_CONTENT_BLOCKS" });
-        }
+        delaySearch();
     }, [format, track, searchTerm, user, dispatch]);
 
     const resetFilters = () => {
@@ -94,7 +90,7 @@ function Panelists() {
         }
         
         // Delay the search so that it runs after the user is done typing
-        searchTimeout = setTimeout(() => runSearch(), 300);
+        searchTimeout = setTimeout(() => runSearch(), 250);
     }
 
     const runSearch = () => {
