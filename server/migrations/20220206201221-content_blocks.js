@@ -59,7 +59,7 @@ module.exports = {
           transaction,
         },
       );
-      await queryInterface.bulkInsert('faq',
+      await queryInterface.bulkInsert('content_block',
         [
           {
             name: 'about',

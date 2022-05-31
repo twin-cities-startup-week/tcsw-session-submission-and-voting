@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'production' && process.env.HONEYBADGER_API_KEY) {
   app.use(Honeybadger.requestHandler); // Use *before* all other app middleware.
 }
 
-let callbackURL = `https://sessions.twincitiesstartupweek.com/auth/google/callback`;
+let callbackURL = `${process.env.BASE_URL}/auth/google/callback`;
 if (process.env.NODE_ENV !== 'production') {
     callbackURL = `http://localhost:5000/auth/google/callback`;
 }
@@ -129,12 +129,12 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
   //   login page.  Otherwise, the primary route function function will be called,
   //   which, in this example, will redirect the user to the home page.
   app.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: 'https://sessions.twincitiesstartupweek.com/#/login' }),
+    passport.authenticate('google', { failureRedirect: `${process.env.BASE_URL}/#/login` }),
     (req, res) => {
       if (process.env.NODE_ENV !== 'production') {
         res.redirect('http://localhost:3000/#/home');
       } else {
-        res.redirect('https://sessions.twincitiesstartupweek.com/#/home'); // TODO: After login page.
+        res.redirect(`${process.env.BASE_URL}/#/home`); // TODO: After login page.
       }
     }
   );

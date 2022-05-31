@@ -63,7 +63,7 @@ function AdminUserList() {
         // dispatch({ type: 'GOOGLE_LOGIN' })
         const time = new Date().getTime();
         if (process.env.NODE_ENV === 'production') {
-            window.open(`https://sessions.twincitiesstartupweek.com/api/admin/users/csv?t=${time}`);
+            window.open(`${window.location.protocol}//${window.location.host}/api/admin/users/csv?t=${time}`);
         } else {
             window.open(`http://localhost:5000/api/admin/users/csv?t=${time}`);
         }

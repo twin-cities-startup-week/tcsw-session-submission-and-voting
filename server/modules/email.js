@@ -15,7 +15,7 @@ Thank you for submitting a session for Twin Cities Startup Week 2022! After revi
 
 You can edit your session submission until submissions close on June 12, 2022. The TCSW team will review each change and accept or reject the edited submission for public voting.
 
-https://sessions.twincitiesstartupweek.com/#/user/submission
+${process.env.BASE_URL}/#/user/submission
 
 Title: ${newSubmission.title}
 Description: ${newSubmission.description}
@@ -31,7 +31,7 @@ Hello ${firstName},
 Thank you for submitting a session for Twin Cities Startup Week 2022! After reviewing your submission, the TCSW team will be in contact to let you know whether or not it has been accepted into the TCSW Session Selector for public voting.  
 <br />
 <br />
-You can <a href="https://sessions.twincitiesstartupweek.com/#/user/submission">edit your session submission</a> until submissions close on June 12, 2022. The TCSW team will review each change and accept or reject the edited submission for public voting.
+You can <a href="${process.env.BASE_URL}/#/user/submission">edit your session submission</a> until submissions close on June 12, 2022. The TCSW team will review each change and accept or reject the edited submission for public voting.
 <br />
 <br />
 <strong>Title</strong>
@@ -71,17 +71,17 @@ Thank you for submitting a session for Twin Cities Startup Week 2022! We are exc
 SUBMISSION CHANGES
 Please feel free to edit your submission until submissions close on June 12, 2022. Our team will review the edited submission and reevaluate its acceptance into the TCSW Session Selector.
 
-https://sessions.twincitiesstartupweek.com/#/user/submission
+${process.env.BASE_URL}/#/user/submission
 
 PUBLIC VOTING
 Being accepted onto the TCSW Session Selector does not guarantee your event will be accepted onto the TCSW Schedule. The TCSW team will use community and votes and feedback to determine the final TCSW event lineup. Public voting will be open from June 16-29, 2022.
 
 PROMOTING YOUR EVENT
-Make sure you are ready to promote your event and encourage your community to vote from June 16-29, 2022. The TCSW Team will be in touch with a media kit to help you spread the word. 
+Make sure you are ready to promote your event and encourage your community to vote from June 16-29, 2022. The TCSW Team will be in touch with a media kit to help you spread the word.
 
 If you have any questions about around TCSW or the voting process, contact us at tcsw@beta.mn.
 
-Thank you! 
+Thank you!
 
 TCSW Team
 `,
@@ -94,7 +94,7 @@ Thank you for submitting a session for Twin Cities Startup Week 2022! We are exc
 <br />
 <strong>SUBMISSION CHANGES</strong>
 <br />
-Please feel free to <a href="https://sessions.twincitiesstartupweek.com/#/user/submission">edit your submission</a> until submissions close on June 12, 2022. Our team will review the edited submission and reevaluate its acceptance into the TCSW Session Selector.
+Please feel free to <a href="${process.env.BASE_URL}/#/user/submission">edit your submission</a> until submissions close on June 12, 2022. Our team will review the edited submission and reevaluate its acceptance into the TCSW Session Selector.
 <br />
 <br />
 <strong>PUBLIC VOTING</strong>
@@ -104,13 +104,13 @@ Being accepted onto the TCSW Session Selector does not guarantee your event will
 <br />
 <strong>PROMOTING YOUR EVENT</strong>
 <br />
-Make sure you are ready to promote your event and encourage your community to vote from June 16-29, 2022. The TCSW Team will be in touch with a media kit to help you spread the word. 
+Make sure you are ready to promote your event and encourage your community to vote from June 16-29, 2022. The TCSW Team will be in touch with a media kit to help you spread the word.
 <br />
 <br />
 If you have any questions about around TCSW or the voting process, contact us at tcsw@beta.mn.
 <br />
 <br />
-Thank you! 
+Thank you!
 <br />
 <br />
 TCSW Team
@@ -136,11 +136,11 @@ Thank you for submitting a session for Twin Cities Startup Week 2022. Your submi
 
 Please feel free to edit your submission until submissions close on June 12, 2022. Our team will review the edited submission and reevaluate its acceptance into the TCSW Session Selector.
 
-https://sessions.twincitiesstartupweek.com/#/user/submission
+${process.env.BASE_URL}/#/user/submission
 
 If you have any questions about around TCSW or the voting process, contact us at tcsw@beta.mn.
 
-Thank you! 
+Thank you!
 
 TCSW Team
 `,
@@ -151,13 +151,13 @@ Hi ${firstName},
 Thank you for submitting a session for Twin Cities Startup Week 2022. Your submission does not align with our session criteria and is not accepted into the TCSW Session Selector for public voting. 
 <br />
 <br />
-Please feel free to <a href="https://sessions.twincitiesstartupweek.com/#/user/submission">edit your submission</a> until submissions close on June 12, 2022. Our team will review the edited submission and reevaluate its acceptance into the TCSW Session Selector.
+Please feel free to <a href="${process.env.BASE_URL}/#/user/submission">edit your submission</a> until submissions close on June 12, 2022. Our team will review the edited submission and reevaluate its acceptance into the TCSW Session Selector.
 <br />
 <br />
 If you have any questions about around TCSW or the voting process, contact us at tcsw@beta.mn.
 <br />
 <br />
-Thank you! 
+Thank you!
 <br />
 <br />
 TCSW Team
