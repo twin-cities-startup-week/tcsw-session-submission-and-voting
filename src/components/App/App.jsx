@@ -27,6 +27,7 @@ import ForgotPassword from '../ForgotPassword/ForgotPassword';
 import ResetPassword from '../ResetPassword/ResetPassword';
 import Leaderboard from '../Leaderboard/Leaderboard';
 import AdminContentPage from '../AdminContentPage/AdminContentPage';
+import AdminFAQPage from '../AdminFAQPage/AdminFAQPage';
 import SubmissionListPage from '../SubmissionListPage/SubmissionListPage';
 import GlobalAlertModal from '../GlobalAlertModal/GlobalAlertModal';
 import TemporarySearchPage from '../TemporarySearchPage/TemporarySearchPage';
@@ -34,6 +35,14 @@ import AdminUserList from '../AdminUserList/AdminUserList';
 import './App.css';
 
 import {createTheme, ThemeProvider} from '@mui/material/styles';
+import ReactGA from 'react-ga';
+if (process.env.REACT_APP_GA_CODE) {
+  ReactGA.initialize(process.env.REACT_APP_GA_CODE);
+  console.log('GA initialized!');
+} else {
+  console.log('NO GA CODE!');
+}
+
 
 const theme = createTheme({
   components: {
@@ -185,9 +194,17 @@ function App() {
               </Route>
 
               <Route
+                // shows adminPage at all times (logged in or not)
+                exact
+                path="/admin/faq"
+              >
+                <AdminFAQPage />
+              </Route>
+
+              {/* <Route
                 exact path='/leaderboard'>
                   <Leaderboard/>
-              </Route>  
+              </Route>   */}
 
               <Route
                 exact path='/user/submission'>

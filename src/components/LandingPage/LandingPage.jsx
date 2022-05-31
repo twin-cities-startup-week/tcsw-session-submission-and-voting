@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
+import ReactGA from 'react-ga';
 
 // CUSTOM COMPONENTS
 import RegisterForm from '../RegisterForm/RegisterForm';
@@ -21,6 +22,13 @@ function LandingPage() {
   useEffect(() => {
     dispatch({ type: "FETCH_CONTENT_BLOCKS" });
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log('GA TRACKING: /home');
+    if (process.env.REACT_APP_GA_CODE) {
+      ReactGA.pageview('/home');
+    }
+  }, []);
 
   const onLogin = (event) => {
     history.push('/login');

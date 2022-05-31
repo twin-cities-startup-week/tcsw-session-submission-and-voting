@@ -17,7 +17,7 @@ FAQ.init({
     },
     order: {
         type: INTEGER,
-        autoIncrement: true,
+        allowNull: true,
     },
     answer: {
         type: TEXT,

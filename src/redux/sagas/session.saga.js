@@ -55,6 +55,25 @@ function* fetchApprovedSessions(action) {
     }
 }
 
+function* fetchLeaderboard(action) {
+    try {
+        const submissions = yield axios.get('/api/submission/leaderboard', { params: action.payload });
+        yield put({ type: 'SET_LEADERBOARD', payload: submissions.data });
+        if (action.onComplete) {
+            action.onComplete();
+        }
+    } catch (error) {
+        yield put({
+            type: 'SET_GLOBAL_MODAL',
+            payload: {
+                modalOpen: true,
+                title: 'Oh no! Something went wrong.',
+                body: 'If the problem persists, please reach out to tcsw@beta.mn so that we can help.',
+            },
+        });
+    }
+}
+
 function* voteForSession(action) {
     try {
         yield axios.put(`/api/submission/vote/${action.payload}`);
@@ -97,6 +116,7 @@ function* sessionSaga (){
     yield takeLatest('FETCH_SESSIONS_AWAITING_APPROVAL', fetchAwaitingApproval);
     yield takeLatest('FETCH_ADMIN_APPROVED_SESSIONS', fetchAdminApprovedSessions);
     yield takeLatest('FETCH_APPROVED_SESSIONS', fetchApprovedSessions);
+    yield takeLatest('FETCH_LEADERBOARD', fetchLeaderboard);
     yield takeLatest('VOTE_FOR_SESSION', voteForSession);
 }
 

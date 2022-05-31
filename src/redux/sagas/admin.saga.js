@@ -10,9 +10,27 @@ function* fetchAllContent() {
     }
 }
 
+function* fetchAllFAQ() {
+    try {
+        const response = yield axios.get(`/api/content/faq`);
+        yield put({ type: 'SET_FAQS', payload: response.data });
+    } catch (error) {
+        console.log('Session get request failed', error);
+    }
+}
+
 function* sendContent(action) {
     try {
         yield axios.post('/api/content/block', action.payload);
+    } catch (error) {
+        console.log('Session get request failed', error);
+    }
+}
+
+function* sendFAQ(action) {
+    try {
+        const response = yield axios.post('/api/content/faq', action.payload);
+        // yield put({ type: 'SET_CONTENT_BLOCK', payload: response.data });
     } catch (error) {
         console.log('Session get request failed', error);
     }
@@ -92,7 +110,9 @@ function* demoteAdminUser(action) {
 
 function* sessionSaga (){
     yield takeLatest('FETCH_CONTENT_BLOCKS', fetchAllContent);
+    yield takeLatest('FETCH_FAQ', fetchAllFAQ);
     yield takeLatest('SEND_CONTENT_BLOCK', sendContent);
+    yield takeLatest('SEND_FAQ', sendFAQ);
     yield takeLatest('APPROVE_SESSION', approveSession);
     yield takeLatest('DENY_SESSION', denySession);
     yield takeLatest('DELETE_SESSION', deleteSession);

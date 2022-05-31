@@ -16,7 +16,7 @@ const { Op } = Sequelize;
 const { logError } = require('./../modules/logger');
 
 // GET route for all APPROVED submissions
-router.get('/approved', rejectUnauthenticated, async (req, res) => {
+router.get('/approved', async (req, res) => {
     // console.log('Params', req.query);
     const whereCondition = {
         status: 'approved',
@@ -60,8 +60,78 @@ router.get('/approved', rejectUnauthenticated, async (req, res) => {
     }
     try {
         const userSessions = await Session.findAll({
+            attributes: [
+                'id',
+                'title',
+                'industry',
+                'track',
+                'speakers',
+                'location',
+                'location_details',
+                'time',
+                'date',
+                'host',
+                'description',
+                'attendees',
+                'length',
+                'area_of_interest',
+                'media',
+                'image',
+                'format',
+            ],
             where: whereCondition,
-            limit: 50,
+            limit: 100,
+            order: [
+                ['title', 'ASC'],
+            ],
+        });
+        res.status(200).send(userSessions);
+    } catch (e) {
+        logError(e);
+        res.sendStatus(500);
+    }
+});
+
+// GET route for leaderboard returns top 10 sessions with the most votes
+router.get('/leaderboard', async (req, res) => {
+    try {
+        const userSessions = await Session.findAll({
+            raw: true,
+            attributes: [
+                'id',
+                'title',
+                'industry',
+                'track',
+                'speakers',
+                'location',
+                'location_details',
+                'time',
+                'date',
+                'host',
+                'description',
+                'attendees',
+                'length',
+                'area_of_interest',
+                'media',
+                'image',
+                'format',
+                // [Sequelize.fn('COUNT', Sequelize.col('user_votes.id')), 'vote_count'],
+            ],
+            include: [{
+                model: UserVote,
+                duplicating: false,
+                attributes: [],
+            }],
+            group: ['session.id'],
+            where: {
+                status: 'approved',
+            },
+            order: [
+                [Sequelize.fn('COUNT', Sequelize.col('user_votes.id')), 'DESC'],
+                ['title', 'ASC'],
+            ],
+            limit: 10,
+
         });
         res.status(200).send(userSessions);
     } catch (e) {
@@ -237,7 +307,6 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
 });
 
 //PUT route for session voting 
-// router.put('/vote/:id', rejectUnauthenticated, async (req, res) => {
 router.put('/vote/:id', requireAdmin, async (req, res) => {
     try {
         // Use the logged in user id

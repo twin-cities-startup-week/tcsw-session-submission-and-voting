@@ -5,6 +5,7 @@ import { useHistory } from 'react-router';
 import { makeStyles } from '@mui/styles';
 import { Button, Grid, Paper, Typography, FormControl, RadioGroup, FormControlLabel, Hidden, Checkbox } from '@mui/material';
 import MarkdownView from 'react-showdown';
+import ReactGA from 'react-ga';
 
 // Styling
 const useStyles = makeStyles({
@@ -55,6 +56,12 @@ function Panelists() {
     const [format, setFormat] = useState([]);
     const [collapsed, setCollapsed] = useState(true);
     const classes = useStyles();
+
+    useEffect(() => {
+        if (process.env.REACT_APP_GA_CODE) {
+            ReactGA.pageview('/votepage');
+        }
+    }, []);
 
     //Get all the session
     useEffect(() => {
@@ -266,7 +273,7 @@ function Panelists() {
                                     typeIndicator === ''
                                     && approvedSessions
                                     && approvedSessions.map(session => (
-                                        <>
+                                        <div key={session.id}>
                                             <div className={classes.item}>
                                                 <div style={{ paddingRight: '20px' }}>
                                                     <img src={session.image || 'images/TCSW_session_selector_lightblue.png'} className={classes.previewImage} />
@@ -294,7 +301,7 @@ function Panelists() {
                                                 
                                             </div>
                                             <hr />
-                                        </>
+                                        </div>
                                     ))
                                 }
                             </Grid>
