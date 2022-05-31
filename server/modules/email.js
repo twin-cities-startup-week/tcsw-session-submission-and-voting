@@ -13,7 +13,7 @@ Hello ${firstName},
 
 Thank you for submitting a session for Twin Cities Startup Week 2022! After reviewing your submission, the TCSW team will be in contact to let you know whether or not it has been accepted into the TCSW Session Selector for public voting.  
 
-You can edit your session submission until submissions close on May 15, 2022. The TCSW team will review each change and accept or reject the edited submission for public voting.
+You can edit your session submission until submissions close on June 12, 2022. The TCSW team will review each change and accept or reject the edited submission for public voting.
 
 https://sessions.twincitiesstartupweek.com/#/user/submission
 
@@ -31,7 +31,7 @@ Hello ${firstName},
 Thank you for submitting a session for Twin Cities Startup Week 2022! After reviewing your submission, the TCSW team will be in contact to let you know whether or not it has been accepted into the TCSW Session Selector for public voting.  
 <br />
 <br />
-You can <a href="https://sessions.twincitiesstartupweek.com/#/user/submission">edit your session submission</a> until submissions close on May 15, 2022. The TCSW team will review each change and accept or reject the edited submission for public voting.
+You can <a href="https://sessions.twincitiesstartupweek.com/#/user/submission">edit your session submission</a> until submissions close on June 12, 2022. The TCSW team will review each change and accept or reject the edited submission for public voting.
 <br />
 <br />
 <strong>Title</strong>
@@ -74,10 +74,10 @@ Please feel free to edit your submission until submissions close on June 12, 202
 https://sessions.twincitiesstartupweek.com/#/user/submission
 
 PUBLIC VOTING
-Being accepted onto the TCSW Session Selector does not guarantee your event will be accepted onto the TCSW Schedule. The TCSW team will use community and votes and feedback to determine the final TCSW event lineup. Public voting will be open from May 25, 2022 to June 8, 2022.
+Being accepted onto the TCSW Session Selector does not guarantee your event will be accepted onto the TCSW Schedule. The TCSW team will use community and votes and feedback to determine the final TCSW event lineup. Public voting will be open from June 16-29, 2022.
 
 PROMOTING YOUR EVENT
-Make sure you are ready to promote your event and encourage your community to vote from May 25, 2022 to June 8, 2022. The TCSW Team will be in touch with a media kit to help you spread the word. 
+Make sure you are ready to promote your event and encourage your community to vote from June 16-29, 2022. The TCSW Team will be in touch with a media kit to help you spread the word. 
 
 If you have any questions about around TCSW or the voting process, contact us at tcsw@beta.mn.
 
