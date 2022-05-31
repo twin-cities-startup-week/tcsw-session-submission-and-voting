@@ -89,7 +89,13 @@ function VotePage() {
                     {user.admin &&
                         (
                             <>
-                                <Button sx={{ width: '100%' }} variant="contained" onClick={() => voteForSession(details.id)}>Vote</Button>
+                                {
+                                    details.user_votes && details.user_votes.length > 0 ?
+                                    (<Button sx={{ width: '100%' }} variant="contained">✓ Voted</Button>)
+                                    : 
+                                    (<Button sx={{ width: '100%' }} variant="contained" onClick={() => voteForSession(details.id)}>Vote</Button>)
+                                }
+                                
                                 <h5>Time:</h5>
                                 <ul>
                                     {details.time && details.time.map(time => <li>{time}</li>)}

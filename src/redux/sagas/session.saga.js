@@ -78,6 +78,14 @@ function* voteForSession(action) {
     try {
         yield axios.put(`/api/submission/vote/${action.payload}`);
         yield put({ type: 'FETCH_SUBMISSION_DETAILS', payload: { id: action.payload } });
+        yield put({
+            type: 'SET_GLOBAL_MODAL',
+            payload: {
+                modalOpen: true,
+                title: `Vote Received`,
+                body: 'Thank you for voting!',
+            },
+        });
     } catch (error) {
         console.log(error);
         if (error.response && error.response.status === 409) {
