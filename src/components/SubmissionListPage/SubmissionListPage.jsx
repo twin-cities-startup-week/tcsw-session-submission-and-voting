@@ -89,9 +89,9 @@ function SubmissionListPage() {
                                 <Typography className={classes.title} variant="h3">
                                     {submission.title}
                                 </Typography>
-                                {/* <Typography variant="body">
+                                <Typography variant="body">
                                     Number of votes: {submission.vote_count}
-                                </Typography> */}
+                                </Typography>
                                 <MarkdownView
                                     markdown={submission.description}
                                 />
