@@ -24,7 +24,6 @@ function LandingPage() {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log('GA TRACKING: /home');
     if (process.env.REACT_APP_GA_CODE) {
       ReactGA.pageview('/home');
     }
