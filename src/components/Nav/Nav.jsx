@@ -37,6 +37,10 @@ function Nav() {
     setOpen(!open);
     history.push('/admin/content');
   }
+  const pushToAdminFAQ = () => {
+    setOpen(!open);
+    history.push('/admin/faq');
+  }
   const pushToMySubmissions = () => {
     setOpen(!open);
     history.push('/user/submission');
@@ -186,6 +190,18 @@ function Nav() {
                   onClick={pushToAdminContent}>
 
                   <ListItemText primary="Edit Content" />
+
+                </ListItemButton>
+              }
+              {user.admin &&
+                <ListItemButton
+                  sx={{
+                    textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
+                    '&:hover': { background: "#0c495a" }
+                  }}
+                  onClick={pushToAdminFAQ}>
+
+                  <ListItemText primary="Edit FAQ" />
 
                 </ListItemButton>
               }
