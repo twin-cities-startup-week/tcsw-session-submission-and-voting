@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import FaqItemPage from '../FaqItemPage/FaqItemPage';
 import Typography from '@mui/material/Typography';
+import MarkdownView from 'react-showdown';
 import './Faq.css';
 import { useDispatch, useSelector } from "react-redux";
 import ReactGA from 'react-ga';
@@ -22,17 +23,16 @@ import { Paper, makeStyles } from "@material-ui/core";
         paddingBottom: '10px',
         width: '100%',
     },
-    content: {
-        paddingTop: '33px',
-    }
   });
 
 function FaqPage (){
     const classes = useStyles();
     const dispatch = useDispatch();
     const { faq } = useSelector((store) => store.content);
+    const { block } = useSelector((store) => store.content);
     useEffect(() => {
         dispatch({ type: "FETCH_FAQ" });
+        dispatch({ type: "FETCH_CONTENT_BLOCKS" });
     }, [dispatch]);
       
     useEffect(() => {
@@ -43,15 +43,10 @@ function FaqPage (){
   
     return (
         <div className={classes.root}> 
-            <div className={classes.content}>
-                <Typography variant="h2">
-                    TCSW Session Submission & Voting
-                </Typography>
-                <h4> 2022 Session Submission Dates</h4>
-                <p> Session Submission Deadline: April 6, 2022 to June 12, 2022</p>
-                <p> Session Voting Deadline: June 16, 2021 to June 29, 2022</p>
-                <br />
-            </div>  
+            <MarkdownView
+                style={{ width: '95%' }}
+                markdown={block['faq']}
+            />
             <div className={classes.shadow}>
                 {faq.map((faq, i) =>
                     <FaqItemPage faq={faq} index={i} />

@@ -8,6 +8,14 @@ import { Button, Grid, Typography } from '@mui/material';
 import { useHistory, useParams } from 'react-router-dom';
 import ReactGA from 'react-ga';
 
+function isValidHttpUrl(s) {
+    let url;
+    try {
+        url = new URL(s);
+    } catch (e) { return false; }
+    return /https?/.test(url.protocol);
+}
+
 // Styling
 const useStyles = makeStyles({
     root: {
@@ -148,7 +156,13 @@ function VotePage() {
 
                     <div className='related-media'>
                         <h3>Related Media</h3>
-                        <p>{details.media}</p>
+                        {
+                            details.media && isValidHttpUrl(details.media) ? (
+                                <p><a href={details.media} target="_blank">{details.media}</a></p>
+                            ) : (
+                                <p>{details.media}</p>
+                            )
+                        }
                     </div>
 
                     <div>

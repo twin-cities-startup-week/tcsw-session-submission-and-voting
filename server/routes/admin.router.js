@@ -302,10 +302,16 @@ router.get('/users/csv', requireAdmin, async (req, res) => {
                 'last_name',
                 'email',
                 'admin',
+                [Sequelize.fn('COUNT', Sequelize.col('sessions.id')), 'session_count'],
                 'created_at',
                 'current_sign_in_ip',
-                'current_sign_in_at'
+                'current_sign_in_at',
             ],
+            include: [{
+                model: Session,
+                attributes: [],
+            }],
+            group: ['user.id'],
             raw: true,
             order: [
                 ['first_name', 'ASC'],

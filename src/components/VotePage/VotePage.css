@@ -48,14 +48,17 @@
 
 .speaker{
     border-bottom: solid black;
+    padding-bottom: 20px;
 }
 
 .organizers{
     border-bottom: solid black;
+    padding-bottom: 20px;
 }
 
 .related-media{
     border-bottom: solid black;
+    padding-bottom: 20px;
 }
 
 .edit-button{
