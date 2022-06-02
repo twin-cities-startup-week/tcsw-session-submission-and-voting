@@ -4,6 +4,7 @@ const blankSubmission = {
     user_id: '',
     email: '',
     phone: '',
+    linkedin: '',
     host: '',
     title: '',
     description: '',

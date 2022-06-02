@@ -8,6 +8,14 @@ import { Button, Grid, Typography } from '@mui/material';
 import { useHistory, useParams } from 'react-router-dom';
 import ReactGA from 'react-ga';
 
+function isValidHttpUrl(s) {
+    let url;
+    try {
+        url = new URL(s);
+    } catch (e) { return false; }
+    return /https?/.test(url.protocol);
+}
+
 // Styling
 const useStyles = makeStyles({
     root: {
@@ -85,15 +93,17 @@ function VotePage() {
             <Grid container spacing={0} style={{ backgroundColor: '#FBBD19', width: '100%' }}>
                 <Grid item xs={12} lg={2} style={{ backgroundColor: '#FBBD19', padding: '20px' }}>
                     <h2>TCSW 2022</h2>
-                    {
-                        details.user_votes && details.user_votes.length > 0 ?
-                            (<Button sx={{ width: '100%' }} variant="contained">✓ Voted</Button>)
-                            :
-                            (<Button sx={{ width: '100%' }} variant="contained" onClick={() => voteForSession(details.id)}>Vote</Button>)
-                    }
+                    {/* <Button sx={{ width: '100%' }} variant="contained" onClick={() => voteForSession(details.id)}>Vote</Button> */}
                     {user.admin &&
                         (
                             <>
+                                {
+                                    details.user_votes && details.user_votes.length > 0 ?
+                                    (<Button sx={{ width: '100%' }} variant="contained">✓ Voted</Button>)
+                                    : 
+                                    (<Button sx={{ width: '100%' }} variant="contained" onClick={() => voteForSession(details.id)}>Vote</Button>)
+                                }
+                                
                                 <h5>Time:</h5>
                                 <ul>
                                     {details.time && details.time.map(time => <li>{time}</li>)}
@@ -146,7 +156,13 @@ function VotePage() {
 
                     <div className='related-media'>
                         <h3>Related Media</h3>
-                        <p>{details.media}</p>
+                        {
+                            details.media && isValidHttpUrl(details.media) ? (
+                                <p><a href={details.media} target="_blank">{details.media}</a></p>
+                            ) : (
+                                <p>{details.media}</p>
+                            )
+                        }
                     </div>
 
                     <div>

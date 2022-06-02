@@ -353,6 +353,11 @@ function SubmissionPage() {
                                     <TextField type="tel" fullWidth id="phone-input" label="Phone" variant="outlined" required value={submission.phone} onChange={handleChangeFor('phone')} />
                                 </Box>
                                 <Box p={1}>
+                                    <Typography variant="body2" className={classes.boldText} gutterBottom> LinkedIn:</Typography>
+                                    <Typography variant="caption" display="block" gutterBottom>This will be displayed in your event details so that the community can connect with you regarding your session.</Typography>
+                                    <TextField inputProps={{ maxLength: 2048 }} type="url" fullWidth id="linkedin-input" label="LinkedIn URL (optional)" variant="outlined" value={submission.linkedin} onChange={handleChangeFor('linkedin')} />
+                                </Box>
+                                <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>Is this event being hosted by an organization, company or other entity? If so, list here. If not, tell us a little bit about yourself.</Typography>
                                     <TextField inputProps={{ maxLength: 255 }} fullWidth id="host-input" label="Host" variant="outlined" required value={submission.host} onChange={handleChangeFor('host')} />
                                 </Box>
@@ -600,7 +605,7 @@ function SubmissionPage() {
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>Please share any related media you would like to have included on your TCSW session listing (YouTube links, etc).</Typography>
-                                    <TextField inputProps={{ maxLength: 2048 }} fullWidth id="media-input" label="Media (optional)" variant="outlined" value={submission.media} onChange={handleChangeFor('media')} />
+                                    <TextField type="url" inputProps={{ maxLength: 2048 }} fullWidth id="media-input" label="Media (optional)" variant="outlined" value={submission.media} onChange={handleChangeFor('media')} />
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="body2" className={classes.boldText} gutterBottom>What does success look like for your event?</Typography>

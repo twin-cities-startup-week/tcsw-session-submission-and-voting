@@ -73,6 +73,7 @@ Session.init({
     other_info: STRING,
     ip_address: STRING,
     status: STRING,
+    linkedin: STRING,
     awaiting_approval: {
         type: BOOLEAN,
         defaultValue: true,
