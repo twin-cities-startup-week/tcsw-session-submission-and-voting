@@ -93,17 +93,15 @@ function VotePage() {
             <Grid container spacing={0} style={{ backgroundColor: '#FBBD19', width: '100%' }}>
                 <Grid item xs={12} lg={2} style={{ backgroundColor: '#FBBD19', padding: '20px' }}>
                     <h2>TCSW 2022</h2>
-                    {/* <Button sx={{ width: '100%' }} variant="contained" onClick={() => voteForSession(details.id)}>Vote</Button> */}
+                    {
+                        details.user_votes && details.user_votes.length > 0 ?
+                            (<Button sx={{ width: '100%' }} variant="contained">✓ Voted</Button>)
+                            :
+                            (<Button sx={{ width: '100%' }} variant="contained" onClick={() => voteForSession(details.id)}>Vote</Button>)
+                    }
                     {user.admin &&
                         (
                             <>
-                                {
-                                    details.user_votes && details.user_votes.length > 0 ?
-                                    (<Button sx={{ width: '100%' }} variant="contained">✓ Voted</Button>)
-                                    : 
-                                    (<Button sx={{ width: '100%' }} variant="contained" onClick={() => voteForSession(details.id)}>Vote</Button>)
-                                }
-                                
                                 <h5>Time:</h5>
                                 <ul>
                                     {details.time && details.time.map(time => <li>{time}</li>)}

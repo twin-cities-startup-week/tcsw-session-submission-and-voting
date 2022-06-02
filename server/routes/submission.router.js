@@ -307,7 +307,7 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
 });
 
 //PUT route for session voting 
-router.put('/vote/:id', requireAdmin, async (req, res) => {
+router.put('/vote/:id', rejectUnauthenticated, async (req, res) => {
     try {
         // Use the logged in user id
         const userId = req.user.id;
