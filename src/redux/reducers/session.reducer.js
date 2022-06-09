@@ -25,6 +25,51 @@ const approvedSessions = (state = [], action) => {
     switch (action.type) {
         case 'SET_APPROVED_SESSIONS':
             return action.payload;
+        case 'SET_VOTE_FOR_SESSION_IN_LIST':
+            let sessionListCopy = [...state];
+            for(let session of sessionListCopy) {
+                console.log('session id', session.id, action.payload);
+                if (session.id === action.payload) {
+                    // This array just needs to contain something to update
+                    // the vote button to be filled in. On the next page load, 
+                    // it will contain the user_id and time of vote.
+                    session.user_votes = ['voted'];
+                }
+            }
+            return sessionListCopy;
+        default:
+            return state;
+    }
+}
+
+const searchTerm = (state = '', action) => {
+    switch (action.type) {
+        case 'SET_SEARCH_TERM':
+            return action.payload;
+        case 'CLEAR_SEARCH_FILTERS':
+            return '';
+        default:
+            return state;
+    }
+}
+
+const searchTrack = (state = [], action) => {
+    switch (action.type) {
+        case 'SET_SEARCH_TRACK':
+            return action.payload;
+        case 'CLEAR_SEARCH_FILTERS':
+            return [];
+        default:
+            return state;
+    }
+}
+
+const searchFormat = (state = [], action) => {
+    switch (action.type) {
+        case 'SET_SEARCH_FORMAT':
+            return action.payload;
+        case 'CLEAR_SEARCH_FILTERS':
+            return [];
         default:
             return state;
     }
@@ -44,4 +89,7 @@ export default combineReducers({
     adminApprovedSessions,
     approvedSessions,
     leaderboard,
+    searchTerm,
+    searchTrack,
+    searchFormat,
 });

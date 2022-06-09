@@ -61,11 +61,8 @@ function Panelists() {
     const history = useHistory();
     const {approvedSessions} = useSelector((store) => store.session);
     const user = useSelector((store) => store.user);
-    const { block } = useSelector((store) => store.content);
-    const [searchTerm, setSearchTerm] = useState('');
+    const {searchTerm, searchTrack, searchFormat} = useSelector((store) => store.session);
     const [typeIndicator, setTypeIndicator] = useState('');
-    const [track, setTrack] = useState([]);
-    const [format, setFormat] = useState([]);
     const [collapsed, setCollapsed] = useState(true);
     const classes = useStyles();
 
@@ -78,18 +75,15 @@ function Panelists() {
     //Get all the session
     useEffect(() => {
         delaySearch();
-    }, [format, track, searchTerm, user, dispatch]);
+    }, [searchFormat, searchTrack, searchTerm, user, dispatch]);
 
     const resetFilters = () => {
-        setSearchTerm('');
-        setTrack([]);
-        setFormat([]);
+        dispatch({ type: 'CLEAR_SEARCH_FILTERS' });
         runSearch();
     }
 
     const handleSearchChange = (event) => {
-        setSearchTerm(event.target.value);
-
+        dispatch({ type: 'SET_SEARCH_TERM', payload: event.target.value });
     }
 
     const delaySearch = () => {
@@ -109,8 +103,8 @@ function Panelists() {
         setTypeIndicator('Searching...');
         dispatch({ type: 'FETCH_APPROVED_SESSIONS', payload: {
             searchTerm,
-            track: encodeURIComponent(String(track)),
-            format: encodeURIComponent(String(format)),
+            track: encodeURIComponent(String(searchTrack)),
+            format: encodeURIComponent(String(searchFormat)),
         }, onComplete: searchComplete});
         searchTimeout = null;
     }
@@ -124,81 +118,81 @@ function Panelists() {
     }
 
     const handleChangeForTrack = (value) => (event) => {
-        let listOfItems = [...track];
+        let listOfItems = [...searchTrack];
         // console.log(value);
         if (event.target.checked && listOfItems.indexOf(value) < 0) {
-            listOfItems = [...track, value];
+            listOfItems = [...searchTrack, value];
         } else if (!event.target.checked) {
             listOfItems = listOfItems.filter(item => item !== value);
         }
-        setTrack(listOfItems);
+        dispatch({ type: 'SET_SEARCH_TRACK', payload: listOfItems });
     }
 
     const handleChangeForFormat = (value) => (event) => {
-        let listOfItems = [...format];
+        let listOfItems = [...searchFormat];
         // console.log(value);
         if (event.target.checked && listOfItems.indexOf(value) < 0) {
-            listOfItems = [...format, value];
+            listOfItems = [...searchFormat, value];
         } else if (!event.target.checked) {
             listOfItems = listOfItems.filter(item => item !== value);
         }
-        setFormat(listOfItems);
+        dispatch({ type: 'SET_SEARCH_FORMAT', payload: listOfItems });
     }
 
     const trackAndFormat = () => (
         <>
             <Typography variant="h6" style={{ paddingTop: '20px', paddingBottom: '5px' }}>Track</Typography>
-            <RadioGroup value={track} name="radio-buttons-group">
+            <RadioGroup value={searchTrack} name="radio-buttons-group">
                 <FormControlLabel control={
-                    <Checkbox checked={track.indexOf('Growth') >= 0} onChange={handleChangeForTrack('Growth')} />
+                    <Checkbox checked={searchTrack.indexOf('Growth') >= 0} onChange={handleChangeForTrack('Growth')} />
                 } label="Growth" />
                 <FormControlLabel control={
-                    <Checkbox checked={track.indexOf('Culture') >= 0} onChange={handleChangeForTrack('Culture')} />
+                    <Checkbox checked={searchTrack.indexOf('Culture') >= 0} onChange={handleChangeForTrack('Culture')} />
                 } label="Culture" />
                 <FormControlLabel control={
-                    <Checkbox checked={track.indexOf('Funding') >= 0} onChange={handleChangeForTrack('Funding')} />
+                    <Checkbox checked={searchTrack.indexOf('Funding') >= 0} onChange={handleChangeForTrack('Funding')} />
                 } label="Funding" />
                 <FormControlLabel control={
-                    <Checkbox checked={track.indexOf('Product') >= 0} onChange={handleChangeForTrack('Product')} />
+                    <Checkbox checked={searchTrack.indexOf('Product') >= 0} onChange={handleChangeForTrack('Product')} />
                 } label="Product" />
                 <FormControlLabel control={
-                    <Checkbox checked={track.indexOf('Spotlight') >= 0} onChange={handleChangeForTrack('Spotlight')} />
+                    <Checkbox checked={searchTrack.indexOf('Spotlight') >= 0} onChange={handleChangeForTrack('Spotlight')} />
                 } label="Spotlight" />
             </RadioGroup>
             <Typography variant="h6" style={{ paddingTop: '20px', paddingBottom: '5px' }}>Format</Typography>
-            <RadioGroup value={format} name="radio-buttons-group">
+            <RadioGroup value={searchFormat} name="radio-buttons-group">
                 <FormControlLabel control={
-                    <Checkbox checked={format.indexOf('Presentation') >= 0} onChange={handleChangeForFormat('Presentation')} />
+                    <Checkbox checked={searchFormat.indexOf('Presentation') >= 0} onChange={handleChangeForFormat('Presentation')} />
                 } label="Presentation" />
                 <FormControlLabel control={
-                    <Checkbox checked={format.indexOf('Panel') >= 0} onChange={handleChangeForFormat('Panel')} />
+                    <Checkbox checked={searchFormat.indexOf('Panel') >= 0} onChange={handleChangeForFormat('Panel')} />
                 } label="Panel" />
                 <FormControlLabel control={
-                    <Checkbox checked={format.indexOf('Workshop') >= 0} onChange={handleChangeForFormat('Workshop')} />
+                    <Checkbox checked={searchFormat.indexOf('Workshop') >= 0} onChange={handleChangeForFormat('Workshop')} />
                 } label="Workshop" />
                 <FormControlLabel control={
-                    <Checkbox checked={format.indexOf('Keynote') >= 0} onChange={handleChangeForFormat('Keynote')} />
+                    <Checkbox checked={searchFormat.indexOf('Keynote') >= 0} onChange={handleChangeForFormat('Keynote')} />
                 } label="Keynote" />
                 <FormControlLabel control={
-                    <Checkbox checked={format.indexOf('Roundtable') >= 0} onChange={handleChangeForFormat('Roundtable')} />
+                    <Checkbox checked={searchFormat.indexOf('Roundtable') >= 0} onChange={handleChangeForFormat('Roundtable')} />
                 } label="Roundtable" />
                 <FormControlLabel control={
-                    <Checkbox checked={format.indexOf('Fireside Chat') >= 0} onChange={handleChangeForFormat('Fireside Chat')} />
+                    <Checkbox checked={searchFormat.indexOf('Fireside Chat') >= 0} onChange={handleChangeForFormat('Fireside Chat')} />
                 } label="Fireside Chat" />
                 <FormControlLabel control={
-                    <Checkbox checked={format.indexOf('Showcase') >= 0} onChange={handleChangeForFormat('Showcase')} />
+                    <Checkbox checked={searchFormat.indexOf('Showcase') >= 0} onChange={handleChangeForFormat('Showcase')} />
                 } label="Showcase" />
                 <FormControlLabel control={
-                    <Checkbox checked={format.indexOf('Demo') >= 0} onChange={handleChangeForFormat('Demo')} />
+                    <Checkbox checked={searchFormat.indexOf('Demo') >= 0} onChange={handleChangeForFormat('Demo')} />
                 } label="Demo" />
                 <FormControlLabel control={
-                    <Checkbox checked={format.indexOf('Meetup') >= 0} onChange={handleChangeForFormat('Meetup')} />
+                    <Checkbox checked={searchFormat.indexOf('Meetup') >= 0} onChange={handleChangeForFormat('Meetup')} />
                 } label="Meetup" />
                 <FormControlLabel control={
-                    <Checkbox checked={format.indexOf('Pitch') >= 0} onChange={handleChangeForFormat('Pitch')} />
+                    <Checkbox checked={searchFormat.indexOf('Pitch') >= 0} onChange={handleChangeForFormat('Pitch')} />
                 } label="Pitch" />
                 <FormControlLabel control={
-                    <Checkbox checked={format.indexOf('Other') >= 0} onChange={handleChangeForFormat('Other')} />
+                    <Checkbox checked={searchFormat.indexOf('Other') >= 0} onChange={handleChangeForFormat('Other')} />
                 } label="Other" />
             </RadioGroup>
         </>

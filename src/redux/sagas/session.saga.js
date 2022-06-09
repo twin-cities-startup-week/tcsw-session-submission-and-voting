@@ -77,7 +77,11 @@ function* fetchLeaderboard(action) {
 function* voteForSession(action) {
     try {
         yield axios.put(`/api/submission/vote/${action.payload}`);
+        // Refresh the selected submission (detail (vote) page)
         yield put({ type: 'FETCH_SUBMISSION_DETAILS', payload: { id: action.payload } });
+        // Avoid having to refresh the whole list, only update the selected
+        // session (search result page)
+        yield put({ type: 'SET_VOTE_FOR_SESSION_IN_LIST', payload: action.payload });
         yield put({
             type: 'SET_GLOBAL_MODAL',
             payload: {
