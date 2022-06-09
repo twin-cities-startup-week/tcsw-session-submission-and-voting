@@ -80,8 +80,8 @@ function VotePage() {
             type: 'SET_GLOBAL_MODAL',
             payload: {
                 modalOpen: true,
-                title: 'Already Voted',
-                body: 'You have already voted for this session.',
+                title: 'Already voted for this session',
+                body: 'Oops! Looks like you already voted for this session. Check out some of the others - you can vote for every one once!',
             },
         });
     }
