@@ -61,7 +61,9 @@ function VotePage() {
             if (process.env.REACT_APP_GA_CODE) {
                 ReactGA.pageview(`/votepage/${submissionId}`);
             }
+            window.scrollTo(0, 0);
         }
+        
     }, [submissionId, dispatch])
 
     // function to add a Vote to the session vote count.   

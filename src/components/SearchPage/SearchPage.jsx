@@ -61,7 +61,7 @@ function Panelists() {
     const history = useHistory();
     const {approvedSessions} = useSelector((store) => store.session);
     const user = useSelector((store) => store.user);
-    const {searchTerm, searchTrack, searchFormat} = useSelector((store) => store.session);
+    const {searchTerm, searchTrack, searchFormat, searchChanged} = useSelector((store) => store.session);
     const [typeIndicator, setTypeIndicator] = useState('');
     const [collapsed, setCollapsed] = useState(true);
     const classes = useStyles();
@@ -74,12 +74,14 @@ function Panelists() {
 
     //Get all the session
     useEffect(() => {
-        delaySearch();
+        if (searchChanged) {
+            delaySearch();
+        }
     }, [searchFormat, searchTrack, searchTerm, user, dispatch]);
 
     const resetFilters = () => {
         dispatch({ type: 'CLEAR_SEARCH_FILTERS' });
-        runSearch();
+        delaySearch();
     }
 
     const handleSearchChange = (event) => {
@@ -100,6 +102,7 @@ function Panelists() {
     }
 
     const runSearch = () => {
+        dispatch({ type: 'SET_SEARCH_CHANGED', payload: false })
         setTypeIndicator('Searching...');
         dispatch({ type: 'FETCH_APPROVED_SESSIONS', payload: {
             searchTerm,

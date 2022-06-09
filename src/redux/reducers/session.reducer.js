@@ -75,6 +75,21 @@ const searchFormat = (state = [], action) => {
     }
 }
 
+// Keep track of whether search filters have changed
+const searchChanged = (state = true, action) => {
+    switch (action.type) {
+        case 'SET_SEARCH_CHANGED':
+            return action.payload;
+        case 'SET_SEARCH_TERM':
+        case 'SET_SEARCH_FORMAT':
+        case 'SET_SEARCH_TRACK':
+        case 'CLEAR_SEARCH_FILTERS':
+            return true;
+        default:
+            return state;
+    }
+}
+
 const leaderboard = (state = [], action) => {
     switch (action.type) {
         case 'SET_LEADERBOARD':
@@ -92,4 +107,5 @@ export default combineReducers({
     searchTerm,
     searchTrack,
     searchFormat,
+    searchChanged,
 });
