@@ -3,7 +3,18 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { makeStyles } from '@mui/styles';
-import { Button, Grid, Paper, Typography, FormControl, RadioGroup, FormControlLabel, Hidden, Checkbox } from '@mui/material';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import {
+    Button,
+    Grid,
+    Typography,
+    RadioGroup,
+    FormControlLabel,
+    Hidden,
+    Checkbox,
+    IconButton,
+} from '@mui/material';
 import MarkdownView from 'react-showdown';
 import ReactGA from 'react-ga';
 
@@ -24,8 +35,9 @@ const useStyles = makeStyles({
         },
     },
     title: {
-        paddingTop: '20px',
+        paddingTop: '0px',
         paddingBottom: '20px',
+        cursor: 'pointer',
     },
     previewImage: {
         height: '200px',
@@ -191,6 +203,26 @@ function Panelists() {
             </RadioGroup>
         </>
     )
+
+    // function to add a Vote to the session vote count.   
+    const voteForSession = (sessionId) => {
+        if (user && user.id) {
+            dispatch({ type: 'VOTE_FOR_SESSION', payload: sessionId });
+        } else {
+            history.push(`/registration`);
+        }
+    }
+
+    const diplayAlreadyVoted = () => {
+        dispatch({
+            type: 'SET_GLOBAL_MODAL',
+            payload: {
+                modalOpen: true,
+                title: 'Already Voted',
+                body: 'You have already voted for this session.',
+            },
+        });
+    }
     
     return(
         <>
@@ -267,11 +299,32 @@ function Panelists() {
                             && approvedSessions.map(session => (
                                 <div key={session.id}>
                                     <div className={classes.item}>
-                                        <div style={{ paddingRight: '20px' }}>
-                                            <img src={session.image || 'images/TCSW_session_selector_lightblue.png'} className={classes.previewImage} />
+                                        <div onClick={() => history.push(`/votepage/${session.id}`)} style={{ paddingRight: '20px', cursor: 'pointer' }}>
+                                            <img src={session.image || 'images/TCSW_session_selector.png'} className={classes.previewImage} />
                                         </div>
                                         <div style={{ flex: 1 }}>
-                                            <Button component={Paper} elevation={8}
+                                            {
+                                                session.user_votes && session.user_votes.length > 0 ?
+                                                    (
+                                                        <IconButton
+                                                            sx={{ float: 'right', marginLeft: '20px', border: "3px solid #0c495a", borderRadius: 50 }}
+                                                            aria-label="delete" size="large" color="primary"
+                                                            onClick={() => diplayAlreadyVoted()}>
+                                                            <ThumbUpIcon fontSize="large" />
+                                                        </IconButton>
+                                                    )
+                                                    :
+                                                    (
+                                                        <IconButton
+                                                            sx={{ float: 'right', marginLeft: '20px', border: "3px solid #0c495a", borderRadius: 50 }}
+                                                            aria-label="delete" size="large" color="primary"
+                                                            onClick={() => voteForSession(session.id)}
+                                                        >
+                                                            <ThumbUpOffAltIcon fontSize="large" />
+                                                        </IconButton>
+                                                    )
+                                            }
+                                            {/* <Button component={Paper} elevation={8}
                                                 variant="contained"
                                                 type="submit"
                                                 name="submit"
@@ -280,8 +333,8 @@ function Panelists() {
                                                 onClick={() => history.push(`/votepage/${session.id}`)}
                                             >
                                                 View Details
-                                            </Button>
-                                            <Typography className={classes.title} variant="h3">
+                                            </Button> */}
+                                            <Typography onClick={() => history.push(`/votepage/${session.id}`)} className={classes.title} variant="h2">
                                                 {session.title}
                                             </Typography>
                                             <Typography variant="body"><strong>Track:</strong> {session.track} | <strong>Format:</strong> {session.format} | <strong>Industry:</strong> {getArray(session.industry).join(', ')}</Typography>

@@ -4,7 +4,9 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MarkdownView from 'react-showdown';
 import { makeStyles } from '@mui/styles';
-import { Button, Grid, Typography } from '@mui/material';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import { Button, Grid, Typography, IconButton } from '@mui/material';
 import { useHistory, useParams } from 'react-router-dom';
 import ReactGA from 'react-ga';
 
@@ -64,7 +66,22 @@ function VotePage() {
 
     // function to add a Vote to the session vote count.   
     const voteForSession = ( sessionId ) => {
-        dispatch({ type: 'VOTE_FOR_SESSION', payload: sessionId });        
+        if (user && user.id) {
+            dispatch({ type: 'VOTE_FOR_SESSION', payload: sessionId });  
+        } else {
+            history.push(`/registration`);
+        }     
+    }
+
+    const diplayAlreadyVoted = () => {
+        dispatch({
+            type: 'SET_GLOBAL_MODAL',
+            payload: {
+                modalOpen: true,
+                title: 'Already Voted',
+                body: 'You have already voted for this session.',
+            },
+        });
     }
 
     const sessionApprove = ( sessionId ) => {
@@ -92,13 +109,12 @@ function VotePage() {
         <div>
             <Grid container spacing={0} style={{ backgroundColor: '#FBBD19', width: '100%' }}>
                 <Grid item xs={12} lg={2} style={{ backgroundColor: '#FBBD19', padding: '20px' }}>
-                    <h2>TCSW 2022</h2>
-                    {
-                        details.user_votes && details.user_votes.length > 0 ?
-                            (<Button sx={{ width: '100%' }} variant="contained">✓ Voted</Button>)
-                            :
-                            (<Button sx={{ width: '100%' }} variant="contained" onClick={() => voteForSession(details.id)}>Vote</Button>)
-                    }
+                    <Button
+                        sx={{ width: '100%' }} variant="contained"
+                        onClick={() => history.goBack()}
+                    >
+                        Back to Sessions
+                    </Button>
                     {user.admin &&
                         (
                             <>
@@ -117,9 +133,30 @@ function VotePage() {
                 <Grid item md={12} lg={10} order={{ xs: 1, sm: 1, md: 1, lg: 2 }} style={{ backgroundColor: '#FFF', padding: '20px'  }}>
                     <div className={classes.item}>
                         <div style={{ paddingRight: '20px' }}>
-                            <img src={details.image || 'images/TCSW_session_selector_lightblue.png'} className={classes.previewImage} />
+                            <img src={details.image || 'images/TCSW_session_selector.png'} className={classes.previewImage} />
                         </div>
                         <div style={{ flex: 1 }}>
+                            {
+                                details.user_votes && details.user_votes.length > 0 ?
+                                    (
+                                        <IconButton
+                                            sx={{ float: 'right', marginLeft: '20px', border: "3px solid #0c495a", borderRadius: 50 }}
+                                            aria-label="delete" size="large" color="primary"
+                                            onClick={() => diplayAlreadyVoted()}>
+                                            <ThumbUpIcon fontSize="large" />
+                                        </IconButton>
+                                    )
+                                    :
+                                    (
+                                        <IconButton
+                                            sx={{ float: 'right', marginLeft: '20px', border: "3px solid #0c495a", borderRadius: 50 }}
+                                            aria-label="delete" size="large" color="primary"
+                                            onClick={() => voteForSession(details.id)}
+                                        >
+                                            <ThumbUpOffAltIcon fontSize="large" />
+                                        </IconButton>
+                                    )
+                            }
                             {user.admin &&
                                 (
                                     <>
