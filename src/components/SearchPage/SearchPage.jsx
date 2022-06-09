@@ -94,7 +94,7 @@ function Panelists() {
 
     const delaySearch = () => {
         if (searchTimeout) {
-            console.log('clearing timeout');
+            // console.log('clearing timeout');
             clearTimeout(searchTimeout);
             setTypeIndicator('Searching..');
         } else {
@@ -125,7 +125,7 @@ function Panelists() {
 
     const handleChangeForTrack = (value) => (event) => {
         let listOfItems = [...track];
-        console.log(value);
+        // console.log(value);
         if (event.target.checked && listOfItems.indexOf(value) < 0) {
             listOfItems = [...track, value];
         } else if (!event.target.checked) {
@@ -136,7 +136,7 @@ function Panelists() {
 
     const handleChangeForFormat = (value) => (event) => {
         let listOfItems = [...format];
-        console.log(value);
+        // console.log(value);
         if (event.target.checked && listOfItems.indexOf(value) < 0) {
             listOfItems = [...format, value];
         } else if (!event.target.checked) {

@@ -38,7 +38,7 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import ReactGA from 'react-ga';
 if (process.env.REACT_APP_GA_CODE) {
   ReactGA.initialize(process.env.REACT_APP_GA_CODE);
-  console.log('GA initialized!');
+  // console.log('GA initialized!');
 } else {
   console.log('NO GA CODE!');
 }

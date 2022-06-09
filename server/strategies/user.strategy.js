@@ -43,7 +43,6 @@ passport.use(
       .query('SELECT * FROM "user" WHERE email = $1', [username.toLowerCase()])
       .then((result) => {
         const user = result && result.rows && result.rows[0];
-        console.log(user, password, encryptLib.comparePassword(password, user.password));
         if (user && password && user.password && password.length && password.length > 6 && encryptLib.comparePassword(password, user.password)) {
           // All good! Passwords match!
           // done takes an error (null in this case) and a user
