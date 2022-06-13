@@ -59,12 +59,12 @@ function SubmissionListPage() {
                                 You haven't submit any sessions yet.
                             </Typography>
                             <br />
-                            <Button
+                            {/* <Button
                                 variant="contained"
                                 sx={{ mt: 2, mb: 2 }}
                                 onClick={() => history.push('/submission')}
                             >Submission Form
-                            </Button>
+                            </Button> */}
                         </>
                     )
                 }

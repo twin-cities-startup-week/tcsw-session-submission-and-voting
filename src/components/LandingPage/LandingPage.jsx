@@ -69,11 +69,11 @@ function LandingPage() {
           show the Submission Form and Search Sessions buttons */}
           {user.id && 
             <Box sx={{ textAlign: 'center' }}>
-              <Button 
+              {/* <Button 
                 variant="contained"
                 sx={{ mt: 2, mb: 2 }}
                 onClick={() => history.push('/submission')}
-              > Submission Form</Button>
+              > Submission Form</Button> */}
 
               {/* <Button 
                 variant="contained"

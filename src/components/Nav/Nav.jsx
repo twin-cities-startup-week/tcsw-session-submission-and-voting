@@ -117,16 +117,8 @@ function Nav() {
             {/* If a user is logged in, show these links */}
             {user.id && (
               <>
-                <Link className="navLink" to="/submission">
+                {/* <Link className="navLink" to="/submission">
                   Submission Form
-                </Link>
-
-                {/* <Link className="navLink" to="/panelistView">
-                  Search
-                </Link>
-
-                <Link className="navLink" to="/leaderboard">
-                  Leaderboard
                 </Link> */}
               </>
             )}
@@ -223,7 +215,7 @@ function Nav() {
 
                 </ListItemButton>
               }
-              { mobileScreen && user.id &&
+              {/* { mobileScreen && user.id &&
                 <ListItemButton
                 sx={{
                   textAlign: 'right', color: "#FBBD19", bgcolor: "#0c495a",
@@ -233,7 +225,7 @@ function Nav() {
 
                   <ListItemText primary="Submission Form" />
                 </ListItemButton>
-              }
+              } */}
               {user.id &&
                 <ListItemButton
                   sx={{
