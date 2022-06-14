@@ -61,8 +61,10 @@ function VotePage() {
             if (process.env.REACT_APP_GA_CODE) {
                 ReactGA.pageview(`/votepage/${submissionId}`);
             }
-            // Used to redirect back to this page after login
-            localStorage.setItem('PREVIOUS_PAGE', `/votepage/${submissionId}`);
+            if (user && !user.id) {
+                // Used to redirect back to this page after login
+                localStorage.setItem('PREVIOUS_PAGE', `/votepage/${submissionId}`);
+            }
             window.scrollTo(0, 0);
         }
         
@@ -115,7 +117,7 @@ function VotePage() {
                 <Grid item xs={12} lg={2} style={{ backgroundColor: '#FBBD19', padding: '20px' }}>
                     <Button
                         sx={{ width: '100%' }} variant="contained"
-                        onClick={() => history.goBack()}
+                        onClick={() => history.push('/votepage')}
                     >
                         Back to Sessions
                     </Button>

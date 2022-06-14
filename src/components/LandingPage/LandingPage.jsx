@@ -27,15 +27,15 @@ function LandingPage() {
     if (process.env.REACT_APP_GA_CODE) {
       ReactGA.pageview('/home');
     }
-    const nextPage = localStorage.getItem('PREVIOUS_PAGE');
-    if (nextPage && nextPage !== '') {
-      localStorage.removeItem('PREVIOUS_PAGE');
-      history.push(nextPage);
-    } else {
-      localStorage.removeItem('PREVIOUS_PAGE');
-    }
-
   }, []);
+  useEffect(() => {
+    const nextPage = localStorage.getItem('PREVIOUS_PAGE');
+    // We have a nextPage and logged in user
+    if (nextPage && nextPage !== '' && user && user.id) {
+      localStorage.setItem('PREVIOUS_PAGE', '');
+      history.push(nextPage);
+    }
+  }, [user]);
 
   return (
     <div className="container" style={{maxWidth: 1200}}>

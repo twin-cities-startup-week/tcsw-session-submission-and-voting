@@ -22,6 +22,7 @@ const useStyles = makeStyles({
 function AboutPage() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const user = useSelector((store) => store.user);
   const { block } = useSelector((store) => store.content);
   //Get all the session
   useEffect(() => {
@@ -32,8 +33,10 @@ function AboutPage() {
     if (process.env.REACT_APP_GA_CODE) {
       ReactGA.pageview('/about');
     }
-    // Used to redirect back to this page after login
-    localStorage.setItem('PREVIOUS_PAGE', '/about');
+    if (user && !user.id) {
+      // Used to redirect back to this page after login
+      localStorage.setItem('PREVIOUS_PAGE', '/about');
+    }
   }, []);
 
   return (
