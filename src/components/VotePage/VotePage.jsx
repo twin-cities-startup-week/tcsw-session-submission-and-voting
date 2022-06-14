@@ -191,6 +191,14 @@ function VotePage() {
                     <div className='organizers'>
                         <h3>Organizers</h3>
                         <p>{details.host}</p>
+                        {
+                            details.linkedin && isValidHttpUrl(details.linkedin) && (
+                                <>
+                                    <p><strong>Have an idea or comment about this session?</strong></p>
+                                    <p>Reach out via <a href={details.linkedin}>{details.linkedin}</a></p>
+                                </>
+                            )
+                        }
                     </div>
 
                     <div className='related-media'>

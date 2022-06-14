@@ -211,6 +211,7 @@ router.get('/details/:id', async (req, res) => {
                     'media',
                     'image',
                     'format',
+                    'linkedin',
                 ],
                 include,
                 where: whereCondition,
