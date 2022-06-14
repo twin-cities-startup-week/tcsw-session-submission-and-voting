@@ -61,6 +61,8 @@ function VotePage() {
             if (process.env.REACT_APP_GA_CODE) {
                 ReactGA.pageview(`/votepage/${submissionId}`);
             }
+            // Used to redirect back to this page after login
+            localStorage.setItem('PREVIOUS_PAGE', `/votepage/${submissionId}`);
             window.scrollTo(0, 0);
         }
         

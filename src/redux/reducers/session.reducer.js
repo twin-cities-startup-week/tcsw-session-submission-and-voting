@@ -4,6 +4,8 @@ const adminAwaitingApproval = (state = [], action) => {
     switch (action.type) {
         case 'SET_SESSIONS_AWAITING_APPROVAL':
             return action.payload;
+        case 'UNSET_USER':
+            return [];
         default:
             return state;
     }
@@ -15,6 +17,8 @@ const adminApprovedSessions = (state = [], action) => {
     switch (action.type) {
         case 'SET_ADMIN_APPROVED_SESSIONS':
             return action.payload;
+        case 'UNSET_USER':
+            return [];
         default:
             return state;
     }
@@ -37,6 +41,8 @@ const approvedSessions = (state = [], action) => {
                 }
             }
             return sessionListCopy;
+        case 'UNSET_USER':
+            return [];
         default:
             return state;
     }
@@ -47,6 +53,7 @@ const searchTerm = (state = '', action) => {
         case 'SET_SEARCH_TERM':
             return action.payload;
         case 'CLEAR_SEARCH_FILTERS':
+        case 'UNSET_USER':
             return '';
         default:
             return state;
@@ -58,6 +65,7 @@ const searchTrack = (state = [], action) => {
         case 'SET_SEARCH_TRACK':
             return action.payload;
         case 'CLEAR_SEARCH_FILTERS':
+        case 'UNSET_USER':
             return [];
         default:
             return state;
@@ -69,6 +77,7 @@ const searchFormat = (state = [], action) => {
         case 'SET_SEARCH_FORMAT':
             return action.payload;
         case 'CLEAR_SEARCH_FILTERS':
+        case 'UNSET_USER':
             return [];
         default:
             return state;
@@ -84,6 +93,7 @@ const searchChanged = (state = true, action) => {
         case 'SET_SEARCH_FORMAT':
         case 'SET_SEARCH_TRACK':
         case 'CLEAR_SEARCH_FILTERS':
+        case 'UNSET_USER':
             return true;
         default:
             return state;

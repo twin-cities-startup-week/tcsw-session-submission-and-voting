@@ -39,6 +39,8 @@ function FaqPage (){
         if (process.env.REACT_APP_GA_CODE) {
             ReactGA.pageview('/faq');
         }
+        // Used to redirect back to this page after login
+        localStorage.setItem('PREVIOUS_PAGE', '/faq');
     }, []);
   
     return (

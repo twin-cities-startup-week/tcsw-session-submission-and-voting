@@ -27,11 +27,15 @@ function LandingPage() {
     if (process.env.REACT_APP_GA_CODE) {
       ReactGA.pageview('/home');
     }
-  }, []);
+    const nextPage = localStorage.getItem('PREVIOUS_PAGE');
+    if (nextPage && nextPage !== '') {
+      localStorage.removeItem('PREVIOUS_PAGE');
+      history.push(nextPage);
+    } else {
+      localStorage.removeItem('PREVIOUS_PAGE');
+    }
 
-  const onLogin = (event) => {
-    history.push('/login');
-  };
+  }, []);
 
   return (
     <div className="container" style={{maxWidth: 1200}}>
