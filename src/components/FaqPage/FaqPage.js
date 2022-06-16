@@ -28,6 +28,7 @@ import { Paper, makeStyles } from "@material-ui/core";
 function FaqPage (){
     const classes = useStyles();
     const dispatch = useDispatch();
+    const user = useSelector((store) => store.user);
     const { faq } = useSelector((store) => store.content);
     const { block } = useSelector((store) => store.content);
     useEffect(() => {
@@ -38,6 +39,10 @@ function FaqPage (){
     useEffect(() => {
         if (process.env.REACT_APP_GA_CODE) {
             ReactGA.pageview('/faq');
+        }
+        if (user && !user.id) {
+            // Used to redirect back to this page after login
+            localStorage.setItem('PREVIOUS_PAGE', '/faq');
         }
     }, []);
   

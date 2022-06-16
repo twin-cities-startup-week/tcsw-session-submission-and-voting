@@ -15,6 +15,7 @@ Before you get started, make sure you have the following software installed on y
 
 ### Account Registration
 
+- Google Login
 - SendGrid, for sending emails https://sendgrid.com/
 - AWS S3 Bucket, for image upload https://aws.amazon.com/
 - Recaptcha (use the keys below for development) https://www.google.com/recaptcha/about/

@@ -58,6 +58,23 @@ router.get('/approved', async (req, res) => {
     if (andConditions.length > 0) {
         whereCondition[Op.and] = andConditions;
     }
+    const include = [];
+    // If we have a logged in user, include vote information for the session
+    if (req.user && req.user.id) {
+        include.push(
+            {
+                model: UserVote,
+                required: false,
+                attributes: [
+                    ['created_at', 'voted_at'],
+                    ['id', 'vote_id'],
+                ],
+                where: {
+                    user_id: req.user.id,
+                },
+            },
+        );
+    }
     try {
         const userSessions = await Session.findAll({
             attributes: [
@@ -79,6 +96,7 @@ router.get('/approved', async (req, res) => {
                 'image',
                 'format',
             ],
+            include,
             where: whereCondition,
             limit: 100,
             order: [
@@ -193,6 +211,7 @@ router.get('/details/:id', async (req, res) => {
                     'media',
                     'image',
                     'format',
+                    'linkedin',
                 ],
                 include,
                 where: whereCondition,
@@ -307,7 +326,7 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
 });
 
 //PUT route for session voting 
-router.put('/vote/:id', requireAdmin, async (req, res) => {
+router.put('/vote/:id', rejectUnauthenticated, async (req, res) => {
     try {
         // Use the logged in user id
         const userId = req.user.id;

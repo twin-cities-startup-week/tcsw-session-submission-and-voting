@@ -28,10 +28,14 @@ function LandingPage() {
       ReactGA.pageview('/home');
     }
   }, []);
-
-  const onLogin = (event) => {
-    history.push('/login');
-  };
+  useEffect(() => {
+    const nextPage = localStorage.getItem('PREVIOUS_PAGE');
+    // We have a nextPage and logged in user
+    if (nextPage && nextPage !== '' && user && user.id) {
+      localStorage.setItem('PREVIOUS_PAGE', '');
+      history.push(nextPage);
+    }
+  }, [user]);
 
   return (
     <div className="container" style={{maxWidth: 1200}}>
