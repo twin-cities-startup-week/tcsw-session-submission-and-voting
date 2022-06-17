@@ -98,7 +98,7 @@ router.get('/approved', async (req, res) => {
             ],
             include,
             where: whereCondition,
-            limit: 100,
+            limit: 200,
             order: [
                 ['title', 'ASC'],
             ],
