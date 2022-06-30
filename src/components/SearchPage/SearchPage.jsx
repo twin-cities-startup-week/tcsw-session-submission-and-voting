@@ -60,12 +60,17 @@ function Panelists() {
     const dispatch = useDispatch();
     const history = useHistory();
     const {approvedSessions} = useSelector((store) => store.session);
+    const { block } = useSelector((store) => store.content);
     const user = useSelector((store) => store.user);
     const {searchTerm, searchTrack, searchFormat, searchChanged} = useSelector((store) => store.session);
     const [typeIndicator, setTypeIndicator] = useState('');
     const [collapsed, setCollapsed] = useState(true);
     const classes = useStyles();
-
+    //Get all the session
+    useEffect(() => {
+        dispatch({ type: "FETCH_CONTENT_BLOCKS" });
+    }, [dispatch]);
+    
     useEffect(() => {
         if (process.env.REACT_APP_GA_CODE) {
             ReactGA.pageview('/votepage');

@@ -50,10 +50,16 @@ function VotePage() {
     const user = useSelector((store) => store.user);
     const details = useSelector((store) => store.submission.submissionDetails);
     const { id: submissionId } = useParams();
+    const { block } = useSelector((store) => store.content);
     // const store = useReduxStore();
     const dispatch = useDispatch();
     const history = useHistory();
     const classes = useStyles();
+
+    //Get all the session
+    useEffect(() => {
+        dispatch({ type: "FETCH_CONTENT_BLOCKS" });
+    }, [dispatch]);
 
     useEffect(() => {
         if (submissionId && submissionId !== '') {
