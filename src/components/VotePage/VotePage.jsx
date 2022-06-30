@@ -113,122 +113,134 @@ function VotePage() {
 
     return(
         <div>
-            <Grid container spacing={0} style={{ backgroundColor: '#FBBD19', width: '100%' }}>
-                <Grid item xs={12} lg={2} style={{ backgroundColor: '#FBBD19', padding: '20px' }}>
-                    <Button
-                        sx={{ width: '100%' }} variant="contained"
-                        onClick={() => history.push('/votepage')}
-                    >
-                        Back to Sessions
-                    </Button>
-                    {user.admin &&
-                        (
-                            <>
-                                <h5>Time:</h5>
-                                <ul>
-                                    {details.time && details.time.map(time => <li>{time}</li>)}
-                                </ul>
-                                <h5>Date:</h5>
-                                <ul>
-                                    {details.date && details.date.map(date => <li>{date}</li>)}
-                                </ul>
-                            </>
-                        )
-                    }
-                </Grid>
-                <Grid item md={12} lg={10} order={{ xs: 1, sm: 1, md: 1, lg: 2 }} style={{ backgroundColor: '#FFF', padding: '20px'  }}>
-                    <div className={classes.item}>
-                        <div style={{ paddingRight: '20px' }}>
-                            <img src={details.image || 'images/TCSW_session_selector.png'} className={classes.previewImage} />
-                        </div>
-                        <div style={{ flex: 1 }}>
-                            {
-                                details.user_votes && details.user_votes.length > 0 ?
-                                    (
-                                        <IconButton
-                                            sx={{ float: 'right', marginLeft: '20px', border: "3px solid #0c495a", borderRadius: 50 }}
-                                            aria-label="delete" size="large" color="primary"
-                                            onClick={() => diplayAlreadyVoted()}>
-                                            <ThumbUpIcon fontSize="large" />
-                                        </IconButton>
-                                    )
-                                    :
-                                    (
-                                        <IconButton
-                                            sx={{ float: 'right', marginLeft: '20px', border: "3px solid #0c495a", borderRadius: 50 }}
-                                            aria-label="delete" size="large" color="primary"
-                                            onClick={() => voteForSession(details.id)}
-                                        >
-                                            <ThumbUpOffAltIcon fontSize="large" />
-                                        </IconButton>
-                                    )
-                            }
+            {
+                // Temporarily restrict to only admins. TODO: Make the event start date configurable.
+                user.admin ? (
+                    <Grid container spacing={0} style={{ backgroundColor: '#FBBD19', width: '100%' }}>
+                        <Grid item xs={12} lg={2} style={{ backgroundColor: '#FBBD19', padding: '20px' }}>
+                            <Button
+                                sx={{ width: '100%' }} variant="contained"
+                                onClick={() => history.push('/votepage')}
+                            >
+                                Back to Sessions
+                            </Button>
                             {user.admin &&
                                 (
                                     <>
-                                        <Button sx={{ float: 'right', marginTop: '8px', marginLeft: '20px' }} className='approve-button' variant="contained" color="success" onClick={() => sessionApprove(details.id)}>
-                                            Approve
-                                        </Button>
-                                        <Button sx={{ float: 'right', marginTop: '8px', marginLeft: '20px' }} className='deny-button' variant="contained" color="error" onClick={() => sessionDeny(details.id)}>Deny</Button>
-                                        <Button sx={{ float: 'right', marginTop: '8px' }} className='edit-button' onClick={() => history.push(`/submission/${details.id}/edit`)}>Edit</Button>
-                                        <Button sx={{ float: 'right', marginTop: '8px' }} className='edit-button' color="error" onClick={() => confirmDelete(details.id)}>Delete</Button>
+                                        <h5>Time:</h5>
+                                        <ul>
+                                            {details.time && details.time.map(time => <li>{time}</li>)}
+                                        </ul>
+                                        <h5>Date:</h5>
+                                        <ul>
+                                            {details.date && details.date.map(date => <li>{date}</li>)}
+                                        </ul>
                                     </>
                                 )
                             }
-                            <Typography variant="h2">{details.title}</Typography>
-                            <Typography variant="body"><strong>Track:</strong> {details.track} | <strong>Format:</strong> {details.format} | <strong>Industry:</strong> {details.industry && details.industry.join(', ')}</Typography>
-                            <MarkdownView
-                                markdown={details.description}
-                            />
-                        </div>
-                    </div>
+                        </Grid>
+                        <Grid item md={12} lg={10} order={{ xs: 1, sm: 1, md: 1, lg: 2 }} style={{ backgroundColor: '#FFF', padding: '20px'  }}>
+                            <div className={classes.item}>
+                                <div style={{ paddingRight: '20px' }}>
+                                    <img src={details.image || 'images/TCSW_session_selector.png'} className={classes.previewImage} />
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                    {
+                                        details.user_votes && details.user_votes.length > 0 ?
+                                            (
+                                                <IconButton
+                                                    sx={{ float: 'right', marginLeft: '20px', border: "3px solid #0c495a", borderRadius: 50 }}
+                                                    aria-label="delete" size="large" color="primary"
+                                                    onClick={() => diplayAlreadyVoted()}>
+                                                    <ThumbUpIcon fontSize="large" />
+                                                </IconButton>
+                                            )
+                                            :
+                                            (
+                                                <IconButton
+                                                    sx={{ float: 'right', marginLeft: '20px', border: "3px solid #0c495a", borderRadius: 50 }}
+                                                    aria-label="delete" size="large" color="primary"
+                                                    onClick={() => voteForSession(details.id)}
+                                                >
+                                                    <ThumbUpOffAltIcon fontSize="large" />
+                                                </IconButton>
+                                            )
+                                    }
+                                    {user.admin &&
+                                        (
+                                            <>
+                                                <Button sx={{ float: 'right', marginTop: '8px', marginLeft: '20px' }} className='approve-button' variant="contained" color="success" onClick={() => sessionApprove(details.id)}>
+                                                    Approve
+                                                </Button>
+                                                <Button sx={{ float: 'right', marginTop: '8px', marginLeft: '20px' }} className='deny-button' variant="contained" color="error" onClick={() => sessionDeny(details.id)}>Deny</Button>
+                                                <Button sx={{ float: 'right', marginTop: '8px' }} className='edit-button' onClick={() => history.push(`/submission/${details.id}/edit`)}>Edit</Button>
+                                                <Button sx={{ float: 'right', marginTop: '8px' }} className='edit-button' color="error" onClick={() => confirmDelete(details.id)}>Delete</Button>
+                                            </>
+                                        )
+                                    }
+                                    <Typography variant="h2">{details.title}</Typography>
+                                    <Typography variant="body"><strong>Track:</strong> {details.track} | <strong>Format:</strong> {details.format} | <strong>Industry:</strong> {details.industry && details.industry.join(', ')}</Typography>
+                                    <MarkdownView
+                                        markdown={details.description}
+                                    />
+                                </div>
+                            </div>
 
-                    <div className='speaker'>
-                        <h3>Speakers</h3>
+                            <div className='speaker'>
+                                <h3>Speakers</h3>
+                                <MarkdownView
+                                    markdown={details.speakers}
+                                />
+                            </div>
+
+                            <div className='organizers'>
+                                <h3>Organizers</h3>
+                                <p>{details.host}</p>
+                                {
+                                    details.linkedin && isValidHttpUrl(details.linkedin) && (
+                                        <>
+                                            <p><strong>Have an idea or comment about this session?</strong></p>
+                                            <p>Reach out via <a href={details.linkedin}>{details.linkedin}</a></p>
+                                        </>
+                                    )
+                                }
+                            </div>
+
+                            <div className='related-media'>
+                                <h3>Related Media</h3>
+                                {
+                                    details.media && isValidHttpUrl(details.media) ? (
+                                        <p><a href={details.media} target="_blank">{details.media}</a></p>
+                                    ) : (
+                                        <p>{details.media}</p>
+                                    )
+                                }
+                            </div>
+
+                            <div>
+                                <h3>Location</h3>
+                                <p>{details.location}</p>
+                                {
+                                    details.location_details && (
+                                        <>
+                                            <p><strong>Location Details:</strong></p>
+                                            
+                                            {details.location_details}
+                                        </>
+                                    )
+                                }
+                            </div>
+                        </Grid>
+                    </Grid>
+                ) : (
+                    <div className={classes.root}>
                         <MarkdownView
-                            markdown={details.speakers}
+                            style={{ width: '95%' }}
+                            markdown={block['search']}
                         />
                     </div>
-
-                    <div className='organizers'>
-                        <h3>Organizers</h3>
-                        <p>{details.host}</p>
-                        {
-                            details.linkedin && isValidHttpUrl(details.linkedin) && (
-                                <>
-                                    <p><strong>Have an idea or comment about this session?</strong></p>
-                                    <p>Reach out via <a href={details.linkedin}>{details.linkedin}</a></p>
-                                </>
-                            )
-                        }
-                    </div>
-
-                    <div className='related-media'>
-                        <h3>Related Media</h3>
-                        {
-                            details.media && isValidHttpUrl(details.media) ? (
-                                <p><a href={details.media} target="_blank">{details.media}</a></p>
-                            ) : (
-                                <p>{details.media}</p>
-                            )
-                        }
-                    </div>
-
-                    <div>
-                        <h3>Location</h3>
-                        <p>{details.location}</p>
-                        {
-                            details.location_details && (
-                                <>
-                                    <p><strong>Location Details:</strong></p>
-                                    
-                                    {details.location_details}
-                                </>
-                            )
-                        }
-                    </div>
-                </Grid>
-            </Grid>
+                )
+            }
         </div>
     )
 }

@@ -148,6 +148,7 @@ function Panelists() {
 
     const trackAndFormat = () => (
         <>
+
             <Typography variant="h6" style={{ paddingTop: '20px', paddingBottom: '5px' }}>Track</Typography>
             <RadioGroup value={searchTrack} name="radio-buttons-group">
                 <FormControlLabel control={
@@ -227,132 +228,144 @@ function Panelists() {
     
     return(
         <>
-            <div style={{ backgroundColor: '#FBBD19', width: '100%', height: '100%' }}>
-                <Grid container spacing={0} style={{ backgroundColor: '#FBBD19', width: '100%', height: '100%' }}>
-                    <Grid item xs={12} sm={4} md={4} lg={2} style={{ backgroundColor: '#FBBD19', padding: '20px' }}>
-                        <Typography variant="h2" style={{ paddingTop: '20px', paddingBottom: '5px' }}>
-                            SEARCH
-                            <Hidden smUp>
+            {
+                // Temporarily restrict to only admins. TODO: Make the event start date configurable.
+                user.admin ? (
+                    <div style={{ backgroundColor: '#FBBD19', width: '100%', height: '100%' }}>
+                        <Grid container spacing={0} style={{ backgroundColor: '#FBBD19', width: '100%', height: '100%' }}>
+                            <Grid item xs={12} sm={4} md={4} lg={2} style={{ backgroundColor: '#FBBD19', padding: '20px' }}>
+                                <Typography variant="h2" style={{ paddingTop: '20px', paddingBottom: '5px' }}>
+                                    SEARCH
+                                    <Hidden smUp>
+                                        {
+                                            collapsed ? (
+                                                <Button style={{ float: 'right' }} onClick={() => setCollapsed(false)}>Expand</Button>
+                                            ) : (
+                                                <Button style={{ float: 'right' }} onClick={() => setCollapsed(true)}>Collapse</Button>
+                                            )
+                                        }
+                                    </Hidden>
+
+                                </Typography>
+
+                                <Typography variant="h6" style={{ paddingTop: '20px', paddingBottom: '5px' }}>Keyword</Typography>
+                                <input
+                                    className='search-bar'
+                                    type='text'
+                                    value={searchTerm}
+                                    placeholder='Keyword'
+                                    onChange={handleSearchChange}
+                                />
                                 {
-                                    collapsed ? (
-                                        <Button style={{ float: 'right' }} onClick={() => setCollapsed(false)}>Expand</Button>
-                                    ) : (
-                                        <Button style={{ float: 'right' }} onClick={() => setCollapsed(true)}>Collapse</Button>
+                                    // On mobile phones, toggle the track and format filters
+                                    !collapsed && (
+                                        <Hidden smUp>
+                                            {trackAndFormat()}
+                                        </Hidden>
                                     )
                                 }
-                            </Hidden>
-
-                        </Typography>
-
-                        <Typography variant="h6" style={{ paddingTop: '20px', paddingBottom: '5px' }}>Keyword</Typography>
-                        <input
-                            className='search-bar'
-                            type='text'
-                            value={searchTerm}
-                            placeholder='Keyword'
-                            onChange={handleSearchChange}
-                        />
-                        {
-                            // On mobile phones, toggle the track and format filters
-                            !collapsed && (
-                                <Hidden smUp>
+                                <Hidden smDown>
                                     {trackAndFormat()}
                                 </Hidden>
-                            )
-                        }
-                        <Hidden smDown>
-                            {trackAndFormat()}
-                        </Hidden>
-                        <Button variant="contained" style={{ marginTop: '20px' }} onClick={resetFilters}>Reset</Button>
+                                <Button variant="contained" style={{ marginTop: '20px' }} onClick={resetFilters}>Reset</Button>
 
-                        {/* <Hidden smDown>
-                            <br />
-                            <br />
-                            <div className='leader-board-button-div'>
-                                <p>Want to see who is leading the Vote race?</p>
-                                <Button variant="contained" onClick={goToLeaderBoard}>Leaderboard</Button>
-                            </div>
-                        </Hidden> */}
-
-
-                    </Grid>
-                    <Grid item xs={12} sm={8} md={8} lg={10} style={{ backgroundColor: '#FFF', padding: '20px' }}>
-                        {
-                            typeIndicator !== '' && (
-                                <div style={{ height: '500px' }}>
-                                    <Typography variant="h6">{typeIndicator}</Typography>
-                                </div>
-                            )
-                        }
-                        {
-                            approvedSessions
-                            && approvedSessions.length === 0
-                            && typeIndicator === ''
-                            && (
-                                <div style={{ height: '500px' }}>
-                                    <Typography variant="h6">No results found.</Typography>
-                                </div>
-                            )
-                        }
-                        {
-                            typeIndicator === ''
-                            && approvedSessions
-                            && approvedSessions.map(session => (
-                                <div key={session.id}>
-                                    <div className={classes.item}>
-                                        <div onClick={() => history.push(`/votepage/${session.id}`)} style={{ paddingRight: '20px', cursor: 'pointer' }}>
-                                            <img src={session.image || 'images/TCSW_session_selector.png'} className={classes.previewImage} />
-                                        </div>
-                                        <div style={{ flex: 1 }}>
-                                            {
-                                                session.user_votes && session.user_votes.length > 0 ?
-                                                    (
-                                                        <IconButton
-                                                            sx={{ float: 'right', marginLeft: '20px', border: "3px solid #0c495a", borderRadius: 50 }}
-                                                            aria-label="delete" size="large" color="primary"
-                                                            onClick={() => diplayAlreadyVoted()}>
-                                                            <ThumbUpIcon fontSize="large" />
-                                                        </IconButton>
-                                                    )
-                                                    :
-                                                    (
-                                                        <IconButton
-                                                            sx={{ float: 'right', marginLeft: '20px', border: "3px solid #0c495a", borderRadius: 50 }}
-                                                            aria-label="delete" size="large" color="primary"
-                                                            onClick={() => voteForSession(session.id)}
-                                                        >
-                                                            <ThumbUpOffAltIcon fontSize="large" />
-                                                        </IconButton>
-                                                    )
-                                            }
-                                            {/* <Button component={Paper} elevation={8}
-                                                variant="contained"
-                                                type="submit"
-                                                name="submit"
-                                                value="Log In"
-                                                sx={{ float: 'right', marginTop: '8px' }}
-                                                onClick={() => history.push(`/votepage/${session.id}`)}
-                                            >
-                                                View Details
-                                            </Button> */}
-                                            <Typography onClick={() => history.push(`/votepage/${session.id}`)} className={classes.title} variant="h2">
-                                                {session.title}
-                                            </Typography>
-                                            <Typography variant="body"><strong>Track:</strong> {session.track} | <strong>Format:</strong> {session.format} | <strong>Industry:</strong> {getArray(session.industry).join(', ')}</Typography>
-                                            <MarkdownView
-                                                markdown={session.description}
-                                            />
-                                            
-                                        </div>
-                                        
+                                {/* <Hidden smDown>
+                                    <br />
+                                    <br />
+                                    <div className='leader-board-button-div'>
+                                        <p>Want to see who is leading the Vote race?</p>
+                                        <Button variant="contained" onClick={goToLeaderBoard}>Leaderboard</Button>
                                     </div>
-                                    <hr />
-                                </div>
-                            ))
-                        }
-                    </Grid>
-                </Grid>
-            </div>
+                                </Hidden> */}
+
+
+                            </Grid>
+                            <Grid item xs={12} sm={8} md={8} lg={10} style={{ backgroundColor: '#FFF', padding: '20px' }}>
+                                {
+                                    typeIndicator !== '' && (
+                                        <div style={{ height: '500px' }}>
+                                            <Typography variant="h6">{typeIndicator}</Typography>
+                                        </div>
+                                    )
+                                }
+                                {
+                                    approvedSessions
+                                    && approvedSessions.length === 0
+                                    && typeIndicator === ''
+                                    && (
+                                        <div style={{ height: '500px' }}>
+                                            <Typography variant="h6">No results found.</Typography>
+                                        </div>
+                                    )
+                                }
+                                {
+                                    typeIndicator === ''
+                                    && approvedSessions
+                                    && approvedSessions.map(session => (
+                                        <div key={session.id}>
+                                            <div className={classes.item}>
+                                                <div onClick={() => history.push(`/votepage/${session.id}`)} style={{ paddingRight: '20px', cursor: 'pointer' }}>
+                                                    <img src={session.image || 'images/TCSW_session_selector.png'} className={classes.previewImage} />
+                                                </div>
+                                                <div style={{ flex: 1 }}>
+                                                    {
+                                                        session.user_votes && session.user_votes.length > 0 ?
+                                                            (
+                                                                <IconButton
+                                                                    sx={{ float: 'right', marginLeft: '20px', border: "3px solid #0c495a", borderRadius: 50 }}
+                                                                    aria-label="delete" size="large" color="primary"
+                                                                    onClick={() => diplayAlreadyVoted()}>
+                                                                    <ThumbUpIcon fontSize="large" />
+                                                                </IconButton>
+                                                            )
+                                                            :
+                                                            (
+                                                                <IconButton
+                                                                    sx={{ float: 'right', marginLeft: '20px', border: "3px solid #0c495a", borderRadius: 50 }}
+                                                                    aria-label="delete" size="large" color="primary"
+                                                                    onClick={() => voteForSession(session.id)}
+                                                                >
+                                                                    <ThumbUpOffAltIcon fontSize="large" />
+                                                                </IconButton>
+                                                            )
+                                                    }
+                                                    {/* <Button component={Paper} elevation={8}
+                                                        variant="contained"
+                                                        type="submit"
+                                                        name="submit"
+                                                        value="Log In"
+                                                        sx={{ float: 'right', marginTop: '8px' }}
+                                                        onClick={() => history.push(`/votepage/${session.id}`)}
+                                                    >
+                                                        View Details
+                                                    </Button> */}
+                                                    <Typography onClick={() => history.push(`/votepage/${session.id}`)} className={classes.title} variant="h2">
+                                                        {session.title}
+                                                    </Typography>
+                                                    <Typography variant="body"><strong>Track:</strong> {session.track} | <strong>Format:</strong> {session.format} | <strong>Industry:</strong> {getArray(session.industry).join(', ')}</Typography>
+                                                    <MarkdownView
+                                                        markdown={session.description}
+                                                    />
+                                                    
+                                                </div>
+                                                
+                                            </div>
+                                            <hr />
+                                        </div>
+                                    ))
+                                }
+                            </Grid>
+                        </Grid>
+                    </div>
+                ) : (
+                    <div className={classes.root}>
+                        <MarkdownView
+                            style={{ width: '95%' }}
+                            markdown={block['search']}
+                        />
+                    </div>
+                )
+            }
         </>
     )
 }
